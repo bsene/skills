@@ -13,7 +13,10 @@ description: >
 
 # The Three Rules of TDD (Uncle Bob)
 
-Source: http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd
+Sources:
+
+- http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd
+- https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html
 
 ## The Three Rules
 
@@ -21,15 +24,44 @@ Source: http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd
 2. **You are not allowed to write any more of a unit test than is sufficient to fail; and compilation failures are failures.**
 3. **You are not allowed to write any more production code than is sufficient to pass the one failing unit test.**
 
-## The Core Discipline
+## The Four Nested Cycles
 
-The rules create a tight loop — measured in _seconds_, not minutes. At no point does the system stop compiling or all tests stop passing for more than a minute or two. If you'd walk up to any developer on the team at any random moment, their code worked **a minute ago**.
+The Three Rules operate at the finest granularity, but TDD as a whole is structured as four nested cycles, each at a different timescale. Understanding all four prevents the most common failure modes.
 
-The cycle is:
+| Cycle   | Timescale   | Name                         | What you do                                                                        |
+| ------- | ----------- | ---------------------------- | ---------------------------------------------------------------------------------- |
+| Nano    | Seconds     | **Three Rules**              | Write one failing line → pass it → repeat                                          |
+| Micro   | Minutes     | **Red / Green / Refactor**   | Complete one unit test → make it pass → clean up                                   |
+| Milli   | ~10 minutes | **Specific / Generic**       | Check that production code is growing more general, not mirroring the tests        |
+| Primary | ~1 hour     | **Architectural Boundaries** | Step back and verify you haven't crossed or blurred a major architectural boundary |
 
-```
-Write the smallest failing test → Write the minimum production code to pass it → Refactor → Repeat
-```
+### Nano-cycle (seconds) — The Three Rules
+
+The rules create a tight loop measured in _seconds_. At no point does the system stop compiling or all tests stop passing for more than a minute. If you walked up to any developer at any random moment, their code worked **a minute ago**.
+
+### Micro-cycle (minutes) — Red / Green / Refactor
+
+Once a full unit test is in place, apply RGR:
+
+1. **Red** — Have a failing test.
+2. **Green** — Write the minimum code to make it pass. Don't worry about structure yet.
+3. **Refactor** — Clean up the mess. The tests are your safety net.
+
+Refactoring is not a phase at the end of the project — it happens _every few minutes_, continuously.
+
+### Milli-cycle (~10 min) — Specific / Generic
+
+> _As the tests get more specific, the code gets more generic._
+
+Watch for the symptom of over-specificity: production code that starts to resemble the test data. A healthy sign is that tests you _haven't written yet_ would already pass. An unhealthy sign is that each new test forces a narrowly targeted `if` or special case.
+
+If you get **stuck** — meaning the next test would require a large out-of-cycle rewrite — backtrack. Delete recent tests, find an earlier branching point, and approach it with smaller, more general increments.
+
+### Primary cycle (~1 hour) — Architectural Boundaries
+
+Every hour or so, zoom out. Ask: are we drifting across a boundary we should be protecting? The nano and micro cycles are too fine-grained to catch architectural drift. Use this cycle to check alignment with the intended clean architecture, and let those decisions guide the next hour's nano/micro/milli work.
+
+---
 
 ## How to Apply the Rules When Writing Code
 
@@ -78,13 +110,15 @@ When reviewing code or a PR with TDD in mind, check:
 
 ## Common Pitfalls
 
-| Pitfall                                       | What the rules say                                                              |
-| --------------------------------------------- | ------------------------------------------------------------------------------- |
-| Writing the whole test before running it      | Stop as soon as the test fails to compile or an assertion fails (Rule 2)        |
-| Writing more production code "while I'm here" | Only write what makes the current failing test pass (Rule 3)                    |
-| Skipping tests for "obvious" code             | No production code without a failing test first (Rule 1)                        |
-| Writing tests after the fact                  | Tests written after give you false confidence; the design wasn't shaped by them |
-| Large test increments                         | If an increment takes >10 minutes, break it into smaller steps                  |
+| Pitfall                                       | What the rules say                                                                     |
+| --------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Writing the whole test before running it      | Stop as soon as the test fails to compile or an assertion fails (Rule 2)               |
+| Writing more production code "while I'm here" | Only write what makes the current failing test pass (Rule 3)                           |
+| Skipping tests for "obvious" code             | No production code without a failing test first (Rule 1)                               |
+| Writing tests after the fact                  | Tests written after give you false confidence; the design wasn't shaped by them        |
+| Large test increments                         | If an increment takes >10 minutes, break it into smaller steps                         |
+| Getting stuck on the next test                | Production code is too specific — backtrack, delete recent tests, generalise           |
+| Production code mirrors test data             | Tests are getting specific faster than code is getting general (milli-cycle violation) |
 
 ## Example Skeleton (TypeScript)
 
