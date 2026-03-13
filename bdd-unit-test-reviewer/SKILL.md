@@ -146,9 +146,11 @@ The test body should have three clearly separated phases:
 - Multiple `When` actions (act → assert → act again)
 - Missing `# Given` / `# When` / `# Then` comments in complex tests
 - The "When" buried inside setup code
+- The words `GIVEN` or `THEN` appearing literally in `describe()` or `it()` messages — these are structural concepts, not label prefixes. Writing `describe('GIVEN the order exists', ...)` is noise; write `describe('the order exists', ...)` instead.
 
 **Suggested fix:** Add section comments and restructure so each phase is visually
-distinct. Show before/after side by side.
+distinct. Show before/after side by side. Strip `GIVEN`/`THEN` prefixes from
+`describe`/`it` labels.
 
 ---
 
