@@ -21,8 +21,8 @@ rather than fixing it.
 
 > "The best comment is a good name for a method or class."
 
-Comments are **not inherently bad** — but when they're needed to explain *what* the code
-does (rather than *why* a design decision was made), that's a signal to refactor.
+Comments are **not inherently bad** — but when they're needed to explain _what_ the code
+does (rather than _why_ a design decision was made), that's a signal to refactor.
 
 ---
 
@@ -35,12 +35,14 @@ Look for these patterns:
 - A method whose purpose isn't clear from its name → candidate for **Rename Method**
 - Comments describing required preconditions or invariants → candidate for **Introduce Assertion**
 - Comments that are out of date, misleading, or redundant with the code
+- Large parts of commented code -> ask user if it could be deleted
 
 ---
 
 ## Refactoring Treatments
 
 ### 1. Extract Variable
+
 **When:** A comment explains a complex expression.
 
 ```python
@@ -60,6 +62,7 @@ if can_access_adult_content_in_france:
 ```
 
 ### 2. Extract Method
+
 **When:** A comment describes what a section of code does — turn that section into a
 named method, using the comment text as the method name.
 
@@ -95,6 +98,7 @@ def calculate_order_total(items):
 ```
 
 ### 3. Rename Method
+
 **When:** A method exists but its name doesn't explain what it does, so comments
 compensate.
 
@@ -110,6 +114,7 @@ def celsius_to_fahrenheit(celsius):
 ```
 
 ### 4. Introduce Assertion
+
 **When:** A comment describes a required state or precondition for the system to work.
 
 ```python
@@ -137,6 +142,7 @@ Do **NOT** remove comments that:
 - Explain a **genuinely complex algorithm** where simpler alternatives were exhausted
 - Document **public API surface** (docstrings for libraries, SDKs)
 - Reference **external context** (ticket numbers, spec references, legal requirements)
+- Communicate information that could not inferred from the code: specify order of execution, todo
 
 ---
 
@@ -146,8 +152,8 @@ When the user shares code to review for comment smells:
 
 1. **Scan all comments** — list each one with its type (what/why/how/outdated)
 2. **Classify each comment** as:
-   - ✅ Legitimate (explain *why*, complex algorithm, API doc)
-   - ⚠️ Smell — explains *what* code does (refactor candidate)
+   - ✅ Legitimate (explain _why_, complex algorithm, API doc)
+   - ⚠️ Smell — explains _what_ code does (refactor candidate)
    - ❌ Outdated / misleading (delete)
 3. **For each smell**, suggest the appropriate refactoring technique with a concrete example
 4. **Show before/after** for the refactored snippet
@@ -157,12 +163,12 @@ When the user shares code to review for comment smells:
 
 ## Quick Reference
 
-| Comment explains...          | Refactoring to apply     |
-|-----------------------------|--------------------------|
-| A complex expression         | Extract Variable         |
-| What a code block does       | Extract Method           |
-| What a method does           | Rename Method            |
-| A required precondition      | Introduce Assertion      |
-| Why a design was chosen      | ✅ Keep it               |
-| A complex, irreducible algo  | ✅ Keep it               |
-| Something outdated/wrong     | ❌ Delete it             |
+| Comment explains...         | Refactoring to apply |
+| --------------------------- | -------------------- |
+| A complex expression        | Extract Variable     |
+| What a code block does      | Extract Method       |
+| What a method does          | Rename Method        |
+| A required precondition     | Introduce Assertion  |
+| Why a design was chosen     | ✅ Keep it           |
+| A complex, irreducible algo | ✅ Keep it           |
+| Something outdated/wrong    | ❌ Delete it         |
