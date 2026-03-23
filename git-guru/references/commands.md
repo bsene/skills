@@ -11,7 +11,7 @@ Source: https://comprendre-git.com/fr/glossaire/
 3. [Staging & committing](#staging--committing)
 4. [Branching](#branching)
 5. [Merging & rebasing](#merging--rebasing)
-6. [Remote operations](#remote-operations)
+6. [Remote operations](#remote-operations) — incl. [force push](#force-push--when-why-and-how-safely)
 7. [Undoing things](#undoing-things)
 8. [Inspection & history](#inspection--history)
 9. [Advanced commands](#advanced-commands)
@@ -26,6 +26,7 @@ git config --global user.email "you@example.com"
 git config --global core.editor "code --wait"
 git config --global pull.rebase true         # pull = fetch + rebase
 git config --global push.default current    # push current branch
+git config --global push.autoSetupRemote true  # auto-track on first push
 git config --global init.defaultBranch main
 git config --global alias.lg "log --oneline --graph --all"
 git config --list --show-origin              # see all config
@@ -121,10 +122,44 @@ git pull --rebase                 # fetch + rebase (cleaner history)
 
 git push origin <branch>          # push branch
 git push -u origin <branch>       # push + set upstream tracking
-git push --force-with-lease       # safer force push
+git push --force-with-lease --force-if-includes  # safest force push ⚠️
+git push --force-with-lease       # safer: fails if remote changed since last fetch ⚠️
+git push --force                  # overwrite remote unconditionally ⚠️⚠️
 git push origin --delete <branch> # delete remote branch
 git push origin <tag>             # push a tag
 git push origin --tags            # push all tags
+```
+
+### Force push — when, why, and how safely
+
+Use force push after **rebase** or **history rewriting** where the remote and local branches have intentionally diverged.
+
+| Option                                   | What it checks before overwriting                | Recommended?                |
+| ---------------------------------------- | ------------------------------------------------ | --------------------------- |
+| `--force` / `-f`                         | Nothing — overwrites unconditionally             | ❌ Never on shared branches |
+| `--force-with-lease`                     | Remote ref matches your last-fetched state       | ✅ Yes                      |
+| `--force-with-lease --force-if-includes` | Above + local branch includes all remote commits | ✅✅ Safest                 |
+
+```bash
+# ── Recommended: double protection ────────────────────────────
+git push --force-with-lease --force-if-includes origin <branch>
+
+# ── Alias to avoid typing it every time ───────────────────────
+git config --global alias.pushf "push --force-with-lease --force-if-includes"
+git pushf origin <branch>
+
+# ── Auto-setup remote tracking on first push ──────────────────
+git config --global push.autoSetupRemote true
+# → lets you run `git push` without specifying remote/branch
+```
+
+> ⚠️ `--force-with-lease` only checks the **remote tracking ref** in your local repo. If a background fetch ran (e.g. IDE auto-fetch), the ref updates and the lease passes even if a teammate pushed — that's what `--force-if-includes` guards against.
+
+**Recovering commits after an accidental `--force`** (look in the victim's local repo):
+
+```bash
+git reflog                        # find the overwritten commit SHA
+git reset --keep <commit_hash>    # restore branch to that state ⚠️
 ```
 
 ---
