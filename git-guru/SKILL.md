@@ -74,6 +74,51 @@ For workflow questions:
 | Undo a merge                      | `git reset --hard ORIG_HEAD` ⚠️                 |
 | Undo a rebase                     | `git reset --hard ORIG_HEAD` (or via reflog) ⚠️ |
 
+### Changing a commit message
+
+| Situation                                | Command                                              |
+| ---------------------------------------- | ---------------------------------------------------- |
+| Fix the last commit message (not pushed) | `git commit --amend`                                 |
+| Fix the last commit message inline       | `git commit --amend -m "new message"`                |
+| Fix an older commit message              | `git rebase -i HEAD~N` → mark line with `reword`     |
+| Fix any commit already pushed            | reword via rebase + `git push --force-with-lease` ⚠️ |
+
+**Last commit — not yet pushed:**
+
+```bash
+git commit --amend          # opens editor — change the message, save & close
+# or inline:
+git commit --amend -m "fix: correct typo in login handler"
+```
+
+> ⚠️ `--amend` rewrites the commit (new SHA). Never amend a commit already shared with teammates without coordinating first.
+
+**Older commit — not yet pushed (interactive rebase):**
+
+```bash
+git rebase -i HEAD~3        # lists last 3 commits in editor
+# Change 'pick' → 'reword' on the line(s) to fix, save & close
+# Git reopens the editor once per reworded commit — update message, save & close
+```
+
+**Any commit — already pushed:**
+
+```bash
+# 1. Fix locally with --amend or rebase -i (see above)
+# 2. Force-push safely
+git push --force-with-lease --force-if-includes origin <branch>
+```
+
+**Pro tip — `autoreword` alias (older commits, no double editor prompt):**
+
+```bash
+git config --global alias.autoreword   '!git commit --fixup reword:$1 && GIT_EDITOR=true git rebase --autosquash -i --rebase-merges $1~1'
+
+git autoreword <sha>        # rewrites that commit's message in one step
+```
+
+> Uses `--fixup reword:` to stage the intent, then `--autosquash` to apply it automatically. The editor opens once — keep the `amend! …` first line untouched, rewrite the message below it, save & close.
+
 ### Moving commits to another branch
 
 ```bash
