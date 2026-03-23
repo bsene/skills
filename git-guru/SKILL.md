@@ -34,6 +34,7 @@ Answer all questions related to:
 
 Load the full reference when needed → `references/concepts.md`
 Load command cheatsheet → `references/commands.md`
+Load commit internals deep-dive → `references/commit-anatomy.md`
 
 ## Anatomy of a Git response
 
@@ -139,4 +140,5 @@ Delete the markers + keep what you want, then `git add`.
 - For full glossary and concept definitions → `references/concepts.md`
 - For command flags and usage patterns → `references/commands.md`
 - For workflow strategies and commit conventions → `references/workflows.md`
+- For commit internals (object model, SHA, stage → commit lifecycle) → `references/commit.md`
 - Source: https://comprendre-git.com/fr/glossaire/
