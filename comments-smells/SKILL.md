@@ -167,7 +167,12 @@ Do **NOT** remove comments that:
 - Explain a **genuinely complex algorithm** where simpler alternatives were exhausted
 - Document **public API surface** (docstrings for libraries, SDKs)
 - Reference **external context** (ticket numbers, spec references, legal requirements)
-- Communicate information that could not inferred from the code: specify order of execution, todo
+- Communicate information that could not inferred from the code: specify order of execution
+- **TODO comments** — These must NEVER be automatically removed and require manual management
+
+### TODO Comments: Special Rule
+
+**TODO comments CANNOT be automatically removed.** They represent intentional, deferred work that requires explicit human review and decision-making. Always treat TODO comments as read-only during refactoring — only the user can decide whether to address or remove them.
 
 ### A Guiding Principle
 
