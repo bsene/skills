@@ -461,105 +461,143 @@ Benefits:
 
 ---
 
-## 8. Private class methods (confusing)
+## 8. Unclear public/private boundaries
 
 ### Anti-Pattern
-```ruby
-class Config
-  def self.api_key
-    ENV["API_KEY"]
-  end
+```typescript
+class Config {
+  static getApiKey(): string {
+    return process.env.API_KEY || "";
+  }
 
-  private
+  // "Private" but still callable
+  static decryptKey(): string {
+    // implementation
+  }
+}
 
-  def self.decrypt_key
-    # implementation
-  end
-end
-
-Config.decrypt_key  # ❌ Still accessible!
+Config.decryptKey();  // ❌ Still accessible despite intent to hide
 ```
 
 **Problem:**
-- `private` doesn't work as expected for class methods
+- No true privacy in static methods
 - Confusing API surface
+- Doesn't prevent misuse
 
-### Fix (use a module)
-```ruby
-module Config
-  module_function
+### Fix (use functions with module scope)
+```typescript
+// Private to module
+function decryptKey(): string {
+  // implementation
+}
 
-  def api_key
-    ENV["API_KEY"]
-  end
+// Public API
+export function getApiKey(): string {
+  return process.env.API_KEY || "";
+}
 
-  private
+// decryptKey is truly inaccessible from outside the module
+```
 
-  def decrypt_key
-    # implementation
-  end
-end
+Or use closures:
+```typescript
+export const createConfig = () => {
+  const decryptKey = (): string => {
+    // implementation
+  };
 
-Config.decrypt_key  # ❌ Raises NoMethodError (truly private)
+  return {
+    getApiKey(): string {
+      return process.env.API_KEY || "";
+    }
+  };
+};
+
+// Usage
+const config = createConfig();
+config.getApiKey();      // ✅ Works
+config.decryptKey();     // ❌ Property does not exist
 ```
 
 ---
 
-## 9. Default parameters instead of required arguments
+## 9. Optional parameters creating invalid states
 
 ### Anti-Pattern
-```ruby
-class Order
-  def initialize(user = nil, items = [], total = 0)
-    @user = user
-    @items = items
-    @total = total
-  end
+```typescript
+interface OrderParams {
+  user?: User;
+  items?: Item[];
+  total?: number;
+}
 
-  def process
-    raise "User required" if @user.nil?
-    raise "Items required" if @items.empty?
-    # ...
-  end
-end
+class Order {
+  user?: User;
+  items?: Item[];
+  total?: number;
 
-order = Order.new  # ❌ Valid object, but invalid state
-order.process      # ❌ Exception at runtime
+  constructor(params: OrderParams = {}) {
+    this.user = params.user;
+    this.items = params.items;
+    this.total = params.total;
+  }
+
+  process(): void {
+    if (!this.user) throw new Error("User required");
+    if (!this.items?.length) throw new Error("Items required");
+    // ...
+  }
+}
+
+const order = new Order();  // ❌ Valid object, but invalid state
+order.process();            // ❌ Exception at runtime
 ```
 
 **Problem:**
 - Object can exist in invalid states
 - Errors caught at process time, not construction time
+- TypeScript doesn't warn about missing required data
 
-### Fix (require all args, or use module function)
-```ruby
-class Order
-  attr_reader :user, :items, :total
+### Fix (require all args in constructor)
+```typescript
+interface OrderParams {
+  user: User;
+  items: Item[];
+  total: number;
+}
 
-  def initialize(user:, items:, total:)
-    raise ArgumentError, "user required" if user.nil?
-    raise ArgumentError, "items required" if items.empty?
-    @user = user
-    @items = items
-    @total = total
-  end
+class Order {
+  readonly user: User;
+  readonly items: Item[];
+  readonly total: number;
 
-  def process
-    # no need to re-validate
-  end
-end
+  constructor(params: OrderParams) {
+    // Type system enforces all required fields at construction time
+    this.user = params.user;
+    this.items = params.items;
+    this.total = params.total;
+  }
 
-Order.new(user: user, items: items, total: total)  # ✅ Valid from construction
+  process(): void {
+    // no need to check — we know user/items exist
+  }
+}
+
+// ✅ TypeScript error: missing required properties
+const order = new Order({});
+
+// ✅ Valid from construction
+const validOrder = new Order({ user, items, total });
 ```
 
-Or use a module:
-```ruby
-module OrderProcessor
-  module_function
+Or use a function:
+```typescript
+function processOrder(user: User, items: Item[], total: number): void {
+  if (!user) throw new Error("User required");
+  if (!items.length) throw new Error("Items required");
+  // process directly
+}
 
-  def process(user:, items:, total:)
-    raise ArgumentError, "user required" if user.nil?
-    # process directly
-  end
-end
+// ✅ Type system enforces all required arguments
+processOrder(user, items, total);
 ```
