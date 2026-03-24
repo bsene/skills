@@ -19,6 +19,8 @@ comments — not because the logic is genuinely complex, but because the code st
 itself is unclear. Comments in this context act like a deodorant: they mask fishy code
 rather than fixing it.
 
+> "A comment is a sign that the code is not finished." — XP community principle
+
 > "The best comment is a good name for a method or class."
 
 Comments are **not inherently bad** — but when they're needed to explain _what_ the code
@@ -129,6 +131,29 @@ def set_discount(rate):
     self.discount = rate
 ```
 
+### 5. Write Tests as Executable Comments
+
+**When:** A comment documents expected behavior, edge cases, or intent that would otherwise need explanation.
+
+Unit tests and assertions serve as "executable documentation" — they clarify intent and validate assumptions
+in code that cannot lie or become outdated the way comments can.
+
+```python
+# Before
+def calculate_discount(price, percentage):
+    # percentage must be 0-100, not 0-1
+    return price * (1 - percentage / 100)
+
+# After (with clear test)
+def test_calculate_discount_expects_percentage_not_decimal():
+    """Document the API contract: percentage is 0-100, not 0-1"""
+    assert calculate_discount(100, 10) == 90  # 10% off
+    assert calculate_discount(100, 0) == 100  # 0% off
+    assert calculate_discount(100, 100) == 0  # 100% off
+```
+
+Tests eliminate the need for comments that describe "what should happen" because the test _is_ the specification.
+
 ---
 
 ## When Comments Are Legitimate
@@ -143,6 +168,14 @@ Do **NOT** remove comments that:
 - Document **public API surface** (docstrings for libraries, SDKs)
 - Reference **external context** (ticket numbers, spec references, legal requirements)
 - Communicate information that could not inferred from the code: specify order of execution, todo
+
+### A Guiding Principle
+
+> "The whole point is not to delete comments, but to obviate them and then delete them." — Tim Ottinger
+
+**Misunderstanding to avoid:** Absence of comments does _not_ imply well-factored code. The goal is code
+that is clear and well-structured enough that comments become unnecessary — not code that simply lacks them.
+Comments should become redundant through refactoring, not through deletion alone.
 
 ---
 
