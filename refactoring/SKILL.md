@@ -153,18 +153,42 @@ class UserService {
     // email send
   }
 
-  updateUser(id: string, updates: Partial<User>): User { /* ... */ }
-  deleteUser(id: string): void { /* ... */ }
-  findUserById(id: string): User | null { /* ... */ }
-  findUserByEmail(email: string): User | null { /* ... */ }
-  hashPassword(password: string): string { /* ... */ }
-  verifyPassword(password: string, hash: string): boolean { /* ... */ }
-  resetPassword(userId: string): string { /* ... */ }
-  sendWelcomeEmail(user: User): void { /* ... */ }
-  sendPasswordResetEmail(user: User, token: string): void { /* ... */ }
-  logAudit(action: string, userId: string): void { /* ... */ }
-  cacheUser(user: User): void { /* ... */ }
-  clearUserCache(userId: string): void { /* ... */ }
+  updateUser(id: string, updates: Partial<User>): User {
+    /* ... */
+  }
+  deleteUser(id: string): void {
+    /* ... */
+  }
+  findUserById(id: string): User | null {
+    /* ... */
+  }
+  findUserByEmail(email: string): User | null {
+    /* ... */
+  }
+  hashPassword(password: string): string {
+    /* ... */
+  }
+  verifyPassword(password: string, hash: string): boolean {
+    /* ... */
+  }
+  resetPassword(userId: string): string {
+    /* ... */
+  }
+  sendWelcomeEmail(user: User): void {
+    /* ... */
+  }
+  sendPasswordResetEmail(user: User, token: string): void {
+    /* ... */
+  }
+  logAudit(action: string, userId: string): void {
+    /* ... */
+  }
+  cacheUser(user: User): void {
+    /* ... */
+  }
+  clearUserCache(userId: string): void {
+    /* ... */
+  }
   // ... 20+ more methods
 }
 ```
@@ -187,20 +211,39 @@ type User = {
 
 // Password handling
 class PasswordManager {
-  hash(password: string): string { /* ... */ }
-  verify(password: string, hash: string): boolean { /* ... */ }
-  generateResetToken(userId: string): string { /* ... */ }
+  hash(password: string): string {
+    /* ... */
+  }
+  verify(password: string, hash: string): boolean {
+    /* ... */
+  }
+  generateResetToken(userId: string): string {
+    /* ... */
+  }
 }
 
 // User persistence
 class UserRepository {
-  constructor(private db: Database, private cache: Cache) {}
+  constructor(
+    private db: Database,
+    private cache: Cache,
+  ) {}
 
-  create(user: User): User { /* ... */ }
-  update(id: string, updates: Partial<User>): User { /* ... */ }
-  delete(id: string): void { /* ... */ }
-  findById(id: string): User | null { /* ... */ }
-  findByEmail(email: string): User | null { /* ... */ }
+  create(user: User): User {
+    /* ... */
+  }
+  update(id: string, updates: Partial<User>): User {
+    /* ... */
+  }
+  delete(id: string): void {
+    /* ... */
+  }
+  findById(id: string): User | null {
+    /* ... */
+  }
+  findByEmail(email: string): User | null {
+    /* ... */
+  }
 }
 
 // User operations
@@ -209,14 +252,20 @@ class UserService {
     private userRepository: UserRepository,
     private passwordManager: PasswordManager,
     private emailService: EmailService,
-    private auditLog: AuditLog
+    private auditLog: AuditLog,
   ) {}
 
   registerUser(name: string, email: string, password: string): User {
     const hash = this.passwordManager.hash(password);
-    const user = this.userRepository.create({ id: generateId(), name, email, passwordHash: hash, createdAt: new Date() });
+    const user = this.userRepository.create({
+      id: generateId(),
+      name,
+      email,
+      passwordHash: hash,
+      createdAt: new Date(),
+    });
     this.emailService.sendWelcomeEmail(user);
-    this.auditLog.log('user_registered', user.id);
+    this.auditLog.log("user_registered", user.id);
     return user;
   }
 
@@ -225,7 +274,7 @@ class UserService {
     const user = this.userRepository.findById(userId);
     if (user) {
       this.emailService.sendPasswordReset(user, token);
-      this.auditLog.log('password_reset_requested', userId);
+      this.auditLog.log("password_reset_requested", userId);
     }
     return token;
   }
@@ -247,7 +296,9 @@ Overusing primitive types (strings, integers, arrays) instead of creating small 
 - Using string constants to represent structured data:
   ```typescript
   const status = "pending"; // Should be an enum or type
-  if (status === "pending") { /* ... */ }
+  if (status === "pending") {
+    /* ... */
+  }
   ```
 - Using primitive arrays as pseudo-objects:
   ```typescript
@@ -256,7 +307,9 @@ Overusing primitive types (strings, integers, arrays) instead of creating small 
   ```
 - Validation logic scattered throughout the codebase:
   ```typescript
-  if (email.includes("@") && email.includes(".")) { /* ... */ }
+  if (email.includes("@") && email.includes(".")) {
+    /* ... */
+  }
   // ...repeated in 5 different places
   ```
 - Type information lost through generics:
@@ -270,12 +323,20 @@ Create a small object or type to represent the domain concept. Encapsulate valid
 
 ```typescript
 // ❌ Primitive Obsession
-function processOrder(customerId: string, items: string[], amount: number, status: string) {
+function processOrder(
+  customerId: string,
+  items: string[],
+  amount: number,
+  status: string,
+) {
   // Validation scattered everywhere
   if (customerId.length === 0) throw new Error("Invalid customer");
   if (items.length === 0) throw new Error("No items");
   if (amount <= 0) throw new Error("Invalid amount");
-  if (["pending", "processing", "completed", "cancelled"].includes(status) === false) {
+  if (
+    ["pending", "processing", "completed", "cancelled"].includes(status) ===
+    false
+  ) {
     throw new Error("Invalid status");
   }
 
@@ -295,7 +356,7 @@ enum OrderStatus {
   PENDING = "pending",
   PROCESSING = "processing",
   COMPLETED = "completed",
-  CANCELLED = "cancelled"
+  CANCELLED = "cancelled",
 }
 
 type Email = string & { readonly __brand: "Email" };
@@ -352,7 +413,13 @@ A method or function that requires many parameters (>3-4). Long parameter lists 
 - Method signature exceeds 3-4 parameters
 - Parameters are related to a common concept but passed separately:
   ```typescript
-  function createUser(name: string, email: string, country: string, city: string, zipCode: string)
+  function createUser(
+    name: string,
+    email: string,
+    country: string,
+    city: string,
+    zipCode: string,
+  );
   // All address-related — should be one Address object
   ```
 - Callers struggle to remember parameter order:
@@ -476,11 +543,27 @@ Groups of identical variables appearing together in different places. These shou
 
 - Same variables appear in multiple method signatures:
   ```typescript
-  function connectToDatabase(host: string, port: number, username: string, password: string) { }
-  function queryDatabase(host: string, port: number, username: string, password: string) { }
-  function closeConnection(host: string, port: number, username: string, password: string) { }
+  function connectToDatabase(
+    host: string,
+    port: number,
+    username: string,
+    password: string,
+  ) {}
+  function queryDatabase(
+    host: string,
+    port: number,
+    username: string,
+    password: string,
+  ) {}
+  function closeConnection(
+    host: string,
+    port: number,
+    username: string,
+    password: string,
+  ) {}
   ```
 - Same fields appear in multiple classes:
+
   ```typescript
   class DatabaseService {
     host: string;
@@ -496,6 +579,7 @@ Groups of identical variables appearing together in different places. These shou
     password: string;
   }
   ```
+
 - Same local variables used together:
   ```python
   def send_message(recipient_name, recipient_email, recipient_phone):
@@ -583,13 +667,13 @@ class PaymentGateway:
 
 ## Quick Reference Table
 
-| Bloater | Detection | Refactoring | Payoff |
-|---------|-----------|-------------|--------|
-| **Long Method** | >10 lines, multiple responsibilities | Extract Method | Testable, reusable, clear intent |
-| **Large Class** | >10 methods, multiple concerns, hard to test | Extract Class | Focused, maintainable, easier to extend |
-| **Primitive Obsession** | String/int constants for domain concepts | Create Type/Object | Type-safe, validation once, intent clear |
-| **Long Parameter List** | >3-4 parameters, related params | Parameter Objects/Enums | Self-documenting, testable, extensible |
-| **Data Clumps** | Same variables in multiple places | Extract Class | Validation once, consistency, clarity |
+| Bloater                 | Detection                                    | Refactoring             | Payoff                                   |
+| ----------------------- | -------------------------------------------- | ----------------------- | ---------------------------------------- |
+| **Long Method**         | >10 lines, multiple responsibilities         | Extract Method          | Testable, reusable, clear intent         |
+| **Large Class**         | >10 methods, multiple concerns, hard to test | Extract Class           | Focused, maintainable, easier to extend  |
+| **Primitive Obsession** | String/int constants for domain concepts     | Create Type/Object      | Type-safe, validation once, intent clear |
+| **Long Parameter List** | >3-4 parameters, related params              | Parameter Objects/Enums | Self-documenting, testable, extensible   |
+| **Data Clumps**         | Same variables in multiple places            | Extract Class           | Validation once, consistency, clarity    |
 
 ---
 
@@ -624,6 +708,7 @@ When reviewing code for bloaters:
    - Suggest extracting into a class
 
 **For each bloater found:**
+
 - Explain which bloater it is
 - Show why it's problematic (testability, maintainability, clarity)
 - Suggest the appropriate refactoring with a concrete example
