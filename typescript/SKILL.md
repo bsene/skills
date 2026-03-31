@@ -553,6 +553,59 @@ const route = buildRoute("api", "users", "profile");
 
 ---
 
+## TypeScript at Scale
+
+### Strictness as Policy
+
+Enable `"strict": true` globally. Enforce in CI so regressions are blocked before merge. Prefer `@ts-expect-error` (fails if the error disappears) over `@ts-ignore` (silently stale). Track `any` usage as a metric and reduce it continuously via linting.
+
+### Domain Types vs Transport Types
+
+Keep API/DTO types separate from domain models. Map external responses into domain objects at architectural boundaries — don't let wire-format shapes leak into business logic.
+
+```typescript
+// Transport (DTO) — mirrors the API wire format
+type UserDTO = { user_id: string; display_name: string; created_at: string };
+
+// Domain — owned by the application
+type User = { id: string; name: string; createdAt: Date };
+
+function toDomain(dto: UserDTO): User {
+  return {
+    id: dto.user_id,
+    name: dto.display_name,
+    createdAt: new Date(dto.created_at),
+  };
+}
+```
+
+### Runtime Validation at Boundaries
+
+TypeScript is compile-time only. Validate external inputs (API bodies, env vars, message queues) at entry points with a schema library (e.g., Zod). Never trust inbound shapes.
+
+```typescript
+import { z } from "zod";
+
+const UserSchema = z.object({ id: z.string(), name: z.string() });
+
+// In an API handler — validated once, typed for the rest of the app
+const user = UserSchema.parse(req.body); // throws ZodError on mismatch
+```
+
+### Monorepo Contracts
+
+In a monorepo, publish domain contracts as a dedicated package (e.g., `@org/contracts`) shared by frontend, backend, and services. Use TypeScript project references to make boundaries explicit and enforce that packages don't import deeply across each other.
+
+Version shared types semantically: deprecate before removing, and communicate breaking changes before merging.
+
+### Type Debt
+
+Track type debt like failing tests: measure excessive `any` usage, inconsistent `null` handling, and duplicate type definitions. Reduce via linting rules (`@typescript-eslint/no-explicit-any`) and gradual refactoring — don't let it accumulate silently.
+
+> Types are documentation. If they confuse humans, they're failing.
+
+---
+
 ## Acknowledgments
 
 > **Pro TypeScript: Application-Scale JavaScript Development** (2nd ed.)
