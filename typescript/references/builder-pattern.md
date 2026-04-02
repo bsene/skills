@@ -103,88 +103,88 @@ console.log(request);
 - **Return `this`, not the concrete class** — subclasses preserve their own type through the chain.
 - **`Object.freeze` the product** — enforces immutability at runtime after `build()`.
 - **Required fields in the constructor** — optional fields get defaults; this is the idiomatic TS alternative to overloaded constructors.
-- **Step Builder variant** — for compile-time enforcement of required fields, each setter returns a distinct interface that exposes only the next legal method, culminating in a `build()` only available once all required fields are set.
+- **Step Builder variant** — for compile-time enforcement of required fields, each setter returns a distinct interface that exposes only the next legal method, culminating in a `build()` only available once all required fields are set. The variant below uses a SQL-query domain to illustrate the step-constraint clearly; the technique is domain-agnostic.
 
 ---
 
 ## Step Builder Variant (compile-time required-field safety)
 
 ```typescript
-// Each interface exposes only what is legal at that step
-interface NeedsUrl {
-  url(url: string): NeedsMethod;
+// Each interface exposes only what's legal at that step
+interface NeedsTable {
+  from(table: string): NeedsColumns;
 }
-interface NeedsMethod {
-  method(m: HttpRequest["method"]): OptionalSteps;
+interface NeedsColumns {
+  select(...cols: string[]): OptionalSteps;
 }
 interface OptionalSteps {
-  auth(token: string): OptionalSteps;
-  json(body: unknown): OptionalSteps;
-  header(key: string, value: string): OptionalSteps;
-  timeout(ms: number): OptionalSteps;
-  build(): HttpRequest;
+  where(condition: string): OptionalSteps;
+  limit(n: number): OptionalSteps;
+  offset(n: number): OptionalSteps;
+  orderBy(col: string): OptionalSteps;
+  build(): QueryConfig;
 }
 
-class StepHttpBuilder implements NeedsUrl, NeedsMethod, OptionalSteps {
-  private _url = "";
-  private _method: HttpRequest["method"] = "GET";
-  private _headers: Record<string, string> = {};
-  private _body: unknown = undefined;
-  private _timeout = 30_000;
+class StepQueryBuilder implements NeedsTable, NeedsColumns, OptionalSteps {
+  private _table = "";
+  private _columns: string[] = [];
+  private _conditions: string[] = [];
+  private _limit: number | null = null;
+  private _offset = 0;
+  private _orderBy: string | null = null;
 
   // Private constructor — force use of the static entry point
   private constructor() {}
 
-  static create(): NeedsUrl {
-    return new StepHttpBuilder();
+  static create(): NeedsTable {
+    return new StepQueryBuilder();
   }
 
-  url(url: string): NeedsMethod {
-    this._url = url;
+  from(table: string): NeedsColumns {
+    this._table = table;
     return this;
   }
 
-  method(m: HttpRequest["method"]): OptionalSteps {
-    this._method = m;
+  select(...cols: string[]): OptionalSteps {
+    this._columns = cols;
     return this;
   }
 
-  auth(token: string): OptionalSteps {
-    return this.header("Authorization", `Bearer ${token}`);
-  }
-
-  json(body: unknown): OptionalSteps {
-    this._body = body;
-    return this.header("Content-Type", "application/json");
-  }
-
-  header(key: string, value: string): OptionalSteps {
-    this._headers[key] = value;
+  where(condition: string): OptionalSteps {
+    this._conditions.push(condition);
     return this;
   }
 
-  timeout(ms: number): OptionalSteps {
-    this._timeout = ms;
+  limit(n: number): OptionalSteps {
+    this._limit = n;
+    return this;
+  }
+  offset(n: number): OptionalSteps {
+    this._offset = n;
+    return this;
+  }
+  orderBy(col: string): OptionalSteps {
+    this._orderBy = col;
     return this;
   }
 
-  build(): HttpRequest {
+  build(): QueryConfig {
     return Object.freeze({
-      url: this._url,
-      method: this._method,
-      headers: Object.freeze({ ...this._headers }),
-      body: this._body,
-      timeout: this._timeout,
+      table: this._table,
+      columns: [...this._columns],
+      conditions: [...this._conditions],
+      limit: this._limit,
+      offset: this._offset,
+      orderBy: this._orderBy,
     });
   }
 }
 
-// Compiler enforces url → method first — build() not visible until both are set
-const req = StepHttpBuilder.create()
-  .url("https://api.example.com/users")
-  .method("GET")
-  .auth("tok-xyz")
-  .timeout(10_000)
+// Compiler enforces the correct order — build() is not visible until select() is called
+const q = StepQueryBuilder.create()
+  .from("orders")
+  .select("id", "total")
+  .where("status = 'shipped'")
   .build();
 ```
 

@@ -1,10 +1,11 @@
 # my-skills
 
-A personal collection of Claude Code **skills** — specialized domain knowledge packs that enhance Claude's ability to assist with software engineering tasks. Each skill is a structured markdown document that teaches Claude deep expertise in a specific area, from testing and refactoring to version control and design patterns.
+A personal collection of Claude Code(also compatible) **skills** — specialized domain knowledge packs that enhance Claude's ability to assist with software engineering tasks. Each skill is a structured markdown document that teaches Claude deep expertise in a specific area, from testing and refactoring to version control and design patterns.
 
 ## What is a Skill?
 
 A skill is a self-contained knowledge pack loaded into Claude Code. It provides:
+
 - **Domain expertise**: specialized knowledge about a specific topic (e.g., BDD testing, Git workflows, OOP design)
 - **Structured workflows**: step-by-step processes for applying that knowledge
 - **Reference guides**: quick lookup tables, checklists, and examples
@@ -12,31 +13,32 @@ A skill is a self-contained knowledge pack loaded into Claude Code. It provides:
 Skills are **auto-activated** in conversations — when you mention a topic that matches a skill's expertise area, Claude automatically applies that skill's knowledge and workflow. The activation trigger is defined in each skill's frontmatter via a `description` field that Claude uses to recognize when to invoke it.
 
 ### Example
+
 When you ask "can you review my tests against BDD principles?", the `bdd-unit-test-reviewer` skill auto-activates and applies its 5-step BDD audit workflow.
 
 ## Skill Catalog
 
-| Domain | Skill | Purpose |
-|--------|-------|---------|
-| **Testing** | `bdd-unit-test-reviewer` | Audit unit tests against Dan North's BDD principles |
-| | `testdesiderata` | Review tests against Kent Beck's 12 TestDesiderata properties |
-| | `tcrdd` | Guide through TDD and TCRDD (Test-Commit-Revert + TDD) workflows |
-| **Refactoring** | `refactoring` | Detect and fix code bloaters (long methods, large classes, primitive obsession, etc.) |
-| | `refactoring-patterns` | Apply 7 active refactoring operations (Extract, Replace, Introduce, Simplify, Move, Rename) |
-| | `comments-smells` | Detect and fix the "Comments" code smell |
-| | `mikado-method` | Guide safe, incremental refactoring via Mikado graphs |
-| **OOP Design** | `oo-principles` | Analyze OOP code against Dave Thomas's 7 principles |
-| | `cupid-checker` | Review code against Dan North's CUPID properties (Composable, Unix, Predictable, Idiomatic, Domain-based) |
-| | `tell-dont-ask` | Apply the Tell Don't Ask principle in OOP refactoring |
-| **TypeScript/JavaScript** | `typescript` | Design patterns, SOLID principles, and TS5+ type system features |
-| | `typescript/design-patterns` | Classic GoF design patterns in modern JavaScript/TypeScript |
-| | `composing-software` | Functional programming composition techniques in JavaScript |
-| **Databases/ORM** | `drizzle-learner` | Teaching code reviewer for Drizzle ORM + PostgreSQL |
-| **Version Control** | `git-guru` | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals |
-| | `gitlab-dag` | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`) |
-| **Documentation** | `markdown` | Comprehensive GitHub Flavored Markdown (GFM) reference |
-| | `writing-a-good-claude-md` | Write, review, and audit CLAUDE.md/AGENTS.md files for AI agents |
-| **Languages** | `chicken-scheme` | Write, compile, debug, and package CHICKEN Scheme programs |
+| Domain                    | Skill                        | Purpose                                                                                                   |
+| ------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Testing**               | `bdd-unit-test-reviewer`     | Audit unit tests against Dan North's BDD principles                                                       |
+|                           | `testdesiderata`             | Review tests against Kent Beck's 12 TestDesiderata properties                                             |
+|                           | `tcrdd`                      | Guide through TDD and TCRDD (Test-Commit-Revert + TDD) workflows                                          |
+| **Refactoring**           | `refactoring`                | Detect and fix code bloaters (long methods, large classes, primitive obsession, etc.)                     |
+|                           | `refactoring-patterns`       | Apply 7 active refactoring operations (Extract, Replace, Introduce, Simplify, Move, Rename)               |
+|                           | `comments-smells`            | Detect and fix the "Comments" code smell                                                                  |
+|                           | `mikado-method`              | Guide safe, incremental refactoring via Mikado graphs                                                     |
+| **OOP Design**            | `oo-principles`              | Analyze OOP code against Dave Thomas's 7 principles                                                       |
+|                           | `cupid-checker`              | Review code against Dan North's CUPID properties (Composable, Unix, Predictable, Idiomatic, Domain-based) |
+|                           | `tell-dont-ask`              | Apply the Tell Don't Ask principle in OOP refactoring                                                     |
+| **TypeScript/JavaScript** | `typescript`                 | Design patterns, SOLID principles, and TS5+ type system features                                          |
+|                           | `typescript/design-patterns` | Classic GoF design patterns in modern JavaScript/TypeScript                                               |
+|                           | `composing-software`         | Functional programming composition techniques in JavaScript                                               |
+| **Databases/ORM**         | `drizzle-learner`            | Teaching code reviewer for Drizzle ORM + PostgreSQL                                                       |
+| **Version Control**       | `git-guru`                   | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals    |
+|                           | `gitlab-dag`                 | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
+| **Documentation**         | `markdown`                   | Comprehensive GitHub Flavored Markdown (GFM) reference                                                    |
+|                           | `writing-a-good-claude-md`   | Write, review, and audit CLAUDE.md/AGENTS.md files for AI agents                                          |
+| **Languages**             | `chicken-scheme`             | Write, compile, debug, and package CHICKEN Scheme programs                                                |
 
 ## How Skills Activate
 
@@ -47,10 +49,11 @@ Skills are **context-aware and automatic**:
 3. No explicit commands or manual loading required
 
 ### Example Triggers
-- *"My tests have bad names"* → activates `bdd-unit-test-reviewer`
-- *"I need to refactor this long method"* → activates `refactoring-patterns`
-- *"How do I rewrite a commit message?"* → activates `git-guru`
-- *"Help me optimize this CI/CD pipeline"* → activates `gitlab-dag`
+
+- _"My tests have bad names"_ → activates `bdd-unit-test-reviewer`
+- _"I need to refactor this long method"_ → activates `refactoring-patterns`
+- _"How do I rewrite a commit message?"_ → activates `git-guru`
+- _"Help me optimize this CI/CD pipeline"_ → activates `gitlab-dag`
 
 ## Skill File Format
 
@@ -110,25 +113,6 @@ This repo uses `skills-lock.json` to track externally sourced skills. One extern
 - **`skill-optimizer`** (from [mcollina/skills](https://github.com/mcollina/skills) on GitHub): Optimize skills for activation, clarity, and cross-model reliability
 
 External skills are installed in `.agents/skills/` and pinned by commit hash in `skills-lock.json` for reproducibility.
-
-## Repository Structure
-
-```
-my-skills/
-├── README.md                         # This file
-├── skills-lock.json                  # External skill version pins
-├── .node-version                     # Node version (24)
-├── .claude/
-│   ├── settings.local.json           # Local Claude Code settings
-│   └── skills/                       # Symlinks to local skills
-├── .agents/
-│   └── skills/skill-optimizer/       # Externally installed skill
-└── skills/                           # 19 local skills, each with:
-    ├── skill-name/
-    │   ├── SKILL.md
-    │   └── references/               # (optional)
-    └── ...
-```
 
 ---
 
