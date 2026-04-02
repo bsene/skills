@@ -98,7 +98,7 @@ const query = new QueryBuilder("users")
 Key idioms: required fields in the constructor, optional fields as setters with safe defaults, `return this` (typed as `this` for subclass safety), `Object.freeze` on the `build()` product.  
 Also covers the **Step Builder** variant for compile-time required-field enforcement.
 
-→ Full code, Step Builder variant, and trade-offs: `references/builder-pattern.md`
+→ Full code, Step Builder variant, and trade-offs: `../../references/builder-pattern.md`
 
 ---
 
