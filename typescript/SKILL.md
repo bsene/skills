@@ -71,201 +71,23 @@ Apply when reviewing class design or explaining why a pattern fits.
 
 Create objects without exposing the concrete class. Use the companion object pattern to pair the type and factory under one name.
 
-```typescript
-type ApiClient = { get(path: string): Promise<unknown> };
-
-class RestClient implements ApiClient {
-  async get(path: string) {
-    return fetch(path).then((r) => r.json());
-  }
-}
-class GraphQLClient implements ApiClient {
-  async get(path: string) {
-    return fetch(path, { method: "POST" }).then((r) => r.json());
-  }
-}
-class MockClient implements ApiClient {
-  async get(path: string) {
-    return { mock: true, path };
-  }
-}
-
-let ApiClient = {
-  create(kind: "rest" | "graphql" | "mock"): ApiClient {
-    switch (kind) {
-      case "rest":
-        return new RestClient();
-      case "graphql":
-        return new GraphQLClient();
-      case "mock":
-        return new MockClient();
-    }
-  },
-};
-const client = ApiClient.create(
-  process.env.NODE_ENV === "test" ? "mock" : "rest",
-);
-```
+→ Full example with companion object overloads: `references/patterns.md`
 
 ### Strategy
 
 Encapsulate interchangeable algorithms; swap at runtime.
 
-```typescript
-interface AuthStrategy {
-  verify(token: string): Promise<{ userId: string } | null>;
-}
-
-class JwtAuth implements AuthStrategy {
-  async verify(token: string) {
-    // validate JWT signature + expiry
-    return token.startsWith("Bearer ") ? { userId: "u-1" } : null;
-  }
-}
-class ApiKeyAuth implements AuthStrategy {
-  async verify(token: string) {
-    // look up token in DB
-    return token === process.env.API_KEY ? { userId: "service" } : null;
-  }
-}
-
-class AuthMiddleware {
-  constructor(private strategy: AuthStrategy) {}
-  async handle(req: { headers: Record<string, string> }) {
-    const token = req.headers["authorization"] ?? "";
-    return this.strategy.verify(token);
-  }
-}
-
-const mw = new AuthMiddleware(new JwtAuth());
-```
+→ Full example with RateLimiter and token-bucket strategies: `references/patterns.md`
 
 ### Abstract Factory
 
 Interface for creating compatible product families; client knows nothing of concrete classes.
 
-```typescript
-interface Button {
-  html(): string;
-  onClick(fn: () => void): void;
-}
-interface Input {
-  html(): string;
-  value(): string;
-}
-
-class WebButton implements Button {
-  html() {
-    return '<button class="btn">Submit</button>';
-  }
-  onClick(fn: () => void) {
-    /* attach addEventListener */
-  }
-}
-class WebInput implements Input {
-  html() {
-    return '<input type="text" />';
-  }
-  value() {
-    return "";
-  }
-}
-class NativeButton implements Button {
-  html() {
-    return "[NativeButton]";
-  }
-  onClick(fn: () => void) {
-    /* native tap handler */
-  }
-}
-class NativeInput implements Input {
-  html() {
-    return "[NativeTextField]";
-  }
-  value() {
-    return "";
-  }
-}
-
-interface UIFactory {
-  createButton(): Button;
-  createInput(): Input;
-}
-class WebUIFactory implements UIFactory {
-  createButton() {
-    return new WebButton();
-  }
-  createInput() {
-    return new WebInput();
-  }
-}
-class NativeUIFactory implements UIFactory {
-  createButton() {
-    return new NativeButton();
-  }
-  createInput() {
-    return new NativeInput();
-  }
-}
-
-class LoginForm {
-  private btn: Button;
-  private input: Input;
-  constructor(factory: UIFactory) {
-    this.btn = factory.createButton();
-    this.input = factory.createInput();
-  }
-  render() {
-    return `${this.input.html()} ${this.btn.html()}`;
-  }
-}
-new LoginForm(new WebUIFactory()).render();
-```
+→ Full example with cross-platform Button/Modal UI families: `references/patterns.md`
 
 ### Builder
 
 Fluent step-by-step construction; centralises validation; returns an immutable product.
-
-```typescript
-class HttpRequestBuilder {
-  private _headers: Record<string, string> = {};
-  private _body: unknown = undefined;
-  private _method: "GET" | "POST" | "PUT" | "DELETE" = "GET";
-
-  constructor(private _url: string) {}
-
-  method(m: "GET" | "POST" | "PUT" | "DELETE"): this {
-    this._method = m;
-    return this;
-  }
-  header(key: string, value: string): this {
-    this._headers[key] = value;
-    return this;
-  }
-  json(body: unknown): this {
-    this._body = body;
-    return this.header("Content-Type", "application/json");
-  }
-  auth(token: string): this {
-    return this.header("Authorization", `Bearer ${token}`);
-  }
-
-  build() {
-    return Object.freeze({
-      url: this._url,
-      method: this._method,
-      headers: { ...this._headers },
-      body: this._body,
-    });
-  }
-}
-
-const req = new HttpRequestBuilder("https://api.example.com/users")
-  .method("POST")
-  .auth("tok-xyz")
-  .json({ name: "Alice" })
-  .build();
-```
 
 → Full example + Step Builder (compile-time required-field safety): `references/builder-pattern.md`
 
@@ -273,188 +95,34 @@ const req = new HttpRequestBuilder("https://api.example.com/users")
 
 TypeScript's separate type/value namespaces let you bind the same name to both a type and a utility object. Import both with one statement.
 
-```typescript
-type HttpStatus = { code: number; text: string };
-let HttpStatus = {
-  OK: { code: 200, text: "OK" } as HttpStatus,
-  CREATED: { code: 201, text: "Created" } as HttpStatus,
-  BAD_REQUEST: { code: 400, text: "Bad Request" } as HttpStatus,
-  UNAUTHORIZED: { code: 401, text: "Unauthorized" } as HttpStatus,
-  NOT_FOUND: { code: 404, text: "Not Found" } as HttpStatus,
-  isSuccess(s: HttpStatus) {
-    return s.code >= 200 && s.code < 300;
-  },
-  isClientError(s: HttpStatus) {
-    return s.code >= 400 && s.code < 500;
-  },
-};
-
-const status: HttpStatus = HttpStatus.NOT_FOUND;
-console.log(HttpStatus.isClientError(status)); // true
-```
+→ Full example: `references/type-system.md` → Companion Object Pattern
 
 ### Real Mixins ⚠️
 
 Use the class-expression pattern only. Legacy `applyMixins` has no `super()` and is now marked outdated in the official handbook.
 
-```typescript
-type Constructor<T = object> = new (...args: any[]) => T;
-
-function Cacheable<TBase extends Constructor>(Base: TBase) {
-  return class extends Base {
-    private cache = new Map<string, unknown>();
-    getCached<T>(key: string, compute: () => T): T {
-      if (!this.cache.has(key)) this.cache.set(key, compute());
-      return this.cache.get(key) as T;
-    }
-  };
-}
-function RateLimited<TBase extends Constructor>(Base: TBase) {
-  return class extends Base {
-    private hits = 0;
-    private windowStart = Date.now();
-    checkLimit(maxPerSecond: number): boolean {
-      if (Date.now() - this.windowStart > 1000) {
-        this.hits = 0;
-        this.windowStart = Date.now();
-      }
-      return ++this.hits <= maxPerSecond;
-    }
-  };
-}
-
-class BaseApiHandler {
-  constructor(public name: string) {}
-}
-
-const ApiHandler = Cacheable(RateLimited(BaseApiHandler));
-const handler = new ApiHandler("products");
-handler.checkLimit(100);
-handler.getCached("list", () => [{ id: 1 }]);
-```
-
 "is-a" → inheritance · "has-a" → delegation · "can-do" → mixin.
+
+→ Full example with Cacheable and Loggable mixins: `references/patterns.md`
 
 ### Decorator (TS 5.0+ Standard API) ⚠️
 
 Cross-cutting concerns applied declaratively. No flag needed.
 
-```typescript
-// Logs method calls with timing — useful for API route handlers
-function logRequest(
-  originalMethod: Function,
-  ctx: ClassMethodDecoratorContext,
-) {
-  return async function (this: unknown, ...args: unknown[]) {
-    const start = Date.now();
-    const result = await (originalMethod as Function).call(this, ...args);
-    console.log(`[${String(ctx.name)}] ${Date.now() - start}ms`);
-    return result;
-  };
-}
-
-// Validates that the first argument has required fields
-function requireBody(fields: string[]) {
-  return function (originalMethod: Function, ctx: ClassMethodDecoratorContext) {
-    return function (
-      this: unknown,
-      body: Record<string, unknown>,
-      ...rest: unknown[]
-    ) {
-      const missing = fields.filter((f) => !(f in body));
-      if (missing.length)
-        throw new Error(`Missing fields: ${missing.join(", ")}`);
-      return (originalMethod as Function).call(this, body, ...rest);
-    };
-  };
-}
-
-class UserController {
-  @logRequest
-  async getUser(id: string) {
-    return { id, name: "Alice" };
-  }
-
-  @requireBody(["email", "password"])
-  async register(body: Record<string, unknown>) {
-    return { created: true };
-  }
-}
-```
-
 Frameworks using DI-style `@inject` (Angular, NestJS, typeorm) still require `"experimentalDecorators": true`. The two APIs are not interoperable.
+
+→ Full example with complete API comparison table: `references/patterns.md`
 
 ---
 
 ## Type System
 
-→ Full examples: `references/type-system.md`
+- **unknown > any** — force narrowing before use; right type for API responses and JSON.parse
+- **Discriminated unions** — literal tag field; exhaustiveness via assertNever
+- **Mapped/conditional types** — Partial, Readonly, infer, Awaited — built-in and custom
+- **Type branding** — prevent structural aliasing for IDs and tokens at zero runtime cost
 
-### `unknown` over `any`
-
-`any` opts out of all type checking. `unknown` forces a narrowing check before use — prefer it for API responses and external data.
-
-```typescript
-// Safely parse an untrusted API response body
-function parseResponseBody(body: unknown): { id: string; name: string } | null {
-  if (typeof body !== "object" || body === null) return null;
-  if (!("id" in body) || !("name" in body)) return null;
-  const { id, name } = body as Record<string, unknown>;
-  if (typeof id !== "string" || typeof name !== "string") return null;
-  return { id, name };
-}
-```
-
-### Type Narrowing & Discriminated Unions
-
-Flow-based narrowing via `typeof`, `instanceof`, `in`, equality checks. For union types with overlapping shapes, a **literal tag field** discriminates reliably:
-
-```typescript
-type ApiSuccess<T> = { status: "success"; data: T; statusCode: number };
-type ApiError = { status: "error"; message: string; statusCode: number };
-type ApiResponse<T> = ApiSuccess<T> | ApiError;
-
-function handleResponse<T>(res: ApiResponse<T>) {
-  if (res.status === "success") {
-    console.log(res.data); // T ✓ — fully narrowed
-  } else {
-    console.error(res.message); // string ✓
-  }
-}
-```
-
-### Mapped & Conditional Types
-
-```typescript
-// Make all config fields optional for partial updates (PATCH requests)
-type PatchBody<T> = { [K in keyof T]?: T[K] };
-
-// Strip functions — useful for serializing state to JSON
-type Serializable<T> = { [K in keyof T]: T[K] extends Function ? never : T[K] };
-
-// Unwrap a Promise return type
-type Awaited_<T> = T extends Promise<infer U> ? U : T;
-type UserData = Awaited_<ReturnType<typeof fetchUser>>; // inferred from async fn
-```
-
-### Type Branding
-
-Prevent accidental substitution of structurally identical token/ID types at zero runtime cost:
-
-```typescript
-type UserId = string & { readonly _brand: unique symbol };
-type SessionToken = string & { readonly _brand: unique symbol };
-type CsrfToken = string & { readonly _brand: unique symbol };
-
-const UserId = (id: string) => id as UserId;
-const SessionToken = (tok: string) => tok as SessionToken;
-const CsrfToken = (tok: string) => tok as CsrfToken;
-
-function getSession(token: SessionToken) {
-  /* ... */
-}
-getSession(CsrfToken("abc")); // ✗ Error — wrong brand, caught at compile time
-```
+→ Full examples with narrowing, type guards, widening, escape hatches: `references/type-system.md`
 
 ---
 
@@ -503,53 +171,13 @@ else res.status(200).json(result);
 
 ## Generics
 
-```typescript
-// Generic fetch wrapper — infers response shape from the type parameter
-async function apiFetch<T>(url: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(url, init);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json() as Promise<T>;
-}
-const user = await apiFetch<{ id: string; name: string }>("/api/users/1");
+Generic fetch wrapper (`apiFetch<T>`), generic Repository interface, branded RouteParam. TS 5.x `const` type parameters preserve literal route/method types — use for route config objects.
 
-// Generic repository interface
-interface Repository<T, TId> {
-  findById(id: TId): Promise<T | null>;
-  save(item: T): Promise<T>;
-  delete(id: TId): Promise<void>;
-}
-
-// Typed route params prevent mixing up path segments
-class RouteParam<TKind extends string> {
-  constructor(
-    readonly kind: TKind,
-    readonly value: string,
-  ) {}
-  toString() {
-    return `${this.kind}:${this.value}`;
-  }
-}
-class UserId extends RouteParam<"userId"> {}
-class PostSlug extends RouteParam<"postSlug"> {}
-```
-
-TS 5.x `const` type parameters — preserves literal route/method types:
-
-```typescript
-function buildRoute<const T extends readonly string[]>(...segments: T): T {
-  return segments;
-}
-const route = buildRoute("api", "users", "profile");
-// type: readonly ['api', 'users', 'profile'] — not string[]
-```
+→ Full examples: `references/patterns.md` → Generics section
 
 ---
 
-## OO Concepts
-
-**Open recursion** — `this.method()` dispatches to the most-derived class.
-**Delegation** — pass `this` into a collaborator so it can call back. Prefer when "has-a" applies.
-**Structural polymorphism** — explicit `implements` is optional; shape compatibility is enough.
+**Open recursion** — `this.method()` dispatches to the most-derived class. **Delegation** — pass `this` into a collaborator so it can call back. Prefer when "has-a" applies. **Structural polymorphism** — explicit `implements` is optional; shape compatibility is enough.
 
 ---
 
@@ -604,16 +232,3 @@ Track type debt like failing tests: measure excessive `any` usage, inconsistent 
 
 > Types are documentation. If they confuse humans, they're failing.
 
----
-
-## Acknowledgments
-
-> **Pro TypeScript: Application-Scale JavaScript Development** (2nd ed.)
-> Steve Fenton — Apress, 2018
-> Chapters 1, 2, 4 (Language Features, Code Organization, Object Orientation in TypeScript)
-
-> **Programming TypeScript: Making Your JavaScript Applications Scale**
-> Boris Cherny — O'Reilly Media, 2019
-> Chapters 3, 4, 5, 6, 7 (All About Types, Functions, Classes & Interfaces, Advanced Types, Handling Errors)
-
-All examples updated and verified against the TypeScript 5.x official documentation at typescriptlang.org.
