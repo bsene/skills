@@ -1,32 +1,39 @@
 ---
 name: typescript-design-patterns
 description: >
-  Apply classic Typescript design patterns to solve structural and behavioral problems in Typescript/Javascript. 
-  Use this skill whenever the user asks about a design pattern by name, asks how to structure objects or classes, needs to share behavior without inheritance, wants to decouple components, manage a single shared resource, intercept object access, or build an event/pub-sub system. Also trigger when the user describes a problem that a well-known pattern solves — even if they don't name the pattern — such as "how do I make sure only one instance exists?", "how do I notify multiple parts of my app when something changes?", "how do I create objects without knowing their type upfront?", or "how do I construct a complex object step by step with optional fields?". Based on patterns.dev.
+  TypeScript design patterns for structural and behavioral problems. Use when
+  the user asks about a named pattern in a TypeScript context: Strategy,
+  Abstract Factory, Builder, Factory, Observer, Singleton, Decorator, Proxy,
+  Mixin, Flyweight, Mediator, Companion Object. Also triggers when the user
+  describes a problem a pattern solves in TypeScript: "swap algorithms at
+  runtime", "create families of related objects", "construct a complex object
+  step-by-step", "add cross-cutting behavior without modifying classes",
+  "share behavior across unrelated classes via class-expression mixin",
+  "pair a type and factory under one name", "decouple components via a hub",
+  "reuse instances to reduce memory". Based on Pro TypeScript (Fenton) and
+  Programming TypeScript (Cherny).
 ---
 
-# JavaScript Design Patterns Skill
-
-Classic GoF-inspired design patterns implemented in modern JavaScript (ES2017+).
-Inspirations from:
-
-- [patterns.dev](https://www.patterns.dev/vanilla).
-- [Refactoring Guru - Design Patterns](https://refactoring.guru/design-patterns)
+# TypeScript Design Patterns
 
 ## Quick Pattern Selector
 
-| Problem                                                    | Pattern       |
-| ---------------------------------------------------------- | ------------- |
-| Need exactly one shared instance (DB, config, logger)      | **Singleton** |
-| Intercept, validate, or log object property access         | **Proxy**     |
-| Share methods across many instances without duplication    | **Prototype** |
-| Notify multiple parts of the app when state changes        | **Observer**  |
-| Encapsulate private state; expose a clean public API       | **Module**    |
-| Add reusable behavior to classes without inheritance       | **Mixin**     |
-| Decouple components via a central communication hub        | **Mediator**  |
-| Reuse instances to reduce memory (thousands of objects)    | **Flyweight** |
-| Create objects without specifying their exact type         | **Factory**   |
-| Construct complex objects step-by-step with optional parts | **Builder**   |
+| Problem                                          | Pattern                              |
+| ------------------------------------------------ | ------------------------------------ |
+| One shared instance (DB, config, logger)         | **Singleton**                        |
+| Swap algorithms at runtime                       | **Strategy**                         |
+| Create families of related objects               | **Abstract Factory**                 |
+| Create objects without naming the concrete class | **Factory**                          |
+| Construct complex objects step-by-step           | **Builder**                          |
+| Pair a type and utility object under one name    | **Companion Object**                 |
+| Notify subscribers on state change               | **Observer**                         |
+| Add cross-cutting behavior non-invasively        | **Decorator** (TS 5+ standard)       |
+| Intercept/validate/log property access           | **Proxy**                            |
+| Share behavior across unrelated classes          | **Mixin** (class-expression pattern) |
+| Reuse instances to reduce memory                 | **Flyweight**                        |
+| Decouple via a central hub                       | **Mediator**                         |
+
+→ Full pattern examples with trade-offs: `references/patterns.md`
 
 ---
 
@@ -35,75 +42,59 @@ Inspirations from:
 For every pattern question, provide:
 
 1. **What it is** — one sentence
-2. **When to use / when NOT to use** — concrete conditions
-3. **Code example** — minimal, modern JS (ES6+), runnable
-4. **Trade-offs** — what you gain and what you give up
+2. **When to use / NOT to use** — concrete conditions
+3. **Minimal TypeScript 5+ example** — runnable
+4. **Trade-offs** — gains vs. costs
+5. **⚠️ Caveat** — flag any TS-version or API-specific nuance
 
 ---
 
 ## Pattern Summaries
 
-### Singleton
-
-One instance, globally accessible. Use for shared resources. Avoid when you need testability or multiple independent instances.
-
-### Proxy (ES6 `Proxy`)
-
-Wrap an object to intercept `get`/`set`/`apply` traps. Use for validation, logging, caching, reactive systems. Has runtime overhead — avoid on hot paths.
-
-### Prototype
-
-Add shared methods to `.prototype` rather than each instance. Memory-efficient. Mutating the prototype affects all instances.
-
-### Observer / EventEmitter
-
-Subscribers register for events; publisher emits without knowing who's listening. Great for decoupling. Risk: memory leaks if listeners aren't removed.
-
-### Module (ES Modules / IIFE)
-
-Expose only a public API; keep internals private. Prefer ES `import/export` for tree-shaking. Use IIFE only in non-bundled environments.
-
-### Mixin
-
-Copy methods from plain objects onto a class prototype with `Object.assign`. Enables multiple-behavior composition. Risk: name collisions, hard to trace origins.
-
-### Mediator / Middleware
-
-Components communicate through a central hub, not directly. Pipeline variant (Express-style) chains async handlers. Decouples senders from receivers.
-
-### Flyweight
-
-Share a common "intrinsic state" object across many instances; each instance only stores unique "extrinsic state". Best for large numbers of similar objects.
-
 ### Factory
 
-A function or class that creates and returns objects based on input, hiding instantiation details. Useful for polymorphism and plugin architectures.
+Create objects without exposing the concrete class. Use the companion object pattern to pair the type and factory under one name.
+
+→ Full example with companion object overloads: `references/patterns.md`
+
+### Strategy
+
+Encapsulate interchangeable algorithms behind an interface; swap at runtime without changing the caller.
+
+→ Full example with RateLimiter and token-bucket strategies: `references/patterns.md`
+
+### Abstract Factory
+
+Interface for creating compatible product families; client depends only on the factory interface, never on concrete classes.
+
+→ Full example with cross-platform Button/Modal UI families: `references/patterns.md`
 
 ### Builder
 
-Separate the construction of a complex object from its representation, allowing the same process to produce different configurations via a fluent, step-by-step API.
+Fluent step-by-step construction; centralises validation; returns an immutable product. Required fields go in the constructor; optional fields as chainable setters with safe defaults; `build()` returns a frozen product.
 
-**When to use:** Objects with many optional fields (avoid telescoping constructors); multi-step construction where order matters; you want compile-time safety on required vs. optional parts.  
-**When NOT to use:** Simple objects with ≤ 3 fields — a plain object literal or single constructor is clearer.
-
-```typescript
-const query = new QueryBuilder("users")
-  .select("id", "email", "created_at")
-  .where("active = true")
-  .orderBy("created_at")
-  .limit(25)
-  .build();
-```
-
-Key idioms: required fields in the constructor, optional fields as setters with safe defaults, `return this` (typed as `this` for subclass safety), `Object.freeze` on the `build()` product.  
 Also covers the **Step Builder** variant for compile-time required-field enforcement.
 
-→ Full code, Step Builder variant, and trade-offs: `../../references/builder-pattern.md`
+→ Full example + Step Builder variant: `references/patterns.md`
 
----
+### Companion Object Pattern
 
-## Reference Files
+TypeScript's separate type/value namespaces let you bind the same name to both a type and a utility object. Import both with one statement.
 
-For full examples with runnable code and detailed trade-offs, read:
-→ `references/design-patterns.md` — all patterns except Builder
-→ `references/builder-pattern.md` — Builder: full example, Step Builder variant, trade-offs
+→ Full example: `references/patterns.md`
+
+### Real Mixins ⚠️
+
+Use the class-expression pattern only. Legacy `applyMixins` has no `super()` and is now marked outdated in the official handbook.
+
+"is-a" → inheritance · "has-a" → delegation · "can-do" → mixin.
+
+→ Full example with Cacheable and Loggable mixins: `references/patterns.md`
+
+### Decorator (TS 5.0+ Standard API) ⚠️
+
+Cross-cutting concerns applied declaratively. No compiler flag needed for the standard API.
+
+Frameworks using DI-style `@inject` (Angular, NestJS, typeorm) still require `"experimentalDecorators": true`. The two APIs are not interoperable.
+
+→ Full example with complete API comparison table: `references/patterns.md`
