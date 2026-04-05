@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "creating-skills": {
+      "source": "jesseotremblay/claude-skills",
+      "sourceType": "github",
+      "computedHash": "27493c40c6c3d86ac5b55af988cda282b035b7492e1279d65ac80c0b5335388e"
+    },
     "skill-optimizer": {
       "source": "mcollina/skills",
       "sourceType": "github",
