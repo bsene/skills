@@ -1,5 +1,5 @@
 ---
-name: oo-principles
+name: oop-principles
 description: >
   Analyze TypeScript/JavaScript code against Dave Thomas's object-oriented principles to identify when classes should be utility functions, when data structures are overengineered, and when design patterns are unnecessary. Helps developers write simpler, more maintainable code by distinguishing true object-oriented design from class-oriented anti-patterns.
   Trigger when users ask about class design, want to refactor classes into functions, question whether they need a class, ask about "is this a code smell?", show you TypeScript/JavaScript code with potential design issues, or discuss patterns like Decorators, Factories, or Strategy.
