@@ -3,32 +3,45 @@ name: typescript
 description: >
   TypeScript error handling strategies, strictness policy, runtime validation,
   monorepo contracts, and domain types vs DTOs. Use when the user asks about
-  error handling in TypeScript ("return exceptions", "union error types",
-  "T | Error pattern", "typed errors"), runtime validation ("Zod", "schema
-  validation at boundaries", "validate API response"), TypeScript at scale
-  ("strict mode", "ts-expect-error vs ts-ignore", "any as metric",
-  "monorepo shared types", "project references", "type debt", "domain vs DTO",
-  "wire format leaking into business logic"). Based on Pro TypeScript (Fenton
-  2018) and Programming TypeScript (Cherny, O'Reilly 2019).
+  error handling in TypeScript, runtime validation with Zod, strict mode, or
+  domain‑vs‑DTO distinctions.
+triggers:
+  - TypeScript error handling
+  - Zod validation
+  - strict mode
+  - runtime validation
+  - domain vs DTO
 ---
 
 # TypeScript
 
-Sub-skills — route here first if the user's question fits:
+Sub-skills — route here first if the user’s question fits:
 
 - Design patterns (Strategy, Factory, Builder, Decorator, Mixin…) → `design-patterns/` sub-skill
+  ```typescript
+  // Quick Factory example
+  const shape = ShapeFactory.create("circle");
+  shape.draw();
+  ```
 - Type system (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
+  ```typescript
+  const res: Result = { type: "success", data: "ok" };
+  handle(res);
+  ```
 - SOLID principles (SRP, OCP, LSP, ISP, DIP) → `solid/` sub-skill
+  ```typescript
+  makeItFly(new Duck());
+  ```
 
 ---
 
 ## Error Handling
 
 | Strategy                                     | Caller forced to handle?   | Composability        |
-| -------------------------------------------- | -------------------------- | -------------------- |
-| Return `T \| null`                           | Yes (null check)           | Low                  |
+| -------------------------------------------- | -------------------------- | --------------------- |
+| Return `T | null`                           | Yes (null check)           | Low                  |
 | Throw exception                              | No — easy to miss          | High                 |
-| **Return exception** `T \| ErrorA \| ErrorB` | **Yes — union exhaustion** | Medium               |
+| **Return exception** `T | ErrorA | ErrorB` | **Yes — union exhaustion** | Medium               |
 | Option/Either type                           | Via `.flatMap` chain       | High (needs library) |
 
 **Return exceptions (preferred for expected failures):**
@@ -54,7 +67,9 @@ function resolveUser(
   if (!user) return new NotFoundError(`User ${id} not found`);
   return user;
 }
+```
 
+```typescript
 const result = resolveUser(authHeader, userId);
 if (result instanceof BadRequestError) res.status(400).send(result.message);
 else if (result instanceof UnauthorizedError)
@@ -114,4 +129,10 @@ Version shared types semantically: deprecate before removing, and communicate br
 
 Track type debt like failing tests: measure excessive `any` usage, inconsistent `null` handling, and duplicate type definitions. Reduce via linting rules (`@typescript-eslint/no-explicit-any`) and gradual refactoring — don't let it accumulate silently.
 
-> Types are documentation. If they confuse humans, they're failing.
+> Types are documentation. If they confuse humans, they’re failing.
+
+## References
+
+- User example: see `references/user-example.md`.
+- Zod example: see `references/zod-example.md`.
+
