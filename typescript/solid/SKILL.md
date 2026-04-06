@@ -1,12 +1,26 @@
 ---
 name: typescript-solid
-description: >
-  SOLID principles in TypeScript. Use when the user asks about SOLID, SRP, OCP,
-  LSP, ISP, DIP, single responsibility principle, open-closed principle, Liskov
-  substitution, interface segregation, dependency inversion, god class, fat
-  interface, "one reason to change", "extend without modifying", "depend on
-  abstractions", "interface too large", or asks how to structure classes to
-  reduce coupling and improve testability.
+description: SOLID principles for reducing coupling and improving testability—SRP, OCP, LSP, ISP, and DIP with TypeScript examples.
+triggers:
+  - SOLID
+  - SRP
+  - OCP
+  - LSP
+  - ISP
+  - DIP
+  - single responsibility principle
+  - open-closed principle
+  - Liskov substitution
+  - interface segregation
+  - dependency inversion
+  - god class
+  - fat interface
+  - one reason to change
+  - extend without modifying
+  - depend on abstractions
+  - interface too large
+  - reduce coupling
+  - improve testability
 ---
 
 # SOLID Principles

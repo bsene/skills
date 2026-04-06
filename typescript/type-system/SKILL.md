@@ -1,15 +1,24 @@
 ---
 name: typescript-type-system
-description: >
-  TypeScript type system deep dive. Use when the user asks about unknown vs any,
-  type narrowing, flow-based refinement, discriminated unions, exhaustiveness checking
-  with assertNever, mapped types (Partial/Readonly/Pick/Record), conditional types
-  (infer/Awaited), user-defined type guards (value is T), type branding for nominal
-  types, companion object pattern, type widening, as const, or escape hatches
-  (type assertions, non-null assertion !, definite assignment !:). Also triggers for:
-  "how do I narrow a type", "what is unknown for", "how do I write a type predicate",
-  "how to create nominal types", "how to prevent structural aliasing", "what does
-  infer do", "when to use as const".
+description: Deep dive into TypeScript's type system—narrowing, discriminated unions, mapped types, conditional types, type guards, branding, and escape hatches.
+triggers:
+  - unknown vs any
+  - type narrowing
+  - discriminated unions
+  - exhaustiveness checking
+  - mapped types
+  - conditional types
+  - infer keyword
+  - user-defined type guards
+  - type branding
+  - companion object pattern
+  - as const
+  - escape hatches
+  - type assertion
+  - how do I narrow a type
+  - how do I write a type predicate
+  - how to create nominal types
+  - how to prevent structural aliasing
 ---
 
 # TypeScript Type System
