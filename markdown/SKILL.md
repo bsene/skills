@@ -1,3 +1,24 @@
+---
+name: markdown
+description: GitHub Flavored Markdown (GFM) reference — syntax, tables, alerts, footnotes, task lists, links, images, mentions, and common pitfalls.
+triggers:
+  - github flavored markdown
+  - GFM
+  - markdown table
+  - markdown syntax
+  - markdown heading
+  - markdown link
+  - markdown image
+  - task list
+  - markdown alert
+  - callout markdown
+  - footnote markdown
+  - markdown line break
+  - markdown emoji
+  - escape markdown
+  - markdown section anchor
+---
+
 # SKILL: GitHub Flavored Markdown (GFM)
 > Based on the official [GitHub Basic Writing and Formatting Syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) reference.
 
@@ -24,14 +45,12 @@ Use `#` symbols (1–6) to define heading levels. GitHub auto-generates a linked
 
 | Style | Syntax | Example |
 |---|---|---|
-| Bold | `** **` or `__ __` | `**bold**` |
-| Italic | `* *` or `_ _` | `_italic_` |
-| Strikethrough | `~~ ~~` or `~ ~` | `~~struck~~` |
-| Bold + italic | `*** ***` | `***all important***` |
-| Bold with nested italic | `** **` + `_ _` | `**very _important_**` |
+| Bold | `**text**` | `**bold**` |
+| Italic | `_text_` | `_italic_` |
+| Strikethrough | `~~text~~` | `~~struck~~` |
+| Bold + italic | `***text***` | `***important***` |
 | Subscript | `<sub></sub>` | `H<sub>2</sub>O` |
 | Superscript | `<sup></sup>` | `x<sup>2</sup>` |
-| Underline | `<ins></ins>` | `<ins>underlined</ins>` |
 
 ---
 
@@ -267,31 +286,9 @@ Prefix any Markdown character with `\` to render it literally:
 
 ---
 
-## Quick Reference
+## Reference
 
-| Goal | Syntax |
-|---|---|
-| Heading | `# ` through `###### ` |
-| Bold | `**text**` |
-| Italic | `_text_` |
-| Strikethrough | `~~text~~` |
-| Blockquote | `> text` |
-| Inline code | `` `code` `` |
-| Code block | ` ```lang ` … ` ``` ` |
-| Unordered list | `- item` |
-| Ordered list | `1. item` |
-| Task list | `- [ ] item` / `- [x] item` |
-| Link | `[label](url)` |
-| Image | `![alt](url)` |
-| Section link | `[label](#heading-anchor)` |
-| Custom anchor | `<a name="id"></a>` |
-| Mention | `@username` or `@org/team` |
-| Issue/PR ref | `#number` |
-| Footnote | `[^1]` + `[^1]: text` |
-| Alert | `> [!NOTE]` / `[!TIP]` / `[!IMPORTANT]` / `[!WARNING]` / `[!CAUTION]` |
-| Emoji | `:emojicode:` |
-| HTML comment | `<!-- hidden -->` |
-| Escape character | `\*` `\#` `\[` etc. |
+**Quick syntax lookup:** See [GFM Quick Reference](references/quick-ref.md)
 
 ---
 
@@ -305,10 +302,3 @@ Prefix any Markdown character with `\` to render it literally:
 - **Color swatches** (`` `#hex` ``, `` `rgb()` ``, `` `hsl()` ``) only render in issues, PRs, and discussions — not in plain `.md` file views.
 - **Custom anchors** (`<a name="">`) are not included in the auto-generated table of contents.
 
----
-
-## Further Reading
-
-- [GitHub Flavored Markdown Spec](https://github.github.com/gfm/)
-- [Advanced formatting: tables, collapsed sections, diagrams, math](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting)
-- [Writing on GitHub quickstart](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/quickstart-for-writing-on-github)
