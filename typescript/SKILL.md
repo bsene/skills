@@ -1,37 +1,29 @@
 ---
 name: typescript
-description: >
-  TypeScript error handling strategies, strictness policy, runtime validation,
-  monorepo contracts, and domain types vs DTOs. Use when the user asks about
-  error handling in TypeScript, runtime validation with Zod, strict mode, or
-  domain‑vs‑DTO distinctions.
+description: TypeScript error handling via union returns, strictness policy, runtime validation with Zod, monorepo contracts, and domain types vs DTOs.
 triggers:
   - TypeScript error handling
   - Zod validation
   - strict mode
   - runtime validation
   - domain vs DTO
+  - typescript best practices
+  - handle errors without throwing
+  - validate API response
+  - type safety
+  - typescript strictness
+  - ts-expect-error
+  - monorepo types
+  - api contract
 ---
 
 # TypeScript
 
-Sub-skills — route here first if the user’s question fits:
+## Route to Sub-skills
 
-- Design patterns (Strategy, Factory, Builder, Decorator, Mixin…) → `design-patterns/` sub-skill
-  ```typescript
-  // Quick Factory example
-  const shape = ShapeFactory.create("circle");
-  shape.draw();
-  ```
-- Type system (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
-  ```typescript
-  const res: Result = { type: "success", data: "ok" };
-  handle(res);
-  ```
-- SOLID principles (SRP, OCP, LSP, ISP, DIP) → `solid/` sub-skill
-  ```typescript
-  makeItFly(new Duck());
-  ```
+→ **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `design-patterns/` sub-skill
+→ **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
+→ **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `solid/` sub-skill
 
 ---
 
