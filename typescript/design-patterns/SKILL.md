@@ -63,50 +63,16 @@ For every pattern question, provide:
 
 ## Pattern Summaries
 
-### Factory
+**Factory** — Create objects without exposing concrete classes. Pair type and factory via companion object. → `references/patterns.md`
 
-Create objects without exposing the concrete class. Use the companion object pattern to pair the type and factory under one name.
+**Strategy** — Encapsulate interchangeable algorithms; swap at runtime without changing caller. → `references/patterns.md`
 
-→ Full example with companion object overloads: `references/patterns.md`
+**Abstract Factory** — Interface for compatible product families. Client depends on factory, never concretes. → `references/patterns.md`
 
-### Strategy
+**Builder** — Fluent step-by-step construction with validation and immutable product. Covers Step Builder for compile-time field enforcement. → `references/patterns.md`
 
-Encapsulate interchangeable algorithms behind an interface; swap at runtime without changing the caller.
+**Companion Object Pattern** — Bind same name to type and utility object. One import covers both. → `references/patterns.md`
 
-→ Full example with RateLimiter and token-bucket strategies: `references/patterns.md`
+**Real Mixins ⚠️** — Use class-expression pattern only; legacy `applyMixins` is outdated. (is-a → inheritance; has-a → delegation; can-do → mixin.) → `references/patterns.md`
 
-### Abstract Factory
-
-Interface for creating compatible product families; client depends only on the factory interface, never on concrete classes.
-
-→ Full example with cross-platform Button/Modal UI families: `references/patterns.md`
-
-### Builder
-
-Fluent step-by-step construction; centralises validation; returns an immutable product. Required fields go in the constructor; optional fields as chainable setters with safe defaults; `build()` returns a frozen product.
-
-Also covers the **Step Builder** variant for compile-time required-field enforcement.
-
-→ Full example + Step Builder variant: `references/patterns.md`
-
-### Companion Object Pattern
-
-TypeScript's separate type/value namespaces let you bind the same name to both a type and a utility object. Import both with one statement.
-
-→ Full example: `references/patterns.md`
-
-### Real Mixins ⚠️
-
-Use the class-expression pattern only. Legacy `applyMixins` has no `super()` and is now marked outdated in the official handbook.
-
-"is-a" → inheritance · "has-a" → delegation · "can-do" → mixin.
-
-→ Full example with Cacheable and Loggable mixins: `references/patterns.md`
-
-### Decorator (TS 5.0+ Standard API) ⚠️
-
-Cross-cutting concerns applied declaratively. No compiler flag needed for the standard API.
-
-Frameworks using DI-style `@inject` (Angular, NestJS, typeorm) still require `"experimentalDecorators": true`. The two APIs are not interoperable.
-
-→ Full example with complete API comparison table: `references/patterns.md`
+**Decorator (TS 5.0+ Standard) ⚠️** — Cross-cutting concerns declaratively. Standard API needs no flag. Frameworks like Angular/NestJS still require `"experimentalDecorators": true` (APIs not interoperable). → `references/patterns.md`
