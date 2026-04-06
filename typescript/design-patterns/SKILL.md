@@ -1,17 +1,29 @@
 ---
 name: typescript-design-patterns
-description: >
-  TypeScript design patterns for structural and behavioral problems. Use when
-  the user asks about a named pattern in a TypeScript context: Strategy,
-  Abstract Factory, Builder, Factory, Observer, Singleton, Decorator, Proxy,
-  Mixin, Flyweight, Mediator, Companion Object. Also triggers when the user
-  describes a problem a pattern solves in TypeScript: "swap algorithms at
-  runtime", "create families of related objects", "construct a complex object
-  step-by-step", "add cross-cutting behavior without modifying classes",
-  "share behavior across unrelated classes via class-expression mixin",
-  "pair a type and factory under one name", "decouple components via a hub",
-  "reuse instances to reduce memory". Based on Pro TypeScript (Fenton) and
-  Programming TypeScript (Cherny).
+description: Design patterns for TypeScript—Factory, Strategy, Builder, Decorator, Singleton, Mixin, and more with problem-oriented and GoF triggers.
+triggers:
+  - design patterns
+  - typescript design patterns
+  - Strategy pattern
+  - Factory pattern
+  - Abstract Factory
+  - Builder pattern
+  - Singleton pattern
+  - Decorator pattern
+  - Proxy pattern
+  - Mixin pattern
+  - Observer pattern
+  - Flyweight pattern
+  - Mediator pattern
+  - Companion Object
+  - swap algorithms at runtime
+  - create families of related objects
+  - construct a complex object step-by-step
+  - add cross-cutting behavior
+  - share behavior across classes
+  - pair a type and factory
+  - decouple components via a hub
+  - reuse instances to reduce memory
 ---
 
 # TypeScript Design Patterns
