@@ -41,26 +41,26 @@ triggers:
 
 ## Concepts
 
-**`unknown` vs `any`** — `any` disables all checking; `unknown` forces narrowing before use. Use `unknown` for external data (API responses, `JSON.parse`, user input).
+**`unknown` vs `any`** — `any` disables checking; `unknown` forces narrowing. Use for external data.
 
-**Type narrowing** — TypeScript tracks types through `if`, `typeof`, `instanceof`, `in`, equality, truthiness, and `Array.isArray`. Called refinement.
+**Type narrowing** — TypeScript narrows types through `typeof`, `instanceof`, `in`, equality, truthiness, `Array.isArray`.
 
-**Discriminated unions** — literal tag field (`type: "auth" | "data" | "error"`) lets TypeScript dispatch on shape in a `switch`. Invaluable for Redux actions, WebSocket messages, API response variants.
+**Discriminated unions** — Tag field enables dispatch via `switch`. Essential for Redux actions, WebSocket messages, API variants.
 
-**Exhaustiveness checking** — `assertNever(value: never)` causes a compile error if a new union member is added but not handled.
+**Exhaustiveness checking** — `assertNever(value: never)` forces compile error if new union member isn't handled.
 
-**Mapped types** — transform every key of an existing type: `{ [K in keyof T]?: T[K] }`. Built-ins: `Partial`, `Required`, `Readonly`, `Pick`, `Record`.
+**Mapped types** — Transform object keys: `{ [K in keyof T]?: T[K] }`. Built-ins: `Partial`, `Required`, `Readonly`, `Pick`, `Record`.
 
-**Conditional types** — type-level ternary: `T extends Promise<infer U> ? U : T`. Distributive over unions. Built-ins: `Exclude`, `Extract`, `NonNullable`, `ReturnType`, `Awaited`.
+**Conditional types** — Type-level ternary: `T extends Promise<infer U> ? U : T`. Built-ins: `Exclude`, `Extract`, `Awaited`.
 
-**User-defined type guards** — predicate return `value is T` carries refinement across function boundaries.
+**User-defined type guards** — Return `value is T` to carry refinement across function boundaries.
 
-**Type branding** — `type UserId = string & { readonly _brand: unique symbol }` prevents structural aliasing at zero runtime cost.
+**Type branding** — `type UserId = string & { readonly _brand: unique symbol }` prevents structural aliasing at zero cost.
 
-**Companion object pattern** — declare the same name as both a `type` and a `let`/`const` value; TypeScript's separate namespaces allow it. One import covers type annotation and utility methods.
+**Companion object pattern** — Bind the same name to both a type and const value. One import covers annotation and utilities.
 
-**`as const`** — freezes a value to its narrowest literal type. Use on config objects and arrays to derive union types: `type Method = (typeof HTTP_METHODS)[number]`.
+**`as const`** — Freeze values to literal types. Use on configs/arrays to derive union types.
 
-**Escape hatches** — `as T` (assertion), `!` (non-null), `!:` (definite assignment). Use as a last resort; frequent use signals types should be restructured.
+**Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed.
 
 → Full examples with runnable code: `references/type-system.md`
