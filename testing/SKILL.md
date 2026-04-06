@@ -2,7 +2,7 @@
 name: testing
 description: >
   Master testing strategy skill — the unified entry point for all testing questions,
-  philosophy, and approach. Use this skill when the user asks about testing strategy,
+  philosophy, approach, and practical tactics. Use this skill when the user asks about testing strategy,
   testing approach, testing philosophy, what kind of tests to write, testing best practices,
   testing methodology, or testing mindset. Also trigger on: "how should I test this?",
   "what's the best way to test?", "unit vs integration vs e2e", "what makes a good test?",
@@ -12,7 +12,10 @@ description: >
   "when to use mocks", "mocking strategy", "mocks vs fakes", "test doubles",
   "should I write tests first?", "test-driven", "testing anti-patterns", "how much to test",
   "test design", "testing architecture", "testing layers", "check my tests", "review my test suite",
-  "do these follow BDD?", "help me name my tests", or when the user shares test code asking for feedback.
+  "do these follow BDD?", "help me name my tests", "test desiderata", "12 properties",
+  "determinism", "behavioral sensitivity", "structural insensitivity", "smoke test", "smoke testing",
+  "sanity check", "critical path test", "fast CI gate", "regression gate", "quick validation",
+  "run smoke tests", "identify smoke tests", or when the user shares test code asking for feedback.
 ---
 
 # Testing — Strategy & Philosophy
@@ -38,13 +41,13 @@ The test pyramid describes *how many* of each type to write and *why*. Unit test
 
 Test a single behavior in isolation. Zero or minimal setup; no I/O, no network, no database. When unit tests require heavy mocking, that is a design signal—the code under test has too many dependencies. The solution is refactoring, not better mocks.
 
-Specialist skill: Use `tcrdd` to practice TDD cycles; use `testdesiderata` to audit quality.
+Specialist guidance: Use `tcrdd` for TDD workflow practice; see TestDesiderata section below to audit quality.
 
 ### Integration / Collaboration Tests (Some)
 
 Test that two real components work together. Prefer real collaborators over mocks at this layer. It is acceptable to hit a real database or file system if using a test container or in-memory variant. Smoke tests live here—they validate critical-path integration scenarios without testing every permutation.
 
-Specialist skill: Use `smoke-test` for the CI gate pattern.
+Specialist guidance: See the Smoke Tests section below for the CI gate pattern and practical implementation.
 
 ### End-to-End Tests (Few)
 
@@ -162,19 +165,19 @@ it("should notify the customer by email after confirmation", ...);
 
 ## Decision Guide
 
-Use this table to determine which approach fits your situation, then route to the specialist skill if needed.
+Use this table to determine which approach fits your situation.
 
-| Situation | Recommended approach | Specialist skill |
-|-----------|---------------------|-----------------|
-| Starting a new feature from scratch | Write the test first (Red-Green-Refactor cycle) | `tcrdd` |
-| Reviewing existing tests for quality | Audit against 12 properties (Isolation, Speed, Readability, Behavioral Sensitivity, etc.) | `testdesiderata` |
-| Tests have vague names or unclear intent | Audit against BDD naming conventions and one-behavior-per-test principle | See BDD Review section below |
-| Setting up a CI gate for fast feedback | Smoke test suite pattern | `smoke-test` |
-| Code is too hard to test | Apply Principle 1: refactor for dependency injection, pure cores | This skill (Principle 1) |
-| Heavy mocking in tests | Apply Principle 2: replace mocks with fakes; redesign if needed | This skill (Principle 2) |
-| Tests are slow | Apply Principle 3: push I/O to edges, unit-test the pure core | This skill (Principle 3) |
-| Tests break on every refactor | Apply Principle 4; also `testdesiderata` property: Structural Insensitivity | `testdesiderata` |
-| Untested legacy code, need to add tests | Mikado Method + Test Data Builders pattern | `mikado-method` |
+| Situation | Recommended approach |
+|-----------|---------------------|
+| Starting a new feature from scratch | Write the test first (Red-Green-Refactor cycle) — see `tcrdd` specialist skill |
+| Reviewing existing tests for quality | Audit against 12 properties (Isolation, Speed, Readability, Behavioral Sensitivity, etc.) — see TestDesiderata section below |
+| Tests have vague names or unclear intent | Audit against BDD naming conventions and one-behavior-per-test principle — see BDD Review section below |
+| Setting up a CI gate for fast feedback | Smoke test suite pattern — see Smoke Tests section below |
+| Code is too hard to test | Apply Principle 1: refactor for dependency injection, pure cores |
+| Heavy mocking in tests | Apply Principle 2: replace mocks with fakes; redesign if needed |
+| Tests are slow | Apply Principle 3: push I/O to edges, unit-test the pure core |
+| Tests break on every refactor | Apply Principle 4; audit TestDesiderata property: Structural Insensitivity |
+| Untested legacy code, need to add tests | Mikado Method + Test Data Builders pattern — see `mikado-method` specialist skill |
 
 ---
 
@@ -191,6 +194,97 @@ Use this table to determine which approach fits your situation, then route to th
 | Flaky tests | Intermittent failures, ignored in CI; low confidence | Non-deterministic state (time, DB order, async timing, network) | Control time with test doubles; isolate state; use fakes instead of real I/O |
 
 ---
+
+## TestDesiderata — Quality Audit
+
+TestDesiderata identifies twelve properties that tests _should_ have. These properties don't exist in isolation—some support each other, while others compete. The goal is to consciously choose which matter most for your context.
+
+### The Twelve Properties
+
+| Property | What it means |
+|----------|---------------|
+| **Isolation** | Tests run independently; one test's failure doesn't affect others |
+| **Composability** | Test logic can be reused & combined; patterns extracted into helpers |
+| **Determinism** | Tests produce consistent results every time; no flakiness |
+| **Speed** | Tests run quickly; feedback is immediate |
+| **Readability** | Test intent is obvious; a reader understands it without deep investigation |
+| **Behavioral Sensitivity** | Tests fail when actual code behavior changes; they catch real bugs |
+| **Structural Insensitivity** | Tests survive refactoring; implementation changes don't break them |
+| **Automation** | Tests run automatically in CI/CD without manual steps |
+| **Specificity** | Each test validates one focused thing |
+| **Predictiveness** | Passing tests give confidence the code works in production |
+| **Inspirational Confidence** | Test results make developers want to refactor without fear |
+| **Clarity of Purpose** | The "why" of the test is evident |
+
+### How to Review Against TestDesiderata
+
+When a user shares test code and asks for a review, provide:
+
+1. **Quick Assessment** — brief overview of test health against the 12 properties
+2. **Property-by-Property Breakdown** — for relevant properties:
+   - ✅ **Strength** — what the test does well
+   - ⚠️ **Concern** — where it could improve
+   - 💡 **Suggestion** — concrete improvement (with code examples)
+3. **Trade-offs** — acknowledge when improving one property affects another (e.g., speed vs. behavioral sensitivity), and point out design wins where multiple properties can improve simultaneously
+4. **Priority Improvements** — ranked by impact and effort—quick wins first
+
+### Key Principles
+
+#### Properties Support Each Other
+- **Isolation** + **Speed** — independent tests run in parallel
+- **Composability** + **Behavioral Sensitivity** — reusable helpers catch real behavior changes
+- **Readability** + **Specificity** — focused tests are easier to understand
+
+#### Properties Can Conflict
+- **Speed** vs. **Behavioral Sensitivity** — fast tests often mock more (reducing sensitivity)
+- **Structural Insensitivity** vs. **Specificity** — broad tests might ignore critical details
+- **Composability** vs. **Readability** — helper abstractions sometimes hide test intent
+
+#### Design Wins Exist
+Smart design can resolve apparent conflicts. For example:
+- **Composability + Speed:** Extract setup into reusable, fast helper builders
+- **Behavioral Sensitivity + Structural Insensitivity:** Test behavior at the API boundary, not internals
+- **Readability + Specificity:** Name tests so they clearly state what one thing they validate
+
+### Common Test Smells
+
+#### Determinism Issues
+- Tests that pass/fail randomly
+- Async tests with arbitrary waits (`setTimeout(500)`)
+- Tests depending on external state (time, filesystem, database)
+
+**TestDesiderata lens:** Determinism problem. Solution: Control time, use fakes, isolate state.
+
+#### Behavioral Sensitivity Issues
+- Mocking the entire system under test
+- Tests that pass when code is broken
+- Changes to code behavior don't trigger test failures
+
+**TestDesiderata lens:** Behavioral sensitivity too low. Solution: Hit real code paths, minimize mocks.
+
+#### Structural Insensitivity Issues
+- Tests break when you refactor variable names
+- Tests fail when you move code from one file to another
+- Tests coupled to class structure or private methods
+
+**TestDesiderata lens:** Structural insensitivity too low. Solution: Test behavior, not implementation.
+
+#### Readability Issues
+- 50-line test setup; actual assertion is 1 line
+- Test names that don't describe what's being tested
+- Unclear what inputs matter vs. boilerplate
+
+**TestDesiderata lens:** Readability problem. Solution: Extract setup, name clearly, show intent.
+
+### Reference: Kent Beck's Vision
+
+Kent Beck emphasizes that great tests:
+1. Distinguish signal (important behaviors) from noise (implementation details)
+2. Build confidence through quick feedback
+3. Enable fearless refactoring
+4. Document behavior, not implementation
+
+TestDesiderata operationalizes this by giving you twelve properties to consciously balance.
 
 ---
 
@@ -294,24 +388,305 @@ Flag this as a **design smell** (not just a naming issue). Suggest introducing a
 
 ---
 
+## Smoke Tests
+
+Smoke tests are minimal, rapid tests that validate critical user-facing functionality and core workflows. They run quickly and catch major failures before slower integration or performance tests.
+
+### What Are Smoke Tests?
+
+A smoke test verifies that:
+
+1. **Core features work** — the application starts, main entry points execute
+2. **Critical paths execute** — key user workflows complete without exceptions
+3. **System integration is intact** — major components communicate correctly
+
+**Characteristics:**
+- Minimal setup; no deep behavior verification
+- Fast execution (seconds, not minutes)
+- Broad coverage of happy paths
+- High signal-to-noise ratio (if smoke tests fail, the build is broken)
+
+### Task 1: Identify Smoke Tests
+
+Smoke tests in Jest/Vitest can be marked several ways:
+
+#### Pattern 1: Skip Other Tests (Run Smoke Only)
+
+```javascript
+describe('Smoke Tests', () => {
+  it.only('should load the application', () => {
+    expect(app.isReady()).toBe(true);
+  });
+});
+
+describe('Full Feature Tests', () => {
+  it('should handle edge case X', () => {
+    // Skipped if smoke tests use .only above
+  });
+});
+```
+
+**Detection:** Look for `describe.only(...)` or `it.only(...)`
+
+#### Pattern 2: Dedicated `smoke` Group
+
+```javascript
+describe.skip('Smoke Tests', () => {
+  it('should load app', () => { ... });
+  it('should initialize core service', () => { ... });
+  it('should connect to database', () => { ... });
+});
+```
+
+**Detection:** Look for `describe('Smoke Tests')` or comments `// @smoke` or `@critical`
+
+#### Pattern 3: Filename Convention
+
+```
+tests/
+  smoke/                    # Smoke tests directory
+    load.test.js
+    core-service.test.js
+  unit/                     # All other tests
+  integration/
+```
+
+**Detection:** Tests in a `smoke/` or `smoke-tests/` directory
+
+#### Pattern 4: Custom Markers (Comments or Tags)
+
+```javascript
+// @smoke @critical
+describe('Load Test', () => {
+  it('should initialize the app', () => { ... });
+});
+```
+
+**Detection:** Grep for `@smoke`, `@critical`, `@fast`, or tags in test files
+
+### Task 2: Run Smoke Tests
+
+#### Command: Run Smoke Tests Only
+
+**Using `--testPathPattern` (directory-based):**
+```bash
+npm test -- --testPathPattern='smoke'
+# or with Vitest
+npm test -- --grep '@smoke'
+```
+
+**Using `--testNamePattern` (name-based):**
+```bash
+npm test -- --testNamePattern='Smoke Tests'
+# Runs all tests in any describe/it with "Smoke Tests" in the name
+```
+
+**Using `.only` in code:**
+If tests are marked with `it.only(...)`, run normally:
+```bash
+npm test
+# Only .only tests execute; others skip automatically
+```
+
+#### Workflow: Running Smoke Tests
+
+1. **Identify smoke tests** (see Task 1 above)
+2. **Choose command** based on your marking strategy:
+   - Directory: `npm test -- --testPathPattern='smoke'`
+   - Name pattern: `npm test -- --testNamePattern='Smoke'`
+   - `.only` marker: `npm test` (no args needed)
+3. **Capture output**:
+   ```bash
+   npm test -- --testPathPattern='smoke' --verbose
+   # or
+   npm test -- --testPathPattern='smoke' --coverage
+   ```
+4. **Interpret results**:
+   - ✅ All pass → critical paths are healthy
+   - ❌ Any fail → the build is blocked; investigate immediately
+   - ⚠️ Flaky → smoke test is unreliable; remove or fix
+
+### Task 3: Generate Smoke Test Template
+
+Use this template as a starting point. Adapt it to your application's architecture.
+
+```javascript
+/**
+ * Smoke Tests — Critical Path Validation
+ *
+ * These tests verify that core features and system integration are intact.
+ * Run before slower integration/performance tests.
+ *
+ * Run with: npm test -- --testPathPattern='smoke'
+ */
+
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { createApp } from '../src/app';
+import { connectDatabase } from '../src/db';
+
+describe('Smoke Tests', () => {
+  let app;
+  let db;
+
+  beforeAll(async () => {
+    // Minimal setup for smoke tests
+    db = await connectDatabase();
+    app = createApp({ db });
+  });
+
+  afterAll(async () => {
+    await app.close();
+    await db.close();
+  });
+
+  // ===== Core System =====
+
+  it('should initialize the application', () => {
+    expect(app).toBeDefined();
+    expect(app.isRunning()).toBe(true);
+  });
+
+  it('should establish database connection', () => {
+    expect(db.isConnected()).toBe(true);
+  });
+
+  it('should load configuration', () => {
+    const config = app.getConfig();
+    expect(config).toBeDefined();
+    expect(config.port).toBeDefined();
+  });
+
+  // ===== Critical User Workflows =====
+
+  it('should authenticate a valid user', async () => {
+    const result = await app.auth.login('user@example.com', 'password');
+    expect(result.success).toBe(true);
+    expect(result.token).toBeDefined();
+  });
+
+  it('should create a resource (happy path)', async () => {
+    const resource = await app.api.post('/resources', {
+      name: 'Test Resource'
+    });
+    expect(resource.id).toBeDefined();
+    expect(resource.name).toBe('Test Resource');
+  });
+
+  it('should retrieve created resource', async () => {
+    const resource = await app.api.get('/resources/1');
+    expect(resource).toBeDefined();
+    expect(resource.name).toBe('Test Resource');
+  });
+
+  it('should list resources', async () => {
+    const list = await app.api.get('/resources');
+    expect(Array.isArray(list)).toBe(true);
+  });
+
+  // ===== System Integration =====
+
+  it('should serve the health check endpoint', async () => {
+    const health = await app.api.get('/health');
+    expect(health.status).toBe('ok');
+  });
+
+  it('should return valid error responses', async () => {
+    const result = await app.api.get('/resources/999');
+    expect(result.statusCode).toBe(404);
+    expect(result.error).toBeDefined();
+  });
+});
+```
+
+#### Smoke Test Guidelines
+
+| Aspect | ✅ Do | ❌ Don't |
+|--------|-------|---------|
+| **Scope** | Test critical workflows | Test every edge case |
+| **Setup** | Minimal, reusable fixtures | Complex multi-step setup |
+| **Assertions** | 1–3 per test, focused | Many assertions per test |
+| **Time** | <100ms per test | Slow, resource-heavy tests |
+| **Maintenance** | Stable, rarely change | Break on implementation changes |
+| **Coverage** | Broad paths, not deep | Deep internal behavior |
+
+### Quick Reference: Smoke Test Checklist
+
+- [ ] Identify where smoke tests live (directory, `.only`, or naming convention)
+- [ ] List all critical user workflows (auth, create, read, update, list, etc.)
+- [ ] Write 5–10 focused smoke tests covering happy paths
+- [ ] Add a `beforeAll` setup and `afterAll` teardown
+- [ ] Run smoke tests in isolation: `npm test -- --testPathPattern='smoke'`
+- [ ] Ensure all smoke tests pass before running full suite
+- [ ] Integrate smoke tests into CI pipeline as a first-pass gate
+
+### Integration: Smoke Tests in CI/CD
+
+Add this to your GitHub Actions / GitLab CI:
+
+```yaml
+# GitHub Actions example
+- name: Run Smoke Tests
+  run: npm test -- --testPathPattern='smoke'
+  if: always()
+
+- name: Run Full Test Suite
+  run: npm test
+  if: steps.smoke.outcome == 'success'
+```
+
+Smoke tests act as a **gate**: if they fail, skip the slower suite.
+
+### Common Patterns & Pitfalls
+
+#### ✅ Good: Broad Coverage, Minimal Depth
+
+```javascript
+it('should process payment', async () => {
+  const result = await app.payments.charge({ amount: 100 });
+  expect(result.success).toBe(true);
+  // That's it. Don't verify internal state, audit logs, etc.
+});
+```
+
+#### ❌ Bad: Too Deep, Slow, Maintenance Burden
+
+```javascript
+it('should process payment and verify all downstream effects', async () => {
+  const order = await app.orders.create({ ... });
+  const invoice = await app.invoices.generate(order.id);
+  const notification = await app.notifications.send(order.customerId);
+  const balance = await app.accounting.updateBalance(order.customerId);
+  // 4 unrelated assertions in one test. Harder to debug.
+});
+```
+
+#### ⚠️ Flaky Smoke Tests
+
+If a smoke test fails inconsistently:
+
+1. **Isolate the failure** — does it fail in isolation? (`npm test -- --testPathPattern='specific-test'`)
+2. **Add a timeout** — is async/timing the issue?
+3. **Remove from smoke suite** — move to integration tests
+4. **Fix the root cause** — often test isolation or shared state
+
+---
+
 ## Specialist Skills
 
-This skill covers *why* and *when*. For the *how* and deep dives, route to the specialist skills below:
+This skill covers *why*, *when*, and *how*. For TDD workflow deep dives, route to the specialist skill below:
 
 ```
-testing/                    ← you are here (strategy & philosophy, including BDD review)
-├── testdesiderata          ← test quality review (12 properties)
-├── tcrdd                   ← TDD workflow, red/green/refactor, TCRDD
-└── smoke-test              ← CI smoke test suite, critical path validation
+testing/    ← you are here (strategy, philosophy, BDD review, TestDesiderata, smoke tests)
+└── tcrdd   ← TDD workflow, red/green/refactor, TCRDD
 ```
 
-| If the user says... | Route to |
-|---------------------|----------|
-| "Review my tests", "are these tests good?" | `testdesiderata` (all 12 properties) for deep quality review |
-| "Help me name my tests", "follow BDD?", "unclear what the test does" | BDD Review section (above) |
-| "Walk me through TDD", "write tests first", "red/green/refactor" | `tcrdd` |
-| "Set up a smoke test", "fast CI feedback", "critical-path validation" | `smoke-test` |
-| "What's wrong with my test strategy?", "my tests feel wrong" | This skill — diagnose using Principles 1–4 and the anti-patterns table, then route |
+| If the user says... | What to do |
+|---------------------|-----------|
+| "Review my tests", "are these tests good?" | Use TestDesiderata section (above) for quality review against 12 properties |
+| "Help me name my tests", "follow BDD?", "unclear what the test does" | Use BDD Review section (above) |
+| "Walk me through TDD", "write tests first", "red/green/refactor" | Route to `tcrdd` specialist skill |
+| "Set up a smoke test", "fast CI feedback", "critical-path validation" | Use Smoke Tests section (above) |
+| "What's wrong with my test strategy?", "my tests feel wrong" | Diagnose using Principles 1–4 and the anti-patterns table, then reference relevant sections |
 
 ---
 
@@ -327,7 +702,7 @@ testing/                    ← you are here (strategy & philosophy, including B
 
 ### 3. Ask About a Pain Point
 
-"My tests break every time I refactor." This skill identifies the root cause (Structural Insensitivity in testdesiderata terms), explains the fix (test behavior, not implementation), and routes to `testdesiderata` for the full framework.
+"My tests break every time I refactor." This skill identifies the root cause (Structural Insensitivity per the TestDesiderata property), explains the fix (test behavior, not implementation), and the TestDesiderata section provides the full framework.
 
 ---
 
@@ -347,3 +722,6 @@ testing/                    ← you are here (strategy & philosophy, including B
 - Uncle Bob — The Three Rules of TDD: http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd
 - Martin Fowler — Test Pyramid: https://martinfowler.com/bliki/TestPyramid.html
 - Eric Elliott — Composing Software (mocks vs fakes): https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc
+- Wikipedia — Smoke Testing: https://en.wikipedia.org/wiki/Smoke_testing
+- Vitest CLI Options: https://vitest.dev/config/
+- Jest CLI Options: https://jestjs.io/docs/cli
