@@ -37,14 +37,14 @@ triggers:
 
 ## Concepts
 
-**SRP** — One reason to change. A `UserController` that also validates and hashes passwords needs splitting into `UserValidator`, `PasswordHasher`, and `UserRepository`.
+**SRP** — One reason to change. Split `UserController` into `UserValidator`, `PasswordHasher`, `UserRepository`.
 
-**OCP** — Add behavior via subclass, don't edit proven code. Add `CsvResponseFormatter extends JsonResponseFormatter` without touching `JsonResponseFormatter`.
+**OCP** — Extend via subclass, don't edit proven code. Add `CsvResponseFormatter extends JsonResponseFormatter` without touching the base.
 
-**LSP** — Every subtype must be fully substitutable for its supertype. If `ReadOnlyCache extends Cache` but throws on `set()`, it violates LSP — fix by segregating `ReadableCache` and `WritableCache` interfaces.
+**LSP** — Subtypes must be fully substitutable. `ReadOnlyCache extends Cache` violating `set()` is LSP violation—use `ReadableCache` / `WritableCache` interfaces instead.
 
-**ISP** — Split fat interfaces into focused slices. A `DataStore` with `read`, `write`, `delete`, `stream`, and `transaction` forces analytics dashboards (which only need `read` + `stream`) to depend on write operations they never use.
+**ISP** — Split fat interfaces into focused slices. Don't force read-only clients to depend on write methods.
 
-**DIP** — High-level modules depend on abstractions. `EmailService(private transport: MailTransport)` not `new SendgridClient()`. The abstraction lets you swap `SendgridTransport` for `SmtpTransport` or `NullTransport` (tests) without touching `EmailService`.
+**DIP** — Depend on abstractions, not concretions. `EmailService(transport: MailTransport)` not `new SendgridClient()`. Enables swapping implementations.
 
 → Full annotated examples for all five principles: `references/solid.md`
