@@ -164,7 +164,7 @@ item = new TaxDecorator(item);
 - Hard to compose and test
 - Overkill for simple transformations
 
-### Fix (using composition + functions)
+### Fix (composition + functions)
 ```typescript
 const applyDiscount = (price: number, percent: number): number =>
   price * (1 - percent / 100);
@@ -172,27 +172,12 @@ const applyDiscount = (price: number, percent: number): number =>
 const applyTax = (price: number, rate: number): number =>
   price * (1 + rate / 100);
 
-// Usage
 let price = 100;
 price = applyDiscount(price, 10);
 price = applyTax(price, 8);
 ```
 
-Or use a higher-order function:
-```typescript
-const withDiscount = (percent: number) => (price: number) =>
-  price * (1 - percent / 100);
-
-const withTax = (rate: number) => (price: number) =>
-  price * (1 + rate / 100);
-
-const applyDiscount10 = withDiscount(10);
-const applyTax8 = withTax(8);
-
-let price = 100;
-price = applyDiscount10(price);
-price = applyTax8(price);
-```
+Advanced: configure via higher-order functions, e.g. `const withDiscount = (pct: number) => (price: number) => price * (1 - pct / 100);`
 
 ---
 
