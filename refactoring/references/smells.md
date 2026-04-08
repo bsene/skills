@@ -606,6 +606,7 @@ A **Comments smell** occurs when comments explain _what_ the code does rather th
 - Comment documenting expected behavior or edge cases → **Write Tests**
 - Commented-out code → ask user if it can be deleted
 - Outdated or misleading comment → delete
+- Comment restates what the code says (redundant) → delete
 
 #### Refactoring Techniques
 
@@ -689,6 +690,56 @@ it("expects percentage as 0-100, not 0-1", () => {
   expect(calculateDiscount(100, 100)).toBe(0);
 });
 ```
+
+##### 6. Delete Redundant Comment
+
+If a comment says exactly what the code says, delete it. Redundancy is often *created* by a prior tidying — after an Extract Method or Guard Clause, a once-useful comment can collapse into a restatement.
+
+```typescript
+// before — comment re-orients reader after a long authenticated branch
+function handleRequest(req: Request) {
+  if (req.session) {
+    const user = loadUser(req.session.userId);
+    logAccess(user);
+    return renderDashboard(user);
+  } else {
+    // no session, fall back to the anonymous user
+    return renderAnonymous();
+  }
+}
+
+// after Guard Clause — comment now just restates the code, delete it
+function handleRequest(req: Request) {
+  if (!req.session) return renderAnonymous();
+  const user = loadUser(req.session.userId);
+  logAccess(user);
+  return renderDashboard(user);
+}
+```
+
+> Tidyings chain — re-check nearby comments after every refactor.
+
+##### 7. Add Comment
+
+The inverse tidying. When you have an "oh, *that's* what's going on" moment reading code, record it — but write down only what isn't obvious from the code itself. Aim it at a specific future reader (or yourself 15 minutes ago).
+
+Good moments to add a comment:
+
+- You just understood something non-obvious (constraint, perf tradeoff, ordering requirement).
+- You just fixed a defect and noticed a hidden coupling: `// if you add another status here, also update billing/webhooks.ts`. Eventually the coupling should be designed away — until then, surface it instead of burying it.
+- Domain context the rest of the team doesn't share (regulatory, biology, finance, protocol quirks).
+
+```typescript
+// Stripe webhooks can arrive out of order and be redelivered for up to 3 days.
+// We dedupe on event.id rather than trusting created_at.
+async function handleStripeEvent(event: Stripe.Event) {
+  if (await seenEvents.has(event.id)) return;
+  await seenEvents.add(event.id);
+  await process(event);
+}
+```
+
+> If the comment would just restate the code, you're writing the wrong comment — see *Delete Redundant Comment*.
 
 #### When Comments Are Legitimate
 
