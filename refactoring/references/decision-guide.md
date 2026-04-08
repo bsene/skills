@@ -100,6 +100,11 @@ if (isPremiumActive) {
 
 ### Scenario 4: Scattered Duplicate Logic
 
+**Step 0: How many occurrences? (Rule of Three)**
+- 1 → leave it
+- 2 → leave it; note the duplication but don't extract yet — two points don't reliably reveal the right abstraction
+- 3+ → proceed to Step 1
+
 **Step 1: Is it the exact same code repeated?**
 - Yes → **Extract Method** (once, call from multiple places)
 - No (similar but slightly different logic) ↓
@@ -239,7 +244,7 @@ After refactoring, check:
 
 - ✅ Every method has a single, clear responsibility
 - ✅ Every class has one reason to change (SRP)
-- ✅ No duplicate logic (DRY)
+- ✅ No duplicate logic repeated 3+ times (DRY, tempered by Rule of Three)
 - ✅ Names express intent (Rename applied everywhere needed)
 - ✅ No deep nesting (guard clauses, extract methods)
 - ✅ Type checks are centralized (if polymorphism applies)
