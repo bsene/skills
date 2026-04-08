@@ -13,7 +13,7 @@ Pull out a section of code into a separate, named method/function. This is the m
 #### When to Use
 
 - Code section has a clear, single purpose but is buried in a larger method
-- Same logic appears in multiple places (extract once, reuse everywhere)
+- Same logic appears in **3+ places** (Rule of Three — wait until the third occurrence before extracting; two duplicates rarely reveal the right abstraction)
 - Method has complex local variables and you want to isolate them
 - You want to test a section in isolation
 - Code comment describes what a section does — that's a candidate for extraction
@@ -413,5 +413,162 @@ function calculateTaxAdjustedAmounts(orders: Order[]): number[] {
 ```
 
 **Payoff:** Code is self-documenting, onboarding is faster, fewer bugs from misunderstanding, refactoring opportunities become obvious.
+
+---
+
+## Part 2b — Additional High-Value Techniques
+
+Compact entries for common Fowler-catalog refactorings beyond the seven above. Each one: when to use, before → after.
+
+### Inline Method / Inline Variable
+
+**When:** A method body is as clear as its name, or a temp variable just restates an expression — the indirection adds noise without value. Inverse of Extract.
+
+```typescript
+// ❌
+function getRating(driver: Driver) { return moreThanFiveLateDeliveries(driver) ? 2 : 1; }
+function moreThanFiveLateDeliveries(driver: Driver) { return driver.numberOfLateDeliveries > 5; }
+
+// ✅
+function getRating(driver: Driver) { return driver.numberOfLateDeliveries > 5 ? 2 : 1; }
+```
+
+---
+
+### Change Function Declaration
+
+**When:** A function's name, parameter order, or parameter set no longer matches its purpose. Rename, reorder, add, or remove parameters. Migrate call sites in lockstep.
+
+```typescript
+// ❌  circum(radius: number)
+// ✅  circumference(radius: number)
+```
+
+For risky changes across many call sites: introduce the new function, delegate the old to it, migrate callers, then delete the old.
+
+---
+
+### Introduce Parameter Object
+
+**When:** The same group of parameters travels together across multiple functions. Bundle them into a type — often the seed of a real domain concept.
+
+```typescript
+// ❌
+function inRange(start: Date, end: Date, point: Date) { ... }
+function overlaps(start1: Date, end1: Date, start2: Date, end2: Date) { ... }
+
+// ✅
+type DateRange = { start: Date; end: Date };
+function inRange(range: DateRange, point: Date) { ... }
+function overlaps(a: DateRange, b: DateRange) { ... }
+```
+
+---
+
+### Replace Magic Literal
+
+**When:** A literal value (number, string) carries domain meaning that isn't obvious from context.
+
+```typescript
+// ❌  if (blood < 0.08) ...
+// ✅  const LEGAL_BAC_LIMIT = 0.08;
+//     if (blood < LEGAL_BAC_LIMIT) ...
+```
+
+Skip for truly self-explanatory literals (`0`, `1`, `""`).
+
+---
+
+### Decompose Conditional
+
+**When:** A conditional has complex predicate and branches. Extract each piece into a named function so the structure reads like prose.
+
+```typescript
+// ❌
+if (date.before(SUMMER_START) || date.after(SUMMER_END)) {
+  charge = quantity * winterRate + winterServiceCharge;
+} else {
+  charge = quantity * summerRate;
+}
+
+// ✅
+charge = isSummer(date) ? summerCharge(quantity) : winterCharge(quantity);
+```
+
+---
+
+### Consolidate Conditional Expression
+
+**When:** A sequence of separate conditionals all return the same result. Merge them with `&&`/`||` (and usually extract the merged predicate).
+
+```typescript
+// ❌
+if (seniority < 2) return 0;
+if (monthsDisabled > 12) return 0;
+if (isPartTime) return 0;
+
+// ✅
+if (isNotEligibleForDisability()) return 0;
+function isNotEligibleForDisability() {
+  return seniority < 2 || monthsDisabled > 12 || isPartTime;
+}
+```
+
+---
+
+### Replace Temp with Query
+
+**When:** A local variable holds the result of an expression that could be a method. Promoting it lets other methods reuse the value and shrinks the enclosing function.
+
+```typescript
+// ❌
+const basePrice = quantity * itemPrice;
+if (basePrice > 1000) return basePrice * 0.95;
+
+// ✅
+if (basePrice() > 1000) return basePrice() * 0.95;
+function basePrice() { return quantity * itemPrice; }
+```
+
+Caveat: only when the expression is pure and cheap (or cached).
+
+---
+
+### Remove Dead Code
+
+**When:** Code is unreachable, an unused export, or a feature flag long since flipped. Delete it. Version control is the archive — don't comment it out.
+
+---
+
+### Remove Flag Argument
+
+**When:** A boolean (or enum) parameter selects between two distinct behaviors. Split into two clearly named functions; callers become self-documenting.
+
+```typescript
+// ❌  bookConcert(customer, isPremium)
+// ✅  bookConcert(customer)
+//     premiumBookConcert(customer)
+```
+
+---
+
+### Separate Query from Modifier
+
+**When:** A function both returns a value *and* has a side effect. Split into a pure query and a separate command (Command-Query Separation).
+
+```typescript
+// ❌
+function getTotalOutstandingAndSendBill(): number {
+  const total = ...;
+  sendBill(total);
+  return total;
+}
+
+// ✅
+function totalOutstanding(): number { ... }
+function sendBill(): void { sendBillFor(totalOutstanding()); }
+```
+
+Callers can now query freely without triggering side effects.
 
 ---
