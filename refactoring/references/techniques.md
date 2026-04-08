@@ -1,8 +1,6 @@
 # Refactoring Techniques
 
-## Part 2 — Refactoring Techniques
-
-Refactoring techniques are the tools you actively apply to improve code design, clarity, and maintainability. While Part 1 catalogs *smells to avoid*, Part 2 catalogs *techniques to apply*.
+The tools you actively apply to improve code design, clarity, and maintainability. The companion catalog of *smells to avoid* lives in [smells.md](smells.md).
 
 ### Technique #1: Extract Method / Extract Function
 
