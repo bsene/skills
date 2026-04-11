@@ -4,7 +4,7 @@ description: >
   Test-Commit-Revert + TDD: a disciplined red/green/refactor loop where each phase auto-commits on success
   and auto-reverts on failure via `git gamble`. A reliable way to add "clean code that works" (Ron Jeffries).
   Use when the user asks to start a TCRDD / TCR / TDD cycle, mentions red-green-refactor, wants to use
-  `git gamble`, or wants to pair on TDD. Implementation is done pair-programming style between the agent
+  `git-gamble`, or wants to pair on TDD. Implementation is done pair-programming style between the agent
   and the user.
 ---
 
@@ -24,7 +24,7 @@ REFACTOR → clean code → git gamble --refactor
            fail? revert → try again
 ```
 
-> `git gamble --<phase>` runs the tests and auto-commits when the result matches the phase's expectation, or auto-reverts otherwise. No git-gamble installed? Do it manually: run the tests, `git commit` on the expected result, `git reset --hard` on the unexpected one.
+> `git-gamble --<phase>` runs the tests and auto-commits when the result matches the phase's expectation, or auto-reverts otherwise. No git-gamble installed? Do it manually: run the tests, `git commit` on the expected result, `git reset --hard` on the unexpected one.
 
 ---
 
@@ -47,7 +47,7 @@ REFACTOR → clean code → git gamble --refactor
 - Write _only enough_ of a test to fail. As soon as it won't compile, or an assertion fails — stop.
 - Do not write the full test scenario at once; get it to a red state first.
 
-After that, run: `git gamble --red`
+After that, run: `git-gamble --red`
 
 Post actions:
 
@@ -60,7 +60,7 @@ Post actions:
 - Resist the urge to generalise, add helpers, or handle future cases — those are for later tests.
 - If the simplest passing implementation feels like a "cheat" (e.g., returning a hardcoded value), that's fine. The next test will force you to generalise.
 
-After that, run: `git gamble --green`
+After that, run: `git-gamble --green`
 
 Post actions:
 
@@ -72,7 +72,7 @@ Post actions:
 - With all tests green, clean up both production and test code freely.
 - The tests act as a safety net; you can refactor without fear of breaking behaviour.
 
-After that, run: `git gamble --refactor`
+After that, run: `git-gamble --refactor`
 
 Post actions:
 
@@ -101,7 +101,7 @@ When helping someone practice TCRDD:
    - Green: "Write the minimum code — no more than needed to pass the test."
    - Refactor: "Only restructure. If you're adding behaviour, that's a new Red cycle."
 
-3. **Remind about the gamble step.** Before running tests, the user should declare their expectation with `git gamble --<phase>`. This is what triggers the automatic commit or revert.
+3. **Remind about the gamble step.** Before running tests, the user should declare their expectation with `git-gamble --<phase>`. This is what triggers the automatic commit or revert.
 
 4. **When they get a surprise result**, help them understand why:
    - Unexpected pass in Red → their test didn't capture a real missing behaviour. Revert and rethink the test.
