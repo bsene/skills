@@ -37,7 +37,7 @@ REFACTOR → clean code → git gamble --refactor
 
 ## How to write code
 
-> Note: always ask the user to review changes before moving to the next step.
+> Note: always ask the user to review the diff **before running `git-gamble`**. Once gamble runs the change is either committed or reverted — review after that is too late.
 >
 > Keep cycles short. If you feel stuck for more than a few minutes, the test increment is too big — break it down further.
 
