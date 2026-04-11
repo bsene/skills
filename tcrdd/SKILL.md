@@ -37,7 +37,7 @@ REFACTOR → clean code → git gamble --refactor
 
 ## How to write code
 
-> Note: always ask the user to review the diff **before running `git-gamble`**. Once gamble runs the change is either committed or reverted — review after that is too late.
+> Note: each phase has **two user checkpoints** — (1) state your plan and get approval **before writing any code**, then (2) show the diff and get approval **before running `git-gamble`**. The gamble is irreversible (auto-commit or auto-revert), so both checkpoints must happen while the change is still mutable.
 >
 > Keep cycles short. If you feel stuck for more than a few minutes, the test increment is too big — break it down further.
 
