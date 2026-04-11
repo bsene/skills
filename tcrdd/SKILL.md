@@ -1,25 +1,34 @@
 ---
 name: tcrdd
 description: >
-  Test-Commit-Revert + TDD: a disciplined red/green/refactor loop where each phase auto-commits on success
-  and auto-reverts on failure via `git gamble`. A reliable way to add "clean code that works" (Ron Jeffries).
-  Use when the user asks to start a TCRDD / TCR / TDD cycle, mentions red-green-refactor, wants to use
-  `git-gamble`, or wants to pair on TDD. Implementation is done pair-programming style between the agent
-  and the user.
+  Test-Commit-Revert + TDD (TCRDD): red/green/refactor with per-phase auto-commit on success
+  and auto-revert on failure, gated by user approval before code and before committing.
+
+  TRIGGER when: user says TCRDD, TCR, TDD, red-green-refactor, "test-first", "write the test
+  first", "let's TDD this", "baby steps", "commit on green", "revert on failure", "go step by
+  step with tests"; user mentions `git-gamble`; user wants approval-gated pair programming on
+  a feature; user wants disciplined test-then-code cadence with automatic commits.
+
+  DO NOT use when: retrofitting tests onto existing code without behaviour change (use
+  `testing` instead); one-off bug fix where per-phase commits add noise; no runnable test
+  command available.
+
+  Prefer this over `testing` when cadence and commit discipline matter, not just test
+  authoring.
 ---
 
 ## Workflow
 
 ```
-RED   → write 1 test → git gamble --red
+RED   → write 1 test → request approval from user → git-gamble --red
         fail? commit → GREEN
         pass? revert → try again
 
-GREEN → write min code → git gamble --green
+GREEN → write min code → request approval from user → git-gamble --green
         pass? commit → REFACTOR
         fail? revert → try again
 
-REFACTOR → clean code → git gamble --refactor
+REFACTOR → clean code → request approval from user → git-gamble --refactor
            pass? commit → (loop or done or back to RED)
            fail? revert → try again
 ```
@@ -90,7 +99,7 @@ Post actions:
 
 ---
 
-## How to Guide Users Through TCRDD
+## How to Guide Users (or agents) Through TCRDD
 
 When helping someone practice TCRDD:
 
@@ -114,3 +123,5 @@ When helping someone practice TCRDD:
 - [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html) — full visual flowcharts for each phase
 - [TCR original post by Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
 - [TDD (Wikipedia)](https://en.wikipedia.org/wiki/Test-driven_development)
+- [Test Desiderata — Kent Beck](https://testdesiderata.com/)
+- [unit test - M. Fowler](https://martinfowler.com/bliki/UnitTest.html)
