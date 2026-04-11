@@ -20,15 +20,15 @@ description: >
 ## Workflow
 
 ```
-RED   → write 1 test → request approval from user → git-gamble --red
+RED   → plan test → approval? → write test → diff approval? → git-gamble --red
         fail? commit → GREEN
         pass? revert → try again
 
-GREEN → write min code → request approval from user → git-gamble --green
+GREEN → plan code → approval? → write code → diff approval? → git-gamble --green
         pass? commit → REFACTOR
         fail? revert → try again
 
-REFACTOR → clean code → request approval from user → git-gamble --refactor
+REFACTOR → plan cleanup → approval? → refactor → diff approval? → git-gamble --refactor
            pass? commit → (loop or done or back to RED)
            fail? revert → try again
 ```
@@ -39,7 +39,7 @@ REFACTOR → clean code → request approval from user → git-gamble --refactor
 
 ## How to write code
 
-> Note: each phase has **two user checkpoints** — (1) state your plan and get approval **before writing any code**, then (2) show the diff and get approval **before running `git-gamble`**. The gamble is irreversible (auto-commit or auto-revert), so both checkpoints must happen while the change is still mutable.
+> Both approval gates are required: the `git-gamble` step is irreversible (auto-commit or auto-revert).
 >
 > Keep cycles short. If you feel stuck for more than a few minutes, the test increment is too big — break it down further.
 
@@ -48,40 +48,16 @@ REFACTOR → clean code → request approval from user → git-gamble --refactor
 - Ask the user for the **smallest next behaviour** they want to add.
 - Write _only enough_ of a test to fail — stop at the first compile error or failed assertion. Don't write the full scenario upfront.
 
-After that, run: `git-gamble --red`
-
-Post actions:
-
-- **Tests pass** → revert (your test wasn't really new/failing), write another test, repeat
-- **Tests fail** → commit, move to GREEN
-
 ### GREEN — Write the minimum production code
 
 - Write _only_ the code that makes the currently failing test pass. Nothing more.
 - Resist the urge to generalise, add helpers, or handle future cases — those are for later tests.
 - If the simplest passing implementation feels like a "cheat" (e.g., returning a hardcoded value), that's fine. The next test will force you to generalise.
 
-After that, run: `git-gamble --green`
-
-Post actions:
-
-- **Tests fail** → revert, try something else, repeat
-- **Tests pass** → commit, move to REFACTOR
-
 ### REFACTOR
 
 - With all tests green, clean up both production and test code freely.
 - The tests act as a safety net; you can refactor without fear of breaking behaviour.
-
-After that, run: `git-gamble --refactor`
-
-Post actions:
-
-- **Tests fail** → revert, try a different refactor, repeat
-- **Tests pass** → commit, then:
-  - **refactor opportunities found** → repeat REFACTOR
-  - **more features to add** → back to RED
-  - **feature done** → move to REPEAT
 
 ### REPEAT
 
@@ -90,12 +66,6 @@ Post actions:
   - **Done** → squash the intermediate commits into one clean commit
 
 ---
-
-## Coaching tips
-
-- **Surprise pass in RED** → the test didn't capture new behaviour. Revert, rewrite the test.
-- **Surprise fail in GREEN or REFACTOR** → the change regressed something. Revert, take a smaller step.
-- **Stuck for more than a few minutes?** The increment is too big. Break the test down further.
 
 ## Resources
 
