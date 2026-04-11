@@ -1,9 +1,11 @@
 ---
 name: tcrdd
 description: >
-  A reliable way to add "clean code that works" (Ron jeffries)
-  Use this skill when user ask for starting a TCRDD cycle, or mention using TCRDD workflow or similar.
-  Implementation will ne done in air programming way between the agent and the user
+  Test-Commit-Revert + TDD: a disciplined red/green/refactor loop where each phase auto-commits on success
+  and auto-reverts on failure via `git gamble`. A reliable way to add "clean code that works" (Ron Jeffries).
+  Use when the user asks to start a TCRDD / TCR / TDD cycle, mentions red-green-refactor, wants to use
+  `git gamble`, or wants to pair on TDD. Implementation is done pair-programming style between the agent
+  and the user.
 ---
 
 ## Workflow
@@ -22,6 +24,8 @@ REFACTOR → clean code → git gamble --refactor
            fail? revert → try again
 ```
 
+> `git gamble --<phase>` runs the tests and auto-commits when the result matches the phase's expectation, or auto-reverts otherwise. No git-gamble installed? Do it manually: run the tests, `git commit` on the expected result, `git reset --hard` on the unexpected one.
+
 ---
 
 ## The Three Rules
@@ -29,15 +33,13 @@ REFACTOR → clean code → git gamble --refactor
 - http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd
 - https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html
 
-## Cycles
-
-- https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html
-
 ---
 
 ## How to write code
 
-> Note: always ask user to review changes before moving to next step.
+> Note: always ask the user to review changes before moving to the next step.
+>
+> Keep cycles short. If you feel stuck for more than a few minutes, the test increment is too big — break it down further.
 
 ### RED — Write a failing test
 
@@ -75,15 +77,16 @@ After that, run: `git gamble --refactor`
 Post actions:
 
 - **Tests fail** → revert, try a different refactor, repeat
-- **Tests pass** → commit
-  - find refactor opportunities ? if yes, repeat this step
-  - ask user more features to add ? if yes, go back to RED
-  - ask user is it done? if yes go next step
+- **Tests pass** → commit, then:
+  - **refactor opportunities found** → repeat REFACTOR
+  - **more features to add** → back to RED
+  - **feature done** → move to REPEAT
 
 ### REPEAT
 
-- ask user is overall feature, fix is done, if yes make a clean git commit by squashing intermediate git commits. If no then go to RED
-- Keep cycles short. If you feel stuck for more than a few minutes, the test increment is too big — break it down further.
+- Ask the user whether the overall feature or fix is done.
+  - **Not done** → back to RED
+  - **Done** → squash the intermediate commits into one clean commit
 
 ---
 
