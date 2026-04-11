@@ -37,13 +37,6 @@ REFACTOR → clean code → request approval from user → git-gamble --refactor
 
 ---
 
-## The Three Rules
-
-- http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd
-- https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html
-
----
-
 ## How to write code
 
 > Note: each phase has **two user checkpoints** — (1) state your plan and get approval **before writing any code**, then (2) show the diff and get approval **before running `git-gamble`**. The gamble is irreversible (auto-commit or auto-revert), so both checkpoints must happen while the change is still mutable.
@@ -52,9 +45,8 @@ REFACTOR → clean code → request approval from user → git-gamble --refactor
 
 ### RED — Write a failing test
 
-- Ask user the **smallest next behaviour** he/she want to add.
-- Write _only enough_ of a test to fail. As soon as it won't compile, or an assertion fails — stop.
-- Do not write the full test scenario at once; get it to a red state first.
+- Ask the user for the **smallest next behaviour** they want to add.
+- Write _only enough_ of a test to fail — stop at the first compile error or failed assertion. Don't write the full scenario upfront.
 
 After that, run: `git-gamble --red`
 
@@ -74,7 +66,7 @@ After that, run: `git-gamble --green`
 Post actions:
 
 - **Tests fail** → revert, try something else, repeat
-- **Tests pass** → commit, move to Refactor
+- **Tests pass** → commit, move to REFACTOR
 
 ### REFACTOR
 
@@ -99,29 +91,18 @@ Post actions:
 
 ---
 
-## How to Guide Users (or agents) Through TCRDD
+## Coaching tips
 
-When helping someone practice TCRDD:
-
-1. **Identify their current phase.** Ask what they just did. Are they about to write a test (Red), about to make it pass (Green), or about to clean up (Refactor)?
-
-2. **Coach the correct constraint for that phase.**
-   - Red: "Write only one test. Don't write any implementation yet."
-   - Green: "Write the minimum code — no more than needed to pass the test."
-   - Refactor: "Only restructure. If you're adding behaviour, that's a new Red cycle."
-
-3. **Remind about the gamble step.** Before running tests, the user should declare their expectation with `git-gamble --<phase>`. This is what triggers the automatic commit or revert.
-
-4. **When they get a surprise result**, help them understand why:
-   - Unexpected pass in Red → their test didn't capture a real missing behaviour. Revert and rethink the test.
-   - Unexpected fail in Green/Refactor → their change introduced a regression. Revert and try something smaller.
-
-5. **Encourage baby steps.** If a user wants to implement a big chunk, help them break it into the smallest possible increment that would change the test outcome.
+- **Surprise pass in RED** → the test didn't capture new behaviour. Revert, rewrite the test.
+- **Surprise fail in GREEN or REFACTOR** → the change regressed something. Revert, take a smaller step.
+- **Stuck for more than a few minutes?** The increment is too big. Break the test down further.
 
 ## Resources
 
 - [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html) — full visual flowcharts for each phase
 - [TCR original post by Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
+- [The Three Rules of TDD — Uncle Bob](http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd)
+- [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html)
 - [TDD (Wikipedia)](https://en.wikipedia.org/wiki/Test-driven_development)
 - [Test Desiderata — Kent Beck](https://testdesiderata.com/)
-- [unit test - M. Fowler](https://martinfowler.com/bliki/UnitTest.html)
+- [unit test — M. Fowler](https://martinfowler.com/bliki/UnitTest.html)
