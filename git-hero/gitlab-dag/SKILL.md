@@ -1,14 +1,6 @@
 ---
-name: gitlab-dag
-description: >
-  Design, write, review, or optimize GitLab CI/CD pipelines using DAG (Directed Acyclic Graph)
-  with the `needs:` keyword and parallelism features (`parallel:`, `parallel:matrix`).
-  Use this skill whenever the user mentions GitLab CI, `.gitlab-ci.yml`, pipeline optimization,
-  job dependencies, the `needs:` keyword, parallel matrix builds, pipeline speed, or wants to
-  break free from strict stage ordering. Also trigger when the user asks about reducing CI
-  runtime, fanning out jobs, matrix builds across OS/version/environment combinations, or
-  1:1 job dependency mapping between matrix jobs. If the request involves GitLab pipelines
-  at all — even simple questions — consult this skill first.
+name: git-hero-gitlab-dag
+description: "Design, write, review, or optimize GitLab CI/CD pipelines using DAG (Directed Acyclic Graph) with the needs keyword and parallelism features (parallel, parallel:matrix). Use this skill whenever the user mentions GitLab CI, .gitlab-ci.yml, pipeline optimization, job dependencies, the needs keyword, parallel matrix builds, pipeline speed, or wants to break free from strict stage ordering. Also trigger when the user asks about reducing CI runtime, fanning out jobs, matrix builds across OS/version/environment combinations, or 1:1 job dependency mapping between matrix jobs."
 ---
 
 # GitLab DAG & Parallelism Skill

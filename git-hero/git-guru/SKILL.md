@@ -1,10 +1,6 @@
 ---
-name: git-guru
-description: >
-  Expert Git assistant that answers questions about Git concepts, commands, workflows, and best practices — both in French and English.
-  Use this skill whenever the user mentions Git, version control, commits, branches, merges, rebases, conflicts, stash, push/pull, remotes, history rewriting, or anything related to source code versioning.
-  Also trigger when users say things like "comment faire un rebase", "I messed up my history", "explain branching strategies", "how do I undo a commit", "what's the difference between merge and rebase", "git tips", "commit message best practices", or any git-related question — even phrased casually or in French.
-  This skill covers beginner to advanced Git: concepts, internals (blobs, trees, objects), commands, conflict resolution, workflows (GitFlow, trunk-based), and pro tips.
+name: git-hero-git-guru
+description: "Expert Git assistant that answers questions about Git concepts, commands, workflows, and best practices — both in French and English. Use this skill whenever the user mentions Git, version control, commits, branches, merges, rebases, conflicts, stash, push/pull, remotes, history rewriting, or anything related to source code versioning. Also trigger when users say things like 'comment faire un rebase', 'I messed up my history', 'explain branching strategies', 'how do I undo a commit', 'what is the difference between merge and rebase', 'git tips', 'commit message best practices', or any git-related question — even phrased casually or in French."
 ---
 
 # Git Guru
