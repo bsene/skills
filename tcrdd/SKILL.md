@@ -15,6 +15,7 @@ description: >
 
   Prefer this over `testing` when cadence and commit discipline matter, not just test
   authoring.
+user-invocable: false
 ---
 
 # TCRDD
@@ -44,6 +45,7 @@ REFACTOR → plan cleanup → approval? → refactor → diff approval? → git-
 ## How to write code
 
 Before each phase:
+
 - [ ] Plan approved by user
 - [ ] Diff approved by user before running `git-gamble`
 
@@ -71,24 +73,24 @@ Before each phase:
 
 ## Error handling
 
-| Situation | Action |
-|---|---|
-| `git-gamble` reverts your change | The step was too large — split it into smaller increments and try again |
-| Tests are flaky (pass/fail randomly) | Fix or isolate the flaky test before continuing the cycle |
-| `git-gamble` is not installed | Run tests manually; `git commit` on expected result, `git reset --hard` on unexpected |
+| Situation                            | Action                                                                                |
+| ------------------------------------ | ------------------------------------------------------------------------------------- |
+| `git-gamble` reverts your change     | The step was too large — split it into smaller increments and try again               |
+| Tests are flaky (pass/fail randomly) | Fix or isolate the flaky test before continuing the cycle                             |
+| `git-gamble` is not installed        | Run tests manually; `git commit` on expected result, `git reset --hard` on unexpected |
 
 ---
 
 ## Resources
 
-| Read when | Link |
-|---|---|
-| Need visual flowcharts for each phase | [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html) |
-| Want the original TCR rationale | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864) |
-| Want deeper TDD cycle theory | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
+| Read when                             | Link                                                                                                  |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Need visual flowcharts for each phase | [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html)                                  |
+| Want the original TCR rationale       | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                  |
+| Want deeper TDD cycle theory          | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
 
 ## Upstream
 
-| Before starting TCRDD | Skill | Why |
-|---|---|---|
+| Before starting TCRDD                        | Skill         | Why                                                                |
+| -------------------------------------------- | ------------- | ------------------------------------------------------------------ |
 | Unsure whether the feature is worth building | `kano-triage` | Classify the feature before investing in red/green/refactor cycles |

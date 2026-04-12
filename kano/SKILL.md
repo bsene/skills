@@ -19,6 +19,7 @@ description: >
 
   Prefer this over `tcrdd` when the question is "should we build this?" rather than
   "how should we build this?"
+user-invocable: false
 ---
 
 # Kano Triage
@@ -27,13 +28,13 @@ Classify features before building them. A principled framework for deciding what
 
 ## Kano Classification
 
-| Category | When present | When absent | Developer action |
-|---|---|---|---|
-| **Must-be** | Expected, no satisfaction boost | Strong dissatisfaction | Build it. No discussion. |
-| **One-dimensional** | Satisfaction proportional to execution | Dissatisfaction proportional to absence | Build if resources allow. Negotiate scope. |
-| **Attractive** | Delightful surprise | No dissatisfaction | Build only if cheap or strategically differentiating. |
-| **Indifferent** | No effect | No effect | **Refuse it.** This is waste. |
-| **Reverse** | Active dissatisfaction | Relief | **Refuse it and explain why.** Building this harms users. |
+| Category            | When present                           | When absent                             | Developer action                                          |
+| ------------------- | -------------------------------------- | --------------------------------------- | --------------------------------------------------------- |
+| **Must-be**         | Expected, no satisfaction boost        | Strong dissatisfaction                  | Build it. No discussion.                                  |
+| **One-dimensional** | Satisfaction proportional to execution | Dissatisfaction proportional to absence | Build if resources allow. Negotiate scope.                |
+| **Attractive**      | Delightful surprise                    | No dissatisfaction                      | Build only if cheap or strategically differentiating.     |
+| **Indifferent**     | No effect                              | No effect                               | **Refuse it.** This is waste.                             |
+| **Reverse**         | Active dissatisfaction                 | Relief                                  | **Refuse it and explain why.** Building this harms users. |
 
 ---
 
@@ -66,13 +67,13 @@ Each question accepts five answers: **Like it**, **Expect it**, **Neutral**, **C
 
 Cross-reference the answers in the evaluation matrix:
 
-| | **Like** | **Expect** | **Neutral** | **Tolerate** | **Dislike** |
-|---|---|---|---|---|---|
-| **Like** | Q | A | A | A | O |
-| **Expect** | R | I | I | I | M |
-| **Neutral** | R | I | I | I | M |
-| **Tolerate** | R | I | I | I | M |
-| **Dislike** | R | R | R | R | Q |
+|              | **Like** | **Expect** | **Neutral** | **Tolerate** | **Dislike** |
+| ------------ | -------- | ---------- | ----------- | ------------ | ----------- |
+| **Like**     | Q        | A          | A           | A            | O           |
+| **Expect**   | R        | I          | I           | I            | M           |
+| **Neutral**  | R        | I          | I           | I            | M           |
+| **Tolerate** | R        | I          | I           | I            | M           |
+| **Dislike**  | R        | R          | R           | R            | Q           |
 
 > Rows = functional answer, Columns = dysfunctional answer.
 > **M** = Must-be, **O** = One-dimensional, **A** = Attractive, **I** = Indifferent, **R** = Reverse, **Q** = Questionable (re-ask — answers are contradictory).
@@ -91,11 +92,11 @@ Once classified:
 
 The Kano skill's output is a _decision_: build, refuse, or scope-down. Implementation method is a separate concern.
 
-| Situation | Route to | Why |
-|---|---|---|
-| Feature validated, build with discipline | `tcrdd` | Red/green/refactor ensures craft quality on what Kano validated |
-| Feature requires large-scale restructuring | `mikado-method` | Safe incremental refactoring via dependency graphs |
-| Need to audit or add test coverage | `testing` | Testing strategy and philosophy |
+| Situation                                  | Route to        | Why                                                             |
+| ------------------------------------------ | --------------- | --------------------------------------------------------------- |
+| Feature validated, build with discipline   | `tcrdd`         | Red/green/refactor ensures craft quality on what Kano validated |
+| Feature requires large-scale restructuring | `mikado-method` | Safe incremental refactoring via dependency graphs              |
+| Need to audit or add test coverage         | `testing`       | Testing strategy and philosophy                                 |
 
 ---
 
@@ -114,19 +115,19 @@ When a feature classifies as **Indifferent** or **Reverse**, refuse it with evid
 
 ## Error handling
 
-| Situation | Action |
-|---|---|
-| Stakeholder disagrees with classification | Re-run with more respondents; present data, not opinion |
-| No access to users for the questionnaire | Use proxy signals: support tickets, analytics, competitor analysis |
-| Feature is politically mandated despite Indifferent/Reverse | Document the override. Build with minimal investment. Flag for removal review. |
-| Classification is ambiguous (borderline) | Default to the more conservative category (e.g. borderline Attractive → treat as Indifferent) |
+| Situation                                                   | Action                                                                                        |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Stakeholder disagrees with classification                   | Re-run with more respondents; present data, not opinion                                       |
+| No access to users for the questionnaire                    | Use proxy signals: support tickets, analytics, competitor analysis                            |
+| Feature is politically mandated despite Indifferent/Reverse | Document the override. Build with minimal investment. Flag for removal review.                |
+| Classification is ambiguous (borderline)                    | Default to the more conservative category (e.g. borderline Attractive → treat as Indifferent) |
 
 ---
 
 ## Resources
 
-| Read when | Link |
-|---|---|
-| Want the original Kano model theory | [Kano model — Wikipedia](https://en.wikipedia.org/wiki/Kano_model) |
+| Read when                                         | Link                                                                                                          |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Want the original Kano model theory               | [Kano model — Wikipedia](https://en.wikipedia.org/wiki/Kano_model)                                            |
 | Understanding alienation in AI-driven development | [Aliénation ou autonomisation — Benoit Gantaume](https://artisandeveloppeur.fr/alienation-ou-autonomisation/) |
-| Need multi-feature questionnaire and scoring | `references/kano-questionnaire.md` |
+| Need multi-feature questionnaire and scoring      | `references/kano-questionnaire.md`                                                                            |
