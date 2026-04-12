@@ -15,26 +15,28 @@ triggers:
   - ts-expect-error
   - monorepo types
   - api contract
+user-invocable: false
 ---
 
 # TypeScript
 
 ## Route to Sub-skills
 
-→ **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `design-patterns/` sub-skill
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
-→ **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `solid/` sub-skill
+→ **Zod** (schema validation, transforms, coercion, branded types…) → `zod/` sub-skill
+→ **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `oop-principles` skill
+→ **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `oop-principles` skill
 
 ---
 
 ## Error Handling
 
-| Strategy                                     | Caller forced to handle?   | Composability        |
-| -------------------------------------------- | -------------------------- | --------------------- |
-| Return `T | null`                           | Yes (null check)           | Low                  |
-| Throw exception                              | No — easy to miss          | High                 |
-| **Return exception** `T | ErrorA | ErrorB` | **Yes — union exhaustion** | Medium               |
-| Option/Either type                           | Via `.flatMap` chain       | High (needs library) |
+| Strategy                | Caller forced to handle? | Composability        |
+| ----------------------- | ------------------------ | -------------------- | -------------------------- | ------ |
+| Return `T               | null`                    | Yes (null check)     | Low                        |
+| Throw exception         | No — easy to miss        | High                 |
+| **Return exception** `T | ErrorA                   | ErrorB`              | **Yes — union exhaustion** | Medium |
+| Option/Either type      | Via `.flatMap` chain     | High (needs library) |
 
 **Return exceptions (preferred for expected failures):**
 
@@ -75,9 +77,11 @@ else res.status(200).json(result);
 ## TypeScript at Scale
 
 ### Strictness as Policy
+
 Enable `"strict": true` globally and enforce in CI. Prefer `@ts-expect-error` over `@ts-ignore`. Track and reduce `any` usage via linting.
 
 ### Domain Types vs Transport Types
+
 Keep API/DTO types separate. Map external responses into domain objects at boundaries.
 
 ```typescript
@@ -85,11 +89,16 @@ type UserDTO = { user_id: string; display_name: string; created_at: string };
 type User = { id: string; name: string; createdAt: Date };
 
 function toDomain(dto: UserDTO): User {
-  return { id: dto.user_id, name: dto.display_name, createdAt: new Date(dto.created_at) };
+  return {
+    id: dto.user_id,
+    name: dto.display_name,
+    createdAt: new Date(dto.created_at),
+  };
 }
 ```
 
 ### Runtime Validation at Boundaries
+
 Validate external inputs (API bodies, env vars, queues) at boundaries with Zod.
 
 ```typescript
@@ -98,9 +107,11 @@ const user = UserSchema.parse(req.body);
 ```
 
 ### Monorepo Contracts
+
 Publish domain contracts as `@org/contracts`. Use TypeScript project references to enforce boundaries.
 
 ### Type Debt
+
 Track and reduce `any` usage, `null` inconsistency, and duplicate definitions via `@typescript-eslint/no-explicit-any`.
 
 > Types are documentation. If they confuse humans, they’re failing.
@@ -109,4 +120,3 @@ Track and reduce `any` usage, `null` inconsistency, and duplicate definitions vi
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
-
