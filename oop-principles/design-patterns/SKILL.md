@@ -1,9 +1,9 @@
 ---
-name: typescript-design-patterns
-description: Design patterns for TypeScript—Factory, Strategy, Builder, Decorator, Singleton, Mixin, and more with problem-oriented and GoF triggers.
+name: oop-principles-design-patterns
+description: Design patterns—Factory, Strategy, Builder, Decorator, Singleton, Mixin, and more with problem-oriented and GoF triggers.
 triggers:
   - design patterns
-  - typescript design patterns
+  - OOP design patterns
   - Strategy pattern
   - Factory pattern
   - Abstract Factory
@@ -26,7 +26,7 @@ triggers:
   - reuse instances to reduce memory
 ---
 
-# TypeScript Design Patterns
+# Design Patterns
 
 ## Quick Pattern Selector
 
@@ -39,9 +39,9 @@ triggers:
 | Construct complex objects step-by-step           | **Builder**                          |
 | Pair a type and utility object under one name    | **Companion Object**                 |
 | Notify subscribers on state change               | **Observer**                         |
-| Add cross-cutting behavior non-invasively        | **Decorator** (TS 5+ standard)       |
+| Add cross-cutting behavior non-invasively        | **Decorator**                        |
 | Intercept/validate/log property access           | **Proxy**                            |
-| Share behavior across unrelated classes          | **Mixin** (class-expression pattern) |
+| Share behavior across unrelated classes          | **Mixin**                            |
 | Reuse instances to reduce memory                 | **Flyweight**                        |
 | Decouple via a central hub                       | **Mediator**                         |
 
@@ -55,9 +55,9 @@ For every pattern question, provide:
 
 1. **What it is** — one sentence
 2. **When to use / NOT to use** — concrete conditions
-3. **Minimal TypeScript 5+ example** — runnable
+3. **Minimal example** — runnable, in the user's language
 4. **Trade-offs** — gains vs. costs
-5. **⚠️ Caveat** — flag any TS-version or API-specific nuance
+5. **⚠️ Caveat** — flag any language-specific nuance
 
 ---
 
@@ -73,6 +73,6 @@ For every pattern question, provide:
 
 **Companion Object Pattern** — Bind same name to type and utility object. One import covers both. → `references/patterns.md`
 
-**Real Mixins ⚠️** — Use class-expression pattern only; legacy `applyMixins` is outdated. (is-a → inheritance; has-a → delegation; can-do → mixin.) → `references/patterns.md`
+**Mixin** — Share behavior across unrelated classes without inheritance. (is-a → inheritance; has-a → delegation; can-do → mixin.) → `references/patterns.md`
 
-**Decorator (TS 5.0+ Standard) ⚠️** — Cross-cutting concerns declaratively. Standard API needs no flag. Frameworks like Angular/NestJS still require `"experimentalDecorators": true` (APIs not interoperable). → `references/patterns.md`
+**Decorator** — Cross-cutting concerns declaratively. Implementation varies by language (Python decorators, TS 5+ standard decorators, Java annotations). → `references/patterns.md`
