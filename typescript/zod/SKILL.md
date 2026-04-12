@@ -17,6 +17,7 @@ triggers:
   - zod object
   - zod mini
   - zod infer
+user-invocable: false
 ---
 
 # Zod v4 Best Practices

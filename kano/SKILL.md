@@ -19,7 +19,6 @@ description: >
 
   Prefer this over `tcrdd` when the question is "should we build this?" rather than
   "how should we build this?"
-user-invocable: false
 ---
 
 # Kano Triage

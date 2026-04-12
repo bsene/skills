@@ -16,7 +16,6 @@ triggers:
   - when to refactor
   - tidying
   - tidy first
-user-invocable: false
 ---
 
 # Refactoring: Smells & Techniques
