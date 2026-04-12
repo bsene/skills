@@ -1,6 +1,6 @@
 ---
-name: typescript-solid
-description: SOLID principles for reducing coupling and improving testability—SRP, OCP, LSP, ISP, and DIP with TypeScript examples.
+name: oop-principles-solid
+description: SOLID principles for reducing coupling and improving testability—SRP, OCP, LSP, ISP, and DIP with annotated examples.
 triggers:
   - SOLID
   - SRP
