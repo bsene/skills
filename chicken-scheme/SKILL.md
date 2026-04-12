@@ -39,105 +39,6 @@ csc -shared hello.scm  # produces hello.so
 
 ---
 
-## Core Language Patterns
-
-### Modules & Imports (CHICKEN 5)
-
-```scheme
-;; Built-in modules use the (chicken X) namespace
-(import (chicken base))        ; add1, sub1, print, error, etc.
-(import (chicken io))          ; read-string, write-string
-(import (chicken string))      ; string-split, string-translate
-(import (chicken process-context)) ; command-line-arguments, get-environment-variable
-(import (chicken file))        ; file-exists?, delete-file, etc.
-(import (chicken pathname))    ; make-pathname, pathname-directory, etc.
-(import (chicken port))        ; with-output-to-string, open-input-string
-(import (chicken format))      ; format (sprintf-style)
-(import (chicken time))        ; current-seconds, cpu-time
-(import (chicken sort))        ; sort, sort!
-(import (chicken random))      ; pseudo-random-integer, randomize
-```
-
-### Tail Recursion (guaranteed by CHICKEN)
-
-```scheme
-;; Safe: CHICKEN guarantees proper tail calls
-(define (sum-to n acc)
-  (if (= n 0)
-      acc
-      (sum-to (- n 1) (+ acc n))))
-
-(sum-to 1000000 0)  ; => 500000500000 — no stack overflow
-```
-
-### First-Class Continuations (call/cc)
-
-```scheme
-;; Escape continuation (early return)
-(define (find-first pred lst)
-  (call-with-current-continuation
-    (lambda (return)
-      (for-each (lambda (x)
-                  (when (pred x) (return x)))
-                lst)
-      #f)))
-
-(find-first even? '(1 3 5 4 7))  ; => 4
-```
-
-### Macros (syntax-rules)
-
-```scheme
-(define-syntax swap!
-  (syntax-rules ()
-    ((_ a b)
-     (let ((tmp a))
-       (set! a b)
-       (set! b tmp)))))
-```
-
-### Records (SRFI-9 style)
-
-```scheme
-(import srfi-9)
-
-(define-record-type <point>
-  (make-point x y)
-  point?
-  (x point-x)
-  (y point-y))
-
-(define p (make-point 3 4))
-(point-x p)  ; => 3
-```
-
----
-
-## Egg System (Libraries)
-
-```bash
-# Install an egg
-chicken-install srfi-1         # list utilities
-chicken-install srfi-13        # string library
-chicken-install http-client    # HTTP requests
-chicken-install medea           # JSON parser
-chicken-install sqlite3        # SQLite bindings
-chicken-install matchable      # pattern matching
-
-# Search eggs online: https://wiki.call-cc.org/eggs
-```
-
-```scheme
-;; After installing, import in code:
-(import srfi-1)      ; iota, fold, filter, etc.
-(import matchable)   ; match macro
-
-(match '(1 2 3)
-  ((a b c) (+ a b c)))  ; => 6
-```
-
----
-
 ## Compiler Flags (csc)
 
 | Flag          | Effect                                         |
@@ -154,97 +55,17 @@ chicken-install matchable      # pattern matching
 | `-k`          | Keep generated C file (for inspection)         |
 | `-debug all`  | Verbose debug output                           |
 
-```bash
-# Optimised release build
-csc -O3 myapp.scm -o myapp
-
-# Deploy self-contained app (no CHICKEN needed on target)
-csc -deploy myapp.scm -o myapp
-
-# Inspect generated C
-csc -k myapp.scm
-cat myapp.c
-```
-
 ---
 
-## FFI (Calling C from Scheme)
-
-For details, see `references/ffi.md`.
-
-```scheme
-(import (chicken foreign))
-
-;; Inline C declaration
-(foreign-declare "#include <math.h>")
-
-;; Wrap a C function
-(define c-sqrt
-  (foreign-lambda double "sqrt" double))
-
-(c-sqrt 2.0)  ; => 1.4142135623730951
-
-;; Embed C code inline
-(define (add-ints a b)
-  ((foreign-lambda* int ((int a) (int b))
-     "C_return(a + b);")
-   a b))
-```
-
----
-
-## Scripting & CLI
-
-```scheme
-#!/usr/bin/env csi -s
-;;; myscript.scm
-
-(import (chicken process-context)
-        (chicken format))
-
-(define args (command-line-arguments))
-
-(if (null? args)
-    (fprintf (current-error-port) "Usage: myscript <name>\n")
-    (printf "Hello, ~a!\n" (car args)))
-```
+## Egg System (Libraries)
 
 ```bash
-chmod +x myscript.scm
-./myscript.scm World   ; Hello, World!
-```
+chicken-install srfi-1         # list utilities
+chicken-install matchable      # pattern matching
+chicken-install http-client    # HTTP requests
+chicken-install medea           # JSON parser
 
----
-
-## Writing & Distributing Eggs
-
-For full egg tutorial, see `references/eggs.md`.
-
-Minimal egg structure:
-
-```
-my-egg/
-├── my-egg.egg      ; metadata
-├── my-egg.scm      ; source
-└── tests/
-    └── run.scm
-```
-
-`my-egg.egg`:
-
-```scheme
-((synopsis "Does something useful")
- (version "1.0")
- (license "BSD")
- (author "You")
- (components (extension my-egg)))
-```
-
-```bash
-# Install locally from source
-cd my-egg && chicken-install
-
-# Release: create a git tag matching the version string
+# Search eggs online: https://wiki.call-cc.org/eggs
 ```
 
 ---
@@ -259,13 +80,7 @@ cd my-egg && chicken-install
 ,q          ; quit
 ```
 
-Enable readline in REPL:
-
-```bash
-chicken-install breadline
-```
-
-Add to `~/.csirc`:
+Enable readline: `chicken-install breadline`, then add to `~/.csirc`:
 
 ```scheme
 (import breadline)
@@ -284,7 +99,11 @@ Add to `~/.csirc`:
 
 ---
 
-## Reference Files
+## Read On Demand
 
-- `references/ffi.md` — Detailed FFI guide: foreign-lambda, foreign-safe-lambda, records, callbacks, C embedding
-- `references/eggs.md` — Full egg authoring, testing, and publishing workflow
+| Read When | File |
+|---|---|
+| Modules, imports, tail recursion, call/cc, macros, records | [Core Language](references/core-language.md) |
+| Scripting, shebang, CLI tools, compiler flag examples, egg structure | [Scripting & CLI](references/scripting-cli.md) |
+| FFI: foreign-lambda, callbacks, C interop, embedding | [FFI Guide](references/ffi.md) |
+| Egg authoring, testing, and publishing workflow | [Egg System](references/eggs.md) |
