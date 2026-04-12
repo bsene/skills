@@ -2,6 +2,7 @@
 name: refactoring
 description: Detect code smells and apply refactoring techniques to improve clarity, testability, and maintainability.
 triggers:
+  - refactoring opportunities
   - code smell
   - long method
   - large class
@@ -15,6 +16,7 @@ triggers:
   - when to refactor
   - tidying
   - tidy first
+user-invocable: false
 ---
 
 # Refactoring: Smells & Techniques
@@ -25,41 +27,41 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Identifying code smells in your codebase | [Code Smell Catalog](references/smells.md) |
-| Deciding which refactoring technique to use | [Refactoring Techniques](references/techniques.md) |
-| Choosing the right pattern for a specific scenario | [Decision Guide](references/decision-guide.md) |
-| Reviewing a diff/PR for bloater smells | [Detection Checklist](references/detection-checklist.md) |
-| Step-by-step code review and refactoring workflow | [Code Review Workflow](references/code-review-workflow.md) |
-| **Only** when user asks where a pattern applies in a specific language | [Language Patterns](references/language-patterns.md) |
-| **Only** when user asks for a multi-file before/after walkthrough | [Real-World Examples](references/real-world-examples.md) |
+| Read When                                                              | File                                                       |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Identifying code smells in your codebase                               | [Code Smell Catalog](references/smells.md)                 |
+| Deciding which refactoring technique to use                            | [Refactoring Techniques](references/techniques.md)         |
+| Choosing the right pattern for a specific scenario                     | [Decision Guide](references/decision-guide.md)             |
+| Reviewing a diff/PR for bloater smells                                 | [Detection Checklist](references/detection-checklist.md)   |
+| Step-by-step code review and refactoring workflow                      | [Code Review Workflow](references/code-review-workflow.md) |
+| **Only** when user asks where a pattern applies in a specific language | [Language Patterns](references/language-patterns.md)       |
+| **Only** when user asks for a multi-file before/after walkthrough      | [Real-World Examples](references/real-world-examples.md)   |
 
 ---
 
 ## Always-On Guardrails
 
 - **Never auto-remove TODO comments.** TODOs require manual human decision — surface them, don't delete them.
-- **Rule of Three before extracting.** Wait for the *third* duplication before Extract Method / Extract Class. Two points don't reliably reveal the right abstraction.
+- **Rule of Three before extracting.** Wait for the _third_ duplication before Extract Method / Extract Class. Two points don't reliably reveal the right abstraction.
 - **No tests, no refactor.** Don't refactor blind — add a safety net first.
-- **Pair comment tidyings.** When deleting redundant comments, also scan for missing *why* comments worth adding.
+- **Pair comment tidyings.** When deleting redundant comments, also scan for missing _why_ comments worth adding.
 
 ---
 
 ## Smells → Techniques (Quick Reference)
 
-| Smell                   | Detection Signal                                | Technique(s)               |
-| ----------------------- | ----------------------------------------------- | -------------------------- |
-| **Long Method**         | >10 lines, multiple responsibilities             | Extract Method *(Rule of Three)* |
-| **Large Class**         | >10 methods, multiple concerns, hard to test    | Extract Class *(Rule of Three)*  |
-| **Primitive Obsession** | String/int constants for domain concepts        | Create Type/Object         |
-| **Long Parameter List** | >3-4 parameters, related params                 | Introduce Parameter Object |
-| **Data Clumps**         | Same variables in multiple places               | Extract Class              |
-| **Comments (What)**     | Complex expression needs comment                | Extract Variable           |
-| **Comments (What)**     | Code block needs comment                        | Extract Method             |
-| **Comments (What)**     | Method purpose unclear from name                | Rename Method              |
-| **Comments (Precond)**  | Comment documents a required precondition       | Introduce Assertion        |
-| **Comments (Behavior)** | Comment documents expected behavior/edge cases  | Write Tests                |
+| Smell                   | Detection Signal                               | Technique(s)                     |
+| ----------------------- | ---------------------------------------------- | -------------------------------- |
+| **Long Method**         | >10 lines, multiple responsibilities           | Extract Method _(Rule of Three)_ |
+| **Large Class**         | >10 methods, multiple concerns, hard to test   | Extract Class _(Rule of Three)_  |
+| **Primitive Obsession** | String/int constants for domain concepts       | Create Type/Object               |
+| **Long Parameter List** | >3-4 parameters, related params                | Introduce Parameter Object       |
+| **Data Clumps**         | Same variables in multiple places              | Extract Class                    |
+| **Comments (What)**     | Complex expression needs comment               | Extract Variable                 |
+| **Comments (What)**     | Code block needs comment                       | Extract Method                   |
+| **Comments (What)**     | Method purpose unclear from name               | Rename Method                    |
+| **Comments (Precond)**  | Comment documents a required precondition      | Introduce Assertion              |
+| **Comments (Behavior)** | Comment documents expected behavior/edge cases | Write Tests                      |
 
 For the full Techniques → When to Use table, see [techniques.md](references/techniques.md).
 
