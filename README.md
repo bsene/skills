@@ -35,8 +35,10 @@ When you ask "can you review my tests against BDD principles?", the `bdd-unit-te
 |                           | `typescript/design-patterns` | Classic GoF design patterns in modern JavaScript/TypeScript                                               |
 |                           | `composing-software`         | Functional programming composition techniques in JavaScript                                               |
 | **Databases/ORM**         | `drizzle-learner`            | Teaching code reviewer for Drizzle ORM + PostgreSQL                                                       |
-| **Version Control**       | `git-guru`                   | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals    |
-|                           | `gitlab-dag`                 | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
+| **Version Control**       | `git-hero`                   | Comprehensive Git mastery — best practices, expert Q&A, gitmoji, and CI/CD pipelines                     |
+|                           | `git-hero/git-guru`          | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals    |
+|                           | `git-hero/gitmoji`           | Select and apply gitmoji emoji prefixes for commit messages, integrated with Conventional Commits         |
+|                           | `git-hero/gitlab-dag`        | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
 | **Documentation**         | `markdown`                   | Comprehensive GitHub Flavored Markdown (GFM) reference                                                    |
 |                           | `writing-a-good-claude-md`   | Write, review, and audit CLAUDE.md/AGENTS.md files for AI agents                                          |
 | **Languages**             | `chicken-scheme`             | Write, compile, debug, and package CHICKEN Scheme programs                                                |
