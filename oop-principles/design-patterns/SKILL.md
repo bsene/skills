@@ -24,6 +24,7 @@ triggers:
   - pair a type and factory
   - decouple components via a hub
   - reuse instances to reduce memory
+user-invocable: false
 ---
 
 # Design Patterns
