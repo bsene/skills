@@ -20,6 +20,7 @@ When you ask "can you review my tests against BDD principles?", the `bdd-unit-te
 
 | Domain                    | Skill                        | Purpose                                                                                                   |
 | ------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Strategy**              | `kano`                       | Kano model feature triage — classify and refuse unnecessary work before building                           |
 | **Testing**               | `bdd-unit-test-reviewer`     | Audit unit tests against Dan North's BDD principles                                                       |
 |                           | `testdesiderata`             | Review tests against Kent Beck's 12 TestDesiderata properties                                             |
 |                           | `tcrdd`                      | Guide through TDD and TCRDD (Test-Commit-Revert + TDD) workflows                                          |
