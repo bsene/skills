@@ -1,5 +1,5 @@
 ---
-name: tcrdd
+name: test-commit-reverting
 description: >
   Test-Commit-Revert + TDD (TCRDD): red/green/refactor with per-phase auto-commit on success
   and auto-revert on failure, gated by user approval before code and before committing.
@@ -17,6 +17,10 @@ description: >
   authoring.
 ---
 
+# TCRDD
+
+Red/green/refactor driven by `git-gamble`: each phase runs the tests and auto-commits on the expected result or auto-reverts otherwise.
+
 ## Workflow
 
 ```
@@ -33,31 +37,29 @@ REFACTOR → plan cleanup → approval? → refactor → diff approval? → git-
            fail? revert → try again
 ```
 
-> `git-gamble --<phase>` runs the tests and auto-commits when the result matches the phase's expectation, or auto-reverts otherwise. No git-gamble installed? Do it manually: run the tests, `git commit` on the expected result, `git reset --hard` on the unexpected one.
+> No git-gamble installed? Do it manually: run the tests, `git commit` on the expected result, `git reset --hard` on the unexpected one.
 
 ---
 
 ## How to write code
 
-> Both approval gates are required: the `git-gamble` step is irreversible (auto-commit or auto-revert).
->
-> Keep cycles short. If you feel stuck for more than a few minutes, the test increment is too big — break it down further.
+Before each phase:
+- [ ] Plan approved by user
+- [ ] Diff approved by user before running `git-gamble`
 
 ### RED — Write a failing test
 
 - Ask the user for the **smallest next behaviour** they want to add.
-- Write _only enough_ of a test to fail — stop at the first compile error or failed assertion. Don't write the full scenario upfront.
+- Write _only enough_ of a test to fail — stop at the first compile error or failed assertion.
 
 ### GREEN — Write the minimum production code
 
 - Write _only_ the code that makes the currently failing test pass. Nothing more.
 - Resist the urge to generalise, add helpers, or handle future cases — those are for later tests.
-- If the simplest passing implementation feels like a "cheat" (e.g., returning a hardcoded value), that's fine. The next test will force you to generalise.
 
 ### REFACTOR
 
 - With all tests green, clean up both production and test code freely.
-- The tests act as a safety net; you can refactor without fear of breaking behaviour.
 
 ### REPEAT
 
@@ -67,12 +69,20 @@ REFACTOR → plan cleanup → approval? → refactor → diff approval? → git-
 
 ---
 
+## Error handling
+
+| Situation | Action |
+|---|---|
+| `git-gamble` reverts your change | The step was too large — split it into smaller increments and try again |
+| Tests are flaky (pass/fail randomly) | Fix or isolate the flaky test before continuing the cycle |
+| `git-gamble` is not installed | Run tests manually; `git commit` on expected result, `git reset --hard` on unexpected |
+
+---
+
 ## Resources
 
-- [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html) — full visual flowcharts for each phase
-- [TCR original post by Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
-- [The Three Rules of TDD — Uncle Bob](http://butunclebob.com/ArticleS.UncleBob.TheThreeRulesOfTdd)
-- [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html)
-- [TDD (Wikipedia)](https://en.wikipedia.org/wiki/Test-driven_development)
-- [Test Desiderata — Kent Beck](https://testdesiderata.com/)
-- [unit test — M. Fowler](https://martinfowler.com/bliki/UnitTest.html)
+| Read when | Link |
+|---|---|
+| Need visual flowcharts for each phase | [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html) |
+| Want the original TCR rationale | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864) |
+| Want deeper TDD cycle theory | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
