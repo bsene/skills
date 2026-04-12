@@ -86,3 +86,9 @@ Before each phase:
 | Need visual flowcharts for each phase | [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html) |
 | Want the original TCR rationale | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864) |
 | Want deeper TDD cycle theory | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
+
+## Upstream
+
+| Before starting TCRDD | Skill | Why |
+|---|---|---|
+| Unsure whether the feature is worth building | `kano-triage` | Classify the feature before investing in red/green/refactor cycles |
