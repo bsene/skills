@@ -21,6 +21,7 @@ triggers:
   - interface too large
   - reduce coupling
   - improve testability
+user-invocable: false
 ---
 
 # SOLID Principles

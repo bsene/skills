@@ -15,7 +15,6 @@ description: >
 
   Prefer this over `testing` when cadence and commit discipline matter, not just test
   authoring.
-user-invocable: false
 ---
 
 # TCRDD

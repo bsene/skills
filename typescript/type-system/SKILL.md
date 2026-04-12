@@ -19,6 +19,7 @@ triggers:
   - how do I write a type predicate
   - how to create nominal types
   - how to prevent structural aliasing
+user-invocable: false
 ---
 
 # TypeScript Type System
