@@ -1,5 +1,5 @@
 ---
-name: test-commit-reverting
+name: tcrdd
 description: >
   Test-Commit-Revert + TDD (TCRDD): red/green/refactor with per-phase auto-commit on success
   and auto-revert on failure, gated by user approval before code and before committing.
