@@ -1,24 +1,11 @@
 ---
 name: typescript-type-system
-description: Deep dive into TypeScript's type system—narrowing, discriminated unions, mapped types, conditional types, type guards, branding, and escape hatches.
-triggers:
-  - unknown vs any
-  - type narrowing
-  - discriminated unions
-  - exhaustiveness checking
-  - mapped types
-  - conditional types
-  - infer keyword
-  - user-defined type guards
-  - type branding
-  - companion object pattern
-  - as const
-  - escape hatches
-  - type assertion
-  - how do I narrow a type
-  - how do I write a type predicate
-  - how to create nominal types
-  - how to prevent structural aliasing
+description: >
+  Deep dive into TypeScript's type system — narrowing, discriminated unions, mapped types, conditional types, type guards, branding, and escape hatches.
+  TRIGGER when: user asks about unknown vs any, type narrowing, discriminated unions, exhaustiveness checking,
+  mapped types, conditional types, infer keyword, user-defined type guards, type branding, companion object pattern,
+  as const, escape hatches, type assertion, how do I narrow a type, how do I write a type predicate,
+  how to create nominal types, how to prevent structural aliasing.
 user-invocable: false
 ---
 
