@@ -1,20 +1,10 @@
 ---
 name: typescript
-description: TypeScript error handling via union returns, strictness policy, runtime validation with Zod, monorepo contracts, and domain types vs DTOs.
-triggers:
-  - TypeScript error handling
-  - Zod validation
-  - strict mode
-  - runtime validation
-  - domain vs DTO
-  - typescript best practices
-  - handle errors without throwing
-  - validate API response
-  - type safety
-  - typescript strictness
-  - ts-expect-error
-  - monorepo types
-  - api contract
+description: >
+  TypeScript error handling via union returns, strictness policy, runtime validation with Zod, monorepo contracts, and domain types vs DTOs.
+  TRIGGER when: user mentions TypeScript error handling, Zod validation, strict mode, runtime validation, domain vs DTO,
+  typescript best practices, handle errors without throwing, validate API response, type safety, typescript strictness,
+  ts-expect-error, monorepo types, api contract.
 user-invocable: false
 ---
 
@@ -31,12 +21,12 @@ user-invocable: false
 
 ## Error Handling
 
-| Strategy                | Caller forced to handle? | Composability        |
-| ----------------------- | ------------------------ | -------------------- | -------------------------- | ------ |
-| Return `T               | null`                    | Yes (null check)     | Low                        |
-| Throw exception         | No — easy to miss        | High                 |
-| **Return exception** `T | ErrorA                   | ErrorB`              | **Yes — union exhaustion** | Medium |
-| Option/Either type      | Via `.flatMap` chain     | High (needs library) |
+| Strategy | Caller forced to handle? | Composability |
+| --- | --- | --- |
+| Return `T \| null` | Yes (null check) | Low |
+| Throw exception | No — easy to miss | High |
+| **Return exception** `T \| ErrorA \| ErrorB` | **Yes — union exhaustion** | Medium |
+| Option/Either type | Via `.flatMap` chain | High (needs library) |
 
 **Return exceptions (preferred for expected failures):**
 
