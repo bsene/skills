@@ -86,6 +86,20 @@ develop ──●───●───●───●───●──●──
 **Pros:** Clear release process, parallel development, hotfix isolation.
 **Cons:** Complex, many long-lived branches, merge overhead.
 
+## Branch Naming Conventions
+
+```
+<type>/<ticket-or-slug>
+```
+
+| Prefix | Purpose | Example |
+| ------ | ------- | ------- |
+| `feature/` | New functionality | `feature/oauth-login` |
+| `fix/` | Bug fix | `fix/cart-double-submit` |
+| `hotfix/` | Urgent production fix | `hotfix/payment-timeout` |
+| `release/` | Release preparation | `release/2.1.0` |
+| `chore/` | Maintenance, tooling | `chore/upgrade-eslint` |
+
 ## Branch Lifecycle Checklist
 
 1. **Create** — branch from the right base (`main` or `develop`)
