@@ -1,21 +1,13 @@
 ---
 name: refactoring
-description: Detect code smells and apply refactoring techniques to improve clarity, testability, and maintainability.
-triggers:
-  - refactoring opportunities
-  - code smell
-  - long method
-  - large class
-  - primitive obsession
-  - long parameter list
-  - data clumps
-  - extract method
-  - extract class
-  - replace conditional
-  - introduce parameter object
-  - when to refactor
-  - tidying
-  - tidy first
+description: >
+  Detect code smells and apply refactoring techniques to improve clarity, testability, and maintainability.
+  TRIGGER when: user mentions refactoring opportunities, code smell, long method, large class, primitive obsession,
+  long parameter list, data clumps, extract method, extract class, replace conditional, introduce parameter object,
+  when to refactor, tidying, tidy first.
+  DO NOT USE when: no tests exist (unsafe to refactor blind — add tests first), the change is behavior-altering rather
+  than structure-only (use `tcrdd` instead), or the user needs to safely untangle a large legacy dependency graph
+  (use `mikado-method` instead).
 ---
 
 # Refactoring: Smells & Techniques
@@ -30,6 +22,7 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
 | Identifying code smells in your codebase                               | [Code Smell Catalog](references/smells.md)                 |
 | Deciding which refactoring technique to use                            | [Refactoring Techniques](references/techniques.md)         |
+| Mapping a code smell directly to a pattern (quick activation lookup)  | [Pattern Triggers](references/pattern-triggers.md)         |
 | Choosing the right pattern for a specific scenario                     | [Decision Guide](references/decision-guide.md)             |
 | Reviewing a diff/PR for bloater smells                                 | [Detection Checklist](references/detection-checklist.md)   |
 | Step-by-step code review and refactoring workflow                      | [Code Review Workflow](references/code-review-workflow.md) |
