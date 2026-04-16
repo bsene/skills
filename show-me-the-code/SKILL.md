@@ -4,6 +4,8 @@ description: >
   Enforces one rule: any code change must be shown as a unified diff. Trigger
   for any request that modifies existing code — fix, refactor, update, replace,
   apply changes — even one-liners. Never skip this skill when code is being changed.
+  DO NOT USE when: producing a new file from scratch (no context lines to diff against)
+  or for non-code responses such as plans, explanations, or architecture diagrams.
 ---
 
 # Show Me The Code
