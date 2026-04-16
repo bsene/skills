@@ -117,6 +117,38 @@ Converts CRLF to LF on commit, leaves LF untouched on checkout. Prevents Windows
 | `default = current` | `git push` pushes current branch to same-named remote branch |
 | `autoSetupRemote = true` | First push auto-creates the upstream tracking — no more `-u` flag |
 
+### Force Push
+
+Never use `--force`. Always use the safe alternative:
+
+```bash
+git push --force-with-lease --force-if-includes origin <branch>
+```
+
+- `--force-with-lease` — refuses if remote has commits you haven't fetched
+- `--force-if-includes` — refuses if your local ref doesn't include remote tip
+
+## Reflog as Safety Net
+
+Every HEAD movement is logged for 90 days. If you lose commits:
+
+```bash
+git reflog                    # find the SHA before the mistake
+git reset --hard <sha>        # restore to that point
+```
+
+## Modern Command Syntax
+
+Prefer the modern commands over legacy `checkout`:
+
+| Legacy | Modern | Purpose |
+| ------ | ------ | ------- |
+| `git checkout <branch>` | `git switch <branch>` | Switch branches |
+| `git checkout -b <branch>` | `git switch -c <branch>` | Create and switch |
+| `git checkout -- <file>` | `git restore <file>` | Discard changes |
+| `git checkout --patch` | `git restore --patch` | Selective discard |
+| `git reset HEAD <file>` | `git restore --staged <file>` | Unstage |
+
 ## Fetch & Prune
 
 ```ini
