@@ -1,20 +1,13 @@
 ---
 name: ports-adapters-architecture
-description: Ports and Adapters (hexagonal) architecture — isolate business logic from external concerns via well-defined boundaries.
-triggers:
-  - ports and adapters
-  - hexagonal architecture
-  - Allistair Cockburn
-  - hexagon architecture
-  - driving adapter
-  - driven adapter
-  - primary adapter
-  - secondary adapter
-  - inbound port
-  - outbound port
-  - adapter pattern
-  - application boundary
-  - dependency inversion
+description: >
+  Ports and Adapters (hexagonal) architecture — isolate business logic from external concerns via well-defined boundaries.
+  TRIGGER when: user asks about ports and adapters, hexagonal architecture, Alistair Cockburn, hexagon architecture,
+  driving adapter, driven adapter, primary adapter, secondary adapter, inbound port, outbound port, adapter pattern,
+  application boundary, dependency inversion.
+  DO NOT USE when: user is asking about general OOP or SOLID principles in the abstract — use `oop-principles`
+  instead. Note: Dependency Inversion Principle (DIP) from `oop-principles/solid` is the theoretical foundation
+  of this pattern.
 ---
 
 # Ports and Adapters Architecture

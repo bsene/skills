@@ -1,26 +1,10 @@
 ---
 name: oop-principles-solid
-description: SOLID principles for reducing coupling and improving testability—SRP, OCP, LSP, ISP, and DIP with annotated examples.
-triggers:
-  - SOLID
-  - SRP
-  - OCP
-  - LSP
-  - ISP
-  - DIP
-  - single responsibility principle
-  - open-closed principle
-  - Liskov substitution
-  - interface segregation
-  - dependency inversion
-  - god class
-  - fat interface
-  - one reason to change
-  - extend without modifying
-  - depend on abstractions
-  - interface too large
-  - reduce coupling
-  - improve testability
+description: >
+  SOLID principles for reducing coupling and improving testability — SRP, OCP, LSP, ISP, and DIP with annotated examples.
+  TRIGGER when: user mentions SOLID, SRP, OCP, LSP, ISP, DIP, single responsibility principle, open-closed principle,
+  Liskov substitution, interface segregation, dependency inversion, god class, fat interface, one reason to change,
+  extend without modifying, depend on abstractions, interface too large, reduce coupling, improve testability.
 user-invocable: false
 ---
 
