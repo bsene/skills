@@ -1,14 +1,16 @@
 ---
 name: composing-software
 description: >
-  Apply functional programming composition techniques in JavaScript. Use this skill
+  Apply functional programming composition techniques in JavaScript and TypeScript. Use this skill
   whenever the user asks about function composition, pipe, compose, currying, partial
   application, point-free style, pure functions, immutability, functors, monads, lenses,
   functional mixins, factory functions, or object composition. Also trigger when the user
-  asks how to avoid class inheritance, how to build reusable abstractions in JavaScript,
-  how to compose async operations, or how to reduce coupling through FP patterns. Even if
-  they just say "compose these functions", "pipe this data", or "make this more functional",
-  use this skill.
+  asks how to avoid class inheritance, how to build reusable abstractions in JavaScript
+  or TypeScript, how to compose async operations, how to reduce coupling through FP patterns,
+  TypeScript composition, or functional TypeScript. Even if they just say "compose these
+  functions", "pipe this data", or "make this more functional", use this skill.
+  DO NOT USE when: the user is designing class-based OOP architecture or asking about SOLID
+  principles — use `oop-principles` instead.
 ---
 
 # Composing Software in JavaScript

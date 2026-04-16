@@ -4,6 +4,8 @@ description: >
   Explains code with C4 model diagrams, analogies, and step-by-step walkthroughs. Use when explaining how code works,
   teaching about a codebase, onboarding to architecture, or when the user asks "how does this work?",
   "explain this system", "draw me a diagram", or "show me the architecture".
+  DO NOT USE when: a one-sentence answer suffices — only invoke when an architecture overview, diagram,
+  or step-by-step code walkthrough is the actual need.
 ---
 
 # Explain Code
