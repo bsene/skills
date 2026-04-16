@@ -1,29 +1,12 @@
 ---
 name: oop-principles-design-patterns
-description: Design patterns—Factory, Strategy, Builder, Decorator, Singleton, Mixin, and more with problem-oriented and GoF triggers.
-triggers:
-  - design patterns
-  - OOP design patterns
-  - Strategy pattern
-  - Factory pattern
-  - Abstract Factory
-  - Builder pattern
-  - Singleton pattern
-  - Decorator pattern
-  - Proxy pattern
-  - Mixin pattern
-  - Observer pattern
-  - Flyweight pattern
-  - Mediator pattern
-  - Companion Object
-  - swap algorithms at runtime
-  - create families of related objects
-  - construct a complex object step-by-step
-  - add cross-cutting behavior
-  - share behavior across classes
-  - pair a type and factory
-  - decouple components via a hub
-  - reuse instances to reduce memory
+description: >
+  Design patterns — Factory, Strategy, Builder, Decorator, Singleton, Mixin, and more with problem-oriented and GoF triggers.
+  TRIGGER when: user mentions design patterns, OOP design patterns, Strategy pattern, Factory pattern, Abstract Factory,
+  Builder pattern, Singleton pattern, Decorator pattern, Proxy pattern, Mixin pattern, Observer pattern, Flyweight pattern,
+  Mediator pattern, Companion Object, swap algorithms at runtime, create families of related objects,
+  construct a complex object step-by-step, add cross-cutting behavior, share behavior across classes,
+  pair a type and factory, decouple components via a hub, reuse instances to reduce memory.
 user-invocable: false
 ---
 

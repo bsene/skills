@@ -1,22 +1,10 @@
 ---
 name: typescript-zod
-description: Zod v4 best practices—schema design, error handling, transforms, coercion, branded types, and boundary validation.
-triggers:
-  - zod
-  - zod validation
-  - zod schema
-  - zod v4
-  - zod parse
-  - zod transform
-  - zod coerce
-  - zod branded types
-  - zod error handling
-  - runtime validation
-  - validate API response
-  - schema composition
-  - zod object
-  - zod mini
-  - zod infer
+description: >
+  Zod v4 best practices — schema design, error handling, transforms, coercion, branded types, and boundary validation.
+  TRIGGER when: user mentions zod, zod validation, zod schema, zod v4, zod parse, zod transform, zod coerce,
+  zod branded types, zod error handling, runtime validation, validate API response, schema composition,
+  zod object, zod mini, zod infer.
 user-invocable: false
 ---
 
