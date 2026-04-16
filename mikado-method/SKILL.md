@@ -9,6 +9,9 @@ description: >
   without a long-lived feature branch, or asks how to incrementally improve a codebase.
   The skill enforces the full Mikado loop: goal → naive attempt → map prerequisites →
   revert → implement leaves → commit → repeat.
+  DO NOT USE when: the change is small and self-contained (a simple rename or one-line
+  fix needs no prerequisite graph) — use `refactoring` instead. If the feature hasn't
+  been scoped yet, consider `kano-triage` first to validate it's worth doing.
 ---
 
 # Mikado Method Skill
