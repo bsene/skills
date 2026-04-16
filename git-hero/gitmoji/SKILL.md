@@ -1,6 +1,7 @@
 ---
 name: git-hero-gitmoji
 description: "Selects and applies gitmoji emoji prefixes for Git commit messages, integrated with Conventional Commits format. Use when the user asks about gitmoji, wants an emoji for a commit message, asks 'which emoji for...', 'quel emoji pour...', mentions commit emoji conventions, says 'prefix my commit', 'gitmoji for', 'emoji commit', or wants to decorate commit messages with standardized emoji."
+user-invocable: false
 ---
 
 # Gitmoji
