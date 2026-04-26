@@ -5,8 +5,6 @@ description: Maintains a rolling daily progress log (progress-daily.md) that cap
 
 # Logging Daily Progress
 
-This skill appends structured daily entries to a rolling progress log, sourced from the user's own git commits. It exists because fresh-context journaling beats retrospective calendar archaeology — the Career Hype Doc practice only works if entries get written while the work is still warm.
-
 ## What a good entry looks like
 
 Every day is a third-level heading followed by three sections. Nothing else.

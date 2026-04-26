@@ -176,3 +176,45 @@ CUPID properties are designed to be:
 **Properties reinforce each other**: improving one typically improves others. Domain-based code tends to be more intention-revealing (Composable). Unix philosophy code tends to be more predictable. Idiomatic code tends to be more composable.
 
 There is no "done" with CUPID — there is always a direction of travel.
+
+---
+
+## Example Review Output
+
+```
+## CUPID Review: `UserService.ts`
+
+Context: TypeScript, NestJS backend, user management module
+
+---
+
+### C — Composable 🟡 Moderate
+**Observations:** `UserService` exposes 14 public methods covering authentication,
+profile management, and notification preferences — a broad surface area that makes
+it harder to compose with other services. The `sendWelcomeEmail` method creates an
+implicit dependency on the email subsystem.
+
+**Suggestions:** Extract notification responsibilities into a `NotificationService`.
+The email concern is likely to change at a different rate than user creation logic.
+
+---
+
+### U — Unix Philosophy 🔴 Weak
+...
+
+### P — Predictable 🟢 Strong
+...
+
+### I — Idiomatic 🟢 Strong
+...
+
+### D — Domain-based 🟡 Moderate
+...
+
+---
+
+## Summary
+The strongest CUPID property here is Predictability... The highest-leverage
+improvement would be extracting the notification logic, which would simultaneously
+improve Composability and Unix philosophy without touching the core user management behaviour.
+```

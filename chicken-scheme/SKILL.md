@@ -39,24 +39,6 @@ csc -shared hello.scm  # produces hello.so
 
 ---
 
-## Compiler Flags (csc)
-
-| Flag          | Effect                                         |
-| ------------- | ---------------------------------------------- |
-| `-o name`     | Output filename                                |
-| `-shared`     | Compile to shared library (.so)                |
-| `-static`     | Statically link CHICKEN runtime                |
-| `-O2` / `-O3` | Optimisation levels                            |
-| `-unsafe`     | Disable bounds/type checks (faster, dangerous) |
-| `-deploy`     | Self-contained deployment (bundles runtime)    |
-| `-c`          | Compile only, don't link                       |
-| `-e "expr"`   | Evaluate expr then exit                        |
-| `-s file.scm` | Run script then exit                           |
-| `-k`          | Keep generated C file (for inspection)         |
-| `-debug all`  | Verbose debug output                           |
-
----
-
 ## Egg System (Libraries)
 
 ```bash
