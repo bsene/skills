@@ -43,24 +43,6 @@ method surfaces those dependencies visually so you can remove them one by one, s
 
 ---
 
-## The Core Loop
-
-```
-1. SET GOAL        → Write the goal as the root node. Circle it twice.
-2. BE NAIVE        → Attempt to implement the goal directly in the code.
-3. OBSERVE BREAKS  → Compiler errors, failing tests, or broken behavior = prerequisites.
-4. MAP             → Add each prerequisite as a child bubble connected to the current node.
-5. REVERT          → Undo ALL changes immediately. Return to green/stable state.
-6. PICK A LEAF     → Choose any leaf node (no children) and repeat the loop from step 2.
-7. COMMIT LEAF     → Once a leaf is implemented cleanly without breakage, commit it.
-8. PRUNE THE GRAPH → Remove the committed leaf. Reveal new leaves. Continue upward.
-```
-
-⚠️ **The revert step is non-negotiable.** It feels counterintuitive to throw away
-"hard work," but the thought process IS the work — it produced the map.
-
----
-
 ## Quick Reference Card
 
 ```

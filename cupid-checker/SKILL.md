@@ -90,46 +90,4 @@ Avoid language like "this violates X" or "you must Y". Prefer: "moving towards m
 
 ## References
 
-- `references/cupid-properties.md` — Full detail on each property's sub-dimensions; read when you need depth on a specific property
-
----
-
-## Example Output Structure
-
-```
-## CUPID Review: `UserService.ts`
-
-Context: TypeScript, NestJS backend, user management module
-
----
-
-### C — Composable 🟡 Moderate
-**Observations:** `UserService` exposes 14 public methods covering authentication,
-profile management, and notification preferences — a broad surface area that makes
-it harder to compose with other services. The `sendWelcomeEmail` method creates an
-implicit dependency on the email subsystem.
-
-**Suggestions:** Extract notification responsibilities into a `NotificationService`.
-The email concern is likely to change at a different rate than user creation logic.
-
----
-
-### U — Unix Philosophy 🔴 Weak
-...
-
-### P — Predictable 🟢 Strong
-...
-
-### I — Idiomatic 🟢 Strong
-...
-
-### D — Domain-based 🟡 Moderate
-...
-
----
-
-## Summary
-The strongest CUPID property here is Predictability... The highest-leverage
-improvement would be extracting the notification logic, which would simultaneously
-improve Composability and Unix philosophy without touching the core user management behaviour.
-```
+- `references/cupid-properties.md` — Full detail on each property's sub-dimensions + example review output; read when you need depth on a specific property
