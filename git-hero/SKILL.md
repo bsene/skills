@@ -9,9 +9,11 @@ Comprehensive Git mastery — best practices, expert Q&A, gitmoji, and CI/CD pip
 
 ## Route to Sub-skills
 
--> **Git Q&A** (concepts, commands, workflows, internals, troubleshooting, conflicts, stash, rebase, reflog...) -> `git-guru/` sub-skill
--> **Gitmoji** (commit emoji, gitmoji prefix, which emoji for..., emoji commit convention...) -> `gitmoji/` sub-skill
--> **GitLab CI/CD** (GitLab pipelines, DAG, `needs:`, parallel matrix, `.gitlab-ci.yml`...) -> `gitlab-dag/` sub-skill
+Route immediately on keyword match. Answer inline only for quick factual git questions not covered by a sub-skill.
+
+-> **Git Q&A** — route when: user asks about concepts, commands, workflows, internals, troubleshooting, conflicts, stash, rebase, reflog, or anything "how do I do X in git?" → `git-guru/` sub-skill
+-> **Gitmoji** — route when: user asks about commit emoji, gitmoji prefix, "which emoji for this commit?", or emoji commit conventions → `gitmoji/` sub-skill
+-> **GitLab CI/CD** — route when: user mentions GitLab pipelines, DAG, `needs:`, parallel matrix, `.gitlab-ci.yml`, or pipeline optimization → `gitlab-dag/` sub-skill
 
 ---
 
