@@ -6,6 +6,8 @@ description: >
   typescript best practices, handle errors without throwing, validate API response, type safety, typescript strictness,
   ts-expect-error, monorepo types, api contract.
 user-invocable: false
+# user-invocable: false because this skill is a router — users invoke sub-skills (type-system, zod) directly.
+# Keeping it non-invocable prevents Claude from stopping here instead of routing deeper.
 ---
 
 # TypeScript

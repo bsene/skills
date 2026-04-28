@@ -1,6 +1,13 @@
 ---
 name: chicken-scheme
-description: Write, compile, debug, and package CHICKEN Scheme programs. Use this skill whenever the user mentions CHICKEN Scheme, call-cc.org, csc, csi, Scheme eggs, Scheme-to-C compilation, R5RS/R7RS Scheme, call/cc, continuations, SRFI, or wants help with any Scheme programming task using CHICKEN. Also trigger for questions about the CHICKEN FFI, C interop from Scheme, egg packaging, REPL usage, or scripting with csi. Even if the user just says "scheme" without specifying CHICKEN, use this skill if context suggests CHICKEN (e.g. they mention eggs, csc, chicken-install, or wiki.call-cc.org).
+description: >
+  Write, compile, debug, and package CHICKEN Scheme programs. Use this skill whenever the user mentions CHICKEN Scheme,
+  call-cc.org, csc, csi, Scheme eggs, Scheme-to-C compilation, R5RS/R7RS Scheme, call/cc, continuations, SRFI, or wants
+  help with any Scheme programming task using CHICKEN. Also trigger for questions about the CHICKEN FFI, C interop from
+  Scheme, egg packaging, REPL usage, or scripting with csi. Even if the user just says "scheme" without specifying CHICKEN,
+  use this skill if context suggests CHICKEN (e.g. they mention eggs, csc, chicken-install, or wiki.call-cc.org).
+  DO NOT USE when: the user is working with another Scheme implementation (Racket, Guile, MIT Scheme, Gambit) — those have
+  different module systems, package managers, and idioms.
 ---
 
 # CHICKEN Scheme Skill

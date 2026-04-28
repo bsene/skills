@@ -67,6 +67,51 @@ adapters/
 
 ---
 
+## Application Workflow
+
+When the user wants to apply or review Ports & Adapters:
+
+1. **Identify the boundary** — where does business logic end and infrastructure begin? The hexagon edge is the answer.
+2. **Define the ports** — write interfaces (not implementations) for every outbound dependency. Name them `for_<action>`.
+3. **Move logic inward** — ensure domain code imports only other domain code, never framework/DB packages.
+4. **Write adapters** — one concrete class per external system, implementing the matching port interface.
+
+## Before / After (TypeScript)
+
+**Before** — domain directly imports infrastructure:
+
+```typescript
+// ❌ domain knows about postgres
+import { db } from "../infrastructure/postgres";
+
+class UserService {
+  async getUser(id: string) {
+    return db.query("SELECT * FROM users WHERE id = $1", [id]);
+  }
+}
+```
+
+**After** — domain depends only on a port interface:
+
+```typescript
+// ✅ domain defines what it needs
+interface UserRepository {
+  findById(id: string): Promise<User | null>;
+}
+
+class UserService {
+  constructor(private readonly users: UserRepository) {}
+  async getUser(id: string) { return this.users.findById(id); }
+}
+
+// adapter lives outside the hexagon
+class PostgresUserRepository implements UserRepository {
+  async findById(id: string) { /* postgres query */ }
+}
+```
+
+---
+
 ## References
 
 - **Alistair Cockburn** — [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)

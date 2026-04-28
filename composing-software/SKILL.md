@@ -17,6 +17,14 @@ description: >
 
 Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc) series.
 
+## Workflow
+
+1. **Identify the coupling** — is the problem inheritance, shared mutable state, or entangled side effects? See Composition Hierarchy below.
+2. **Choose the composition tool** — pure function → factory → functional mixin → class (last resort). Use the Checklist below.
+3. **Apply the pattern** — read the matching reference file for the concrete technique.
+4. **Verify** — can the new unit be tested without mocks? Can it be reused without importing its collaborators?
+
+
 **Central thesis**: all software design is composition — breaking problems down into small pieces and composing solutions back up. The choice of *how* to compose shapes everything about maintainability, testability, and flexibility.
 
 ---

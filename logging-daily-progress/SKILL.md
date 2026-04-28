@@ -46,7 +46,7 @@ Run `git config user.name` and `git config user.email` to get the current author
 Use the bundled helper:
 
 ```bash
-bash scripts/collect_commits.sh <YYYY-MM-DD> [author-regex]
+bash collect_commits.sh <YYYY-MM-DD> [author-regex]
 ```
 
 If no date is given, default to today. If the user asks for a range ("this week", "since Monday"), loop the script over each day — one entry per day, never one mega-entry for the range.
@@ -88,10 +88,10 @@ The skill supports three cadences. Pick based on how the user phrases the reques
 
 ## Bundled resources
 
-- `scripts/collect_commits.sh` — git log wrapper that returns commits for a given day in the exact Commits-section format. Call this instead of hand-rolling `git log` flags every time.
-- `templates/day-entry.md` — the canonical empty template for a single day's entry. Copy and fill.
+- `collect_commits.sh` — git log wrapper that returns commits for a given day in the exact Commits-section format. Call this instead of hand-rolling `git log` flags every time.
+- `day-entry.md` — the canonical empty template for a single day's entry. Copy and fill.
 
 ## Files to read when relevant
 
-- `templates/day-entry.md` — read when drafting a fresh entry from scratch.
+- `day-entry.md` — read when drafting a fresh entry from scratch.
 - The existing `progress-daily.md` — always read the last entry before appending, to match tone and avoid duplicates.
