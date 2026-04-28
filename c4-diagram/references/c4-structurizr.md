@@ -94,7 +94,8 @@ views {
 }
 ```
 
-`autoLayout` directions: `tb` (top-bottom, default), `bt`, `lr` (left-right), `rl`
+Full signature: `autoLayout [tb|bt|lr|rl] [rankSeparation] [nodeSeparation]`
+Directions: `tb` (top-bottom, default), `bt`, `lr` (left-right), `rl`. `rankSeparation` and `nodeSeparation` are optional integers (pixels).
 
 ### Component (Level 3)
 
@@ -122,6 +123,10 @@ views {
 
 ### Deployment (infrastructure)
 
+Deployment grammar:
+- `containerInstance <identifier> [deploymentGroups] [tags]` — instance of a defined container
+- `softwareSystemInstance <identifier> [deploymentGroups] [tags]` — instance of a non-decomposed system (no containers)
+
 ```
 model {
   prod = deploymentEnvironment "Production" {
@@ -132,6 +137,9 @@ model {
       }
       deploymentNode "RDS" "Managed DB" "Amazon RDS" {
         containerInstance db
+      }
+      deploymentNode "SES" "Managed mail" "Amazon SES" {
+        softwareSystemInstance email
       }
     }
   }
@@ -308,21 +316,41 @@ workspace "Accounts Service" "Component view" {
 
 ---
 
-## CLI Export
+## CLI
+
+Binary names by install method:
+- Local install (zip from GitHub releases) and Docker: `structurizr.sh` (Unix/macOS), `structurizr.bat` (Windows)
+- Homebrew (`brew install structurizr-cli`) / Scoop: `structurizr-cli`
+
+Flags are long-form only (`-workspace`, `-format`, `-output`).
+
+### Validate
 
 ```bash
-# Validate DSL syntax
-structurizr-cli validate -workspace diagram.dsl
-
-# Export all views as SVG
-structurizr-cli export -workspace diagram.dsl -format svg -output ./out/
-
-# Export as PNG
-structurizr-cli export -workspace diagram.dsl -format png -output ./out/
-
-# Export as PlantUML (for further tooling)
-structurizr-cli export -workspace diagram.dsl -format plantuml -output ./out/
+structurizr.sh validate -workspace diagram.dsl
 ```
+
+### Export
+
+Supported formats: `plantuml`, `plantuml/structurizr`, `plantuml/c4plantuml`, `mermaid`, `websequencediagrams`, `dot`, `ilograph`, `d2`, `json`, `theme`, `static`. **Note:** `svg` and `png` are not native export formats — render the intermediate output (PlantUML/Mermaid/D2/DOT) with the corresponding tool, or open the workspace in Structurizr Lite / `structurizr/structurizr local`.
+
+```bash
+structurizr.sh export -workspace diagram.dsl -format plantuml -output ./out/
+structurizr.sh export -workspace diagram.dsl -format mermaid  -output ./out/
+structurizr.sh export -workspace diagram.dsl -format d2       -output ./out/
+```
+
+### Docker (no local install)
+
+```bash
+docker run --rm -v "$PWD":/usr/local/structurizr structurizr/cli \
+  validate -workspace diagram.dsl
+
+docker run --rm -v "$PWD":/usr/local/structurizr structurizr/cli \
+  export -workspace diagram.dsl -format mermaid -output out
+```
+
+The `structurizr/cli` image is archived (Feb 2026) but functional. The active replacement is the consolidated `structurizr/structurizr` image (see Lite/local server).
 
 ---
 
