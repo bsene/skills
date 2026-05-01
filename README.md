@@ -41,6 +41,13 @@ When you ask "can you review my tests against BDD principles?", the `bdd-unit-te
 |                           | `git-hero/gitlab-dag`        | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
 | **Documentation**         | `markdown`                   | Comprehensive GitHub Flavored Markdown (GFM) reference                                                    |
 |                           | `writing-a-good-claude-md`   | Write, review, and audit CLAUDE.md/AGENTS.md files for AI agents                                          |
+| **Go**                    | `golang`                     | Idiomatic Go development — project structure, fundamentals, naming, anti-patterns                         |
+|                           | `golang/error-handling`      | Error interface, custom types, wrapping, sentinel errors, panic/recover                                   |
+|                           | `golang/concurrency`         | Goroutines, channels, select, sync primitives, context, errgroup                                          |
+|                           | `golang/types-and-interfaces`| Structs, interfaces, embedding, composition, generics, enums with iota                                    |
+|                           | `golang/testing`             | Table-driven tests, benchmarks, fuzz testing, httptest, testify, profiling                                |
+|                           | `golang/web`                 | HTTP server/client, handlers, middleware, JSON encoding, templates                                        |
+|                           | `golang/packages-and-modules`| go.mod, go.sum, versioning, proxies, workspaces, internal packages                                        |
 | **Languages**             | `chicken-scheme`             | Write, compile, debug, and package CHICKEN Scheme programs                                                |
 
 ## How Skills Activate
