@@ -110,12 +110,24 @@ function createUserId(id: string): UserId { return id as UserId; }
 
 **Companion object pattern** — Bind the same name to both a type and const value. One import covers annotation and utilities.
 
-**`as const`** — Freeze values to literal types. Use on configs/arrays to derive union types.
+**`as const`** — Freeze values to literal types. Use on configs/arrays to derive union types **only when no type exists yet**. If a type already exists, annotate with it instead.
 
 ```typescript
+// Good — no existing type; deriving is the intention
 const ROLES = ["admin", "user", "guest"] as const;
 type Role = (typeof ROLES)[number]; // "admin" | "user" | "guest"
+
+// Bad — Role already exists; don't derive it again
+type Role = "admin" | "user" | "guest";
+const ROLES = ["admin", "user", "guest"] as const;        // ← redundant
+type RoleAgain = (typeof ROLES)[number];                  // ← duplicate
+
+// Good — annotate with the existing type
+type Role = "admin" | "user" | "guest";
+const ROLES: Role[] = ["admin", "user", "guest"];
 ```
+
+⚠️ See rule: `rules/favor-existing-types-over-as-const.md`
 
 **Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed.
 
