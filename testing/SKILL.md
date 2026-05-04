@@ -4,7 +4,8 @@ description: >
   Master testing strategy — philosophy, approach, architecture decisions, test quality audit, and BDD review practices.
   TRIGGER when: user asks about testing strategy, testing approach, testing philosophy, testing methodology, testing mindset,
   how should I test, what tests to write, testing best practices, unit vs integration vs e2e, what makes a good test,
-  test quality, brittle tests, flaky tests, slow tests, hard to maintain tests, testing legacy codebase,
+  test quality, brittle tests, flaky tests, slow tests, hard to maintain tests, my tests are flaky,
+  how do I fix flaky tests, tests keep breaking randomly, why do my tests fail randomly, testing legacy codebase,
   adding tests to existing code, when to use mocks, mocking strategy, test doubles, test-driven development,
   testing anti-patterns, how much to test, testing architecture, testing layers, review my test suite, check my tests,
   BDD testing, test desiderata, smoke test, smoke testing, sanity check, critical path test, fast CI gate.

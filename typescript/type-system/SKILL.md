@@ -29,25 +29,93 @@ user-invocable: false
 
 ## Concepts
 
-**`unknown` vs `any`** — `any` disables checking; `unknown` forces narrowing. Use for external data.
+**`unknown` vs `any`** — `any` disables checking; `unknown` forces narrowing before use. Default to `unknown` for external data (JSON.parse, API responses, user input).
 
-**Type narrowing** — TypeScript narrows types through `typeof`, `instanceof`, `in`, equality, truthiness, `Array.isArray`.
+```typescript
+function process(value: unknown) {
+  if (typeof value === "string") value.toUpperCase(); // OK — narrowed
+  value.toUpperCase();                                // Error — unknown not narrowed
+}
+```
 
-**Discriminated unions** — Tag field enables dispatch via `switch`. Essential for Redux actions, WebSocket messages, API variants.
+**Type narrowing** — TypeScript narrows union types through `typeof`, `instanceof`, `in`, equality checks, truthiness, and `Array.isArray`. Narrowing eliminates impossible branches.
 
-**Exhaustiveness checking** — `assertNever(value: never)` forces compile error if new union member isn't handled.
+```typescript
+function format(val: string | number | null) {
+  if (val === null) return "—";
+  if (typeof val === "number") return val.toFixed(2);
+  return val.trim();  // TS knows val is string here
+}
+```
 
-**Mapped types** — Transform object keys: `{ [K in keyof T]?: T[K] }`. Built-ins: `Partial`, `Required`, `Readonly`, `Pick`, `Record`.
+**Discriminated unions** — A shared literal tag field (`kind`, `type`, `status`) lets `switch`/`if` dispatch on shape. Essential for Redux actions, WebSocket messages, API variants.
 
-**Conditional types** — Type-level ternary: `T extends Promise<infer U> ? U : T`. Built-ins: `Exclude`, `Extract`, `Awaited`.
+```typescript
+type Event =
+  | { kind: "login";  userId: string }
+  | { kind: "logout"; userId: string; reason: string }
+  | { kind: "error";  message: string };
 
-**User-defined type guards** — Return `value is T` to carry refinement across function boundaries.
+function handle(e: Event) {
+  switch (e.kind) {
+    case "login":  return greet(e.userId);
+    case "logout": return log(e.userId, e.reason);
+    case "error":  return alert(e.message);
+  }
+}
+```
 
-**Type branding** — `type UserId = string & { readonly _brand: unique symbol }` prevents structural aliasing at zero cost.
+**Exhaustiveness checking** — `assertNever(value: never)` produces a compile error when a new union member is added but not handled.
+
+```typescript
+function assertNever(x: never): never {
+  throw new Error(`Unhandled case: ${JSON.stringify(x)}`);
+}
+// Add a new Event variant → handle()'s switch breaks at compile time
+```
+
+**Mapped types** — Transform every key of an existing type: `{ [K in keyof T]?: T[K] }`. Built-ins: `Partial`, `Required`, `Readonly`, `Pick`, `Record`.
+
+```typescript
+type Flags<T> = { [K in keyof T]: boolean };
+// Flags<{ name: string; age: number }> → { name: boolean; age: boolean }
+```
+
+**Conditional types** — Type-level ternary: `T extends U ? X : Y`. With `infer`, extract type arguments at the type level.
+
+```typescript
+type Unwrap<T> = T extends Promise<infer U> ? U : T;
+// Unwrap<Promise<string>> → string
+// Unwrap<number>          → number
+```
+
+**User-defined type guards** — Return `value is T` to carry narrowing across function boundaries, where TypeScript can't infer the refinement.
+
+```typescript
+function isUser(v: unknown): v is User {
+  return typeof v === "object" && v !== null && "id" in v;
+}
+```
+
+**Type branding** — Prevents mixing structurally identical types (`UserId` vs `SessionToken`) at zero runtime cost. Use `unique symbol` for full nominal safety.
+
+```typescript
+declare const _brand: unique symbol;
+type UserId      = string & { readonly [_brand]: "UserId" };
+type SessionToken = string & { readonly [_brand]: "SessionToken" };
+
+function createUserId(id: string): UserId { return id as UserId; }
+// createUserId(rawToken)   → compile error — token ≠ userId
+```
 
 **Companion object pattern** — Bind the same name to both a type and const value. One import covers annotation and utilities.
 
 **`as const`** — Freeze values to literal types. Use on configs/arrays to derive union types.
+
+```typescript
+const ROLES = ["admin", "user", "guest"] as const;
+type Role = (typeof ROLES)[number]; // "admin" | "user" | "guest"
+```
 
 **Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed.
 
