@@ -112,3 +112,12 @@ Track and reduce `any` usage, `null` inconsistency, and duplicate definitions vi
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
+
+## Rules (always apply)
+
+| Rule | File |
+|---|---|
+| Avoid type assertions (`as T`, `!`, `as unknown as T`) | `rules/avoid-type-assertions.md` |
+| Avoid intermediate arrays on hot paths | `rules/avoid-intermediate-arrays.md` |
+| Favor existing types over `as const` | `rules/favor-existing-types-over-as-const.md` |
+| Use JavaScript general conventions (naming, const/let, destructuring, template literals) | `rules/js-general-conventions.md` |
