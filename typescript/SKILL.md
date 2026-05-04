@@ -121,3 +121,7 @@ Track and reduce `any` usage, `null` inconsistency, and duplicate definitions vi
 | Avoid intermediate arrays on hot paths | `rules/avoid-intermediate-arrays.md` |
 | Favor existing types over `as const` | `rules/favor-existing-types-over-as-const.md` |
 | Use JavaScript general conventions (naming, const/let, destructuring, template literals) | `rules/js-general-conventions.md` |
+| Do not prefix interfaces with `I` | `rules/no-interface-prefix.md` |
+| Mark properties and arrays `readonly` to signal immutability | `rules/readonly.md` |
+| Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
+| `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
