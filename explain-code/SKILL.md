@@ -22,7 +22,17 @@ description: >
 
 Keep explanations conversational. For complex concepts, use multiple analogies.
 
-## Example output shape
+## Example output shapes
+
+### Single function
+
+> **Analogy:** `debounce` is like a snooze button — it delays acting until you've stopped poking it.
+>
+> **Walkthrough:** Call starts the timer (`setTimeout`). Another call before the timer fires clears it and restarts (`clearTimeout`). Timer fires → callback executes once.
+>
+> **Gotcha:** The returned function captures `timer` via closure — each call site needs its own `debounce(fn, ms)` instance, or they'll share the same timer.
+
+### Multi-class system
 
 > **Analogy:** This auth service is like a bouncer at a club — it checks your ID (token) before letting you into any room (endpoint).
 >
@@ -31,3 +41,13 @@ Keep explanations conversational. For complex concepts, use multiple analogies.
 > **Walkthrough:** Request arrives at the HTTP adapter → `AuthMiddleware` validates the JWT → decoded claims passed to `UserService.resolve()` → user record returned or `UnauthorizedError` thrown.
 >
 > **Gotcha:** `AuthMiddleware` is stateless but relies on `TokenCache` — if cache is cold, every request hits the DB.
+
+### Multi-service architecture
+
+> **Analogy:** This checkout pipeline is like a relay race — each service passes a baton (order event) to the next leg before it can proceed.
+>
+> *(C4 Context diagram here — generated via `c4-diagram` skill)*
+>
+> **Walkthrough:** `OrderService` emits `order.created` to the message bus → `InventoryService` reserves stock and emits `stock.reserved` → `PaymentService` charges and emits `payment.captured` → `NotificationService` sends confirmation email. Failure at any step emits a compensating event to roll back upstream.
+>
+> **Gotcha:** Each service is independently deployable but the saga has no central coordinator — debugging a failed order requires tracing correlation IDs across 4 service logs.

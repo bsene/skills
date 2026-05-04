@@ -4,7 +4,7 @@ description: >
   Zod v4 best practices — schema design, error handling, transforms, coercion, branded types, and boundary validation.
   TRIGGER when: user mentions zod, zod validation, zod schema, zod v4, zod parse, zod transform, zod coerce,
   zod branded types, zod error handling, runtime validation, validate API response, schema composition,
-  zod object, zod mini, zod infer.
+  zod object, zod mini, zod infer, zod v3 to v4, migrate from zod v3, upgrade zod, zod breaking changes.
 user-invocable: false
 ---
 

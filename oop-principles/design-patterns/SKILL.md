@@ -47,16 +47,97 @@ For every pattern question, provide:
 
 ## Pattern Summaries
 
-**Factory** — Create objects without exposing concrete classes. Pair type and factory via companion object. → `references/patterns.md`
+**Factory** — Create objects without naming the concrete class at the call site. Decouples construction from usage; makes swapping implementations easy (test doubles, alternate providers). Pair with companion object to group type + factory under one import.
 
-**Strategy** — Encapsulate interchangeable algorithms; swap at runtime without changing caller. → `references/patterns.md`
+```typescript
+interface Logger { log(msg: string): void; }
+
+function createLogger(env: "prod" | "test"): Logger {
+  return env === "prod" ? new CloudLogger() : new SilentLogger();
+}
+```
+
+→ Full examples: `references/patterns.md`
+
+---
+
+**Strategy** — Encapsulate an interchangeable algorithm behind an interface. The caller holds a reference to the strategy and delegates to it; swapping at runtime requires only reassigning that reference — no conditionals in the caller.
+
+```typescript
+interface SortStrategy { sort(data: number[]): number[]; }
+
+class Sorter {
+  constructor(private strategy: SortStrategy) {}
+  run(data: number[]) { return this.strategy.sort(data); }
+}
+
+const sorter = new Sorter(new QuickSort());
+sorter.run([3, 1, 2]);
+```
+
+→ Full examples: `references/patterns.md`
+
+---
+
+**Observer** — An observable object maintains a subscriber list and notifies all subscribers on state change. Decouples the emitter from its consumers; consumers register at runtime without the emitter knowing who they are.
+
+```typescript
+class EventBus<T> {
+  private subscribers: ((event: T) => void)[] = [];
+  subscribe(fn: (event: T) => void) { this.subscribers.push(fn); }
+  publish(event: T) { this.subscribers.forEach(fn => fn(event)); }
+}
+
+const bus = new EventBus<{ type: string }>();
+bus.subscribe(e => console.log(e.type));
+bus.publish({ type: "user.created" });
+```
+
+→ Full examples: `references/patterns.md`
+
+---
+
+**Builder** — Fluent step-by-step construction with validation and an immutable product at the end. Useful when a constructor would have 4+ params or when some combinations of params are invalid. The Step Builder variant enforces required fields at compile time.
+
+```typescript
+class QueryBuilder {
+  private _table = "";
+  private _where = "";
+
+  from(table: string) { this._table = table; return this; }
+  where(clause: string) { this._where = clause; return this; }
+  build(): string { return `SELECT * FROM ${this._table} WHERE ${this._where}`; }
+}
+
+const q = new QueryBuilder().from("users").where("active = true").build();
+```
+
+→ Full examples: `references/patterns.md`
+
+---
+
+**Decorator** — Add cross-cutting behavior (logging, caching, rate-limiting, auth) without modifying the decorated class. Wraps the original object and delegates; multiple decorators compose. Implementation varies by language: TS 5+ standard decorators, Python `@decorator`, Java annotations.
+
+```typescript
+function logged<T extends (...args: any[]) => any>(fn: T): T {
+  return ((...args: any[]) => {
+    console.log(`calling with`, args);
+    const result = fn(...args);
+    console.log(`result`, result);
+    return result;
+  }) as T;
+}
+
+const add = logged((a: number, b: number) => a + b);
+add(1, 2); // logs inputs + output
+```
+
+→ Full examples: `references/patterns.md`
+
+---
 
 **Abstract Factory** — Interface for compatible product families. Client depends on factory, never concretes. → `references/patterns.md`
-
-**Builder** — Fluent step-by-step construction with validation and immutable product. Covers Step Builder for compile-time field enforcement. → `references/patterns.md`
 
 **Companion Object Pattern** — Bind same name to type and utility object. One import covers both. → `references/patterns.md`
 
 **Mixin** — Share behavior across unrelated classes without inheritance. (is-a → inheritance; has-a → delegation; can-do → mixin.) → `references/patterns.md`
-
-**Decorator** — Cross-cutting concerns declaratively. Implementation varies by language (Python decorators, TS 5+ standard decorators, Java annotations). → `references/patterns.md`
