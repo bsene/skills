@@ -5,7 +5,10 @@ description: >
   TRIGGER when: user asks about unknown vs any, type narrowing, discriminated unions, exhaustiveness checking,
   mapped types, conditional types, infer keyword, user-defined type guards, type branding, companion object pattern,
   as const, escape hatches, type assertion, how do I narrow a type, how do I write a type predicate,
-  how to create nominal types, how to prevent structural aliasing.
+  how to create nominal types, how to prevent structural aliasing,
+  interface vs type alias, when to use interface vs type, enum best practices, typescript enum,
+  const enum, readonly property, ReadonlyArray, lazy object initialization, barrel exports,
+  when to use generics, generic naming conventions, no interface prefix.
 user-invocable: false
 ---
 
@@ -130,5 +133,96 @@ const ROLES: Role[] = ["admin", "user", "guest"];
 ⚠️ See rule: `rules/favor-existing-types-over-as-const.md`
 
 **Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed.
+
+---
+
+## Interface vs Type Alias
+
+| Use `interface` when | Use `type` when |
+|---|---|
+| Defining an object shape others will `extend` or `implement` | Unions and intersections |
+| You need declaration merging (augmenting third-party types) | Mapped/conditional/utility types |
+| Modeling a class contract | Simple semantic alias (`type UserId = string`) |
+
+```typescript
+// interface — extendable contract
+interface Repository<T> {
+  findById(id: string): T | undefined;
+  save(entity: T): void;
+}
+
+// type — union (can't be done with interface)
+type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
+```
+
+Do NOT prefix interfaces with `I`. See `rules/no-interface-prefix.md`.
+
+---
+
+## Generics: when (not) to use
+
+**Don't use generics at a single location** — it provides no type safety over `any`:
+
+```typescript
+// Bad — T appears only in return; equivalent to returning any
+declare function parse<T>(name: string): T;
+
+// Good — T appears in both parameter and return (meaningful constraint)
+function identity<T>(x: T): T { return x; }
+function reverse<T>(items: T[]): T[] { return [...items].reverse(); }
+```
+
+Use descriptive names for multi-parameter generics:
+
+```typescript
+class Dictionary<TKey, TValue> {
+  get(key: TKey): TValue | undefined { ... }
+  set(key: TKey, value: TValue): void { ... }
+}
+```
+
+---
+
+## Enums best practices
+
+```typescript
+// Start at 1 — avoids falsy 0 bugs
+enum Status {
+  Inactive = 1,
+  Active   = 2,
+  Pending  = 3,
+}
+
+// String enums — better logs and API interop
+enum DocumentType {
+  Passport  = 'passport',
+  Visa      = 'passport_visa',
+  DriversLicense = 'drivers_license',
+}
+
+// Const enums — zero runtime cost (inlined by compiler)
+const enum Direction {
+  Up = 'UP',
+  Down = 'DOWN',
+}
+```
+
+---
+
+## Lazy object initialization anti-pattern
+
+Avoid initializing an empty object and adding properties later — TypeScript infers `{}` and later assignments fail:
+
+```typescript
+// Bad
+let config = {};
+config.host = "localhost";  // Error: property 'host' does not exist on type '{}'
+
+// Good — initialize all properties together
+const config = { host: "localhost", port: 3000 };
+
+// Or annotate first
+let config: Config = { host: "localhost", port: 3000 };
+```
 
 → Full examples with runnable code: `references/type-system.md`
