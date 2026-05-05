@@ -92,4 +92,4 @@ Before each phase:
 
 | Before starting TCRDD                        | Skill         | Why                                                                |
 | -------------------------------------------- | ------------- | ------------------------------------------------------------------ |
-| Unsure whether the feature is worth building | `kano-triage` | Classify the feature before investing in red/green/refactor cycles |
+| Unsure whether the feature is worth building | `kano`        | Classify the feature before investing in red/green/refactor cycles |

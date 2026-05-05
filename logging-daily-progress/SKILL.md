@@ -1,6 +1,16 @@
 ---
 name: logging-daily-progress
-description: Maintains a rolling daily progress log (progress-daily.md) that captures Impact, Learnings, and Commits for each day of engineering work, sourced from git history. Use whenever the user says "log today", "log my day", "any updates?", "what did I ship?", "update my progress log", "add today to the hype doc", or asks to recap recent work from git. Also trigger when the user mentions Impact/Learnings/Commits journaling, the Career Hype Doc practice, or wants daily wins recorded while context is fresh rather than reconstructed later from calendar archaeology. Works for any repo — the author identity and file path are configurable.
+description: >
+  Maintains a rolling daily progress log (`progress-daily.md`) that captures Impact, Learnings, and Commits for each
+  day of engineering work, sourced from git history. Author identity and log path are configurable per repo.
+
+  TRIGGER when: user says "log today", "log my day", "any updates?", "what did I ship?", "update my progress log",
+  "add today to the hype doc", "recap this week from git", "catch me up on what I shipped", or "backfill since
+  <date>". Also trigger when the user mentions Impact/Learnings/Commits journaling, the Career Hype Doc practice,
+  or wants daily wins recorded while context is fresh rather than reconstructed later from calendar archaeology.
+
+  DO NOT USE when: the user wants a one-off git log query (use `git log` directly) or a release-notes-style
+  changelog (different audience, different format).
 ---
 
 # Logging Daily Progress

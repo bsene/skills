@@ -1,5 +1,5 @@
 ---
-name: kano-triage
+name: kano
 description: >
   Kano Model feature triage: classify features as Must-be, One-dimensional, Attractive,
   Indifferent, or Reverse before building them. Empowers developers to refuse unnecessary

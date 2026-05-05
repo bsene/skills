@@ -1,17 +1,19 @@
 ---
 name: mikado-method
 description: >
-  Enforce and guide the Mikado Method when a developer is refactoring, restructuring,
-  or dealing with legacy code. Use this skill whenever the user mentions refactoring,
-  technical debt, legacy code, code restructuring, dependency untangling, or "breaking
-  everything" when making changes. Also trigger when the user wants to make a large
-  change safely, asks how to split a big refactoring task, wants to work on main branch
-  without a long-lived feature branch, or asks how to incrementally improve a codebase.
-  The skill enforces the full Mikado loop: goal → naive attempt → map prerequisites →
-  revert → implement leaves → commit → repeat.
-  DO NOT USE when: the change is small and self-contained (a simple rename or one-line
-  fix needs no prerequisite graph) — use `refactoring` instead. If the feature hasn't
-  been scoped yet, consider `kano-triage` first to validate it's worth doing.
+  Enforce and guide the Mikado Method for *large, graph-driven* refactors where a single naive change cascades
+  into many failing call sites. The skill enforces the full Mikado loop: goal → naive attempt → map
+  prerequisites → revert → implement leaves → commit → repeat.
+
+  TRIGGER when: user mentions Mikado Method, dependency untangling, circular dependencies, "breaking everything"
+  on a refactor, change cascading across many files, ripple effects, large-scale legacy refactor with
+  tight coupling, untangling tightly-coupled modules, splitting a big refactor into safe steps, or wanting to
+  work on main without a long-lived feature branch. Also trigger on "graph-based refactor", "prerequisite tree",
+  or "Mikado graph".
+
+  DO NOT USE when: the change is small/in-place (single method, single class, simple rename) — use `refactoring`
+  instead for code smells and Extract Method-style work. If the feature hasn't been scoped yet, consider `kano`
+  first to validate it's worth doing.
 ---
 
 # Mikado Method Skill

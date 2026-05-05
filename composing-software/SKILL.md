@@ -34,7 +34,7 @@ Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/
 | Term | Definition |
 |---|---|
 | **Pure function** | Same input → same output, no side effects |
-| **Composition** | Output of one function becomes input of the next |
+| **Composition** | Combining small functions into a larger one by feeding each output as the next input |
 | **Currying** | Transform `(a, b) => c` into `a => b => c` |
 | **Partial application** | Fix some arguments, return a function for the rest |
 | **Point-free** | Define functions without mentioning their arguments |

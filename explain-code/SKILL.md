@@ -17,7 +17,7 @@ description: >
 1. **Start with an analogy** — compare the code to something from everyday life
 2. **Pick the right C4 level** — match diagram depth to the question; default Level 2 (Container)
 3. **Draw the diagram** — use the `c4-diagram` skill (level selector, DSL rules, rendering all live there)
-4. **Walk through the code** — explain step-by-step what happens
+4. **Walk through the code** — trace inputs to outputs in narrative form: what enters, which functions/modules touch it in order, where state changes, what exits. Name the data, not just the steps.
 5. **Highlight a gotcha** — what's a common mistake or misconception?
 
 Keep explanations conversational. For complex concepts, use multiple analogies.
