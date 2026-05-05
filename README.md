@@ -14,41 +14,42 @@ Skills are **auto-activated** in conversations — when you mention a topic that
 
 ### Example
 
-When you ask "can you review my tests against BDD principles?", the `bdd-unit-test-reviewer` skill auto-activates and applies its 5-step BDD audit workflow.
+When you ask "is this feature worth building?", the `kano` skill auto-activates and applies its Kano-model triage workflow.
 
 ## Skill Catalog
 
-| Domain                    | Skill                        | Purpose                                                                                                   |
-| ------------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------- |
-| **Strategy**              | `kano`                       | Kano model feature triage — classify and refuse unnecessary work before building                           |
-| **Testing**               | `bdd-unit-test-reviewer`     | Audit unit tests against Dan North's BDD principles                                                       |
-|                           | `testdesiderata`             | Review tests against Kent Beck's 12 TestDesiderata properties                                             |
-|                           | `tcrdd`                      | Guide through TDD and TCRDD (Test-Commit-Revert + TDD) workflows                                          |
-| **Refactoring**           | `refactoring`                | Detect and fix code bloaters (long methods, large classes, primitive obsession, etc.)                     |
-|                           | `refactoring-patterns`       | Apply 7 active refactoring operations (Extract, Replace, Introduce, Simplify, Move, Rename)               |
-|                           | `comments-smells`            | Detect and fix the "Comments" code smell                                                                  |
-|                           | `mikado-method`              | Guide safe, incremental refactoring via Mikado graphs                                                     |
-| **OOP Design**            | `oo-principles`              | Analyze OOP code against Dave Thomas's 7 principles                                                       |
-|                           | `cupid-checker`              | Review code against Dan North's CUPID properties (Composable, Unix, Predictable, Idiomatic, Domain-based) |
-|                           | `tell-dont-ask`              | Apply the Tell Don't Ask principle in OOP refactoring                                                     |
-| **TypeScript/JavaScript** | `typescript`                 | Design patterns, SOLID principles, and TS5+ type system features                                          |
-|                           | `typescript/design-patterns` | Classic GoF design patterns in modern JavaScript/TypeScript                                               |
-|                           | `composing-software`         | Functional programming composition techniques in JavaScript                                               |
-| **Databases/ORM**         | `drizzle-learner`            | Teaching code reviewer for Drizzle ORM + PostgreSQL                                                       |
-| **Version Control**       | `git-hero`                   | Comprehensive Git mastery — best practices, expert Q&A, gitmoji, and CI/CD pipelines                     |
-|                           | `git-hero/git-guru`          | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals    |
-|                           | `git-hero/gitmoji`           | Select and apply gitmoji emoji prefixes for commit messages, integrated with Conventional Commits         |
-|                           | `git-hero/gitlab-dag`        | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
-| **Documentation**         | `markdown`                   | Comprehensive GitHub Flavored Markdown (GFM) reference                                                    |
-|                           | `writing-a-good-claude-md`   | Write, review, and audit CLAUDE.md/AGENTS.md files for AI agents                                          |
-| **Go**                    | `golang`                     | Idiomatic Go development — project structure, fundamentals, naming, anti-patterns                         |
-|                           | `golang/error-handling`      | Error interface, custom types, wrapping, sentinel errors, panic/recover                                   |
-|                           | `golang/concurrency`         | Goroutines, channels, select, sync primitives, context, errgroup                                          |
-|                           | `golang/types-and-interfaces`| Structs, interfaces, embedding, composition, generics, enums with iota                                    |
-|                           | `golang/testing`             | Table-driven tests, benchmarks, fuzz testing, httptest, testify, profiling                                |
-|                           | `golang/web`                 | HTTP server/client, handlers, middleware, JSON encoding, templates                                        |
-|                           | `golang/packages-and-modules`| go.mod, go.sum, versioning, proxies, workspaces, internal packages                                        |
-| **Languages**             | `chicken-scheme`             | Write, compile, debug, and package CHICKEN Scheme programs                                                |
+| Domain                    | Skill                          | Purpose                                                                                                   |
+| ------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| **Strategy**              | `kano`                         | Kano model feature triage — classify and refuse unnecessary work before building                          |
+| **Testing**               | `testing`                      | Testing philosophy, hierarchy, smoke tests, and test desiderata for any language                          |
+|                           | `tcrdd`                        | Guide through TDD and TCRDD (Test-Commit-Revert + TDD) workflows                                          |
+| **Refactoring**           | `refactoring`                  | Detect and fix code bloaters (long methods, large classes, primitive obsession, etc.)                     |
+|                           | `mikado-method`                | Guide safe, incremental refactoring via Mikado dependency graphs                                          |
+| **OOP & Architecture**    | `oop-principles`               | Analyze OOP code against Dave Thomas's 7 principles                                                       |
+|                           | `cupid-checker`                | Review code against Dan North's CUPID properties (Composable, Unix, Predictable, Idiomatic, Domain-based) |
+|                           | `ports-adapters-architecture`  | Apply Hexagonal / Ports-and-Adapters architecture                                                         |
+| **TypeScript/JavaScript** | `typescript` *(router)*        | TypeScript best practices — error handling, strict mode, types/Zod sub-skills                             |
+|                           | `typescript/type-system`       | TS5+ type system features                                                                                  |
+|                           | `typescript/zod`               | Runtime validation with Zod                                                                                |
+|                           | `composing-software`           | Functional programming composition techniques in JavaScript                                               |
+| **Go**                    | `golang` *(router)*            | Idiomatic Go — project structure, fundamentals, naming, anti-patterns                                     |
+|                           | `golang/error-handling`        | Error interface, custom types, wrapping, sentinel errors, panic/recover                                   |
+|                           | `golang/concurrency`           | Goroutines, channels, select, sync primitives, context, errgroup                                          |
+|                           | `golang/types-and-interfaces`  | Structs, interfaces, embedding, composition, generics, enums with iota                                    |
+|                           | `golang/testing`               | Table-driven tests, benchmarks, fuzz testing, httptest, testify, profiling                                |
+|                           | `golang/web`                   | HTTP server/client, handlers, middleware, JSON encoding, templates                                        |
+|                           | `golang/packages-and-modules`  | go.mod, go.sum, versioning, proxies, workspaces, internal packages                                        |
+| **Languages**             | `chicken-scheme`               | Write, compile, debug, and package CHICKEN Scheme programs                                                |
+| **Version Control**       | `git-hero` *(router)*          | Git mastery — commit discipline, atomic commits, routes to sub-skills                                     |
+|                           | `git-hero/git-guru`            | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals    |
+|                           | `git-hero/gitmoji`             | Select and apply gitmoji emoji prefixes for commit messages, integrated with Conventional Commits         |
+|                           | `git-hero/gitlab-dag`          | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
+| **Diagrams & Docs**       | `c4-diagram`                   | Render C4 model architecture diagrams via Mermaid or Structurizr DSL                                      |
+|                           | `explain-code`                 | Explain code with C4 diagrams, analogies, and step-by-step walkthroughs                                   |
+|                           | `markdown`                     | Comprehensive GitHub Flavored Markdown (GFM) reference                                                    |
+|                           | `writing-a-good-claude-md`     | Write, review, and audit CLAUDE.md/AGENTS.md files for AI agents                                          |
+| **Workflow**              | `show-me-the-code`             | Strict diff-style protocol for any code change                                                            |
+|                           | `logging-daily-progress`       | Maintain a rolling daily progress log (Impact / Learnings / Commits) sourced from git                     |
 
 ## How Skills Activate
 
@@ -60,10 +61,11 @@ Skills are **context-aware and automatic**:
 
 ### Example Triggers
 
-- _"My tests have bad names"_ → activates `bdd-unit-test-reviewer`
-- _"I need to refactor this long method"_ → activates `refactoring-patterns`
+- _"Is this feature worth building?"_ → activates `kano`
+- _"I need to refactor this long method"_ → activates `refactoring`
 - _"How do I rewrite a commit message?"_ → activates `git-guru`
 - _"Help me optimize this CI/CD pipeline"_ → activates `gitlab-dag`
+- _"Walk me through how this service works"_ → activates `explain-code`
 
 ## Skill File Format
 
@@ -100,6 +102,20 @@ my-skill/
     └── checklist.md          # Review checklist
 ```
 
+### Router Skills
+
+Some skills act as **routers**: their main `SKILL.md` is a thin dispatcher to nested sub-skills, each living in its own sub-directory with its own `SKILL.md`. Routers in this repo: `typescript`, `golang`, `git-hero`.
+
+A router's frontmatter sets `user-invocable: false` so Claude does not stop at the dispatcher when the user actually wants a sub-skill. Sub-skills are activated by their own descriptions (e.g. asking about Goroutines activates `golang/concurrency` directly).
+
+```
+typescript/
+├── SKILL.md                  # Router (user-invocable: false)
+├── rules/                    # Always-on rules surfaced from main file
+├── type-system/SKILL.md      # Sub-skill
+└── zod/SKILL.md              # Sub-skill
+```
+
 ## Adding a New Skill
 
 1. **Create a directory** in the root: `skills/my-new-skill/`
@@ -118,12 +134,13 @@ my-skill/
 
 ## External Skills
 
-This repo uses `skills-lock.json` to track externally sourced skills. One external skill is currently installed:
+This repo uses `skills-lock.json` to track externally sourced skills. Two external skills are currently installed:
 
-- **`skill-optimizer`** (from [mcollina/skills](https://github.com/mcollina/skills) on GitHub): Optimize skills for activation, clarity, and cross-model reliability
+- **`creating-skills`** (from [jesseotremblay/claude-skills](https://github.com/jesseotremblay/claude-skills) on GitHub): Scaffold and audit new skill packs.
+- **`skill-optimizer`** (from [mcollina/skills](https://github.com/mcollina/skills) on GitHub): Optimize skills for activation, clarity, and cross-model reliability.
 
 External skills are installed in `.agents/skills/` and pinned by commit hash in `skills-lock.json` for reproducibility.
 
 ---
 
-**Last updated**: March 30, 2026
+**Last updated**: May 5, 2026

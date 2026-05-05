@@ -1,6 +1,14 @@
 ---
 name: git-hero
-description: "Comprehensive Git mastery — opinionated best practices, expert Q&A, gitmoji commit prefixes, and GitLab CI/CD pipelines. Use when the user asks about git best practices, commit hygiene, branching strategy, history management, force push safety, git workflow setup, clean git history, atomic commits, branch naming, rebase vs merge strategy, git configuration, gitmoji, commit emoji, GitLab CI, pipeline optimization, or says things like 'review my git workflow', 'how should I set up git', 'what are good git practices', 'configure git properly', 'mes bonnes pratiques git', 'comment faire un rebase', 'quel emoji pour ce commit'."
+description: >
+  Comprehensive Git mastery: commit discipline (Conventional Commits, atomic commits) inline, plus routing to
+  expert Q&A (`git-guru`), gitmoji (`gitmoji`), and GitLab CI/CD pipelines (`gitlab-dag`) sub-skills.
+
+  TRIGGER when: user asks about git best practices, commit hygiene, atomic commits, branching strategy,
+  history management, force push safety, git workflow setup, clean git history, branch naming,
+  rebase vs merge strategy, git configuration, gitmoji, commit emoji, GitLab CI, pipeline optimization,
+  Conventional Commits, "review my git workflow", "how should I set up git", "what are good git practices",
+  "configure git properly", "mes bonnes pratiques git", "comment faire un rebase", "quel emoji pour ce commit".
 ---
 
 # Git Hero

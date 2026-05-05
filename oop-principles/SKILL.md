@@ -1,8 +1,17 @@
 ---
 name: oop-principles
 description: >
-  Evaluate code against Dave Thomas's OO principles, SOLID principles, and the Tell Don't Ask rule. Trigger when:
-  class has only static methods; class has a single public method + constructor; code uses GoF pattern names (Decorator/Factory/Strategy/Builder/Command/Observer); class is invalid until setters are called; data class with only constructor + properties; external code reads getters to make decisions (Tell Don't Ask); user asks "is this a code smell?", "should this be a class or a function?", or "why does my code feel procedural?".
+  Evaluate code against Dave Thomas's OO principles, SOLID principles, and the Tell Don't Ask rule. Routes to
+  `design-patterns/` and `solid/` sub-skills.
+
+  TRIGGER when: class has only static methods; class has a single public method + constructor; code uses GoF
+  pattern names (Decorator/Factory/Strategy/Builder/Command/Observer); class is invalid until setters are called;
+  data class with only constructor + properties; external code reads getters to make decisions (Tell Don't Ask);
+  user asks "is this OOP design smell?", "is this a class design issue?", "is this an OOP anti-pattern?",
+  "should this be a class or a function?", or "why does my code feel procedural?".
+
+  DO NOT USE when: the smell is at the function/method level (long method, primitive obsession, feature envy on
+  values, etc.) — that is `refactoring`'s domain. Activate here only for *class-shape* issues.
 ---
 
 # OO Principles

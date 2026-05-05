@@ -1,10 +1,17 @@
 ---
 name: typescript
 description: >
-  TypeScript error handling via union returns, strictness policy, runtime validation with Zod, monorepo contracts, and domain types vs DTOs.
-  TRIGGER when: user mentions TypeScript error handling, Zod validation, strict mode, runtime validation, domain vs DTO,
-  typescript best practices, handle errors without throwing, validate API response, type safety, typescript strictness,
-  ts-expect-error, monorepo types, api contract.
+  TypeScript best-practices router: error handling via union returns, strict-mode policy, runtime validation with Zod,
+  monorepo contracts, domain vs DTO types, and routing to type-system/Zod sub-skills plus design-patterns and SOLID
+  via oop-principles. Always-on rules cover type assertions, readonly, null vs undefined, return-type annotations,
+  interface prefixes, intermediate arrays, and JS general conventions.
+
+  TRIGGER when: user mentions TypeScript, TS, .ts/.tsx files, type safety, type system, type narrowing,
+  discriminated unions, mapped types, generics, conditional types, utility types (Partial/Pick/Omit/Record),
+  Zod, schema validation, runtime validation, strict mode, strictness, ts-expect-error, ts-ignore,
+  error handling without throwing, union return errors, domain vs DTO, monorepo types, api contract,
+  design patterns in TypeScript, SOLID in TypeScript, typescript best practices, idiomatic TypeScript,
+  any/unknown usage, type assertions, readonly, interface prefix, return type annotations.
 user-invocable: false
 # user-invocable: false because this skill is a router — users invoke sub-skills (type-system, zod) directly.
 # Keeping it non-invocable prevents Claude from stopping here instead of routing deeper.
@@ -112,6 +119,7 @@ Track and reduce `any` usage, `null` inconsistency, and duplicate definitions vi
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
+- Barrel exports (when to use, when to avoid): see `references/barrel-exports.md`.
 
 ## Rules (always apply)
 

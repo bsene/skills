@@ -1,13 +1,18 @@
 ---
 name: refactoring
 description: >
-  Detect code smells and apply refactoring techniques to improve clarity, testability, and maintainability.
+  Detect code smells and apply *in-place* refactoring techniques (Extract Method/Class, Replace Conditional,
+  Introduce Parameter Object, Rename, Move) to improve clarity, testability, and maintainability of a single
+  function, class, or file.
+
   TRIGGER when: user mentions refactoring opportunities, code smell, long method, large class, primitive obsession,
-  long parameter list, data clumps, extract method, extract class, replace conditional, introduce parameter object,
-  when to refactor, tidying, tidy first.
-  DO NOT USE when: no tests exist (unsafe to refactor blind — add tests first), the change is behavior-altering rather
-  than structure-only (use `tcrdd` instead), or the user needs to safely untangle a large legacy dependency graph
-  (use `mikado-method` instead).
+  long parameter list, data clumps, feature envy, shotgun surgery, switch statement smell, extract method,
+  extract class, replace conditional with polymorphism, introduce parameter object, simplify single file,
+  improve readability, tidying, tidy first, "clean up this function", "refactor this class".
+
+  DO NOT USE when: no tests exist (unsafe to refactor blind — add tests first), the change is behavior-altering
+  rather than structure-only (use `tcrdd` instead), or the user needs to safely untangle a *cross-file*
+  dependency graph where one change ripples to many call sites (use `mikado-method` instead).
 ---
 
 # Refactoring: Smells & Techniques
