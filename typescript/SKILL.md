@@ -4,14 +4,15 @@ description: >
   TypeScript best-practices router: error handling via union returns, strict-mode policy, runtime validation with Zod,
   monorepo contracts, domain vs DTO types, and routing to type-system/Zod sub-skills plus design-patterns and SOLID
   via oop-principles. Always-on rules cover type assertions, readonly, null vs undefined, return-type annotations,
-  interface prefixes, intermediate arrays, and JS general conventions.
+  interface prefixes, intermediate arrays, JS general conventions, and barrel files.
 
   TRIGGER when: user mentions TypeScript, TS, .ts/.tsx files, type safety, type system, type narrowing,
   discriminated unions, mapped types, generics, conditional types, utility types (Partial/Pick/Omit/Record),
   Zod, schema validation, runtime validation, strict mode, strictness, ts-expect-error, ts-ignore,
   error handling without throwing, union return errors, domain vs DTO, monorepo types, api contract,
   design patterns in TypeScript, SOLID in TypeScript, typescript best practices, idiomatic TypeScript,
-  any/unknown usage, type assertions, readonly, interface prefix, return type annotations.
+  any/unknown usage, type assertions, readonly, interface prefix, return type annotations,
+  barrel files, barrel exports, index.ts re-exports, barrel imports.
 user-invocable: false
 # user-invocable: false because this skill is a router — users invoke sub-skills (type-system, zod) directly.
 # Keeping it non-invocable prevents Claude from stopping here instead of routing deeper.
@@ -119,7 +120,6 @@ Track and reduce `any` usage, `null` inconsistency, and duplicate definitions vi
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
-- Barrel exports (when to use, when to avoid): see `references/barrel-exports.md`.
 
 ## Rules (always apply)
 
@@ -133,3 +133,4 @@ Track and reduce `any` usage, `null` inconsistency, and duplicate definitions vi
 | Mark properties and arrays `readonly` to signal immutability | `rules/readonly.md` |
 | Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
 | `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
+| Do not use barrel files (`index.ts` re-exports) | `rules/no-barrel-files.md` |
