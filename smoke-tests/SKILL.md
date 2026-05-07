@@ -1,13 +1,10 @@
 ---
 name: smoke-tests
 description: >
-  Smoke test identification, authoring, and CI integration.
-  TRIGGER when: smoke test, smoke testing, sanity check, critical path test, fast CI gate,
-  CI first-pass gate, quick validation before full suite, run only critical tests,
-  identify smoke tests, write smoke tests, add smoke test, smoke test template,
-  generate smoke tests, which tests are smoke tests, mark tests as smoke,
-  gate before full suite, build health check tests, validate critical paths,
-  hurl, hurl smoke test, hurl test, .hurl file, hurl CI, write hurl tests.
+  Smoke test identification, authoring, and CI integration — using Hurl for HTTP APIs, Jest/Vitest for in-process.
+  TRIGGER when: smoke test, smoke testing, critical path test, CI gate, gate before full suite,
+  write smoke tests, add smoke test, smoke test template, which tests are smoke tests,
+  hurl, .hurl file.
   DO NOT USE when: user needs full testing strategy or philosophy — use `testing` instead.
 ---
 
@@ -15,17 +12,6 @@ description: >
 
 Minimal, rapid tests that validate critical user-facing functionality before slower suites run.
 If smoke tests fail, the build is broken. Full suite doesn't run.
-
----
-
-## What Smoke Tests Verify
-
-| Goal | Definition | Signal |
-|------|-----------|--------|
-| Core features work | App starts, main entry points execute | Startup crash caught immediately |
-| Critical paths execute | Key user workflows complete without exceptions | Regressions in auth/CRUD caught early |
-| System integration intact | Major components communicate correctly | DB, config, external services up |
-
 **Characteristics:** minimal setup · fast (seconds) · happy paths only · high signal-to-noise
 
 ---
@@ -109,7 +95,7 @@ npm test
 - [ ] Identify smoke test location (directory / `.only` / naming convention)
 - [ ] List critical workflows: auth, create, read, list, health check
 - [ ] Write 5–10 focused tests — happy paths only
-- [ ] Add `beforeAll` setup + `afterAll` teardown
+- [ ] Set up environment before suite (auth token, base URL, DB); tear down after
 - [ ] Run in isolation; all must pass before full suite
 - [ ] Wire as first gate in CI pipeline
 
