@@ -21,7 +21,8 @@ When you ask "is this feature worth building?", the `kano` skill auto-activates 
 | Domain                    | Skill                          | Purpose                                                                                                   |
 | ------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------- |
 | **Strategy**              | `kano`                         | Kano model feature triage — classify and refuse unnecessary work before building                          |
-| **Testing**               | `testing`                      | Testing philosophy, hierarchy, smoke tests, and test desiderata for any language                          |
+| **Testing**               | `testing`                      | Testing philosophy, hierarchy, and test desiderata for any language                                       |
+|                           | `smoke-tests`                  | Identify, write, and gate CI on smoke tests — critical path validation with template                      |
 |                           | `tcrdd`                        | Guide through TDD and TCRDD (Test-Commit-Revert + TDD) workflows                                          |
 | **Refactoring**           | `refactoring`                  | Detect and fix code bloaters (long methods, large classes, primitive obsession, etc.)                     |
 |                           | `mikado-method`                | Guide safe, incremental refactoring via Mikado dependency graphs                                          |

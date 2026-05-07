@@ -8,8 +8,9 @@ description: >
   how do I fix flaky tests, tests keep breaking randomly, why do my tests fail randomly, testing legacy codebase,
   adding tests to existing code, when to use mocks, mocking strategy, test doubles, test-driven development,
   testing anti-patterns, how much to test, testing architecture, testing layers, review my test suite, check my tests,
-  BDD testing, test desiderata, smoke test, smoke testing, sanity check, critical path test, fast CI gate.
+  BDD testing, test desiderata.
   DO NOT USE when: user needs a full interactive TDD cadence with immediate red/green/refactor feedback loops — use `tcrdd` instead.
+  DO NOT USE when: user asks about smoke tests specifically — use `smoke-tests` instead.
 ---
 
 # Testing — Strategy & Philosophy
@@ -86,6 +87,7 @@ For deeper dives into specific testing contexts, route to these specialized skil
 | Situation | Specialist Skill | Why |
 |-----------|------------------|-----|
 | Need to practice TDD workflow interactively | `tcrdd` | Hands-on kata-style practice with immediate feedback |
+| Identifying or writing smoke tests specifically | `smoke-tests` | Dedicated triggers, template, CI integration |
 
 ---
 
