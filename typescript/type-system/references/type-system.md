@@ -7,6 +7,7 @@ _Verified against TypeScript 5.x official documentation._
 - [unknown vs any](#unknown-vs-any)
 - [Type Narrowing & Refinement](#type-narrowing--refinement)
 - [Discriminated Union Types](#discriminated-union-types)
+- [Make Illegal States Unrepresentable](#make-illegal-states-unrepresentable)
 - [Totality / Exhaustiveness Checking](#totality--exhaustiveness-checking)
 - [Mapped Types](#mapped-types)
 - [Conditional Types](#conditional-types)
@@ -128,6 +129,96 @@ function send(msg: object) {
 Tag requirements: same field name across all union members, literal type, not generic, mutually exclusive.
 
 **Invaluable for:** Redux/Flux actions, `useReducer`, WebSocket message routing, API response variants.
+
+---
+
+## Make Illegal States Unrepresentable
+
+When an entity has a lifecycle (PENDING → IN_PROGRESS → COMPLETED/FAILED/CANCELLED), the naive approach uses one type with optional fields for state-specific data. This allows the compiler to accept incoherent combinations — a `PENDING` task with a `finishedAt` date, or a `COMPLETED` task without `startedAt`.
+
+```typescript
+// BAD — optional fields allow incoherent states
+type Task = {
+  id: string;
+  title: string;
+  createdAt: Date;
+  status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "FAILED" | "CANCELLED";
+  startedAt?: Date;     // only valid when status !== "PENDING"
+  finishedAt?: Date;    // only valid when status is "COMPLETED" or "FAILED"
+  error?: string;       // only valid when status is "FAILED"
+  cancelledBy?: string; // only valid when status is "CANCELLED"
+  cancelledAt?: Date;   // only valid when status is "CANCELLED"
+};
+
+// This compiles — but is nonsensical:
+const broken: Task = {
+  id: "1", title: "Deploy", createdAt: new Date(),
+  status: "PENDING",
+  finishedAt: new Date(),
+  error: "oops",
+};
+```
+
+The fix: model each state as its own type in a discriminated union. Fields that belong to a state only exist on that state's type.
+
+```typescript
+// GOOD — each state carries exactly the fields that make sense
+type AbstractTask = { readonly id: string; title: string; createdAt: Date };
+
+type PendingTask    = AbstractTask & { status: "PENDING" };
+type InProgressTask = AbstractTask & { status: "IN_PROGRESS"; startedAt: Date };
+type CompletedTask  = AbstractTask & { status: "COMPLETED"; startedAt: Date; finishedAt: Date };
+type FailedTask     = AbstractTask & { status: "FAILED"; startedAt: Date; finishedAt: Date; error: string };
+type CancelledTask  = AbstractTask & { status: "CANCELLED"; cancelledBy: string; cancelledAt: Date };
+
+type Task = PendingTask | InProgressTask | CompletedTask | FailedTask | CancelledTask;
+```
+
+Pattern matching on `status` narrows to the correct variant — state-specific fields available without assertions or optional chaining:
+
+```typescript
+function describeTask(task: Task): string {
+  switch (task.status) {
+    case "PENDING":
+      return `"${task.title}" is waiting to start`;
+    case "IN_PROGRESS":
+      return `"${task.title}" started at ${task.startedAt.toISOString()}`;
+    case "COMPLETED": {
+      const duration = task.finishedAt.getTime() - task.startedAt.getTime();
+      return `"${task.title}" completed in ${duration}ms`;
+    }
+    case "FAILED":
+      return `"${task.title}" failed: ${task.error}`;
+    case "CANCELLED":
+      return `"${task.title}" cancelled by ${task.cancelledBy} at ${task.cancelledAt.toISOString()}`;
+  }
+}
+```
+
+State transitions as pure functions — return type guarantees valid output:
+
+```typescript
+function startTask(task: PendingTask): InProgressTask {
+  return { ...task, status: "IN_PROGRESS", startedAt: new Date() };
+}
+
+function completeTask(task: InProgressTask): CompletedTask {
+  return { ...task, status: "COMPLETED", finishedAt: new Date() };
+}
+
+function failTask(task: InProgressTask, error: string): FailedTask {
+  return { ...task, status: "FAILED", finishedAt: new Date(), error };
+}
+```
+
+Benefits:
+
+- Compiler rejects incoherent states — `{ status: "PENDING", finishedAt: new Date() }` does not type-check.
+- No `task.startedAt!` or `task.startedAt ?? fallback` — after narrowing, field is guaranteed present.
+- State transition functions accept and return specific variants, making lifecycle explicit in type signatures.
+- Pairs naturally with exhaustiveness checking — add a new status and `assertNever` flags every unhandled case at compile time.
+
+**Apply when:** entity has 3+ states with different associated data, and you find optional fields guarded by runtime status checks. Common in: order processing, payment flows, document approval pipelines, build/deploy status, user onboarding steps.
 
 ---
 

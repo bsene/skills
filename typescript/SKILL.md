@@ -7,15 +7,14 @@ description: >
   interface prefixes, intermediate arrays, JS general conventions, and barrel files.
 
   TRIGGER when: user mentions TypeScript, TS, .ts/.tsx files, type safety, type system, type narrowing,
-  discriminated unions, mapped types, generics, conditional types, utility types (Partial/Pick/Omit/Record),
+  discriminated unions, make illegal states unrepresentable, illegal states, state machine types,
+  mapped types, generics, conditional types, utility types (Partial/Pick/Omit/Record),
   Zod, schema validation, runtime validation, strict mode, strictness, ts-expect-error, ts-ignore,
   error handling without throwing, union return errors, domain vs DTO, monorepo types, api contract,
   design patterns in TypeScript, SOLID in TypeScript, typescript best practices, idiomatic TypeScript,
   any/unknown usage, type assertions, readonly, interface prefix, return type annotations,
   barrel files, barrel exports, index.ts re-exports, barrel imports.
 user-invocable: false
-# user-invocable: false because this skill is a router — users invoke sub-skills (type-system, zod) directly.
-# Keeping it non-invocable prevents Claude from stopping here instead of routing deeper.
 ---
 
 # TypeScript
@@ -76,47 +75,24 @@ else res.status(200).json(result);
 
 ## TypeScript at Scale
 
-### Strictness as Policy
-
-Enable `"strict": true` globally and enforce in CI. Prefer `@ts-expect-error` over `@ts-ignore`. Track and reduce `any` usage via linting.
-
-### Domain Types vs Transport Types
-
-Keep API/DTO types separate. Map external responses into domain objects at boundaries.
+1. Enable `"strict": true` globally; enforce in CI
+2. Use `@ts-expect-error` over `@ts-ignore`
+3. Track `any` usage via `@typescript-eslint/no-explicit-any`
+4. Keep API/DTO types separate from domain types — map at boundaries
+5. Validate external inputs (API bodies, env vars, queues) with Zod at boundaries
+6. Publish domain contracts as `@org/contracts`; use project references for boundaries
 
 ```typescript
+// Domain vs Transport — map at boundary
 type UserDTO = { user_id: string; display_name: string; created_at: string };
 type User = { id: string; name: string; createdAt: Date };
 
 function toDomain(dto: UserDTO): User {
-  return {
-    id: dto.user_id,
-    name: dto.display_name,
-    createdAt: new Date(dto.created_at),
-  };
+  return { id: dto.user_id, name: dto.display_name, createdAt: new Date(dto.created_at) };
 }
 ```
 
-### Runtime Validation at Boundaries
-
-Validate external inputs (API bodies, env vars, queues) at boundaries with Zod.
-
-```typescript
-const UserSchema = z.object({ id: z.string(), name: z.string() });
-const user = UserSchema.parse(req.body);
-```
-
-### Monorepo Contracts
-
-Publish domain contracts as `@org/contracts`. Use TypeScript project references to enforce boundaries.
-
-### Type Debt
-
-Track and reduce `any` usage, `null` inconsistency, and duplicate definitions via `@typescript-eslint/no-explicit-any`.
-
-> Types are documentation. If they confuse humans, they’re failing.
-
-## References
+## Read On Demand
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
