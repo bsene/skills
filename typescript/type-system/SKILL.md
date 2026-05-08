@@ -6,6 +6,8 @@ description: >
   mapped types, conditional types, infer keyword, user-defined type guards, type branding, companion object pattern,
   as const, escape hatches, type assertion, how do I narrow a type, how do I write a type predicate,
   how to create nominal types, how to prevent structural aliasing,
+  make illegal states unrepresentable, illegal states, state machine types, entity lifecycle types,
+  optional field anti-pattern, discriminated union state modeling,
   interface vs type alias, when to use interface vs type, enum best practices, typescript enum,
   const enum, readonly property, ReadonlyArray, lazy object initialization, barrel exports,
   when to use generics, generic naming conventions, no interface prefix.
@@ -21,6 +23,7 @@ user-invocable: false
 | Safely handle API responses / JSON.parse     | `unknown` vs `any`             |
 | Narrow a union based on runtime checks       | Type narrowing & refinement    |
 | Route on message type with different shapes  | Discriminated unions           |
+| Model entity lifecycle without invalid states | Make Illegal States Unrepresentable |
 | Fail at compile time when a case is missed   | Exhaustiveness / `assertNever` |
 | Create `Partial`, `Readonly`, or custom maps | Mapped types                   |
 | Unwrap `Promise<T>`, filter union members    | Conditional types + `infer`    |
@@ -64,6 +67,51 @@ function handle(e: Event) {
     case "login":  return greet(e.userId);
     case "logout": return log(e.userId, e.reason);
     case "error":  return alert(e.message);
+  }
+}
+```
+
+**Make Illegal States Unrepresentable** — Model each state of an entity lifecycle as its own type in a discriminated union. Eliminates incoherent field combinations that optional fields allow.
+
+Anti-pattern — single type with optional fields permits invalid states:
+
+```typescript
+type Task = {
+  id: string;
+  title: string;
+  status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "FAILED" | "CANCELLED";
+  startedAt?: Date;
+  finishedAt?: Date;
+  error?: string;
+  cancelledBy?: string;
+};
+// Compiles fine: { status: "PENDING", finishedAt: new Date() } — incoherent
+```
+
+Fix — one type per state, shared base via intersection:
+
+```typescript
+type AbstractTask = { id: string; title: string; createdAt: Date };
+
+type PendingTask    = AbstractTask & { status: "PENDING" };
+type InProgressTask = AbstractTask & { status: "IN_PROGRESS"; startedAt: Date };
+type CompletedTask  = AbstractTask & { status: "COMPLETED"; startedAt: Date; finishedAt: Date };
+type FailedTask     = AbstractTask & { status: "FAILED"; startedAt: Date; finishedAt: Date; error: string };
+type CancelledTask  = AbstractTask & { status: "CANCELLED"; cancelledBy: string; cancelledAt: Date };
+
+type Task = PendingTask | InProgressTask | CompletedTask | FailedTask | CancelledTask;
+
+function handleTask(task: Task): void {
+  switch (task.status) {
+    case "COMPLETED":
+      console.log(`Done in ${task.finishedAt.getTime() - task.startedAt.getTime()}ms`);
+      break;
+    case "FAILED":
+      console.error(task.error);
+      break;
+    case "CANCELLED":
+      console.log(`Cancelled by ${task.cancelledBy}`);
+      break;
   }
 }
 ```
@@ -186,25 +234,19 @@ class Dictionary<TKey, TValue> {
 ## Enums best practices
 
 ```typescript
-// Start at 1 — avoids falsy 0 bugs
 enum Status {
-  Inactive = 1,
+  Inactive = 1,  // start at 1 — avoids falsy 0 bugs
   Active   = 2,
   Pending  = 3,
 }
 
-// String enums — better logs and API interop
-enum DocumentType {
-  Passport  = 'passport',
-  Visa      = 'passport_visa',
+enum DocumentType {            // string enums — better logs and API interop
+  Passport       = 'passport',
+  Visa           = 'passport_visa',
   DriversLicense = 'drivers_license',
 }
 
-// Const enums — zero runtime cost (inlined by compiler)
-const enum Direction {
-  Up = 'UP',
-  Down = 'DOWN',
-}
+const enum Direction { Up = 'UP', Down = 'DOWN' }  // zero runtime cost (inlined)
 ```
 
 ---
