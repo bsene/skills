@@ -2,6 +2,15 @@
 
 When you spot something that needs refactoring, use this guide to pick the right technique(s).
 
+## Review Workflow
+
+1. **Detect** — Scan for smells (see [smells.md](smells.md) for catalog and severity thresholds)
+2. **Decide** — For each smell, use the scenarios below to pick a technique
+3. **Apply** — For each opportunity: identify the pattern, show before/after, explain the payoff
+4. **Verify** — Tests pass, no duplicate logic, names express intent
+
+---
+
 ## Common Refactoring Scenarios
 
 ### Scenario 1: Long Method (20+ lines)
@@ -228,13 +237,7 @@ This order often reveals opportunities for later patterns.
 
 ---
 
-## Anti-Patterns: When NOT to Refactor
-
-- **Small, one-off code**: Extracting 3 lines into a method adds more noise than clarity
-- **Unstable code**: Don't refactor code that's about to change; refactor after it stabilizes
-- **Code under test**: Refactor *and* update tests together
-- **Performance-critical path**: Profile first; refactoring for clarity might hurt performance
-- **Coming from code review**: Be explicit: "Refactoring for clarity, no behavior change"
+See SKILL.md "When NOT to Refactor" for exceptions and guardrails.
 
 ---
 

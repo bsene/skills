@@ -76,43 +76,13 @@ When the user wants to apply or review Ports & Adapters:
 3. **Move logic inward** — ensure domain code imports only other domain code, never framework/DB packages.
 4. **Write adapters** — one concrete class per external system, implementing the matching port interface.
 
-## Before / After (TypeScript)
+## Read On Demand
 
-**Before** — domain directly imports infrastructure:
+| Read When | File |
+|---|---|
+| Before/after TypeScript example showing the refactoring | [Before / After Example](references/before-after-example.md) |
 
-```typescript
-// ❌ domain knows about postgres
-import { db } from "../infrastructure/postgres";
-
-class UserService {
-  async getUser(id: string) {
-    return db.query("SELECT * FROM users WHERE id = $1", [id]);
-  }
-}
-```
-
-**After** — domain depends only on a port interface:
-
-```typescript
-// ✅ domain defines what it needs
-interface UserRepository {
-  findById(id: string): Promise<User | null>;
-}
-
-class UserService {
-  constructor(private readonly users: UserRepository) {}
-  async getUser(id: string) { return this.users.findById(id); }
-}
-
-// adapter lives outside the hexagon
-class PostgresUserRepository implements UserRepository {
-  async findById(id: string) { /* postgres query */ }
-}
-```
-
----
-
-## References
+## Read On Demand (External)
 
 - **Alistair Cockburn** — [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)
 - **Martin Fowler** — [Ports and Adapters Pattern](https://martinfowler.com/bliki/HexagonalArchitecture.html)

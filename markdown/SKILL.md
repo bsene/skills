@@ -5,6 +5,7 @@ description: >
   TRIGGER when: github flavored markdown, GFM, markdown table, markdown syntax, markdown heading, markdown link,
   markdown image, task list, markdown alert, callout markdown, footnote markdown, markdown line break,
   markdown emoji, escape markdown, markdown section anchor.
+  DO NOT USE when: user is writing markdown content — only invoke for syntax help or rendering troubleshooting.
 ---
 
 # SKILL: GitHub Flavored Markdown (GFM)

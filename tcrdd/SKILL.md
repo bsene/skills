@@ -9,7 +9,7 @@ description: >
   step with tests"; user mentions `git-gamble`; user wants approval-gated pair programming on
   a feature; user wants disciplined test-then-code cadence with automatic commits.
 
-  DO NOT use when: retrofitting tests onto existing code without behaviour change (use
+  DO NOT USE when: retrofitting tests onto existing code without behaviour change (use
   `testing` instead); one-off bug fix where per-phase commits add noise; no runnable test
   command available.
 
@@ -80,7 +80,7 @@ Before each phase:
 
 ---
 
-## Resources
+## Read On Demand
 
 | Read when                             | Link                                                                                                  |
 | ------------------------------------- | ----------------------------------------------------------------------------------------------------- |

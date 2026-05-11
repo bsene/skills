@@ -135,9 +135,8 @@ typescript/
 
 ## External Skills
 
-This repo uses `skills-lock.json` to track externally sourced skills. Two external skills are currently installed:
+This repo uses `skills-lock.json` to track externally sourced skills. One external skill is currently installed:
 
-- **`creating-skills`** (from [jesseotremblay/claude-skills](https://github.com/jesseotremblay/claude-skills) on GitHub): Scaffold and audit new skill packs.
 - **`skill-optimizer`** (from [mcollina/skills](https://github.com/mcollina/skills) on GitHub): Optimize skills for activation, clarity, and cross-model reliability.
 
 External skills are installed in `.agents/skills/` and pinned by commit hash in `skills-lock.json` for reproducibility.

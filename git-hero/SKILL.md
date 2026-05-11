@@ -9,6 +9,7 @@ description: >
   rebase vs merge strategy, git configuration, gitmoji, commit emoji, GitLab CI, pipeline optimization,
   Conventional Commits, "review my git workflow", "how should I set up git", "what are good git practices",
   "configure git properly", "mes bonnes pratiques git", "comment faire un rebase", "quel emoji pour ce commit".
+  DO NOT USE when: user needs a single git command answer — let Claude answer directly.
 ---
 
 # Git Hero

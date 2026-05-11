@@ -91,7 +91,7 @@ incoming version
 
 Delete the markers + keep what you want, then `git add`.
 
-## References
+## Read On Demand
 
 - For full glossary and concept definitions → `references/concepts.md`
 - For command flags and usage patterns → `references/commands.md`
