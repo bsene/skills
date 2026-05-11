@@ -9,7 +9,6 @@ description: >
   Go slices, Go maps, Go packages, Go receiver, Go embedding.
   DO NOT USE when: user is working with a different language and only mentions "go" as a verb.
 user-invocable: false
-# user-invocable: false because this skill is a router — users invoke sub-skills directly.
 ---
 
 # Go
@@ -89,7 +88,7 @@ Every type has a usable zero value — no null surprises.
 
 ---
 
-## Reference Files
+## Read On Demand
 
 | Read When | File |
 |---|---|

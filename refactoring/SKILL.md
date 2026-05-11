@@ -25,13 +25,10 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 
 | Read When                                                              | File                                                       |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Identifying code smells in your codebase                               | [Code Smell Catalog](references/smells.md)                 |
+| Identifying code smells or reviewing a diff/PR for bloaters            | [Code Smell Catalog](references/smells.md)                 |
 | Deciding which refactoring technique to use                            | [Refactoring Techniques](references/techniques.md)         |
-| Mapping a code smell directly to a pattern (quick activation lookup)  | [Pattern Triggers](references/pattern-triggers.md)         |
-| Choosing the right pattern for a specific scenario                     | [Decision Guide](references/decision-guide.md)             |
-| Reviewing a diff/PR for bloater smells                                 | [Detection Checklist](references/detection-checklist.md)   |
-| Step-by-step code review and refactoring workflow                      | [Code Review Workflow](references/code-review-workflow.md) |
-| **Only** when user asks where a pattern applies in a specific language | [Language Patterns](references/language-patterns.md)       |
+| Choosing the right pattern, scenario-based decisions, or review workflow | [Decision Guide](references/decision-guide.md)            |
+| **Only** when user asks where a pattern applies in a specific language | [Language Idioms](references/language-idioms.md)            |
 | **Only** when user asks for a multi-file before/after walkthrough      | [Real-World Examples](references/real-world-examples.md)   |
 
 ---
@@ -64,6 +61,15 @@ For the full Techniques → When to Use table, see [techniques.md](references/te
 
 ---
 
+## Techniques by Goal
+
+- **Testability:** Extract Method → Extract Class → Replace Conditional
+- **Reduce duplication:** Extract Method → Replace Conditional → Introduce Variable
+- **Readability:** Rename → Introduce Variable → Simplify Conditional → Extract Method
+- **Better design/coupling:** Extract Class → Move Method/Field → Replace Conditional
+
+---
+
 ## When NOT to Refactor
 
 Sometimes code size, complexity, or structure is justified:
@@ -81,7 +87,7 @@ Always ask: **"Does this complexity serve the code's purpose, or does it obscure
 
 ---
 
-## References
+## Read On Demand
 
 - **Refactoring Guru:** [Code Smells - Bloaters](https://refactoring.guru/refactoring/smells/bloaters)
 - **Martin Fowler:** [Refactoring Catalog](https://refactoring.com/catalog/) — 72+ techniques organized by operation

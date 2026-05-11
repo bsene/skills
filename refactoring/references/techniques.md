@@ -182,14 +182,7 @@ class SilverCustomer implements Customer {
   }
 }
 
-class BronzeCustomer implements Customer {
-  calculateDiscount(): number {
-    return this.totalSpent * 0.05;
-  }
-
-  sendNotification(message: string): void {
-  }
-}
+// BronzeCustomer follows same pattern
 
 const discount = customer.calculateDiscount();
 customer.sendNotification(msg);
@@ -403,11 +396,6 @@ function calculateTaxAdjustedAmounts(orders: Order[]): number[] {
   return taxAdjustedAmounts;
 }
 
-function calculateTaxAdjustedAmounts(orders: Order[]): number[] {
-  return orders
-    .filter((order) => order.status === "active")
-    .map((order) => order.amount * 1.15);
-}
 ```
 
 **Payoff:** Code is self-documenting, onboarding is faster, fewer bugs from misunderstanding, refactoring opportunities become obvious.
@@ -511,24 +499,6 @@ function isNotEligibleForDisability() {
   return seniority < 2 || monthsDisabled > 12 || isPartTime;
 }
 ```
-
----
-
-### Replace Temp with Query
-
-**When:** A local variable holds the result of an expression that could be a method. Promoting it lets other methods reuse the value and shrinks the enclosing function.
-
-```typescript
-// ❌
-const basePrice = quantity * itemPrice;
-if (basePrice > 1000) return basePrice * 0.95;
-
-// ✅
-if (basePrice() > 1000) return basePrice() * 0.95;
-function basePrice() { return quantity * itemPrice; }
-```
-
-Caveat: only when the expression is pure and cheap (or cached).
 
 ---
 

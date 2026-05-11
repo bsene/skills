@@ -69,14 +69,14 @@ When deciding what tests to write:
 
 ---
 
-## Reference Files
+## Read On Demand
 
 | Read When | File |
 |---|---|
 | Understanding the four cross-cutting testing principles | [Testing Principles](references/principles.md) |
 | Auditing test quality against the 12 desiderata properties | [TestDesiderata — Quality Audit](references/testdesiderata.md) |
 | Reviewing tests for BDD compliance and structure | [BDD Test Review](references/bdd-review.md) |
-| Identifying and writing smoke tests for CI gates | [Smoke Tests](references/smoke-tests.md) |
+| Identifying and writing smoke tests for CI gates | Dedicated `smoke-tests` skill (was `references/smoke-tests.md`) |
 
 ---
 
@@ -89,15 +89,3 @@ For deeper dives into specific testing contexts, route to these specialized skil
 | Need to practice TDD workflow interactively | `tcrdd` | Hands-on kata-style practice with immediate feedback |
 | Identifying or writing smoke tests specifically | `smoke-tests` | Dedicated triggers, template, CI integration |
 
----
-
-## Key Takeaway
-
-The goal of testing is **clarity, not coverage**. A test is good if it:
-- Clearly expresses the expected behavior (not implementation details)
-- Fails when the behavior changes (not when code is refactored)
-- Is easy to understand and maintain
-- Runs fast and deterministically
-- Lives with the code it tests
-
-Tests are the interface between the developer's intent and the reader's understanding. Write them as if you are documenting the system to future maintainers—because you are.

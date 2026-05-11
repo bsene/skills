@@ -57,7 +57,7 @@ def process_payment(order, payment_info, invoice_manager, email_service):
 Split the long method into focused, single-responsibility methods. Each extracted method should do one thing and have a clear name.
 
 ```python
-# ✅ Refactored (easy to understand)
+# ✅ Refactored — orchestrator + focused helpers
 def process_payment(order, payment_info, invoice_manager, email_service):
     validate_payment_info(payment_info)
     transaction_id = charge_payment(payment_info)
@@ -71,22 +71,8 @@ def validate_payment_info(payment_info):
     if payment_info['card_number'] is None:
         raise ValueError("Card number required")
 
-def charge_payment(payment_info):
-    return gateway.charge(
-        payment_info['card_number'],
-        payment_info['amount'],
-        payment_info['expiry']
-    )
-
-def update_order_with_transaction(order, transaction_id):
-    order.transaction_id = transaction_id
-    order.status = 'paid'
-    order.paid_at = datetime.now()
-
-def send_order_confirmation(order, invoice_manager, email_service):
-    invoice = invoice_manager.create(order, order.transaction_id)
-    email_service.send_order_confirmation(order)
-    email_service.send_invoice(order.customer_email, invoice)
+# charge_payment, update_order_with_transaction, send_order_confirmation
+# follow the same pattern: single responsibility, ~5 lines each
 ```
 
 **Payoff:** Each method is now testable in isolation, intent is clear from method names, logic is reusable.
@@ -118,33 +104,14 @@ class UserService {
   private cache: Cache;
   private cryptoService: CryptoService;
 
-  createUser(name: string, email: string, password: string): User {
-  }
-
-  updateUser(id: string, updates: Partial<User>): User {
-  }
-  deleteUser(id: string): void {
-  }
-  findUserById(id: string): User | null {
-  }
-  findUserByEmail(email: string): User | null {
-  }
-  hashPassword(password: string): string {
-  }
-  verifyPassword(password: string, hash: string): boolean {
-  }
-  resetPassword(userId: string): string {
-  }
-  sendWelcomeEmail(user: User): void {
-  }
-  sendPasswordResetEmail(user: User, token: string): void {
-  }
-  logAudit(action: string, userId: string): void {
-  }
-  cacheUser(user: User): void {
-  }
-  clearUserCache(userId: string): void {
-  }
+  createUser(name: string, email: string, password: string): User { }
+  updateUser(id: string, updates: Partial<User>): User { }
+  findUserById(id: string): User | null { }
+  hashPassword(password: string): string { }
+  verifyPassword(password: string, hash: string): boolean { }
+  sendWelcomeEmail(user: User): void { }
+  logAudit(action: string, userId: string): void { }
+  // ... 6 more methods (delete, reset, cache, etc.)
 }
 ```
 
@@ -153,40 +120,18 @@ class UserService {
 Extract cohesive responsibilities into separate, focused classes.
 
 ```typescript
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  passwordHash: string;
-  createdAt: Date;
-};
-
 class PasswordManager {
-  hash(password: string): string {
-  }
-  verify(password: string, hash: string): boolean {
-  }
-  generateResetToken(userId: string): string {
-  }
+  hash(password: string): string { }
+  verify(password: string, hash: string): boolean { }
+  generateResetToken(userId: string): string { }
 }
 
 class UserRepository {
-  constructor(
-    private db: Database,
-    private cache: Cache,
-  ) {}
-
-  create(user: User): User {
-  }
-  update(id: string, updates: Partial<User>): User {
-  }
-  delete(id: string): void {
-  }
-  findById(id: string): User | null {
-  }
-  findByEmail(email: string): User | null {
-  }
+  constructor(private db: Database, private cache: Cache) {}
+  create(user: User): User { }
+  update(id: string, updates: Partial<User>): User { }
+  findById(id: string): User | null { }
+  // ... delete, findByEmail
 }
 
 class UserService {
@@ -199,26 +144,10 @@ class UserService {
 
   registerUser(name: string, email: string, password: string): User {
     const hash = this.passwordManager.hash(password);
-    const user = this.userRepository.create({
-      id: generateId(),
-      name,
-      email,
-      passwordHash: hash,
-      createdAt: new Date(),
-    });
+    const user = this.userRepository.create({ id: generateId(), name, email, passwordHash: hash, createdAt: new Date() });
     this.emailService.sendWelcomeEmail(user);
     this.auditLog.log("user_registered", user.id);
     return user;
-  }
-
-  resetPassword(userId: string): string {
-    const token = this.passwordManager.generateResetToken(userId);
-    const user = this.userRepository.findById(userId);
-    if (user) {
-      this.emailService.sendPasswordReset(user, token);
-      this.auditLog.log("password_reset_requested", userId);
-    }
-    return token;
   }
 }
 ```
@@ -300,12 +229,7 @@ function createEmail(value: string): Email {
   return value as Email;
 }
 
-type CustomerId = string & { readonly __brand: "CustomerId" };
-
-function createCustomerId(value: string): CustomerId {
-  if (value.length === 0) throw new Error("Invalid customer ID");
-  return value as CustomerId;
-}
+// Same pattern for CustomerId, Amount, etc.
 
 type Order = {
   readonly customerId: CustomerId;
@@ -416,18 +340,9 @@ class FlightCriteria:
     max_price: float | None = None
     airline_preference: str | None = None
 
-@dataclass
-class AccommodationCriteria:
-    hotel_needed: bool = False
-    hotel_city: str | None = None
-    hotel_check_in: date | None = None
-    hotel_check_out: date | None = None
-    car_rental_needed: bool = False
-    car_rental_location: str | None = None
-    car_rental_type: str | None = None
+# Same pattern for AccommodationCriteria (hotel + car rental fields)
 
-def book_trip(flight_criteria: FlightCriteria, accommodation: AccommodationCriteria):
-    # ... logic
+def book_trip(flight: FlightCriteria, accommodation: AccommodationCriteria):
     pass
 
 # Call site is now self-documenting
@@ -442,17 +357,7 @@ flight = FlightCriteria(
     airline_preference="United"
 )
 
-accommodation = AccommodationCriteria(
-    hotel_needed=True,
-    hotel_city="LAX",
-    hotel_check_in=date(2026, 4, 1),
-    hotel_check_out=date(2026, 4, 8),
-    car_rental_needed=True,
-    car_rental_location="LAX",
-    car_rental_type="midsize"
-)
-
-book_trip(flight, accommodation)
+book_trip(flight, AccommodationCriteria(hotel_needed=True, hotel_city="LAX", ...))
 ```
 
 **Payoff:** Clearer intent at call sites, easier to test (fewer combinations), easier to extend with new parameters, self-documenting code.
@@ -515,28 +420,20 @@ Groups of identical variables appearing together in different places. These shou
 #### Detection Pattern
 
 ```python
-# ❌ Data Clump
+# ❌ Data Clump — same 5 card params in every class
 class PaymentProcessor:
     def process_transaction(self, card_number, card_holder, exp_month, exp_year, cvv):
-        # Validation
         if len(card_number) != 16:
             raise ValueError("Invalid card")
         if exp_month < 1 or exp_month > 12:
             raise ValueError("Invalid month")
-        # ... more validation and processing
 
 class PaymentValidator:
     def validate_card(self, card_number, card_holder, exp_month, exp_year, cvv):
         # Same validation logic repeated
         if len(card_number) != 16:
             raise ValueError("Invalid card")
-        if exp_month < 1 or exp_month > 12:
-            raise ValueError("Invalid month")
-
-class PaymentGateway:
-    def charge(self, card_number, card_holder, exp_month, exp_year, cvv, amount):
-        # Uses same parameters together
-        pass
+        # ... PaymentGateway.charge() takes the same 5 params too
 ```
 
 #### Refactoring Treatment: Extract Class
@@ -569,21 +466,13 @@ class CreditCard:
         if len(self.cvv) != 3 or not self.cvv.isdigit():
             raise ValueError("Invalid CVV")
 
-    def is_expired(self) -> bool:
-        return datetime.now().year > self.exp_year or \
-               (datetime.now().year == self.exp_year and datetime.now().month > self.exp_month)
-
 class PaymentProcessor:
     def process_transaction(self, card: CreditCard, amount: float):
-        # Validation happens automatically during construction
-        # No need to repeat validation logic
-        if card.is_expired():
-            raise ValueError("Card expired")
-        # ... process with card object
+        # Validation happens automatically during CreditCard construction
+        pass
 
 class PaymentGateway:
     def charge(self, card: CreditCard, amount: float):
-        # Single, clear parameter
         pass
 ```
 
@@ -696,24 +585,21 @@ it("expects percentage as 0-100, not 0-1", () => {
 If a comment says exactly what the code says, delete it. Redundancy is often *created* by a prior tidying — after an Extract Method or Guard Clause, a once-useful comment can collapse into a restatement.
 
 ```typescript
-// before — comment re-orients reader after a long authenticated branch
+// before — comment needed to re-orient reader
 function handleRequest(req: Request) {
   if (req.session) {
     const user = loadUser(req.session.userId);
-    logAccess(user);
     return renderDashboard(user);
   } else {
-    // no session, fall back to the anonymous user
+    // no session, fall back to anonymous
     return renderAnonymous();
   }
 }
 
-// after Guard Clause — comment now just restates the code, delete it
+// after Guard Clause — comment now restates code, delete it
 function handleRequest(req: Request) {
   if (!req.session) return renderAnonymous();
-  const user = loadUser(req.session.userId);
-  logAccess(user);
-  return renderDashboard(user);
+  return renderDashboard(loadUser(req.session.userId));
 }
 ```
 
@@ -746,8 +632,6 @@ async function handleStripeEvent(event: Stripe.Event) {
 Do **not** remove comments that:
 
 - Explain **why** a decision was made (business rule, workaround, regulatory requirement)
-  ```typescript
-  ```
 - Explain a **genuinely complex algorithm** where simpler alternatives were exhausted
 - Document **public API surface** (JSDoc for libraries/SDKs)
 - Reference **external context** (ticket numbers, spec references, legal requirements)
@@ -757,3 +641,12 @@ Do **not** remove comments that:
 > "The whole point is not to delete comments, but to obviate them and then delete them." — Tim Ottinger
 
 ---
+
+## Severity Guidelines
+
+| Severity | Long Method | Large Class | Param List | Data Clumps |
+|----------|------------|-------------|------------|-------------|
+| **Critical** | >30 lines | >20 methods | >6 params | 3+ places |
+| **High** | 15–30 lines | 15–20 methods | 5–6 params | 2 places |
+| **Medium** | 10–15 lines | 10–15 methods | 4–5 params | limited scope |
+| **Low** | 8–10 lines (clear) | 8–10 methods (cohesive) | 3–4 params (named) | local only |

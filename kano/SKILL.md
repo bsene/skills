@@ -12,7 +12,7 @@ description: >
   to decide whether a feature is worth implementing; user questions the value of a story
   or ticket before starting work.
 
-  DO NOT use when: the feature decision is already made and the question is purely about
+  DO NOT USE when: the feature decision is already made and the question is purely about
   implementation technique (use `tcrdd` or `testing` instead); performing market research
   or competitive analysis (this is developer-level triage, not product management); the
   user needs help writing tests or code.
@@ -123,7 +123,7 @@ When a feature classifies as **Indifferent** or **Reverse**, refuse it with evid
 
 ---
 
-## Resources
+## Read On Demand
 
 | Read when                                         | Link                                                                                                          |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |

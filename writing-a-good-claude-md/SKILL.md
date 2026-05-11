@@ -2,6 +2,7 @@
 name: writing-a-good-claude-md
 description: >
   Write, review, audit, or improve CLAUDE.md (or AGENTS.md) files for Claude Code and other AI coding agent harnesses (OpenCode, Zed, Cursor, Codex). Use this skill whenever the user wants to create a new CLAUDE.md from scratch, audit an existing one for bloat or anti-patterns, improve instruction quality, apply progressive disclosure, split monolithic context into referenced sub-documents, or understand CLAUDE.md best practices. Trigger even for casual mentions like "help me write my CLAUDE.md", "is my CLAUDE.md good?", "what should go in CLAUDE.md?", or "my agent keeps ignoring my instructions". Also applies to AGENTS.md files — treat them identically.
+  DO NOT USE when: user is reading or navigating an existing CLAUDE.md — only invoke to create, audit, or improve one.
 ---
 
 # writing-a-good-claude-md Skill
