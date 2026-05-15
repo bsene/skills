@@ -6,14 +6,12 @@ description: >
   via oop-principles. Always-on rules cover type assertions, readonly, null vs undefined, return-type annotations,
   interface prefixes, intermediate arrays, JS general conventions, and barrel files.
 
-  TRIGGER when: user mentions TypeScript, TS, .ts/.tsx files, type safety, type system, type narrowing,
-  discriminated unions, make illegal states unrepresentable, illegal states, state machine types,
-  mapped types, generics, conditional types, utility types (Partial/Pick/Omit/Record),
-  Zod, schema validation, runtime validation, strict mode, strictness, ts-expect-error, ts-ignore,
+  TRIGGER when: user mentions TypeScript, TS, .ts/.tsx files, type safety, type system,
+  discriminated unions, make illegal states unrepresentable, generics, utility types,
+  Zod, schema validation, runtime validation, strict mode, ts-expect-error, ts-ignore,
   error handling without throwing, union return errors, domain vs DTO, monorepo types, api contract,
-  design patterns in TypeScript, SOLID in TypeScript, typescript best practices, idiomatic TypeScript,
-  any/unknown usage, type assertions, readonly, interface prefix, return type annotations,
-  barrel files, barrel exports, index.ts re-exports, barrel imports.
+  typescript best practices, idiomatic TypeScript, any/unknown, type assertions, readonly,
+  interface prefix, return type annotations, barrel files, barrel exports.
 user-invocable: false
 ---
 
