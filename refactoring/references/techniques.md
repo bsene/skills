@@ -1,481 +1,272 @@
 # Refactoring Techniques
 
-The tools you actively apply to improve code design, clarity, and maintainability. The companion catalog of *smells to avoid* lives in [smells.md](smells.md).
+Tools to improve code design, clarity, and maintainability. Smells live in [smells.md](smells.md).
 
-### Technique #1: Extract Method / Extract Function
+---
 
-#### What It Is
+## Technique #1: Extract Method / Function
 
-Pull out a section of code into a separate, named method/function. This is the most frequent refactoring operation.
-
-#### When to Use
-
-- Code section has a clear, single purpose but is buried in a larger method
-- Same logic appears in **3+ places** (Rule of Three — wait until the third occurrence before extracting; two duplicates rarely reveal the right abstraction)
-- Method has complex local variables and you want to isolate them
-- You want to test a section in isolation
-- Code comment describes what a section does — that's a candidate for extraction
-
-#### Detection Pattern
+**When:** clear-purpose section buried in larger method · same logic in 3+ places (Rule of Three) · isolating local-variable cluster · code comment describes a section.
 
 ```typescript
+// ❌
 function processOrder(order: Order) {
-
-  if (order.payment.amount <= 0) {
-    throw new Error("Amount must be positive");
-  }
-  if (!order.payment.cardToken) {
-    throw new Error("Card required");
-  }
-  if (order.payment.amount > order.payment.cardLimit) {
-    throw new Error("Exceeds card limit");
-  }
-
-}
-```
-
-#### Refactoring: Extract Method
-
-```typescript
-function processOrder(order: Order) {
-  validatePayment(order.payment);
+  if (order.payment.amount <= 0) throw new Error("Amount must be positive");
+  if (!order.payment.cardToken) throw new Error("Card required");
+  if (order.payment.amount > order.payment.cardLimit) throw new Error("Exceeds card limit");
 }
 
+// ✅
+function processOrder(order: Order) { validatePayment(order.payment); }
 function validatePayment(payment: Payment) {
-  if (payment.amount <= 0) {
-    throw new Error("Amount must be positive");
-  }
-  if (!payment.cardToken) {
-    throw new Error("Card required");
-  }
-  if (payment.amount > payment.cardLimit) {
-    throw new Error("Exceeds card limit");
-  }
+  if (payment.amount <= 0) throw new Error("Amount must be positive");
+  if (!payment.cardToken) throw new Error("Card required");
+  if (payment.amount > payment.cardLimit) throw new Error("Exceeds card limit");
 }
 ```
 
-**Payoff:** Each method is shorter, intent is clearer, validation can be tested and reused, easier to change validation logic in one place.
+**Payoff:** shorter, intent-bearing names, isolated tests, one place to change.
 
 ---
 
-### Technique #2: Extract Class
+## Technique #2: Extract Class
 
-#### What It Is
-
-Move a group of related fields and methods into a separate class. This splits responsibilities and makes the original class simpler.
-
-#### When to Use
-
-- Class has too many responsibilities (multiple reasons to change)
-- A subset of fields are only used together in certain methods
-- You find yourself passing the same group of parameters repeatedly
-- Class is hard to instantiate or test due to complexity
-
-#### Detection Pattern
+**When:** multiple reasons to change · subset of fields only used together · same parameter group passes repeatedly · complex to instantiate/test.
 
 ```typescript
+// ❌ Order owns two address sextuples
 class Order {
-  id: string;
-  customerId: string;
-  items: OrderItem[];
+  id; customerId; items;
+  shippingStreet; shippingCity; shippingZip;
+  billingStreet; billingCity; billingZip;
+}
 
-  shippingStreet: string;
-  shippingCity: string;
-  shippingZip: string;
-  billingStreet: string;
-  billingCity: string;
-  billingZip: string;
-
+// ✅ Address is reusable
+class Address { street; city; zip; }
+class Order {
+  id; customerId; items;
+  shippingAddress: Address; billingAddress: Address;
 }
 ```
 
-#### Refactoring: Extract Class
-
-```typescript
-class Address {
-  street: string;
-  city: string;
-  zip: string;
-
-}
-
-class Order {
-  id: string;
-  customerId: string;
-  items: OrderItem[];
-  shippingAddress: Address;
-  billingAddress: Address;
-
-}
-```
-
-**Payoff:** Each class is focused, easier to test, Address is reusable in other contexts, dependencies are clear.
+**Payoff:** focused class, reusable type, clearer dependencies.
 
 ---
 
-### Technique #3: Replace Conditional with Polymorphism
+## Technique #3: Replace Conditional with Polymorphism
 
-#### What It Is
-
-Replace if/switch statements that check object type with polymorphic method calls. The type determines which implementation runs.
-
-#### When to Use
-
-- Multiple if/switch statements checking the same type or status
-- Different behavior based on object type (animal.type === 'dog')
-- Same logic repeated for different cases
-- Adding a new type requires changing multiple places (violates Open/Closed Principle)
-
-#### Detection Pattern
+**When:** `if/switch` on type or status · same shape repeated across functions · adding a new case requires editing multiple places (OCP violation).
 
 ```typescript
+// ❌
 function calculateDiscount(customer: Customer): number {
-  if (customer.type === "gold") {
-    return customer.totalSpent * 0.15;
-  } else if (customer.type === "silver") {
-    return customer.totalSpent * 0.10;
-  } else if (customer.type === "bronze") {
-    return customer.totalSpent * 0.05;
-  }
+  if (customer.type === "gold") return customer.totalSpent * 0.15;
+  if (customer.type === "silver") return customer.totalSpent * 0.10;
+  if (customer.type === "bronze") return customer.totalSpent * 0.05;
   return 0;
 }
 
-function sendNotification(customer: Customer, message: string) {
-  if (customer.type === "gold") {
-    sendEmail(customer.email, message);
-    sendSMS(customer.phone, message);
-  } else if (customer.type === "silver") {
-    sendEmail(customer.email, message);
-  } else {
-  }
-}
-```
-
-#### Refactoring: Use Polymorphism
-
-```typescript
-interface Customer {
-  name: string;
-  totalSpent: number;
-  calculateDiscount(): number;
-  sendNotification(message: string): void;
-}
-
+// ✅
+interface Customer { calculateDiscount(): number; sendNotification(msg: string): void; }
 class GoldCustomer implements Customer {
-  calculateDiscount(): number {
-    return this.totalSpent * 0.15;
-  }
-
-  sendNotification(message: string): void {
-    sendEmail(this.email, message);
-    sendSMS(this.phone, message);
-  }
+  calculateDiscount() { return this.totalSpent * 0.15; }
+  sendNotification(msg) { sendEmail(this.email, msg); sendSMS(this.phone, msg); }
 }
-
 class SilverCustomer implements Customer {
-  calculateDiscount(): number {
-    return this.totalSpent * 0.10;
-  }
-
-  sendNotification(message: string): void {
-    sendEmail(this.email, message);
-  }
+  calculateDiscount() { return this.totalSpent * 0.10; }
+  sendNotification(msg) { sendEmail(this.email, msg); }
 }
-
-// BronzeCustomer follows same pattern
 
 const discount = customer.calculateDiscount();
-customer.sendNotification(msg);
 ```
 
-**Payoff:** Adding a new customer type is just a new class, no existing code changes, behavior is localized, easier to test each type in isolation, follows Open/Closed Principle.
+**Payoff:** new type = new class; existing code untouched; behavior localized.
 
 ---
 
-### Technique #4: Introduce Variable / Extract Variable
+## Technique #4: Introduce Variable / Extract Variable
 
-#### What It Is
-
-Assign an intermediate result or complex expression to a named variable. This makes intent clearer and breaks up nested logic.
-
-#### When to Use
-
-- Complex expression is hard to read at first glance
-- Same complex expression appears multiple times
-- You want to give a semantic name to an intermediate result
-- Expression uses multiple operators and precedence is confusing
-
-#### Detection Pattern
+**When:** complex expression hard to parse · same expression repeated · want a semantic name for an intermediate · precedence is confusing.
 
 ```python
-# ❌ Hard to parse
-if user.age >= 18 and user.country in ["US", "CA", "MX"] and \
-   user.verification_status == "verified" and user.account_age_days > 30:
+# ❌
+if user.age >= 18 and user.country in ["US","CA","MX"] and user.verification_status == "verified" and user.account_age_days > 30:
     allow_checkout()
+
+# ✅
+def is_eligible_for_checkout(user):
+    return (user.age >= 18
+            and user.country in ["US","CA","MX"]
+            and user.verification_status == "verified"
+            and user.account_age_days > 30)
+
+if is_eligible_for_checkout(user): allow_checkout()
 ```
 
-#### Refactoring: Introduce Variable
-
-```python
-# ✅ Clear intent
-is_adult = user.age >= 18
-is_allowed_region = user.country in ["US", "CA", "MX"]
-is_verified = user.verification_status == "verified"
-is_established = user.account_age_days > 30
-
-if is_adult and is_allowed_region and is_verified and is_established:
-    allow_checkout()
-
-# Even better: extract to a method
-def is_eligible_for_checkout(user: User) -> bool:
-    return (
-        user.age >= 18 and
-        user.country in ["US", "CA", "MX"] and
-        user.verification_status == "verified" and
-        user.account_age_days > 30
-    )
-
-if is_eligible_for_checkout(user):
-    allow_checkout()
-```
-
-**Payoff:** Readability improves, intent is explicit, logic can be tested separately, same condition can be reused.
+**Payoff:** explicit intent; reusable predicate; testable.
 
 ---
 
-### Technique #5: Simplify Conditional Logic
+## Technique #5: Simplify Conditional Logic
 
-#### What It Is
-
-Reduce nested if/else statements, remove duplication in conditions, or flatten logic flow. Common strategies: consolidate conditions, use guard clauses, remove unnecessary nesting.
-
-#### When to Use
-
-- Multiple if/else branches doing similar things
-- Deep nesting (3+ levels)
-- Repeated condition checks
-- Method has many early exits that aren't guard clauses
-- Boolean flags are being set and checked repeatedly
-
-#### Detection Pattern: Guard Clauses
+**When:** nested if/else >2 levels · repeated checks · scattered early exits · boolean flags ping-ponging.
 
 ```typescript
-function calculateShipping(order: Order): ShippingCost {
+// ❌ Pyramid
+function calculateShipping(order: Order) {
   if (order.weight > 0) {
     if (order.destination !== null) {
-      if (order.isPriority) {
-        return calculateExpressShipping(order);
-      } else {
-        return calculateStandardShipping(order);
-      }
-    } else {
-      throw new Error("No destination");
-    }
-  } else {
-    throw new Error("Invalid weight");
-  }
+      if (order.isPriority) return calculateExpressShipping(order);
+      return calculateStandardShipping(order);
+    } else throw new Error("No destination");
+  } else throw new Error("Invalid weight");
 }
-```
 
-#### Refactoring: Guard Clauses (fail fast)
-
-```typescript
-function calculateShipping(order: Order): ShippingCost {
-  if (order.weight <= 0) {
-    throw new Error("Invalid weight");
-  }
-  if (!order.destination) {
-    throw new Error("No destination");
-  }
-
-  if (order.isPriority) {
-    return calculateExpressShipping(order);
-  }
+// ✅ Guard clauses
+function calculateShipping(order: Order) {
+  if (order.weight <= 0) throw new Error("Invalid weight");
+  if (!order.destination) throw new Error("No destination");
+  if (order.isPriority) return calculateExpressShipping(order);
   return calculateStandardShipping(order);
 }
 ```
 
-**Payoff:** Logic is easier to follow (top to bottom), invalid cases fail immediately, happy path is obvious, fewer nested levels.
+**Payoff:** linear flow; happy path obvious; fewer indents.
 
 ---
 
-### Technique #6: Move Method / Move Field
+## Technique #6: Move Method / Field
 
-#### What It Is
-
-Relocate a method or field to a class where it's more closely related or more frequently used. Reduces coupling.
-
-#### When to Use
-
-- Method uses more data from another class than its own
-- Method is called more often from another class
-- Field is only used in one method and belongs with related data
-- You're refactoring toward better cohesion
-
-#### Detection Pattern
+**When:** method uses more of another class's data than its own · called more from elsewhere · field belongs with related data.
 
 ```typescript
+// ❌ Order computing customer-shaped logic
 class Order {
-  items: OrderItem[];
-  customer: Customer;
-
-  calculateCustomerDiscount(): number {
-    if (this.customer.isPremium) {
-      return this.items.reduce((sum, item) => sum + item.price, 0) * 0.15;
-    }
-    return 0;
+  calculateCustomerDiscount() {
+    return this.customer.isPremium
+      ? this.items.reduce((s,i) => s + i.price, 0) * 0.15 : 0;
   }
 }
-```
 
-#### Refactoring: Move to Customer
-
-```typescript
+// ✅ Move to Customer
 class Customer {
-  isPremium: boolean;
-
-  calculateDiscount(orderTotal: number): number {
-    return this.isPremium ? orderTotal * 0.15 : 0;
-  }
+  calculateDiscount(orderTotal: number) { return this.isPremium ? orderTotal * 0.15 : 0; }
 }
-
 class Order {
-  items: OrderItem[];
-  customer: Customer;
-
-  getTotal(): number {
-    const subtotal = this.items.reduce((sum, item) => sum + item.price, 0);
-    const discount = this.customer.calculateDiscount(subtotal);
-    return subtotal - discount;
+  getTotal() {
+    const subtotal = this.items.reduce((s,i) => s + i.price, 0);
+    return subtotal - this.customer.calculateDiscount(subtotal);
   }
 }
 ```
 
-**Payoff:** Related data lives together, less coupling, method is reusable in other contexts, responsibilities are clearer.
+**Payoff:** related data lives together; less coupling; method reusable.
 
 ---
 
-### Technique #7: Rename (Variable, Method, Class)
+## Technique #7: Rename (Variable, Method, Class)
 
-#### What It Is
+**Principle:** A good name answers three questions — *why does this exist, what does it do, how is it used?* If the name requires a comment, the name does not reveal intent. — *Clean Code*, Martin, ch. 2
 
-Give something a clearer, more intention-revealing name. This is often the most underrated refactoring.
+See [Smell #7 Uncommunicative Name](smells.md) for detection signals + the mine sweeper example.
 
-#### When to Use
-
-- Name doesn't express intent (e.g., `calc`, `tmp`, `data`)
-- Name is misleading or outdated
-- Name requires explanation (code comment says what it does)
-- Single letter or abbreviation obscures meaning
-
-#### Detection Pattern
+**When:** name doesn't express intent (`calc`, `tmp`, `data`) · misleading/outdated · requires explanation · single letter/abbreviation · unit hidden (`int d` for days) · generic placeholder (`data`, `getThem`, `list1`).
 
 ```typescript
+// ❌
 function proc(d: any[]): any[] {
   const r = [];
   for (let i = 0; i < d.length; i++) {
-    if (d[i].s === "active") {
-      r.push(d[i].amt * 1.15); // What's being calculated?
-    }
+    if (d[i].s === "active") r.push(d[i].amt * 1.15);
   }
   return r;
 }
-```
 
-#### Refactoring: Clearer Names
-
-```typescript
+// ✅
+const TAX_RATE = 1.15;
 function calculateTaxAdjustedAmounts(orders: Order[]): number[] {
-  const taxAdjustedAmounts = [];
-  for (const order of orders) {
-    if (order.status === "active") {
-      const taxRate = 1.15; // 15% tax
-      taxAdjustedAmounts.push(order.amount * taxRate);
-    }
-  }
-  return taxAdjustedAmounts;
+  return orders.filter(o => o.status === "active").map(o => o.amount * TAX_RATE);
 }
-
 ```
 
-**Payoff:** Code is self-documenting, onboarding is faster, fewer bugs from misunderstanding, refactoring opportunities become obvious.
+**Pick the right rename** — the right name depends on which question matters:
+
+```java
+int d;                       // ❌
+int elapsedTimeInDays;       // ✅ duration
+int daysSinceCreation;       // ✅ age from anchor
+int fileAgeInDays;           // ✅ domain framing
+```
+
+**Payoff:** code self-documents; comments restating intent become deletable.
 
 ---
 
 ## Part 2b — Additional High-Value Techniques
 
-Compact entries for common Fowler-catalog refactorings beyond the seven above. Each one: when to use, before → after.
+Compact entries for Fowler-catalog refactorings beyond the seven above.
 
-### Inline Method / Inline Variable
+### Inline Method / Variable
 
-**When:** A method body is as clear as its name, or a temp variable just restates an expression — the indirection adds noise without value. Inverse of Extract.
+**When:** method body as clear as its name; temp variable restates the expression — indirection adds noise. Inverse of Extract.
 
 ```typescript
 // ❌
-function getRating(driver: Driver) { return moreThanFiveLateDeliveries(driver) ? 2 : 1; }
-function moreThanFiveLateDeliveries(driver: Driver) { return driver.numberOfLateDeliveries > 5; }
-
+function getRating(d) { return moreThanFiveLateDeliveries(d) ? 2 : 1; }
+function moreThanFiveLateDeliveries(d) { return d.numberOfLateDeliveries > 5; }
 // ✅
-function getRating(driver: Driver) { return driver.numberOfLateDeliveries > 5 ? 2 : 1; }
+function getRating(d) { return d.numberOfLateDeliveries > 5 ? 2 : 1; }
 ```
 
 ---
 
 ### Change Function Declaration
 
-**When:** A function's name, parameter order, or parameter set no longer matches its purpose. Rename, reorder, add, or remove parameters. Migrate call sites in lockstep.
+**When:** name, parameter order, or set no longer matches purpose. For risky changes: introduce new function, delegate old, migrate callers, delete old.
 
 ```typescript
 // ❌  circum(radius: number)
 // ✅  circumference(radius: number)
 ```
 
-For risky changes across many call sites: introduce the new function, delegate the old to it, migrate callers, then delete the old.
-
 ---
 
 ### Introduce Parameter Object
 
-**When:** The same group of parameters travels together across multiple functions. Bundle them into a type — often the seed of a real domain concept.
+**When:** same parameter group travels together across multiple functions — often the seed of a real domain concept.
 
 ```typescript
 // ❌
-function inRange(start: Date, end: Date, point: Date) { ... }
-function overlaps(start1: Date, end1: Date, start2: Date, end2: Date) { ... }
-
+function inRange(start: Date, end: Date, point: Date) {}
+function overlaps(s1: Date, e1: Date, s2: Date, e2: Date) {}
 // ✅
 type DateRange = { start: Date; end: Date };
-function inRange(range: DateRange, point: Date) { ... }
-function overlaps(a: DateRange, b: DateRange) { ... }
+function inRange(r: DateRange, point: Date) {}
+function overlaps(a: DateRange, b: DateRange) {}
 ```
 
 ---
 
 ### Replace Magic Literal
 
-**When:** A literal value (number, string) carries domain meaning that isn't obvious from context.
+**When:** literal carries domain meaning. Skip for self-explanatory (`0`, `1`, `""`).
 
 ```typescript
 // ❌  if (blood < 0.08) ...
-// ✅  const LEGAL_BAC_LIMIT = 0.08;
-//     if (blood < LEGAL_BAC_LIMIT) ...
+// ✅  const LEGAL_BAC_LIMIT = 0.08; if (blood < LEGAL_BAC_LIMIT) ...
 ```
-
-Skip for truly self-explanatory literals (`0`, `1`, `""`).
 
 ---
 
 ### Decompose Conditional
 
-**When:** A conditional has complex predicate and branches. Extract each piece into a named function so the structure reads like prose.
+**When:** conditional has complex predicate and branches. Extract each piece into a named function.
 
 ```typescript
 // ❌
-if (date.before(SUMMER_START) || date.after(SUMMER_END)) {
+if (date.before(SUMMER_START) || date.after(SUMMER_END))
   charge = quantity * winterRate + winterServiceCharge;
-} else {
-  charge = quantity * summerRate;
-}
+else charge = quantity * summerRate;
 
 // ✅
 charge = isSummer(date) ? summerCharge(quantity) : winterCharge(quantity);
@@ -485,58 +276,45 @@ charge = isSummer(date) ? summerCharge(quantity) : winterCharge(quantity);
 
 ### Consolidate Conditional Expression
 
-**When:** A sequence of separate conditionals all return the same result. Merge them with `&&`/`||` (and usually extract the merged predicate).
+**When:** sequence of separate conditionals all return the same result.
 
 ```typescript
 // ❌
 if (seniority < 2) return 0;
 if (monthsDisabled > 12) return 0;
 if (isPartTime) return 0;
-
 // ✅
 if (isNotEligibleForDisability()) return 0;
-function isNotEligibleForDisability() {
-  return seniority < 2 || monthsDisabled > 12 || isPartTime;
-}
+function isNotEligibleForDisability() { return seniority < 2 || monthsDisabled > 12 || isPartTime; }
 ```
 
 ---
 
 ### Remove Dead Code
 
-**When:** Code is unreachable, an unused export, or a feature flag long since flipped. Delete it. Version control is the archive — don't comment it out.
+**When:** code unreachable, unused export, or feature flag flipped. Delete it — version control is the archive.
 
 ---
 
 ### Remove Flag Argument
 
-**When:** A boolean (or enum) parameter selects between two distinct behaviors. Split into two clearly named functions; callers become self-documenting.
+**When:** boolean (or enum) parameter selects between two distinct behaviors. Split.
 
 ```typescript
 // ❌  bookConcert(customer, isPremium)
-// ✅  bookConcert(customer)
-//     premiumBookConcert(customer)
+// ✅  bookConcert(customer); premiumBookConcert(customer)
 ```
 
 ---
 
 ### Separate Query from Modifier
 
-**When:** A function both returns a value *and* has a side effect. Split into a pure query and a separate command (Command-Query Separation).
+**When:** function both returns a value *and* has a side effect (CQS violation).
 
 ```typescript
 // ❌
-function getTotalOutstandingAndSendBill(): number {
-  const total = ...;
-  sendBill(total);
-  return total;
-}
-
+function getTotalOutstandingAndSendBill(): number { const t = compute(); sendBill(t); return t; }
 // ✅
-function totalOutstanding(): number { ... }
+function totalOutstanding(): number { return compute(); }
 function sendBill(): void { sendBillFor(totalOutstanding()); }
 ```
-
-Callers can now query freely without triggering side effects.
-
----

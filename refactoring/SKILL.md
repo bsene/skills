@@ -29,7 +29,6 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 | Deciding which refactoring technique to use                            | [Refactoring Techniques](references/techniques.md)         |
 | Choosing the right pattern, scenario-based decisions, or review workflow | [Decision Guide](references/decision-guide.md)            |
 | **Only** when user asks where a pattern applies in a specific language | [Language Idioms](references/language-idioms.md)            |
-| **Only** when user asks for a multi-file before/after walkthrough      | [Real-World Examples](references/real-world-examples.md)   |
 
 ---
 
@@ -51,11 +50,8 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 | **Primitive Obsession** | String/int constants for domain concepts       | Create Type/Object               |
 | **Long Parameter List** | >3-4 parameters, related params                | Introduce Parameter Object       |
 | **Data Clumps**         | Same variables in multiple places              | Extract Class                    |
-| **Comments (What)**     | Complex expression needs comment               | Extract Variable                 |
-| **Comments (What)**     | Code block needs comment                       | Extract Method                   |
-| **Comments (What)**     | Method purpose unclear from name               | Rename Method                    |
-| **Comments (Precond)**  | Comment documents a required precondition      | Introduce Assertion              |
-| **Comments (Behavior)** | Comment documents expected behavior/edge cases | Write Tests                      |
+| **Comments**            | Code needs a comment to be understood (see smells.md for subtypes) | Extract Method/Variable, Rename, Introduce Assertion, Write Tests |
+| **Uncommunicative Name** | Name needs a comment, single letters, generic placeholders, missing units | Rename / Introduce Variable      |
 
 For the full Techniques → When to Use table, see [techniques.md](references/techniques.md).
 
@@ -87,9 +83,9 @@ Always ask: **"Does this complexity serve the code's purpose, or does it obscure
 
 ---
 
-## Read On Demand
+## External References
 
 - **Refactoring Guru:** [Code Smells - Bloaters](https://refactoring.guru/refactoring/smells/bloaters)
 - **Martin Fowler:** [Refactoring Catalog](https://refactoring.com/catalog/) — 72+ techniques organized by operation
-- **Principles:** Single Responsibility Principle (SRP), Open/Closed Principle (OCP), DRY (Don't Repeat Yourself)
-- **Attribution:** Tim Ottinger on comments; Martin Fowler's "Refactoring: Improving the Design of Existing Code"
+- **Principles:** SRP, OCP, DRY
+- **Attribution:** Tim Ottinger (comments); Fowler *Refactoring*; Martin *Clean Code*

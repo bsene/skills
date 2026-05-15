@@ -1,222 +1,138 @@
-# Refactoring Decision Guide: Choosing the Right Pattern
+# Refactoring Decision Guide
 
-When you spot something that needs refactoring, use this guide to pick the right technique(s).
+Picking the right technique once a smell is spotted.
+
+---
 
 ## Review Workflow
 
-1. **Detect** — Scan for smells (see [smells.md](smells.md) for catalog and severity thresholds)
-2. **Decide** — For each smell, use the scenarios below to pick a technique
-3. **Apply** — For each opportunity: identify the pattern, show before/after, explain the payoff
-4. **Verify** — Tests pass, no duplicate logic, names express intent
+1. **Detect** — scan for smells ([smells.md](smells.md))
+2. **Decide** — use scenarios below
+3. **Apply** — before/after + payoff per opportunity
+4. **Verify** — tests pass, no duplicate logic, names express intent
 
 ---
 
-## Common Refactoring Scenarios
+## Scenario 1: Long Method (20+ lines)
 
-### Scenario 1: Long Method (20+ lines)
+- Logical sections? → **Extract Method** per section
+- One complex operation? → **Simplify Conditional** or **Introduce Variable**
+- After extraction, type/status checks remain? → **Replace Conditional with Polymorphism**
 
-**Step 1: Can you break it into logical sections?**
-- Yes → **Extract Method** (pull out each section)
-- No (it's one complex operation) → **Simplify Conditional** or **Introduce Variable**
-
-**Step 2: After extraction, do you see type/status checks?**
-- Yes → Consider **Replace Conditional with Polymorphism**
-
-**Example path:**
 ```
-Original: 40-line method
-  ↓ Extract Method (3x)
-Three 10-15 line methods
+40-line method
+  ↓ Extract Method ×3
+3 × 10–15 line methods
   ↓ Simplify Conditional on one
-Two 8-10 line methods + one 5-line method
-  ✓ Done
+2 × 8–10 line + 1 × 5-line method
 ```
 
 ---
 
-### Scenario 2: Large Class (20+ methods, 500+ lines)
+## Scenario 2: Large Class (20+ methods)
 
-**Step 1: Are there clear groups of related fields/methods?**
-- Yes → **Extract Class** for each group
-- No → Reread the class; usually there are groups you missed
+- Clear groups? → **Extract Class** per group
+- Extracted classes use original's fields? → **Move Field**
+- Methods that don't belong? → **Move Method**
 
-**Step 2: Do extracted classes mostly use fields from the original?**
-- Yes, consistently → Move those fields with **Move Field**
-- Some methods should move → **Move Method**
-
-**Example path:**
 ```
-Original: UserService (20 methods)
-  - 5 password methods
-  - 8 persistence methods
-  - 4 email methods
-  - 3 cache methods
-  ↓ Extract Class 4x
-PasswordManager, UserRepository, EmailService, CacheService
-  ↓ Move Method (adjust any that don't belong)
-Final: Focused classes with clear responsibilities
+UserService (20 methods)
+  → PasswordManager, UserRepository, EmailService, CacheService
 ```
 
 ---
 
-### Scenario 3: Complex Conditional (nested if/else, 3+ levels)
-
-**Quick decision tree:**
+## Scenario 3: Complex Conditional (nested 3+ levels)
 
 ```
-Is it checking object type/class?
-  Yes → Replace Conditional with Polymorphism
-  No ↓
-Is it checking status/state?
-  Yes → Replace Conditional with Polymorphism (or Introduce Variable for each state)
-  No ↓
-Is nesting >2 levels deep?
-  Yes → Simplify Conditional (guard clauses, extract conditions)
-  No ↓
-Is the condition complex/repeated?
-  Yes → Introduce Variable (name the condition)
-  No → Consider Extract Method (logic is simple but long)
+Checking object type/class? → Replace Conditional with Polymorphism
+Checking status/state?      → Polymorphism OR Introduce Variable per state
+Nesting >2 levels?          → Simplify Conditional (guard clauses)
+Complex/repeated condition? → Introduce Variable (name it)
 ```
 
-**Example:**
 ```typescript
-// ❌ Complex nested
+// ❌
 if (user) {
   if (user.isActive) {
     if (user.account.isPremium) {
-      if (user.account.stripeStatus === 'active') {
-        // do premium thing
-      }
+      if (user.account.stripeStatus === 'active') doIt();
     }
   }
 }
-
-// ✅ After Simplify Conditional (guard clauses)
+// ✅ Guard clauses
 if (!user || !user.isActive) return;
 if (!user.account.isPremium) return;
 if (user.account.stripeStatus !== 'active') return;
-// do premium thing
-
-// ✅ Or with Introduce Variable
-const isPremiumActive = user?.isActive && user.account?.isPremium &&
-                        user.account.stripeStatus === 'active';
-if (isPremiumActive) {
-  // do premium thing
-}
+doIt();
 ```
 
 ---
 
-### Scenario 4: Scattered Duplicate Logic
+## Scenario 4: Scattered Duplicate Logic
 
-**Step 0: How many occurrences? (Rule of Three)**
-- 1 → leave it
-- 2 → leave it; note the duplication but don't extract yet — two points don't reliably reveal the right abstraction
-- 3+ → proceed to Step 1
+Apply **Rule of Three**:
 
-**Step 1: Is it the exact same code repeated?**
-- Yes → **Extract Method** (once, call from multiple places)
-- No (similar but slightly different logic) ↓
+| Occurrences | Action |
+|-------------|--------|
+| 1–2 | leave it; note but don't extract — two points rarely reveal the right abstraction |
+| 3+ | proceed |
 
-**Step 2: Is the variation based on object type?**
-- Yes → **Replace Conditional with Polymorphism**
-- No → **Extract Method with parameters** to handle variations
-
-**Example path:**
-```
-calculateGoldDiscount() { return total * 0.15; }
-calculateSilverDiscount() { return total * 0.10; }
-calculateBronzeDiscount() { return total * 0.05; }
-  ↓ Replace Conditional with Polymorphism
-class GoldCustomer { calculateDiscount() { ... } }
-class SilverCustomer { calculateDiscount() { ... } }
-class BronzeCustomer { calculateDiscount() { ... } }
-```
+- Exact same code? → **Extract Method** once, call from multiple sites
+- Similar, varies by type? → **Replace Conditional with Polymorphism**
+- Similar, varies by data? → **Extract Method with parameters**
 
 ---
 
-### Scenario 5: Method Using Another Class's Data
+## Scenario 5: Method Uses Another Class's Data More
 
-**Check: Which class does the method use most?**
-
-```
-class Order {
-  discount: number;
-  customer: Customer;
-
-  getCustomerTax() {  // Uses customer data, not order data much
-    return this.customer.calculateTax();  // Should be on Customer
-  }
-}
-
-// ✓ After Move Method:
-class Customer {
-  calculateTax() { /* moved here */ }
-}
-
-class Order {
-  customer: Customer;
-  getTotal() { return this.subtotal - this.customer.calculateTax(); }
-}
-```
-
----
-
-### Scenario 6: Hard to Understand Parameter List
-
-**Step 1: Are the parameters conceptually related?**
-- Yes (all address info, or all payment info) → **Extract Class**
-- No (random mix) → **Introduce Parameter Object** or look for a missing abstraction
-
-**Step 2: Are you passing the same group repeatedly?**
-- Yes → **Extract Class** (create a dedicated type, use everywhere)
-- No → Consider if **Move Method** makes sense
-
-**Example:**
 ```typescript
-// ❌ Scattered address parameters
+// ❌ Order computes a customer concern
+class Order {
+  getCustomerTax() { return this.customer.calculateTax(); }
+}
+// ✅ Move to Customer
+class Customer { calculateTax() { /* moved */ } }
+```
+
+---
+
+## Scenario 6: Hard-to-Understand Parameter List
+
+- Params conceptually related? → **Extract Class** (becomes a real type)
+- Random mix? → **Introduce Parameter Object** or look for a missing abstraction
+- Same group passed repeatedly? → **Extract Class** (use everywhere)
+
+```typescript
+// ❌ Scattered DB params
 connectToDatabase(host, port, username, password);
 query(host, port, username, password, sql);
-closeConnection(host, port, username, password);
-
-// ✅ After Extract Class
-class DatabaseConfig {
-  host: string;
-  port: number;
-  username: string;
-  password: string;
-}
-
+// ✅
+class DatabaseConfig { host; port; username; password; }
 class Database {
-  constructor(config: DatabaseConfig) { }
-  query(sql: string) { }
-  close() { }
+  constructor(config: DatabaseConfig) {}
+  query(sql: string) {}
 }
 ```
 
 ---
 
-### Scenario 7: Name Doesn't Express Intent
+## Scenario 7: Name Doesn't Express Intent
 
-**Decision:**
+| Target | Apply |
+|--------|-------|
+| Variable / parameter | **Rename** |
+| Complex expression | **Introduce Variable**, then **Rename** the intermediate |
+| Method / function | **Rename**; consider **Extract Method** |
+| Class | **Rename**; consider **Extract Class** / **Move Class** |
 
-1. **Single variable/parameter** → **Rename**
-2. **Complex expression** → **Introduce Variable** (give it a name), then **Rename** intermediate vars
-3. **Method/function** → **Rename**, then check if **Extract Method** makes sense
-4. **Class** → **Rename**, then check if **Extract Class** or **Move Class** makes sense
-
-**Example:**
 ```typescript
-// ❌ Poor names
+// ❌
 const d = calculateTotal(items);
 function calc(x: any): any { return x * 1.15; }
-
-// ✅ After Rename
-const totalWithTax = calculateTotalWithTax(items);
-function applyTaxRate(amount: number): number { return amount * 1.15; }
-
-// ✅ Further: Introduce Variable
+// ✅
 const TAX_RATE = 1.15;
+const totalWithTax = calculateTotalWithTax(items);
 function applyTaxRate(amount: number): number { return amount * TAX_RATE; }
 ```
 
@@ -224,31 +140,25 @@ function applyTaxRate(amount: number): number { return amount * TAX_RATE; }
 
 ## Refactoring Sequence (Priority Order)
 
-When you spot multiple issues, apply patterns in this order:
+When multiple issues present, apply in this order — each step often reveals the next:
 
-1. **Rename** — Fix naming first (makes next steps clearer)
-2. **Extract Method/Variable** — Break up long code
-3. **Simplify Conditional** — Reduce nesting and complexity
-4. **Extract Class** — Separate concerns
-5. **Move Method/Field** — Adjust responsibilities
-6. **Replace Conditional** — Introduce polymorphism
+1. **Rename** — fix naming first; later steps become clearer
+2. **Extract Method / Variable** — break up long code
+3. **Simplify Conditional** — reduce nesting
+4. **Extract Class** — separate concerns
+5. **Move Method / Field** — adjust responsibilities
+6. **Replace Conditional with Polymorphism** — introduce types
 
-This order often reveals opportunities for later patterns.
-
----
-
-See SKILL.md "When NOT to Refactor" for exceptions and guardrails.
+See SKILL.md *When NOT to Refactor* for exceptions and guardrails.
 
 ---
 
-## Validation: How to Know You're Done
-
-After refactoring, check:
+## Validation Checklist
 
 - ✅ Every method has a single, clear responsibility
 - ✅ Every class has one reason to change (SRP)
-- ✅ No duplicate logic repeated 3+ times (DRY, tempered by Rule of Three)
-- ✅ Names express intent (Rename applied everywhere needed)
-- ✅ No deep nesting (guard clauses, extract methods)
-- ✅ Type checks are centralized (if polymorphism applies)
-- ✅ Tests still pass, and you added tests for extracted methods
+- ✅ No logic duplicated 3+ times (DRY, tempered by Rule of Three)
+- ✅ Names express intent
+- ✅ No deep nesting (guard clauses, extracted methods)
+- ✅ Type checks centralized (if polymorphism applies)
+- ✅ Tests pass + new tests cover extracted methods
