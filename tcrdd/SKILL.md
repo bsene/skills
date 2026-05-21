@@ -57,6 +57,7 @@ Before each phase:
 
 - Write _only_ the code that makes the currently failing test pass. Nothing more.
 - Resist the urge to generalise, add helpers, or handle future cases — those are for later tests.
+- No `@Injectable`, no logger, no Zod — unless the failing test explicitly requires it.
 
 ### REFACTOR
 
