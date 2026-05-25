@@ -1,11 +1,12 @@
 ---
 name: markdown
 description: >
-  GitHub Flavored Markdown (GFM) reference — syntax, tables, alerts, footnotes, task lists, links, images, mentions, and common pitfalls.
-  TRIGGER when: github flavored markdown, GFM, markdown table, markdown syntax, markdown heading, markdown link,
-  markdown image, task list, markdown alert, callout markdown, footnote markdown, markdown line break,
-  markdown emoji, escape markdown, markdown section anchor.
-  DO NOT USE when: user is writing markdown content — only invoke for syntax help or rendering troubleshooting.
+  GitHub Flavored Markdown (GFM) syntax reference — tables, alerts, footnotes, task lists, links, images, mentions, anchors, escaping, and common pitfalls.
+
+  TRIGGER when: user asks about GFM, github flavored markdown, markdown syntax, md syntax, github markdown formatting,
+  markdown table, markdown heading, markdown link, markdown image, task list syntax, markdown alert, GitHub callout,
+  footnote markdown, markdown line break, markdown emoji shortcode, escape markdown special chars, section anchor, autolink.
+  DO NOT USE when: user is composing prose content in markdown and needs no syntax help — only invoke when the question is about rendering, syntax correctness, or feature availability.
 ---
 
 # SKILL: GitHub Flavored Markdown (GFM)
