@@ -1,11 +1,13 @@
 ---
 name: show-me-the-code
 description: >
-  Enforces one rule: any code change must be shown as a unified diff. Trigger
-  for any request that modifies existing code — fix, refactor, update, replace,
-  apply changes — even one-liners. Never skip this skill when code is being changed.
-  DO NOT USE when: producing a new file from scratch (no context lines to diff against)
-  or for non-code responses such as plans, explanations, or architecture diagrams.
+  Enforces one rule: every code change must be presented as a unified diff (`diff -u` format) with 3 lines of context. No exceptions, even one-liners.
+
+  TRIGGER when: user requests a code modification — fix, refactor, update, replace, edit, patch, change, tweak, rename, rewrite,
+  apply changes, modify this, edit the file, change this code,
+  or explicitly asks for a diff — "show me the diff", "as a unified diff", "what changed", "show the patch", "/show-me-the-code".
+  DO NOT USE when: producing a brand-new file from scratch (no context lines to diff against),
+  or for non-code responses such as plans, explanations, architecture, or diagrams.
 ---
 
 # Show Me The Code

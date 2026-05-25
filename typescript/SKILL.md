@@ -1,17 +1,17 @@
 ---
 name: typescript
 description: >
-  TypeScript best-practices router: error handling via union returns, strict-mode policy, runtime validation with Zod,
-  monorepo contracts, domain vs DTO types, and routing to type-system/Zod sub-skills plus design-patterns and SOLID
-  via oop-principles. Always-on rules cover type assertions, readonly, null vs undefined, return-type annotations,
-  interface prefixes, intermediate arrays, JS general conventions, and barrel files.
+  TypeScript best-practices and rule enforcement — type safety, runtime validation, error handling, and conventions.
+  Routes to type-system and Zod sub-skills, plus design patterns and SOLID via `oop-principles`.
 
-  TRIGGER when: user mentions TypeScript, TS, .ts/.tsx files, type safety, type system,
-  discriminated unions, make illegal states unrepresentable, generics, utility types,
-  Zod, schema validation, runtime validation, strict mode, ts-expect-error, ts-ignore,
-  error handling without throwing, union return errors, domain vs DTO, monorepo types, api contract,
-  typescript best practices, idiomatic TypeScript, any/unknown, type assertions, readonly,
-  interface prefix, return type annotations, barrel files, barrel exports.
+  TRIGGER when: language (TypeScript, TS, .ts, .tsx, idiomatic TypeScript),
+  type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing),
+  safety (strict mode, any vs unknown, ts-expect-error, ts-ignore, type assertions),
+  runtime (Zod, schema validation, runtime type checks, parse/safeParse),
+  errors (error handling without throwing, union return errors, Result type),
+  conventions (readonly, return type annotations, null vs undefined, interface prefix, barrel exports, intermediate arrays),
+  contracts (domain vs DTO, monorepo types, API contract types).
+  DO NOT USE when: user asks generic JS questions with no TS angle.
 user-invocable: false
 ---
 

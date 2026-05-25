@@ -1,13 +1,16 @@
 ---
 name: golang
 description: >
-  Idiomatic Go development — project structure, error handling, concurrency, testing, and web services.
-  TRIGGER when: user mentions Go, Golang, .go files, go build, go run, go mod, go test, go fmt,
-  goroutine, channel, Go interface, Go struct, Go error handling, Go project structure,
-  Go best practices, Go idioms, Go concurrency, Go testing, Go web server, Go HTTP, Go JSON,
-  Go generics, Go modules, how to write Go, idiomatic Go, Go code review, Go pointers,
-  Go slices, Go maps, Go packages, Go receiver, Go embedding.
-  DO NOT USE when: user is working with a different language and only mentions "go" as a verb.
+  Idiomatic Go — error handling, concurrency, web services, testing, and project structure.
+
+  TRIGGER when: language (Go, Golang, .go files, go mod, go build, go run, go test, go fmt),
+  concurrency (goroutine, channel, sync, context, select statement),
+  errors (error interface, error wrapping, sentinel errors, panic/recover, errors.Is/As),
+  web (net/http, HTTP handler, JSON encoding, REST API in Go, middleware),
+  idioms (defer, nil, pointers vs values, struct embedding, interface satisfaction, receiver methods, slices, maps),
+  tooling (Go modules, generics, table-driven tests, go vet),
+  ask (idiomatic Go, Go best practices, Go code review, how to write Go).
+  DO NOT USE when: user mentions "go" only as a verb in a different-language context.
 user-invocable: false
 ---
 

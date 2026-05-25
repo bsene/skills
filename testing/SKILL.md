@@ -1,15 +1,15 @@
 ---
 name: testing
 description: >
-  Master testing strategy — philosophy, approach, architecture decisions, test quality audit, and BDD review practices.
-  TRIGGER when: user asks about testing strategy, testing approach, testing philosophy, testing methodology, testing mindset,
-  how should I test, what tests to write, testing best practices, unit vs integration vs e2e, what makes a good test,
-  test quality, brittle tests, flaky tests, slow tests, hard to maintain tests, my tests are flaky,
-  how do I fix flaky tests, tests keep breaking randomly, why do my tests fail randomly, testing legacy codebase,
-  adding tests to existing code, when to use mocks, mocking strategy, test doubles, test-driven development,
-  testing anti-patterns, how much to test, testing architecture, testing layers, review my test suite, check my tests,
-  BDD testing, test desiderata.
-  DO NOT USE when: user needs a full interactive TDD cadence with immediate red/green/refactor feedback loops — use `tcrdd` instead.
+  Testing strategy and philosophy — design feedback, test quality audit, BDD review, and architecture decisions.
+
+  TRIGGER when: strategy (testing strategy, testing approach, testing philosophy, testing methodology, how should I test, what tests to write, testing best practices),
+  quality (test quality, brittle tests, flaky tests, slow tests, hard-to-maintain tests, testing anti-patterns),
+  scope (unit vs integration vs e2e, testing layers, testing architecture, how much to test),
+  mocking (when to use mocks, mocking strategy, test doubles),
+  review (review my test suite, check my tests, BDD review, test desiderata),
+  context (testing legacy codebase, adding tests to existing code).
+  DO NOT USE when: user needs interactive TDD cadence with red/green/refactor loops — use `tcrdd` instead.
   DO NOT USE when: user asks about smoke tests specifically — use `smoke-tests` instead.
 ---
 
