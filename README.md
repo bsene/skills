@@ -45,6 +45,7 @@ When you ask "is this feature worth building?", the `kano` skill auto-activates 
 |                           | `git-hero/git-guru`            | Expert Git assistant (French and English) covering concepts, workflows, troubleshooting, and internals    |
 |                           | `git-hero/gitmoji`             | Select and apply gitmoji emoji prefixes for commit messages, integrated with Conventional Commits         |
 |                           | `git-hero/gitlab-dag`          | Design, write, review, and optimize GitLab CI/CD pipelines using DAG (`needs:`)                           |
+| **API Design**            | `rest-api-design`              | Design and review REST APIs — URIs, verbs, status codes, pagination, errors, security, HATEOAS           |
 | **Diagrams & Docs**       | `c4-diagram`                   | Render C4 model architecture diagrams via Mermaid or Structurizr DSL                                      |
 |                           | `explain-code`                 | Explain code with C4 diagrams, analogies, and step-by-step walkthroughs                                   |
 |                           | `markdown`                     | Comprehensive GitHub Flavored Markdown (GFM) reference                                                    |
