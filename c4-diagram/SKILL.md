@@ -4,7 +4,9 @@ description: >
   Generates C4 model architecture diagrams using Structurizr DSL (primary) or Mermaid C4 (fallback).
   Use when: user asks to "draw a diagram", "create a C4 diagram", "show architecture as a diagram",
   "generate architecture diagram", "document the system", or when explain-code reaches its diagram step.
-  DO NOT USE for code explanation or walkthroughs — only when a diagram is the primary deliverable.
+  DO NOT USE for code explanation or walkthroughs (use `explain-code`), class/sequence/ER diagrams
+  (C4 is system-architecture only), or when a diagram is incidental to a code change — only when
+  a C4 diagram is the primary deliverable.
 ---
 
 # C4 Diagram

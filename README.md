@@ -144,4 +144,4 @@ External skills are installed in `.agents/skills/` and pinned by commit hash in 
 
 ---
 
-**Last updated**: May 5, 2026
+**Last updated**: May 31, 2026
