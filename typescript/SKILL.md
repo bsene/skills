@@ -94,6 +94,7 @@ function toDomain(dto: UserDTO): User {
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
+- ECMAScript edition history (ES1 1997 → ES2025): see `references/ecmascript-history.md`. Use when choosing `tsconfig` `target`/`lib`, judging what downlevels vs. needs a polyfill, or which edition first shipped a feature.
 
 ## Rules (always apply)
 
@@ -108,3 +109,4 @@ function toDomain(dto: UserDTO): User {
 | Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
 | `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
 | Do not use barrel files (`index.ts` re-exports) | `rules/no-barrel-files.md` |
+| Prefer explicit context (params) over implicit `this` | `rules/prefer-explicit-context-over-this.md` |
