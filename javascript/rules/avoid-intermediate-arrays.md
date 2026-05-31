@@ -4,7 +4,7 @@ description: >
   Prevent chains like filter().map() that allocate intermediate arrays on hot paths.
   Use a single reduce pass (with push) or a for-loop instead.
 metadata:
-  tags: typescript, javascript, performance, arrays
+  tags: javascript, typescript, performance, arrays
 ---
 
 # Avoid intermediate arrays
@@ -75,5 +75,4 @@ review and profiling, not lint.
 
 ## Related
 
-- `as const` / type-assertion avoidance — see `avoid-type-assertions.md`.
 - Future rules in this set: avoid iterators/generators, pre-allocate arrays, avoid spread in loops.

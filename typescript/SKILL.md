@@ -1,17 +1,18 @@
 ---
 name: typescript
 description: >
-  TypeScript best-practices and rule enforcement — type safety, runtime validation, error handling, and conventions.
-  Routes to type-system and Zod sub-skills, plus design patterns and SOLID via `oop-principles`.
+  TypeScript-specific best-practices and rule enforcement — type safety, runtime validation,
+  error handling, and TS-only conventions. Routes to type-system and Zod sub-skills, the
+  `javascript` skill for JS-foundation rules, and `oop-principles` for design patterns and SOLID.
 
   TRIGGER when: language (TypeScript, TS, .ts, .tsx, idiomatic TypeScript),
   type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing),
   safety (strict mode, any vs unknown, ts-expect-error, ts-ignore, type assertions),
   runtime (Zod, schema validation, runtime type checks, parse/safeParse),
   errors (error handling without throwing, union return errors, Result type),
-  conventions (readonly, return type annotations, null vs undefined, interface prefix, barrel exports, intermediate arrays),
+  ts-conventions (readonly modifier, return type annotations, interface prefix, `as const`),
   contracts (domain vs DTO, monorepo types, API contract types).
-  DO NOT USE when: user asks generic JS questions with no TS angle.
+  DO NOT USE when: user asks generic JS questions with no TS angle — use `javascript` instead.
 user-invocable: false
 ---
 
@@ -21,6 +22,7 @@ user-invocable: false
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/` sub-skill
+→ **JavaScript conventions** (naming, `this`-handling, barrel files, arrays, null/undefined) → `javascript` skill
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `oop-principles` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `oop-principles` skill
 
@@ -96,17 +98,16 @@ function toDomain(dto: UserDTO): User {
 - Zod example: see `references/zod-example.md`.
 - ECMAScript edition history (ES1 1997 → ES2025): see `references/ecmascript-history.md`. Use when choosing `tsconfig` `target`/`lib`, judging what downlevels vs. needs a polyfill, or which edition first shipped a feature.
 
-## Rules (always apply)
+## JavaScript foundation
+
+TypeScript augments JavaScript — it does not replace JS conventions. Apply the `javascript` skill's rules (naming, `this`-handling, barrel files, intermediate arrays, null/undefined) **in addition** to the TS-specific rules below.
+
+## Rules (TypeScript-specific, always apply)
 
 | Rule | File |
 |---|---|
 | Avoid type assertions (`as T`, `!`, `as unknown as T`) | `rules/avoid-type-assertions.md` |
-| Avoid intermediate arrays on hot paths | `rules/avoid-intermediate-arrays.md` |
 | Favor existing types over `as const` | `rules/favor-existing-types-over-as-const.md` |
-| Use JavaScript general conventions (naming, const/let, destructuring, template literals) | `rules/js-general-conventions.md` |
 | Do not prefix interfaces with `I` | `rules/no-interface-prefix.md` |
 | Mark properties and arrays `readonly` to signal immutability | `rules/readonly.md` |
 | Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
-| `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
-| Do not use barrel files (`index.ts` re-exports) | `rules/no-barrel-files.md` |
-| Prefer explicit context (params) over implicit `this` | `rules/prefer-explicit-context-over-this.md` |

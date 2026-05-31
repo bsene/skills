@@ -4,7 +4,7 @@ description: >
   Pass the data a function needs as explicit arguments instead of relying on the implicit `this` context.
   "this-free" code is data-flow transparent and avoids broken-binding bugs (detached methods, leaked `this` in callbacks).
 metadata:
-  tags: typescript, javascript, this, purity, predictability, functional
+  tags: javascript, typescript, this, purity, predictability, functional
 ---
 
 # Prefer explicit context over implicit `this`
