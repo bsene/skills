@@ -96,7 +96,7 @@ function toDomain(dto: UserDTO): User {
 
 - User example: see `references/user-example.md`.
 - Zod example: see `references/zod-example.md`.
-- ECMAScript edition history (ES1 1997 → ES2025): see `references/ecmascript-history.md`. Use when choosing `tsconfig` `target`/`lib`, judging what downlevels vs. needs a polyfill, or which edition first shipped a feature.
+- ECMAScript edition history (ES1 1997 → ES2025): see `../javascript/references/ecmascript-history.md`. Use when choosing `tsconfig` `target`/`lib`, judging what downlevels vs. needs a polyfill, or which edition first shipped a feature.
 
 ## JavaScript foundation
 

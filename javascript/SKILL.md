@@ -32,6 +32,10 @@ Conventions and rules for idiomatic JavaScript. TypeScript builds on these — w
 | Avoid intermediate arrays on hot paths (`filter().map()` chains) | `rules/avoid-intermediate-arrays.md` |
 | `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
 
+## Read On Demand
+
+- ECMAScript edition history (ES1 1997 → ES2025): see `references/ecmascript-history.md`. Use when judging which edition first shipped a feature, what needs a polyfill on older runtimes, or which syntax is safe for a target environment.
+
 ## Specialist Skills
 
 | Situation | Skill | Why |

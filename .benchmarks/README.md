@@ -34,7 +34,6 @@ Bench harness for the skills in this repo. Goal: measure with-skill vs without-s
 ---
 id: <skill>-<NNN>-<slug>
 skill: <skill-name>
-models: [claude-opus-4-7, claude-sonnet-4-6, claude-haiku-4-5-20251001]
 ---
 
 # Prompt
@@ -46,8 +45,11 @@ models: [claude-opus-4-7, claude-sonnet-4-6, claude-haiku-4-5-20251001]
 - [ ] <machine-gradable bullet 3>
 ```
 
+**Default models** (run unless a scenario overrides with its own `models:` line):
+`[claude-opus-4-7, claude-sonnet-4-6, claude-haiku-4-5-20251001]`
+
 ## Status
 
-- Scenarios: 5 stubs (no runs yet)
-- First instrumentation targets: `tcrdd`, `rest-api-design`, `typescript/type-system`
+- Scenarios: 5 stubs (no runs yet) — `kano`, `refactoring`, `rest-api-design`, `tcrdd`, `typescript-type-system`
+- Priority instrumentation targets: `tcrdd`, `rest-api-design`, `typescript-type-system` (the other stubs run ahead of priority)
 - Out of scope today: full 36-skill coverage, CI gating

@@ -1,7 +1,6 @@
 ---
 id: tcrdd-001-red-green
 skill: tcrdd
-models: [claude-opus-4-7, claude-sonnet-4-6, claude-haiku-4-5-20251001]
 ---
 
 # Prompt

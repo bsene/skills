@@ -22,13 +22,13 @@ This is data-flow transparency: a function states its dependencies in its signat
 
 Calling subscribers by index binds `this` to the `subscribers` array, so any subscriber can wipe the registry:
 
-```typescript
+```javascript
 // Bad — index call leaks `this` as the subscribers array
 function pubsub() {
-  const subscribers: Array<(p: unknown) => void> = [];
+  const subscribers = [];
   return {
-    subscribe(fn: (p: unknown) => void) { subscribers.push(fn); },
-    publish(publication: unknown) {
+    subscribe(fn) { subscribers.push(fn); },
+    publish(publication) {
       for (let i = 0; i < subscribers.length; i += 1) {
         subscribers[i](publication); // `this` === subscribers
       }
@@ -36,18 +36,18 @@ function pubsub() {
   };
 }
 
-bus.subscribe(function (this: unknown[]) {
-  this.length = 0; // wipes every subscriber
+bus.subscribe(function () {
+  this.length = 0; // `this` === subscribers array; wipes every subscriber
 });
 ```
 
-```typescript
+```javascript
 // Good — forEach calls each handler as a plain function; pass only the data
 function pubsub() {
-  const subscribers: Array<(p: unknown) => void> = [];
+  const subscribers = [];
   return {
-    subscribe(fn: (p: unknown) => void) { subscribers.push(fn); },
-    publish(publication: unknown) {
+    subscribe(fn) { subscribers.push(fn); },
+    publish(publication) {
       subscribers.forEach(subscriber => subscriber(publication));
     },
   };
@@ -62,11 +62,14 @@ bus.subscribe(publication => {
 
 A method that depends on `this` works only when called with the right binding:
 
-```typescript
+```javascript
 // Bad — depends on `this`; breaks when detached
 class Rectangle {
-  constructor(readonly width: number, readonly height: number) {}
-  calculateArea(): number {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+  calculateArea() {
     return this.width * this.height;
   }
 }
@@ -76,11 +79,9 @@ const calc = rect.calculateArea;
 calc(); // throws / NaN — `this` is undefined
 ```
 
-```typescript
+```javascript
 // Good — pure function takes the data as an argument; call site is irrelevant
-type Rectangle = { readonly width: number; readonly height: number };
-
-function calculateArea(rect: Rectangle): number {
+function calculateArea(rect) {
   return rect.width * rect.height;
 }
 
