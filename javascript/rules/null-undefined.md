@@ -4,12 +4,12 @@ description: >
   Use `undefined` for absence of a value. Use `null` only where it is part of an API
   contract or external convention (Node.js callbacks, JSON serialization).
 metadata:
-  tags: typescript, null, undefined, nullability
+  tags: javascript, typescript, null, undefined, nullability
 ---
 
 # `undefined` for absence, `null` for API contracts
 
-JavaScript has two "nothing" values. TypeScript preserves both. Choose deliberately.
+JavaScript has two "nothing" values — choose deliberately.
 
 ## Rule
 
@@ -36,7 +36,7 @@ if (value === null) return defaultValue;
 if (value === undefined) return defaultValue;
 ```
 
-`== null` is the one legitimate use of `==` over `===` in TypeScript.
+`== null` is the one legitimate use of `==` over `===` in JavaScript.
 
 ## Objects: use truthy checks
 

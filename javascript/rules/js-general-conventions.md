@@ -1,15 +1,15 @@
 ---
 name: js-general-conventions
 description: >
-  TypeScript code follows JavaScript general conventions — naming, syntax idioms, modern patterns.
-  TS-specific features augment; they don't replace JS conventions.
+  JavaScript naming, syntax idioms, and modern patterns — the foundation TypeScript builds on.
+  Strict equality, const/let, destructuring, template literals, optional chaining.
 metadata:
-  tags: typescript, javascript, conventions, naming, idioms
+  tags: javascript, typescript, conventions, naming, idioms
 ---
 
 # Use JavaScript general conventions
 
-TypeScript is a superset of JavaScript. Follow JS conventions first; use TS-specific features to augment, not replace.
+These idioms apply to all JavaScript. TypeScript builds on them — type features augment, they do not replace these conventions.
 
 ## Naming
 
@@ -78,13 +78,3 @@ users.filter(u => u.active).map(u => u.id);
 | `== null` check | Coercion surprises | `=== null` or `?? ` |
 | Namespace-style imports (`import * as X`) when named imports work | Verbose | Named imports |
 | Excessive type annotations on obvious inferences | Noise | Let TS infer |
-
-## TypeScript augments, not replaces
-
-```typescript
-// Bad — TS-isms where JS convention is cleaner
-const result: Array<string> = new Array<string>();
-
-// Good — JS convention with TS inference
-const result: string[] = [];
-```

@@ -29,7 +29,8 @@ When you ask "is this feature worth building?", the `kano` skill auto-activates 
 | **OOP & Architecture**    | `oop-principles`               | Analyze OOP code against Dave Thomas's 7 principles                                                       |
 |                           | `cupid-checker`                | Review code against Dan North's CUPID properties (Composable, Unix, Predictable, Idiomatic, Domain-based) |
 |                           | `ports-adapters-architecture`  | Apply Hexagonal / Ports-and-Adapters architecture                                                         |
-| **TypeScript/JavaScript** | `typescript` *(router)*        | TypeScript best practices — error handling, strict mode, types/Zod sub-skills                             |
+| **TypeScript/JavaScript** | `javascript`                   | JS-foundation rules — naming, `this`-handling, barrel files, intermediate arrays, null/undefined          |
+|                           | `typescript` *(router)*        | TypeScript-specific best practices — error handling, strict mode, types/Zod sub-skills                    |
 |                           | `typescript/type-system`       | TS5+ type system features                                                                                  |
 |                           | `typescript/zod`               | Runtime validation with Zod                                                                                |
 |                           | `composing-software`           | Functional programming composition techniques in JavaScript                                               |

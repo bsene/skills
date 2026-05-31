@@ -5,7 +5,7 @@ description: >
   Barrel files defeat tree-shaking, hide import origins, cause circular dependencies,
   and expand the importable surface beyond what should be public.
 metadata:
-  tags: typescript, javascript, imports, barrel-files, tree-shaking, performance
+  tags: javascript, typescript, imports, barrel-files, tree-shaking, performance
 ---
 
 # Do not use barrel files (index.ts re-exports)
