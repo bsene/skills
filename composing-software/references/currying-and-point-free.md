@@ -13,6 +13,25 @@ const double   = multiply(2);   // partial application — `a` is fixed
 const triple   = multiply(3);
 ```
 
+The two are distinct:
+
+| | Currying | Partial application |
+|---|---|---|
+| Shape | `f(a)(b)(c)` — chain of unary calls | `g(a, b)` then call rest later |
+| Trigger | Runs only once all args arrive, in stages | Fixes a subset of args **now**, returns a specialized fn |
+| Goal | Compose unary functions | Pre-configure a function for reuse |
+
+A curried function supports partial application for free (each call fixes the next arg). For a non-curried, multi-arg function, fix leading args with a generic helper:
+
+```js
+const partial = (fn, ...fixed) => (...rest) => fn(...fixed, ...rest);
+
+const logError = partial(logger, "ERROR");   // logger(level, message)
+logError("disk full");                       // logger("ERROR", "disk full")
+```
+
+This generalizes specialization — it removes the boilerplate of hand-written wrappers like `const logError = msg => logger("ERROR", msg)`. Name it `partial`, not `curry`: it fixes a subset of args in one step rather than building a staged unary chain.
+
 **Data-last convention**: place the data argument last so that partial application produces a ready-to-pipe function:
 
 ```js
