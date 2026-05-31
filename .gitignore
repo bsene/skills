@@ -1,1 +1,3 @@
 .DS_Store
+.benchmarks/runs/*
+!.benchmarks/runs/.gitkeep
