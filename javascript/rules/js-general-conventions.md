@@ -75,6 +75,6 @@ users.filter(u => u.active).map(u => u.id);
 |---|---|---|
 | `var x` | Hoisted, function-scoped, unexpected | `const` or `let` |
 | `"foo" + bar + "baz"` | Verbose, error-prone | Template literal |
-| `== null` check | Coercion surprises | `=== null` or `?? ` |
+| `==` / `!=` (loose equality) | Coercion surprises | `===` / `!==` — sole exception: `== null` to test null+undefined together (see `null-undefined.md`) |
 | Namespace-style imports (`import * as X`) when named imports work | Verbose | Named imports |
 | Excessive type annotations on obvious inferences | Noise | Let TS infer |
