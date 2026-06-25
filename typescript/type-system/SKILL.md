@@ -285,12 +285,12 @@ Scenario: `.benchmarks/scenarios/typescript-001-illegal-states.md` · Run: 2026-
 
 > **SOFT PASS** (ceiling effect — frontier baselines already produce textbook discriminated unions). Only lift is shared-base on sonnet.
 
-Scenario: `.benchmarks/scenarios/typescript-002-state-transitions.md` · Run: 2026-06-25 *(harder variant — typed transitions + branded ids)*
+Scenario: `.benchmarks/scenarios/typescript-002-state-transitions.md` · Run: 2026-06-25 (N=3 averages) *(harder variant — typed transitions + branded ids)*
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |
 | claude-opus-4-8   | 67%     | 67%  | +0%   |
-| claude-sonnet-4-6 | 67%     | 83%  | +16%  |
-| claude-haiku-4-5  | 83%     | 67%  | **−16%** |
+| claude-sonnet-4-6 | 72%     | 67%  | −5%   |
+| claude-haiku-4-5  | 56%     | 67%  | +11%  |
 
-> **FAIL** (run 2026-06-25) — haiku regresses −16% (≈1 of 6 criteria; likely the compile-time-transition or no-`as` criterion). Single-run, so within ±1-criterion noise, but gate-failing as recorded. **Action (regression-triage):** re-run `typescript-002` to confirm signal vs. noise; if real, the skill likely over-loads haiku on the transition-modeling step — tighten that guidance. opus is also saturated (67/67) → scenario differentiates sonnet only so far. Gate per `skill-optimizer/release-gates.md`.
+> **NEUTRAL** (re-run 2026-06-25, N=3). The earlier single-run haiku **−16% was noise** — across three samples haiku is **+11%** (56→67) with no real regression on any model (sonnet −5% is one criterion of within-run variance). The scenario is genuinely hard: even with the skill, opus caps at 67% (4/6), so it doesn't yet differentiate frontier models. No triage needed; to push the ceiling, sharpen the compile-time-transition guidance. Gate per `skill-optimizer/release-gates.md`.
