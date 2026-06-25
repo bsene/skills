@@ -45,6 +45,43 @@ description: >
 1. Why is `retryCount` hardcoded to 3 — should this be config?
 ```
 
+## Integrated Example
+
+**Input:** user says "/review my changes".
+
+**Step 1 — get the ACTUAL diff** (never reconstruct from memory or from the chat history):
+
+```
+$ git diff main...HEAD
+--- a/src/cart.ts
++++ b/src/cart.ts
+@@ -8,7 +8,7 @@ export function total(items: Item[], coupon?: Coupon) {
+-  const sum = items.reduce((a, i) => a + i.price, 0);
++  const sum = items.reduce((a, i) => a + i.price * i.qty, 0);
+   if (coupon) return sum - coupon.amount;
+   return sum;
+ }
+```
+
+**Step 2 — structured review** against the real lines (note the `coupon.amount` guard the diff
+revealed — reconstructing would have missed it):
+
+```
+## Blockers
+- `src/cart.ts:11` — coupon can drive total negative; clamp with `Math.max(0, sum - coupon.amount)`
+
+## Concerns
+- No test covers the new `qty` multiplication path
+
+## Questions
+1. Should a coupon larger than the cart be an error, or just clamp to 0?
+```
+
+**Step 3 — on approval:** apply the Blocker fix, run tests, run lint, then commit with a
+conventional message (`fix(cart): clamp coupon discount at zero`).
+
+---
+
 ## Guardrails
 
 - Never skip diff step — reconstructed diffs miss context and whitespace changes

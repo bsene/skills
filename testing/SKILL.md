@@ -69,6 +69,48 @@ When deciding what tests to write:
 
 ---
 
+## Integrated Example
+
+**Before — hard to test (the design is the problem):**
+
+```js
+function sendOverdueReminders() {
+  const users = db.query("SELECT * FROM users WHERE balance < 0"); // I/O
+  for (const u of users) {
+    if (Date.now() - u.lastReminded > WEEK) {                       // hidden clock
+      emailClient.send(u.email, "You owe us money");                // I/O
+    }
+  }
+}
+```
+
+To test this you must mock the DB, freeze the clock, and stub the email client — three mocks
+for one rule. The difficulty is feedback: the business logic (*who* gets reminded) is tangled
+with I/O.
+
+**Diagnosis:** the decision lives inside the side effects. Push I/O to the edges; keep the rule pure.
+
+**After — pure core, I/O at the edge:**
+
+```js
+// Pure: trivially testable, no mocks
+function usersToRemind(users, now) {
+  return users.filter(u => u.balance < 0 && now - u.lastReminded > WEEK);
+}
+
+// Thin shell: wires real collaborators together
+function sendOverdueReminders() {
+  for (const u of usersToRemind(db.allUsers(), Date.now()))
+    emailClient.send(u.email, "You owe us money");
+}
+```
+
+`usersToRemind([...], fixedNow)` is a one-line unit test with no test doubles. The shell that
+remains is a thin integration concern, tested sparingly. Hard-to-test became easy-to-test by
+fixing the design, not the test.
+
+---
+
 ## Read On Demand
 
 | Read When | File |
