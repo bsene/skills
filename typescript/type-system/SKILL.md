@@ -11,6 +11,8 @@ description: >
   interface vs type alias, when to use interface vs type, enum best practices, typescript enum,
   const enum, readonly property, ReadonlyArray, lazy object initialization, barrel exports,
   when to use generics, generic naming conventions, no interface prefix.
+  DO NOT USE when: runtime/schema validation at boundaries (parsing external input, API responses) →
+  use `typescript-zod`; plain naming or JS idiom questions → use `javascript`.
 user-invocable: false
 ---
 
@@ -268,3 +270,17 @@ let config: Config = { host: "localhost", port: 3000 };
 ```
 
 → Full examples with runnable code: `references/type-system.md`
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/typescript-001-illegal-states.md` · Run: 2026-06-14
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
+
+> **SOFT PASS** (ceiling effect — frontier baselines already produce textbook discriminated unions). Only lift is shared-base on sonnet. A harder variant — `.benchmarks/scenarios/typescript-002-state-transitions.md` (typed transitions + branded ids) — is authored and **pending a run** to differentiate models. Gate per `skill-optimizer/release-gates.md`.
