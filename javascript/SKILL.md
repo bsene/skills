@@ -15,6 +15,10 @@ description: >
   ALSO APPLIES to TypeScript — it is the foundation TS builds on; load it alongside `typescript`
   on `.ts`/`.tsx`. For type-specific rules (type assertions `as T`, interfaces, generics, `readonly`
   modifier, `as const`, return type annotations) the `typescript` skill adds guidance on top.
+
+  DO NOT USE as the primary skill for type-system questions (discriminated unions, generics, `as`,
+  interfaces, narrowing) → route to `typescript` / `typescript-type-system`; this skill still applies
+  underneath for naming and JS idioms.
 user-invocable: false
 ---
 
