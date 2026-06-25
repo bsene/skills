@@ -55,28 +55,7 @@ func Fetch(ctx context.Context, url string) (Result, error) { ... }
 
 ## Channel Direction Annotations
 
-Annotate direction in function signatures for compile-time safety:
-
-```go
-func producer(out chan<- int) {  // send-only
-    for i := 0; i < 10; i++ {
-        out <- i
-    }
-    close(out)
-}
-
-func consumer(in <-chan int) {   // receive-only
-    for v := range in {
-        fmt.Println(v)
-    }
-}
-
-func main() {
-    ch := make(chan int)  // bidirectional
-    go producer(ch)
-    consumer(ch)
-}
-```
+Annotate direction in function signatures for compile-time safety: `chan<- T` is send-only, `<-chan T` is receive-only, plain `chan T` is bidirectional. The producer owns and `close`s the channel; consumers `range` over it.
 
 ---
 
@@ -139,3 +118,17 @@ default:
 |---|---|
 | Goroutine lifecycle, channel patterns, fan-in/fan-out, pipeline, worker pool | [Goroutines & Channels](references/goroutines-channels.md) |
 | sync.Mutex, WaitGroup, Once, sync.Map, context, errgroup, -race flag | [Sync & Context](references/sync-context.md) |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-concurrency-001-goroutine-leak.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | —       | —    | —     |
+| claude-sonnet-4-6 | —       | —    | —     |
+| claude-haiku-4-5  | —       | —    | —     |
+
+> Not yet run. Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.

@@ -21,8 +21,7 @@ Errors are values, not exceptions. They flow through return values, are inspecte
 |---|---|---|
 | Expected failure (file not found, bad input) | Return `error` | `return fmt.Errorf("open %s: %w", path, err)` |
 | Caller needs to distinguish error kinds | Sentinel or custom type | `var ErrNotFound = errors.New("not found")` |
-| Adding context while preserving chain | Wrap with `%w` | `fmt.Errorf("loading config: %w", err)` |
-| Adding context, no need to match | Format with `%v` | `fmt.Errorf("loading config: %v", err)` |
+| Adding context (see Wrapping vs Formatting) | Wrap `%w` / format `%v` | `fmt.Errorf("loading config: %w", err)` |
 | Truly unrecoverable (programmer bug) | `panic` | Nil map write, index out of bounds |
 | Library boundary cleanup | `recover` in deferred func | HTTP middleware, plugin host |
 
@@ -46,14 +45,6 @@ Any type implementing `Error() string` is an error. This simplicity is the entir
 |---|---|---|---|
 | `%w` | Yes | Yes | Caller may need to match the cause |
 | `%v` | No | No | Adding context, hiding implementation details |
-
-```go
-// Wrapping — caller can check errors.Is(err, os.ErrNotExist)
-return fmt.Errorf("reading config %s: %w", path, err)
-
-// Formatting — chain is broken, cause is hidden
-return fmt.Errorf("reading config %s: %v", path, err)
-```
 
 **Rule:** Wrap (`%w`) by default. Format (`%v`) only when you explicitly want to hide the cause from callers (e.g., at package boundaries).
 
@@ -105,3 +96,17 @@ if errors.As(err, &ve) {
 | Read When | File |
 |---|---|
 | Full patterns: sentinel errors, custom types, wrapping chains, panic/recover, multi-error | [Error Patterns](references/error-patterns.md) |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-error-handling-001-wrap-vs-format.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | —       | —    | —     |
+| claude-sonnet-4-6 | —       | —    | —     |
+| claude-haiku-4-5  | —       | —    | —     |
+
+> Not yet run. Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
