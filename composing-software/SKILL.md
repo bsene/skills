@@ -95,3 +95,17 @@ Functional mixins
     ↓
 Classes (only when a framework forces it)
 ```
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/composing-software-001-compose-vs-inherit.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | —       | —    | —     |
+| claude-sonnet-4-6 | —       | —    | —     |
+| claude-haiku-4-5  | —       | —    | —     |
+
+> Not yet run. Includes an anti-trigger check (SRP follow-up must defer to `oop-principles`). Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
