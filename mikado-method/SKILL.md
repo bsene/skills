@@ -111,3 +111,17 @@ After any naive attempt: **"Revert now — `git checkout .` — your map is save
 |---|---|
 | Starting a graph, populating prerequisites, evaluating leaves | [Graph Building](references/graph-building.md) |
 | Execution order, committing strategy, legacy code, large refactors, hygiene rules | [Execution & Situations](references/execution-and-situations.md) |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/mikado-method-001-revert-discipline.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | —       | —    | —     |
+| claude-sonnet-4-6 | —       | —    | —     |
+| claude-haiku-4-5  | —       | —    | —     |
+
+> Not yet run. Gates always-revert + one-commit-per-leaf + the 3-part output (map / plan / revert reminder). Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
