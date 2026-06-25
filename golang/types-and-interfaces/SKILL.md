@@ -89,61 +89,15 @@ func Map[T, U any](s []T, f func(T) U) []U {
 names := Map(users, func(u User) string { return u.Name })
 ```
 
-Type constraints:
-
-```go
-type Number interface {
-    ~int | ~int64 | ~float64
-}
-
-func Sum[T Number](nums []T) T {
-    var total T
-    for _, n := range nums {
-        total += n
-    }
-    return total
-}
-```
+See [Collections & Generics](references/collections-generics.md) for type constraints (`~int | ~float64`, `comparable`) and the `slices`/`maps`/`cmp` packages.
 
 ---
 
 ## Enums with Iota
 
-Go has no `enum` keyword. Use `iota` with typed constants:
+Go has no `enum` keyword. Use typed constants with `iota` (sequential), or `1 << iota` for bitmask flags. Reserve the zero value for "unknown" to catch uninitialized values, and give the type a `String()` method.
 
-```go
-type Status int
-
-const (
-    StatusPending  Status = iota // 0
-    StatusActive                 // 1
-    StatusInactive               // 2
-)
-
-func (s Status) String() string {
-    switch s {
-    case StatusPending:  return "pending"
-    case StatusActive:   return "active"
-    case StatusInactive: return "inactive"
-    default:             return fmt.Sprintf("Status(%d)", s)
-    }
-}
-```
-
-Bitmask pattern with `1 << iota`:
-
-```go
-type Permission uint8
-
-const (
-    PermRead    Permission = 1 << iota // 1
-    PermWrite                          // 2
-    PermExecute                        // 4
-)
-
-perms := PermRead | PermWrite
-hasRead := perms&PermRead != 0  // true
-```
+See [Collections & Generics](references/collections-generics.md) for full enum, bitmask, and `stringer` examples.
 
 ---
 
@@ -151,11 +105,11 @@ hasRead := perms&PermRead != 0  // true
 
 | Anti-pattern | Problem | Fix |
 |---|---|---|
-| Interface pollution (10+ methods) | Weak abstraction, hard to implement/mock | Split into focused 1-3 method interfaces |
+| Interface pollution (10+ methods) | Weak abstraction, hard to implement/mock | See Interface Design Rules — keep interfaces small (1-3 methods) |
 | Premature interfaces | Interface defined before second implementation exists | Wait until you need polymorphism |
 | Embedding for code reuse without is-a | Promoted methods leak into API surface | Use a regular field instead |
 | `any` / `interface{}` everywhere | Erases type safety | Use specific interfaces or generics |
-| Generics for 1-2 concrete types | Over-engineering | Write the concrete functions |
+| Generics for 1-2 concrete types | Over-engineering | See Generics Quick Guide — write the concrete functions |
 
 ---
 
