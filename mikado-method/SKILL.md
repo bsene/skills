@@ -120,8 +120,8 @@ Scenario: `.benchmarks/scenarios/mikado-method-001-revert-discipline.md`
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | —       | —    | —     |
-| claude-sonnet-4-6 | —       | —    | —     |
-| claude-haiku-4-5  | —       | —    | —     |
+| claude-opus-4-8   | 29%     | 100% | +71%  |
+| claude-sonnet-4-6 | 29%     | 100% | +71%  |
+| claude-haiku-4-5  | 14%     | 57%  | +43%  |
 
-> Not yet run. Gates always-revert + one-commit-per-leaf + the 3-part output (map / plan / revert reminder). Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25). Large gains (opus/sonnet +71) — baselines don't apply always-revert + one-commit-per-leaf + the 3-part output unaided. haiku reaches only 57% with the skill (weaker map/revert adherence) — candidate for a haiku-targeted salience pass. Gate per `skill-optimizer/release-gates.md`.

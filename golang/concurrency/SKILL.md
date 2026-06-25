@@ -127,8 +127,8 @@ Scenario: `.benchmarks/scenarios/golang-concurrency-001-goroutine-leak.md`
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | —       | —    | —     |
-| claude-sonnet-4-6 | —       | —    | —     |
-| claude-haiku-4-5  | —       | —    | —     |
+| claude-opus-4-8   | 83%     | 83%  | +0%   |
+| claude-sonnet-4-6 | 83%     | 83%  | +0%   |
+| claude-haiku-4-5  | 50%     | 50%  | +0%   |
 
-> Not yet run. Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
+> **NEUTRAL** (run 2026-06-25) — no regression, but zero lift on every model and haiku stuck at 50%. Baselines already catch the leak/race basics; the skill adds nothing measurable on the points they miss (errgroup propagation, unbuffered coupling). Does NOT meet SOFT PASS (no gain on the weak model). **Action:** raise salience of errgroup + bounded-pool guidance, or harden the scenario. Gate per `skill-optimizer/release-gates.md`.
