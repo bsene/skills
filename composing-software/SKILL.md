@@ -104,8 +104,8 @@ Scenario: `.benchmarks/scenarios/composing-software-001-compose-vs-inherit.md`
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | —       | —    | —     |
-| claude-sonnet-4-6 | —       | —    | —     |
-| claude-haiku-4-5  | —       | —    | —     |
+| claude-opus-4-8   | 17%     | 100% | +83%  |
+| claude-sonnet-4-6 | 33%     | 100% | +67%  |
+| claude-haiku-4-5  | 0%      | 83%  | +83%  |
 
-> Not yet run. Includes an anti-trigger check (SRP follow-up must defer to `oop-principles`). Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25, strongest signal). Decisive — haiku 0→83, opus 17→100. Baselines reach for `extends`; the skill enforces composition (factory/mixin) and correctly DEFERS the SRP follow-up to `oop-principles` (anti-trigger holds). Gate per `skill-optimizer/release-gates.md`.

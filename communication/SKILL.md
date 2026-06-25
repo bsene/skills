@@ -131,10 +131,10 @@ Conclusion first (Pyramid) → 3 proofs (logos) → reversible pilot (safety) �
 
 Scenario: `.benchmarks/scenarios/communication-001-message-coaching.md`
 
-| Model            | Without | With | Delta |
-| ---------------- | ------- | ---- | ----- |
-| claude-opus-4-8  | —       | —    | —     |
-| claude-sonnet-4-6 | —      | —    | —     |
-| claude-haiku-4-5 | —       | —    | —     |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 86%     | 100% | +14%  |
+| claude-sonnet-4-6 | 71%     | 100% | +29%  |
+| claude-haiku-4-5  | 71%     | 86%  | +15%  |
 
-> Not yet run. Populate via the repo `benchmark-loop`; gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25). Gains on all three models (sonnet +29). Skill reliably adds conclusion-first Pyramid structure, the de-risk/pilot move, and a concrete rewrite that baselines partly miss. Gate per `skill-optimizer/release-gates.md`.
