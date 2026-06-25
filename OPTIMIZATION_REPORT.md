@@ -345,6 +345,27 @@ Findings format: `SEVERITY | axis | problem | fix`. Clean axes omitted. All 36 s
 
 ---
 
+## 5. Backlog Application Status (2026-06-24)
+
+Branch `chore/apply-skill-optimization-backlog`. Text/static portion of the backlog applied; live benchmark runs are the only remaining step.
+
+| Item | Status |
+|------|--------|
+| **P0** tcrdd regression | **FIXED + CONFIRMED.** Added Mode (autonomous path), one-step-at-a-time guard, baby-step vs one-shot example. Re-ran `tcrdd-001` (2026-06-25, 3 models × with/without): sonnet 33%→100%, haiku 17%→83%, opus 100%. No negative delta — regression cleared, gate PASS. |
+| **P1** benchmark footers | **Done.** Footers added to `kano`, `refactoring`, `rest-api-design`, `typescript/type-system`, `tcrdd` (from 2026-06-14 run data); `typescript` router gets a pointer to the leaf footer + side-files. Footer count 1 → 12. |
+| **P2** missing scenarios | **Authored** (6): `golang-concurrency-001`, `golang-error-handling-001`, `composing-software-001` (incl. anti-trigger), `cupid-checker-001`, `mikado-method-001`, `typescript-002` (harder variant). ⏳ Live runs pending. |
+| **P3** anti-triggers | **Done.** `DO NOT USE` added to `javascript`, `typescript/zod`, `typescript/type-system`, `golang/web`, `git-guru`, `gitlab-dag`, `gitmoji` (`chicken-scheme` already had one). |
+| **P4** budget trims | **Done.** golang ×5 dedup, `rest-api-design` 3 checklists → 1 + cut Modern Notes, `design-patterns` inline code → summaries, `solid` Concepts dropped. ~260 lines saved, behavior-neutral. |
+| **P5** hygiene | **Done.** `user-invocable: false` on `git-hero`/`oop-principles` routers; deleted stale `testing/references/smoke-tests.md`; fixed `gitlab-dag` backtick; renamed `markdown`/`writing-a-good-claude-md` titles; integrated examples added to `chicken-scheme`, `testing`, `smoke-tests`, `review`, `show-me-the-code` (`explain-code` already had them). |
+
+### ⏳ Remaining: live benchmark runs (gate-blocking)
+
+7 footers carry **"Not yet run"** and one tcrdd column is pending. To clear the gate per `release-gates.md`, run `benchmark-loop` (3 models × with/without) for:
+`tcrdd-001` (post-fix, **must** show no negative delta), `communication-001/002`, `golang-concurrency-001`, `golang-error-handling-001`, `composing-software-001`, `cupid-checker-001`, `mikado-method-001`, `typescript-002`.
+This is the heavy orchestration step (the 2026-06-14 runs used parallel agents) — best run as a Workflow.
+
+---
+
 ## Appendix — Method & Caveats
 
 - **Static audit**: 6 parallel read-only agents, one per skill cluster, scoring against the 4-axis rubric derived from `.agents/skills/skill-optimizer/rules/`.
