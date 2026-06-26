@@ -111,3 +111,14 @@ TypeScript augments JavaScript — it does not replace JS conventions. Apply the
 | Do not prefix interfaces with `I` | `rules/no-interface-prefix.md` |
 | Mark properties and arrays `readonly` to signal immutability | `rules/readonly.md` |
 | Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
+
+---
+
+## Benchmark
+
+This router has no scenario of its own. Gate data lives in the leaf footers:
+
+- `type-system/SKILL.md` → `## Benchmark` (scenario `typescript-001`, run 2026-06-14, SOFT PASS).
+- Historical optimizer runs: `run-history.md`. Per-skill gate targets: `RELEASE_GATES.md`.
+
+Gate per `skill-optimizer/release-gates.md`.

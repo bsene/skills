@@ -12,6 +12,7 @@ description: >
 
   DO NOT USE when: the smell is at the function/method level (long method, primitive obsession, feature envy on
   values, etc.) — that is `refactoring`'s domain. Activate here only for *class-shape* issues.
+user-invocable: false
 ---
 
 # OO Principles

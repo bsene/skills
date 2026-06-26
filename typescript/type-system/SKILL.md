@@ -11,6 +11,8 @@ description: >
   interface vs type alias, when to use interface vs type, enum best practices, typescript enum,
   const enum, readonly property, ReadonlyArray, lazy object initialization, barrel exports,
   when to use generics, generic naming conventions, no interface prefix.
+  DO NOT USE when: runtime/schema validation at boundaries (parsing external input, API responses) →
+  use `typescript-zod`; plain naming or JS idiom questions → use `javascript`.
 user-invocable: false
 ---
 
@@ -268,3 +270,27 @@ let config: Config = { host: "localhost", port: 3000 };
 ```
 
 → Full examples with runnable code: `references/type-system.md`
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/typescript-001-illegal-states.md` · Run: 2026-06-14
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
+
+> **SOFT PASS** (ceiling effect — frontier baselines already produce textbook discriminated unions). Only lift is shared-base on sonnet.
+
+Scenario: `.benchmarks/scenarios/typescript-002-state-transitions.md` · Run: 2026-06-25 (N=3 averages) *(harder variant — typed transitions + branded ids)*
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 67%  | +0%   |
+| claude-sonnet-4-6 | 72%     | 67%  | −5%   |
+| claude-haiku-4-5  | 56%     | 67%  | +11%  |
+
+> **NEUTRAL** (re-run 2026-06-25, N=3). The earlier single-run haiku **−16% was noise** — across three samples haiku is **+11%** (56→67) with no real regression on any model (sonnet −5% is one criterion of within-run variance). The scenario is genuinely hard: even with the skill, opus caps at 67% (4/6), so it doesn't yet differentiate frontier models. No triage needed; to push the ceiling, sharpen the compile-time-transition guidance. Gate per `skill-optimizer/release-gates.md`.

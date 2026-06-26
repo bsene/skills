@@ -11,6 +11,7 @@ description: >
   emoji (gitmoji, commit emoji, "quel emoji pour ce commit"),
   setup (git configuration, "bonnes pratiques git", "comment faire un rebase", "configure git properly").
   DO NOT USE when: user needs a single one-shot git command answer — let Claude answer directly.
+user-invocable: false
 ---
 
 # Git Hero

@@ -21,6 +21,11 @@ description: >
 
 Red/green/refactor driven by `git-gamble`: each phase runs the tests and auto-commits on the expected result or auto-reverts otherwise.
 
+## Mode
+
+- **Interactive** (a human is in the loop): use the approval gates below — plan approval, then diff approval before each `git-gamble`.
+- **Autonomous** (no human available to approve, e.g. running unattended): **just run the loop.** Approval gates are optional — skip them and proceed. Still commit per phase and still take one baby step at a time. Do **not** freeze waiting for an approval that will never come.
+
 ## Workflow
 
 ```
@@ -43,14 +48,19 @@ REFACTOR → plan cleanup → approval? → refactor → diff approval? → git-
 
 ## How to write code
 
-Before each phase:
+Before each phase (**interactive mode only** — skip in autonomous mode, see Mode):
 
 - [ ] Plan approved by user
 - [ ] Diff approved by user before running `git-gamble`
 
+> **One step at a time — never one-shot.** Each phase advances by exactly one baby step:
+> one failing test, then the minimum code to pass it. Do **not** write the whole test
+> suite or the full implementation in a single pass, even in autonomous mode. One pass =
+> wrong. Loop instead.
+
 ### RED — Write a failing test
 
-- Ask the user for the **smallest next behaviour** they want to add.
+- Ask the user for the **smallest next behaviour** they want to add (in autonomous mode, pick the smallest next behaviour yourself).
 - Write _only enough_ of a test to fail — stop at the first compile error or failed assertion.
 
 ### GREEN — Write the minimum production code
@@ -68,6 +78,31 @@ Before each phase:
 - Ask the user whether the overall feature or fix is done.
   - **Not done** → back to RED
   - **Done** → squash the intermediate commits into one clean commit
+
+---
+
+## Example: baby step vs one-shot
+
+Feature: a `Cart.total()` that sums line items and applies a discount code.
+
+✅ **Correct (one baby step):**
+
+```
+RED:   write a test asserting total() of an empty cart is 0 → fails (no method) → commit
+GREEN: add total() returning 0 → passes → commit
+RED:   write a test for one item → fails → commit
+GREEN: sum the items → passes → commit
+... (discount handled by a later RED/GREEN, not now)
+```
+
+❌ **Wrong (one-shot — what breaks weaker models):**
+
+```
+Write all five tests at once, then a complete Cart with summing + discount logic,
+then a single squashed commit. No red/green cadence, no revert safety.
+```
+
+The skill is the loop. If you produce a finished feature in one turn, you did not run TCRDD.
 
 ---
 
@@ -94,3 +129,20 @@ Before each phase:
 | Before starting TCRDD                        | Skill         | Why                                                                |
 | -------------------------------------------- | ------------- | ------------------------------------------------------------------ |
 | Unsure whether the feature is worth building | `kano`        | Classify the feature before investing in red/green/refactor cycles |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/tcrdd-001-red-green.md`
+
+| Model             | Without | With (pre-fix) | With (post-fix) | Delta (post-fix) |
+| ----------------- | ------- | -------------- | --------------- | ---------------- |
+| claude-opus-4-8   | 100%    | 100%           | 100%            | +0%              |
+| claude-sonnet-4-6 | 100%    | 33% (-67%)     | 100%            | +0%              |
+| claude-haiku-4-5  | 83%     | 17% (-66%)     | 83%             | +0%              |
+
+> **Pre-fix: FAIL** (run 2026-06-14) — heavy approval-gating froze sonnet and made haiku one-shot.
+> **Post-fix: regression CLEARED** (run 2026-06-25) — after the **Mode** (autonomous path) + **one-step-at-a-time** guard, every model ran a proper RED→GREEN loop in autonomous mode: sonnet no longer freezes, haiku no longer one-shots. No negative delta remains.
+> The skill is now behavior-neutral on this task (models already do TCRDD well unaided); the fix removes the harm. Gate per `skill-optimizer/release-gates.md`: **PASS** (no negative delta on the critical scenario).
+> Caveat: single-run, graded from agent self-reports; freeze/one-shot/revert signals directly observed.

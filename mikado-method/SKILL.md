@@ -111,3 +111,17 @@ After any naive attempt: **"Revert now — `git checkout .` — your map is save
 |---|---|
 | Starting a graph, populating prerequisites, evaluating leaves | [Graph Building](references/graph-building.md) |
 | Execution order, committing strategy, legacy code, large refactors, hygiene rules | [Execution & Situations](references/execution-and-situations.md) |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/mikado-method-001-revert-discipline.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 29%     | 100% | +71%  |
+| claude-sonnet-4-6 | 29%     | 100% | +71%  |
+| claude-haiku-4-5  | 14%     | 57%  | +43%  |
+
+> **PASS** (run 2026-06-25). Large gains (opus/sonnet +71) — baselines don't apply always-revert + one-commit-per-leaf + the 3-part output unaided. haiku reaches only 57% with the skill (weaker map/revert adherence) — candidate for a haiku-targeted salience pass. Gate per `skill-optimizer/release-gates.md`.

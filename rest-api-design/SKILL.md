@@ -231,48 +231,19 @@ Accept: application/json
 - Honor `Accept:` order; respond `406 Not Acceptable` if no supported format matches.
 - JSON is the default. XML only if a client explicitly requires it (no longer mandatory).
 
-## Anti-Patterns
+## Review / Pre-Launch Checklist
 
-- Verbs in URLs: `/getUsers`, `/createOrder`, `/updateUser`
-- Singular for instance + plural for collection (`/user/7` next to `/users`) — pick plural, stay
-- `PUT` for partial update (it clears unspecified fields)
-- `POST` create returning `200` without `Location:` header
-- HTML error bodies, or error shape that varies per endpoint
-- Nesting > 2 levels — flatten or move to query params
-- JSONP — deprecated; use CORS
-- Custom `?page=2&size=20` without standardized response headers — OK but document
-- Frequent verbs in URLs ⇒ you have **RPC**, not REST — revisit design
+Run before any endpoint ships. Tier = severity if violated.
 
-## Review Checklist
-
-| Tier | Examples |
+| Tier | Check |
 |---|---|
-| **Blocker** | Missing/broken auth, wrong verb (PUT for partial), 2xx returned on error, plain HTTP for auth, no input validation, no idempotency on payment/order create |
-| **Concern** | Inconsistent case, ad-hoc error shape, missing pagination headers, no version in path, deep nesting, no rate-limit headers, free-form sort/filter without whitelist |
-| **Nit** | Singular noun for instance, missing `Location:` on `201`, missing `curl` example in docs, no `X-RateLimit-*` exposed |
-
-## Pre-Launch Checklist
-
-Run before any endpoint ships:
-
-- [ ] Response shape consistent (bare or wrapped — same across every endpoint)
-- [ ] List endpoints paginated from day one (adding pagination later = breaking change)
-- [ ] Filter / sort params validated and **whitelisted**
-- [ ] Errors return machine-readable `error_code` + human-readable message; validation errors include field-level detail
-- [ ] Status codes correct: `201` create, `204` delete, `409` conflict, `422` validation, `400` illegal op
-- [ ] Rate-limit headers on every response; `429` + `Retry-After` when exceeded
-- [ ] Idempotency-Key supported on every state-changing endpoint with side effects (payments, orders, sends)
-- [ ] Version in path; deprecation policy documented (≤2 versions parallel, ≥6 month sunset)
-- [ ] `curl` example per endpoint in docs; OpenAPI 3.x spec generated
-
-## Modern Notes (diverge from 2014 source)
-
-- JSON-only is fine — drop the XML-mandatory stance.
-- JSONP is deprecated — CORS only.
-- RFC 7807 Problem Details is an acceptable alternative to the OAuth2 error envelope.
-- Cursor pagination acceptable (often preferred) for high-volume / mutable datasets.
-- Document the API with **OpenAPI 3.x**; generate client SDKs from the spec.
-- Idempotency keys (`Idempotency-Key:` header) for non-idempotent ops (`POST` payment) — Stripe pattern.
+| **Blocker** | Missing/broken auth; plain HTTP for auth or API; wrong verb (`PUT` for partial — clears unspecified fields); 2xx returned on error; no input validation; no `Idempotency-Key` on state-changing side-effect endpoints (payments, orders, sends) |
+| **Blocker** | Status codes correct: `201` create (+`Location:`), `204` delete, `409` conflict, `422` validation, `400` illegal-but-valid op |
+| **Concern** | Inconsistent case; ad-hoc/HTML error shape that varies per endpoint; missing pagination headers; list endpoints not paginated from day one (adding later = breaking); no version in path; nesting > 2 levels; missing rate-limit headers + `429`/`Retry-After`; free-form sort/filter without server-side whitelist |
+| **Concern** | Response shape not consistent project-wide (bare or wrapped — never mixed); deprecation policy undocumented (≤2 versions parallel, ≥6 month sunset) |
+| **Concern** | Errors lack machine-readable `error_code` + human message; validation errors lack field-level detail |
+| **Nit** | Singular noun for instance (`/user/7` beside `/users` — pick plural); missing `Location:` on `201`; no `X-RateLimit-*` exposed; missing `curl` example / OpenAPI 3.x spec in docs |
+| **Smell** | Frequent verbs in URLs (`/getUsers`, `/createOrder`) ⇒ you have **RPC**, not REST — revisit; `?page=2&size=20` without standardized headers is OK but document; JSONP is deprecated — use CORS |
 
 ## References
 
@@ -281,3 +252,17 @@ Run before any endpoint ships:
 - [Stripe API reference](https://stripe.com/docs/api) — cursor pagination, idempotency, expand
 - RFC 6749 (OAuth 2.0), RFC 5988 (Link header), RFC 7807 (Problem Details), RFC 3986 (URIs)
 - [interagent/http-api-design](https://github.com/interagent/http-api-design)
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/rest-api-001-status-code.md` · Run: 2026-06-14
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 40%     | 100% | +60%  |
+| claude-sonnet-4-6 | 40%     | 60%  | +20%  |
+| claude-haiku-4-5  | 40%     | 60%  | +20%  |
+
+> **PASS.** Flips the core 400-vs-422 call on all 3 models (every baseline wrongly chose 422). Weaker models under-apply secondary idempotency/409 guidance — candidate for higher salience. Gate per `skill-optimizer/release-gates.md`.

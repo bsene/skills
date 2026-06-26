@@ -88,6 +88,32 @@ Enable readline: `chicken-install breadline`, then add to `~/.csirc`:
 
 ---
 
+## Integrated Example
+
+**Goal:** a CLI tool that reads a JSON file and prints how many records it has.
+
+```scheme
+;;; count.scm
+(import (chicken base)
+        (chicken file)        ; read-string
+        medea)                ; egg: read-json — NOT (use medea)
+
+(define data (with-input-from-file (car (command-line-arguments)) read-json))
+(printf "~a records~%" (length data))
+```
+
+```bash
+chicken-install medea        # install the JSON egg first
+csc count.scm                # Scheme → C → ./count
+./count records.json         # => 42 records
+```
+
+The `medea` egg is pulled in with `(import medea)` — in CHICKEN 5 there is no `use`. `csc`
+compiles to a native binary in one step; for quick iteration `csi -s count.scm records.json`
+runs the same source interpreted.
+
+---
+
 ## Read On Demand
 
 | Read When | File |
