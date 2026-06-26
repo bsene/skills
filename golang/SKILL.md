@@ -108,3 +108,15 @@ Every type has a usable zero value — no null surprises.
 | General testing philosophy (not Go-specific) | `testing` | Language-agnostic testing strategy and philosophy |
 | OOP design principles | `oop-principles` | SOLID, design patterns (language-agnostic) |
 | Hexagonal architecture in Go | `ports-adapters-architecture` | Ports and adapters pattern |
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-router-001-idiomatic.md` · Run: 2026-06-26
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 83%     | 83%  | +0%   |
+
+> **NEUTRAL** (no regression). On idiomatic `readConfig` all baselines already use `defer f.Close()`, `%w`-wrapped errors, immediate error checks, and avoid over-abstraction — the feared "clarity over cleverness suppresses idioms" regression did not appear (haiku's one miss is identical with and without the skill). The router's fundamentals are not load-bearing on a straight-line task. Follow-up: a harder scenario (concurrency-vs-simplicity trade-off, or a dispatch case) to find real lift. Gate per `skill-optimizer/release-gates.md`.

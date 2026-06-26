@@ -377,6 +377,39 @@ All footers now carry run data. `tcrdd-001` post-fix cleared its regression (gat
 
 ---
 
+## 6. Weakest-skill benchmark loop (2026-06-26)
+
+Re-audited all ungated skills (3 parallel Explore agents) ranking by **regression risk** —
+the archetype the loop exists to catch (a skill that *forces* a convention/dogma and makes
+output worse, as `tcrdd` once did). Top-3 weakest + benchmarkable: `git-hero/gitmoji`,
+`oop-principles/solid`, `golang` router. Ran the full loop (3 scenarios × 3 models ×
+with/without = 18 cells + grading, Workflow `skill-benchmark-trio`; logs
+`.benchmarks/runs/2026-06-26/`).
+
+| Skill | Scenario | Result | Note |
+|-------|----------|--------|------|
+| `git-hero/gitmoji` | `gitmoji-001` (security override + opt-out) | **NEUTRAL** | Ceiling — baselines already pick 🔒️ and honour the no-emoji opt-out (no regression). |
+| `git-hero/gitmoji` | `gitmoji-002` (disambiguation) | **PASS** | opus +17, sonnet +17, **haiku +33**. Baselines pick generic 🔥 for dead code (vs ⚰️) and ➕-vs-✨; skill's override/confusion tables fix it. The skill's real value lives here. |
+| `oop-principles/solid` | `solid-001` (god class) | **NEUTRAL** | All models 100/100. Feared dogmatic over-split did **not** materialise — baselines split by genuine responsibility unaided. |
+| `golang` (router) | `golang-router-001` (idiomatic readConfig) | **NEUTRAL** | opus/sonnet 100, haiku 83 — identical with/without. "Clarity over cleverness" did **not** suppress idioms. |
+
+**Key finding:** the audit's *theoretical* HIGH regression risk was **empirically disproven**
+for all three — zero negative deltas anywhere. Two skills (`solid`, `golang` router) are
+reference-grade at these difficulties (no lift, no harm); gitmoji is load-bearing only on
+**subtle** picks, not the obvious ones. Lesson for scenario design: gate on the skill's
+*unique* content (disambiguation), not on cases frontier baselines already nail.
+
+Footers added to all three SKILL.md (PASS for gitmoji via `gitmoji-002`; NEUTRAL for the
+other two). Workflow scripts: `.benchmarks/skill-benchmark-trio.js`,
+`skill-benchmark-gitmoji002.js`.
+
+### Follow-ups (non-blocking)
+1. `solid` / `golang` router — author **harder** scenarios (borderline class that only *looks*
+   multi-purpose; concurrency-vs-simplicity trade-off) to find where each is load-bearing.
+2. Remaining ~22 skills are still ungated — same loop applies; prioritise by regression risk.
+
+---
+
 ## Appendix — Method & Caveats
 
 - **Static audit**: 6 parallel read-only agents, one per skill cluster, scoring against the 4-axis rubric derived from `.agents/skills/skill-optimizer/rules/`.
