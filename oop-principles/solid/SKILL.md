@@ -21,3 +21,15 @@ user-invocable: false
 | **DIP** — Dependency Inversion | Depend on abstractions, not concretions | `EmailService` directly instantiates `SendgridClient` | Inject `EmailService(transport: MailTransport)`, not `new SendgridClient()` |
 
 → Full annotated examples for all five principles: `references/solid.md`
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/solid-001-god-class.md` · Run: 2026-06-26
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
+
+> **NEUTRAL** (no regression). On the `OrderService` god-class all baselines already name the SRP/DIP violations, split by genuine responsibility, and — notably — do **not** over-split into anemic classes. The skill neither helps nor harms at this difficulty; the feared dogmatic-over-split regression did not materialise. Follow-up: author a harder borderline scenario (a class that only *looks* multi-purpose) to find where the skill is load-bearing. Gate per `skill-optimizer/release-gates.md`.
