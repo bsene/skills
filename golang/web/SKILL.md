@@ -7,6 +7,8 @@ description: >
   html/template, Go REST API, Go web service, http.ListenAndServe, http.HandlerFunc,
   Go request handling, Go response writer, Go ServeMux, Go router, chi router,
   Go graceful shutdown, Go HTTP client.
+  DO NOT USE when: non-web JSON/struct marshaling or general Go with no HTTP server/handler/router →
+  use the relevant `golang` sub-skill; non-Go web work.
 user-invocable: false
 ---
 

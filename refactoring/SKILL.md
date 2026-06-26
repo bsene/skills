@@ -89,3 +89,17 @@ Always ask: **"Does this complexity serve the code's purpose, or does it obscure
 - **Martin Fowler:** [Refactoring Catalog](https://refactoring.com/catalog/) — 72+ techniques organized by operation
 - **Principles:** SRP, OCP, DRY
 - **Attribution:** Tim Ottinger (comments); Fowler *Refactoring*; Martin *Clean Code*
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/refactoring-001-long-method.md` · Run: 2026-06-14
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 100% | +17%  |
+| claude-sonnet-4-6 | 33%     | 100% | +67%  |
+| claude-haiku-4-5  | 0%      | 100% | +100% |
+
+> **PASS** (strongest signal). Decisive on weak models (haiku 0→100%): enforces smell-naming, Extract-Method-first, in-place scope, rule-of-three. Keep as-is. Gate per `skill-optimizer/release-gates.md`.

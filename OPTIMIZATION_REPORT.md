@@ -345,6 +345,38 @@ Findings format: `SEVERITY | axis | problem | fix`. Clean axes omitted. All 36 s
 
 ---
 
+## 5. Backlog Application Status (2026-06-24)
+
+Branch `chore/apply-skill-optimization-backlog`. Text/static portion of the backlog applied; live benchmark runs are the only remaining step.
+
+| Item | Status |
+|------|--------|
+| **P0** tcrdd regression | **FIXED + CONFIRMED.** Added Mode (autonomous path), one-step-at-a-time guard, baby-step vs one-shot example. Re-ran `tcrdd-001` (2026-06-25, 3 models × with/without): sonnet 33%→100%, haiku 17%→83%, opus 100%. No negative delta — regression cleared, gate PASS. |
+| **P1** benchmark footers | **Done.** Footers added to `kano`, `refactoring`, `rest-api-design`, `typescript/type-system`, `tcrdd` (from 2026-06-14 run data); `typescript` router gets a pointer to the leaf footer + side-files. Footer count 1 → 12. |
+| **P2** missing scenarios | **Authored + run + follow-ups closed** (6). Benchmarked 2026-06-25. After follow-ups: **6 PASS/clean** — `golang-error-handling` (haiku +33), `composing-software` (haiku 0→83), `cupid-checker` (+25–37), `mikado-method` (+43–71), `golang-concurrency` (PASS after salience edit, haiku +28), `typescript-002` (NEUTRAL — earlier −16 was noise, N=3 shows haiku +11). See per-skill footers. |
+| **P3** anti-triggers | **Done.** `DO NOT USE` added to `javascript`, `typescript/zod`, `typescript/type-system`, `golang/web`, `git-guru`, `gitlab-dag`, `gitmoji` (`chicken-scheme` already had one). |
+| **P4** budget trims | **Done.** golang ×5 dedup, `rest-api-design` 3 checklists → 1 + cut Modern Notes, `design-patterns` inline code → summaries, `solid` Concepts dropped. ~260 lines saved, behavior-neutral. |
+| **P5** hygiene | **Done.** `user-invocable: false` on `git-hero`/`oop-principles` routers; deleted stale `testing/references/smoke-tests.md`; fixed `gitlab-dag` backtick; renamed `markdown`/`writing-a-good-claude-md` titles; integrated examples added to `chicken-scheme`, `testing`, `smoke-tests`, `review`, `show-me-the-code` (`explain-code` already had them). |
+
+### Benchmark runs — DONE (2026-06-25)
+
+All footers now carry run data. `tcrdd-001` post-fix cleared its regression (gate PASS). The P2 batch (7 scenarios × 3 models × with/without = 42 cells + 42 gradings) ran via Workflow `skill-benchmark-batch`. Outcomes:
+
+- **PASS (5):** `communication-001`, `golang-error-handling-001`, `composing-software-001`, `cupid-checker-001`, `mikado-method-001`.
+- **NEUTRAL→PASS (1):** `golang-concurrency-001` — first pass zero lift; fixed by front-loading a "check every time" review checklist → re-run (N=3) opus +16 / sonnet +11 / **haiku +28**.
+- **FAIL→NEUTRAL (1):** `typescript-002` — the haiku −16% was **noise**; repeat-sample (N=3) shows haiku **+11%**, no real regression. Scenario is hard (opus caps 67% even with skill).
+
+### Follow-ups — CLOSED (2026-06-25)
+
+1. ✅ **`typescript-002` regression** — re-run N=3 via Workflow `skill-benchmark-followups`; confirmed noise, no triage needed.
+2. ✅ **`golang-concurrency` flat** — added imperative review checklist (exit path, cancellation, bounded fan-out, unbuffered coupling, errgroup, loop-var, -race); now PASS.
+
+### ⏳ Optional, non-blocking
+
+- **`mikado-method` / `communication` / `typescript-002` on haiku** — gains real but haiku ceilings lower (57% / 86% / 67%); optional weak-model salience pass to push the ceiling.
+
+---
+
 ## Appendix — Method & Caveats
 
 - **Static audit**: 6 parallel read-only agents, one per skill cluster, scoring against the 4-axis rubric derived from `.agents/skills/skill-optimizer/rules/`.

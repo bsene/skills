@@ -14,6 +14,8 @@ user-invocable: false
 
 Go has a built-in test framework — no external library needed. Files end in `_test.go`, functions start with `Test`, and `go test` runs everything.
 
+**Always run `go test -race ./...` in CI** — the race detector catches data races that otherwise ship to production.
+
 ---
 
 ## Test File Conventions
@@ -88,43 +90,17 @@ func TestParseSize(t *testing.T) {
 
 ---
 
-## Key Testing Tools
+## t.Parallel() Loop-Variable Capture
 
-### t.Helper()
-
-Marks a function as a test helper — errors report the caller's line, not the helper's:
+Before Go 1.22, a parallel subtest in a `range` loop captures the loop variable by reference — all subtests see the final iteration's value. Pin it per iteration:
 
 ```go
-func assertEqual(t *testing.T, got, want int) {
-    t.Helper()
-    if got != want {
-        t.Errorf("got %d, want %d", got, want)
-    }
-}
-```
-
-### t.Cleanup()
-
-Registers cleanup functions (LIFO, like defer but scoped to the test):
-
-```go
-func TestWithDB(t *testing.T) {
-    db := setupTestDB(t)
-    t.Cleanup(func() { db.Close() })
-    // test using db...
-}
-```
-
-### t.Parallel()
-
-```go
-func TestThings(t *testing.T) {
-    for _, tt := range tests {
-        t.Run(tt.name, func(t *testing.T) {
-            t.Parallel()  // runs this subtest concurrently with others
-            // ...
-        })
-    }
+for _, tt := range tests {
+    tt := tt // pin (unnecessary on Go 1.22+, where range vars are per-iteration)
+    t.Run(tt.name, func(t *testing.T) {
+        t.Parallel()
+        // ...
+    })
 }
 ```
 
@@ -138,7 +114,6 @@ func TestThings(t *testing.T) {
 | Excessive mocking | Mocks pass while real code fails | Use interfaces + fakes; integration-test boundaries |
 | No `t.Helper()` in helpers | Error points to wrong line | Add `t.Helper()` as first line |
 | Benchmark without `b.ResetTimer()` | Setup time skews results | Call `b.ResetTimer()` after setup |
-| Skipping `-race` in CI | Data races ship to production | Always `go test -race ./...` |
 
 ---
 

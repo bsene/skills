@@ -12,24 +12,12 @@ user-invocable: false
 
 ## Quick Reference
 
-| Principle | Rule | Signal it's violated |
-|---|---|---|
-| **SRP** — Single Responsibility | One reason to change | Class handles auth, hashing, and persistence |
-| **OCP** — Open–Closed | Extend via subclass; don't modify proven code | Adding CSV export requires editing `JsonFormatter` |
-| **LSP** — Liskov Substitution | Subtypes substitutable without surprising callers | `instanceof` checks in calling code; subclass throws "not supported" |
-| **ISP** — Interface Segregation | Many focused interfaces over one fat one | Read-only client forced to implement write methods |
-| **DIP** — Dependency Inversion | Depend on abstractions, not concretions | `EmailService` directly instantiates `SendgridClient` |
-
-## Concepts
-
-**SRP** — One reason to change. Split `UserController` into `UserValidator`, `PasswordHasher`, `UserRepository`.
-
-**OCP** — Extend via subclass, don't edit proven code. Add `CsvResponseFormatter extends JsonResponseFormatter` without touching the base.
-
-**LSP** — Subtypes must be fully substitutable. `ReadOnlyCache extends Cache` violating `set()` is LSP violation—use `ReadableCache` / `WritableCache` interfaces instead.
-
-**ISP** — Split fat interfaces into focused slices. Don't force read-only clients to depend on write methods.
-
-**DIP** — Depend on abstractions, not concretions. `EmailService(transport: MailTransport)` not `new SendgridClient()`. Enables swapping implementations.
+| Principle | Rule | Signal it's violated | Fix |
+|---|---|---|---|
+| **SRP** — Single Responsibility | One reason to change | Class handles auth, hashing, and persistence | Split `UserController` → `UserValidator`, `PasswordHasher`, `UserRepository` |
+| **OCP** — Open–Closed | Extend via subclass; don't modify proven code | Adding CSV export requires editing `JsonFormatter` | Add `CsvResponseFormatter extends JsonResponseFormatter` without touching the base |
+| **LSP** — Liskov Substitution | Subtypes substitutable without surprising callers | `instanceof` checks in calling code; subclass throws "not supported" | Split `ReadableCache` / `WritableCache` interfaces instead of `ReadOnlyCache extends Cache` |
+| **ISP** — Interface Segregation | Many focused interfaces over one fat one | Read-only client forced to implement write methods | Slice fat interface; don't force read-only clients onto write methods |
+| **DIP** — Dependency Inversion | Depend on abstractions, not concretions | `EmailService` directly instantiates `SendgridClient` | Inject `EmailService(transport: MailTransport)`, not `new SendgridClient()` |
 
 → Full annotated examples for all five principles: `references/solid.md`

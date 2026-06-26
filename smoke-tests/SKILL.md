@@ -101,6 +101,49 @@ npm test
 
 ---
 
+## Integrated Example
+
+**Identify:** A storefront API's most critical path is "can a user log in and load their cart?".
+If that breaks, nothing else matters — a perfect smoke-test candidate. It's HTTP and the app
+runs in staging, so reach for Hurl.
+
+**Write** `smoke-tests/login-cart.hurl`:
+
+```hurl
+POST {{base_url}}/login
+{ "email": "smoke@example.com", "password": "{{smoke_pw}}" }
+HTTP 200
+[Captures]
+token: jsonpath "$.token"
+
+GET {{base_url}}/cart
+Authorization: Bearer {{token}}
+HTTP 200
+[Asserts]
+jsonpath "$.items" exists
+```
+
+```bash
+hurl --test --variable base_url=https://staging.example.com \
+            --variable smoke_pw=$SMOKE_PW smoke-tests/login-cart.hurl
+```
+
+**Wire CI** — gate the full suite behind it:
+
+```yaml
+- name: Smoke
+  id: smoke
+  run: hurl --test --variable base_url=${{ env.APP_URL }} smoke-tests/*.hurl
+- name: Full suite
+  run: npm test
+  if: steps.smoke.outcome == 'success'
+```
+
+Happy path only, two requests, runs in under a second. If login or cart breaks, the full
+suite never starts.
+
+---
+
 ## Read On Demand
 
 | Read When | File |

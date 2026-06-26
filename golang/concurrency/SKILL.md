@@ -17,6 +17,20 @@ Concurrency is not parallelism. Goroutines structure concurrent code; the runtim
 
 ---
 
+## Reviewing concurrent Go — check every time
+
+Before approving any goroutine-spawning code, confirm all of these:
+
+1. **Exit path** — every goroutine can stop (ctx cancel, done channel, or input channel closing). No exit path = leak.
+2. **Cancellation** — a slow/hung call is bounded by `context` (`ctx.Done()` / `WithTimeout`). Without it, one stuck call leaks the goroutine and can block its collector forever.
+3. **Bounded fan-out** — never one goroutine per item unbounded. Use a **worker pool** with fixed concurrency under load.
+4. **Channel coupling** — an **unbuffered** channel blocks the sender until a receiver is ready; buffer it or use a pool when you don't want that coupling.
+5. **Errors** — propagate goroutine errors and cancel siblings with **`errgroup.Group`**; don't silently drop them.
+6. **Loop-variable capture** — pre-Go 1.22, a goroutine closing over a `range` variable captures the *shared* var; pin it (`id := id`) or rely on Go 1.22+ per-iteration scoping.
+7. **No shared mutable state** without a `sync.Mutex`/atomic — and prove it with **`go test -race ./...`**.
+
+---
+
 ## Channel vs Mutex Decision Table
 
 | Need | Tool | Why |
@@ -55,28 +69,7 @@ func Fetch(ctx context.Context, url string) (Result, error) { ... }
 
 ## Channel Direction Annotations
 
-Annotate direction in function signatures for compile-time safety:
-
-```go
-func producer(out chan<- int) {  // send-only
-    for i := 0; i < 10; i++ {
-        out <- i
-    }
-    close(out)
-}
-
-func consumer(in <-chan int) {   // receive-only
-    for v := range in {
-        fmt.Println(v)
-    }
-}
-
-func main() {
-    ch := make(chan int)  // bidirectional
-    go producer(ch)
-    consumer(ch)
-}
-```
+Annotate direction in function signatures for compile-time safety: `chan<- T` is send-only, `<-chan T` is receive-only, plain `chan T` is bidirectional. The producer owns and `close`s the channel; consumers `range` over it.
 
 ---
 
@@ -139,3 +132,17 @@ default:
 |---|---|
 | Goroutine lifecycle, channel patterns, fan-in/fan-out, pipeline, worker pool | [Goroutines & Channels](references/goroutines-channels.md) |
 | sync.Mutex, WaitGroup, Once, sync.Map, context, errgroup, -race flag | [Sync & Context](references/sync-context.md) |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-concurrency-001-goroutine-leak.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 78%     | 94%  | +16%  |
+| claude-sonnet-4-6 | 61%     | 72%  | +11%  |
+| claude-haiku-4-5  | 50%     | 78%  | +28%  |
+
+> **PASS** (run 2026-06-25, N=3 averages). First pass was NEUTRAL (zero lift) — the leak/race/errgroup guidance was buried in tables. After front-loading the **"Reviewing concurrent Go — check every time"** checklist, the skill lifts every model — haiku 50→78 (+28). Imperative top-level checklist > buried table for salience (per `activation-design`). Gate per `skill-optimizer/release-gates.md`.

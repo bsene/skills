@@ -100,7 +100,7 @@ Remove `replace` directives before releasing — they are for local development 
 |---|---|---|
 | Circular imports | Compile error, design smell | Extract shared types into a separate package |
 | Deep package nesting | `internal/service/order/v2/handler/` → hard to navigate | Flatten — Go packages are flat by convention |
-| `init()` with side effects | Hidden, untestable execution | Explicit setup in `main()` |
+| `init()` with side effects | Hidden, untestable execution | See [Init Functions](#init-functions) — prefer explicit setup in `main()` |
 | Vendoring without reason | Repo bloat, merge conflicts | Only vendor when reproducibility can't be achieved otherwise |
 | `go get` in scripts | Modifies go.mod | Use `go install pkg@version` for tools |
 

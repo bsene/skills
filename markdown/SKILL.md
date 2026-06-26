@@ -9,7 +9,7 @@ description: >
   DO NOT USE when: user is composing prose content in markdown and needs no syntax help — only invoke when the question is about rendering, syntax correctness, or feature availability.
 ---
 
-# SKILL: GitHub Flavored Markdown (GFM)
+# GitHub Flavored Markdown (GFM)
 > Based on the official [GitHub Basic Writing and Formatting Syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) reference.
 
 GFM is a superset of standard Markdown with GitHub-specific extensions for issues, PRs, discussions, comments, and `.md` files.

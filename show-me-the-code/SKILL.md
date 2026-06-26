@@ -20,3 +20,21 @@ description: >
 - Multiple files: one diff block per file
 
 After the diff: optional 1–3 sentence _why_.
+
+## Example
+
+Asked to "make `total` ignore negative prices", the entire response is the diff in `diff -u`
+format — 3 context lines each side, file headers, hunk header — followed by one line of why:
+
+```diff
+--- a/src/cart.ts
++++ b/src/cart.ts
+@@ -5,7 +5,7 @@ export function total(items: Item[]): number {
+   return items.reduce((sum, item) => {
+-    return sum + item.price;
++    return sum + Math.max(0, item.price);
+   }, 0);
+ }
+```
+
+Clamping each price at 0 prevents a refunded line item from reducing the cart total below the legitimate sum.

@@ -130,3 +130,17 @@ When a feature classifies as **Indifferent** or **Reverse**, refuse it with evid
 | Want the original Kano model theory               | [Kano model — Wikipedia](https://en.wikipedia.org/wiki/Kano_model)                                            |
 | Understanding alienation in AI-driven development | [Aliénation ou autonomisation — Benoit Gantaume](https://artisandeveloppeur.fr/alienation-ou-autonomisation/) |
 | Need multi-feature questionnaire and scoring      | `references/kano-questionnaire.md`                                                                            |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/kano-001-feature-triage.md` · Run: 2026-06-14
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 80%     | 100% | +20%  |
+| claude-sonnet-4-6 | 80%     | 100% | +20%  |
+| claude-haiku-4-5  | 80%     | 100% | +20%  |
+
+> **PASS.** Uniform +20%; load-bearing lift is forcing explicit Kano classification (all baselines skipped the vocabulary). Gate per `skill-optimizer/release-gates.md`.
