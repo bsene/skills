@@ -93,3 +93,17 @@ Avoid language like "this violates X" or "you must Y". Prefer: "moving towards m
 ## Read On Demand
 
 - `references/cupid-properties.md` — Full detail on each property's sub-dimensions + example review output; read when you need depth on a specific property
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/cupid-checker-001-review.md`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 75%     | 100% | +25%  |
+| claude-sonnet-4-6 | 63%     | 100% | +37%  |
+| claude-haiku-4-5  | 75%     | 100% | +25%  |
+
+> **PASS** (run 2026-06-25). Uniform gains (+25 to +37). Skill enforces the mandated 5-property output shape (per-property rating + observations + suggestions) that baselines skip. Gate per `skill-optimizer/release-gates.md`.

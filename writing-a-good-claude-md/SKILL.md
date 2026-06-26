@@ -5,7 +5,7 @@ description: >
   DO NOT USE when: user is reading or navigating an existing CLAUDE.md — only invoke to create, audit, or improve one.
 ---
 
-# writing-a-good-claude-md Skill
+# Writing a Good CLAUDE.md
 
 > Based on **"Writing a good CLAUDE.md"** by [Kyle](https://twitter.com/0xblacklight) (November 25, 2025), published on the [HumanLayer Blog](https://www.humanlayer.dev/blog/writing-a-good-claude-md).
 
