@@ -122,6 +122,6 @@ Scenario: `.benchmarks/scenarios/mikado-method-001-revert-discipline.md`
 | ----------------- | ------- | ---- | ----- |
 | claude-opus-4-8   | 29%     | 100% | +71%  |
 | claude-sonnet-4-6 | 29%     | 100% | +71%  |
-| claude-haiku-4-5  | 14%     | 57%  | +43%  |
+| claude-haiku-4-5  | 14%     | 100% | +86%  |
 
-> **PASS** (run 2026-06-25). Large gains (opus/sonnet +71) — baselines don't apply always-revert + one-commit-per-leaf + the 3-part output unaided. haiku reaches only 57% with the skill (weaker map/revert adherence) — candidate for a haiku-targeted salience pass. Gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25). Large gains across all models — baselines don't apply always-revert + one-commit-per-leaf + the 3-part output unaided; the skill takes every model to 100%. The initial single-run haiku 57% was **noise**: a focused re-run (N=6, with-skill) scored **100% on all six samples, every criterion 6/6**. No haiku-specific weakness. Gate per `skill-optimizer/release-gates.md`. *(Reinforces the single-run sampling caveat — prefer N≥3 before reading a ceiling as real.)*

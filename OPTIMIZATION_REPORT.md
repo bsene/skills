@@ -373,7 +373,8 @@ All footers now carry run data. `tcrdd-001` post-fix cleared its regression (gat
 
 ### ⏳ Optional, non-blocking
 
-- **`mikado-method` / `communication` / `typescript-002` on haiku** — gains real but haiku ceilings lower (57% / 86% / 67%); optional weak-model salience pass to push the ceiling.
+- **`mikado-method` haiku** — RESOLVED: the 57% was single-run noise; N=6 re-run scored 100% on every sample. No edit needed.
+- **`communication` (86%) / `typescript-002` (67%) on haiku** — gains real, ceilings modestly lower; optional weak-model salience pass, though given the mikado/ts-002 noise findings, **re-sample at N≥3 first** before treating either ceiling as real.
 
 ---
 
