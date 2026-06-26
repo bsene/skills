@@ -122,3 +122,15 @@ Use the default when no more specific gitmoji applies. Override with a more prec
 ## Full Catalog
 
 For the complete 73-emoji catalog grouped by category, see [references/gitmoji-catalog.md](references/gitmoji-catalog.md).
+
+## Benchmark
+
+Scenarios: `.benchmarks/scenarios/gitmoji-001-security-and-optout.md`, `gitmoji-002-disambiguation.md` · Run: 2026-06-26
+
+| Scenario | Model | Without | With | Delta |
+| -------- | ----- | ------- | ---- | ----- |
+| 002 disambiguation | claude-opus-4-8   | 83% | 100% | +17% |
+| 002 disambiguation | claude-sonnet-4-6 | 83% | 100% | +17% |
+| 002 disambiguation | claude-haiku-4-5  | 67% | 100% | +33% |
+
+> **PASS.** The load-bearing lift is the override / Common-Confusions tables. On `gitmoji-002` every baseline picked generic 🔥 `:fire:` for dead-code removal (should be ⚰️ `:coffin:`) and haiku also missed ➕ for a new dependency; the skill fixes both — haiku 67→100 (+33). `gitmoji-001` (security override + no-emoji opt-out) was at ceiling (all models 100% with and without — no regression; the opt-out is honoured unaided), so value lives in the subtle picks. Gate per `skill-optimizer/release-gates.md`.
