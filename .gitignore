@@ -43,3 +43,5 @@ bin/
 # Benchmarks (Existing)
 .benchmarks/runs/*
 !.benchmarks/runs/.gitkeep
+
+.lsp
