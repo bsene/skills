@@ -121,30 +121,16 @@ for _, k := range keys {
 
 Maps are **not safe** for concurrent read/write. Two options:
 
+1. **`sync.RWMutex`** — wrap the map in a struct with `RLock`/`Lock`. See the `Cache` example in [Sync & Context](../../concurrency/references/sync-context.md#syncmutex--syncrwmutex) for the canonical pattern (same shape, just swap the value type).
+2. **`sync.Map`** — optimized for append-heavy or read-heavy workloads:
+
 ```go
-// Option 1: sync.RWMutex
-type SafeMap struct {
-    mu sync.RWMutex
-    m  map[string]int
-}
-
-func (s *SafeMap) Get(key string) int {
-    s.mu.RLock()
-    defer s.mu.RUnlock()
-    return s.m[key]
-}
-
-func (s *SafeMap) Set(key string, val int) {
-    s.mu.Lock()
-    defer s.mu.Unlock()
-    s.m[key] = val
-}
-
-// Option 2: sync.Map (optimized for append-heavy or read-heavy workloads)
 var m sync.Map
 m.Store("key", 42)
 v, ok := m.Load("key")
 ```
+
+For most use cases, a regular map + `sync.RWMutex` is simpler and faster — reserve `sync.Map` for the two patterns it's optimized for (see [Sync & Context](../../concurrency/references/sync-context.md#syncmap)).
 
 ### Check Existence
 

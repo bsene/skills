@@ -69,3 +69,7 @@ mylib/
 - Keep `main.go` thin — it wires dependencies and calls `run()`; business logic lives elsewhere
 - Test files (`_test.go`) live next to the code they test, not in a separate `tests/` directory
 - Avoid deep nesting: `internal/service/order/v2/handler/` is a smell — flatten
+
+## External References
+
+- [How to Write Go Code](https://go.dev/doc/code) — official Go documentation on organizing code, modules, and workspaces

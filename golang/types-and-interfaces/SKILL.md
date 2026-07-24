@@ -7,6 +7,8 @@ description: >
   Go bitmask, implicit interface, interface satisfaction, small interfaces, accept interfaces return structs,
   Go type assertion, Go type switch, when to use generics in Go, Go collections, Go struct tags,
   Go composition vs inheritance, Go polymorphism.
+  DO NOT USE when: user asks about OOP design principles or composition/polymorphism in a
+  language-agnostic way with no Go code involved — use `oop-principles` instead.
 user-invocable: false
 ---
 

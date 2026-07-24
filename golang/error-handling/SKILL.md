@@ -6,6 +6,8 @@ description: >
   fmt.Errorf %w, errors.Is, errors.As, sentinel errors, panic recover, when to panic in Go,
   error types in Go, Go error best practices, Go error propagation, error chains,
   Go error interface, handling errors in Go, Go error patterns.
+  DO NOT USE when: user needs general error-handling philosophy outside Go, or panic/recover
+  questions unrelated to Go's error interface.
 user-invocable: false
 ---
 

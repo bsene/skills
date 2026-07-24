@@ -92,7 +92,7 @@ func TestParseSize(t *testing.T) {
 
 ## t.Parallel() Loop-Variable Capture
 
-Before Go 1.22, a parallel subtest in a `range` loop captures the loop variable by reference — all subtests see the final iteration's value. Pin it per iteration:
+Before Go 1.22, a parallel subtest in a `range` loop captures the loop variable by reference — all subtests see the final iteration's value. This is the same root cause covered in [Closures](../references/functions-methods-pointers.md#closures); pin it per iteration:
 
 ```go
 for _, tt := range tests {
