@@ -1,11 +1,11 @@
 ---
 name: dantotsu
-description: Use this skill when the user wants to investigate a bug, defect, incident, or quality issue and find its root cause — including requests to run a "5 whys" analysis, write a postmortem, do a root-cause analysis (RCA), figure out why a bug reached production or slipped past code review/QA, set up a recurring defect-analysis routine, or run a daily/weekly quality-improvement (Kaizen) triage. Also known as the Dantotsu method (Sadao Nomura's Toyota-derived defect-analysis approach, adapted for software by Theodo). Trigger even if the user doesn't name the method explicitly — e.g. "why did this bug get through code review", "a client reported a bug, help me analyze it", "I want to understand why this keeps happening", "write up a root cause report for this defect", or "help me prioritize which fixes to actually ship this week".
+description: Use this skill when the user wants to investigate a bug, defect, incident, or quality issue and find its root cause — including requests to run a "5 whys" analysis, write a postmortem, do a root-cause analysis (RCA), figure out why a bug reached production or slipped past code review/QA, set up a recurring defect-analysis routine, or run a daily/weekly quality-improvement (Kaizen) triage. Also known as the Dantotsu method (Sadao Nomura's Toyota-derived defect-analysis approach, adapted for software). Trigger even if the user doesn't name the method explicitly — e.g. "why did this bug get through code review", "a client reported a bug, help me analyze it", "I want to understand why this keeps happening", "write up a root cause report for this defect", or "help me prioritize which fixes to actually ship this week".
 ---
 
 # Dantotsu — Defect Analysis
 
-A structured method for turning a single defect into a permanent quality improvement. Originated by Sadao Nomura, a former Toyota engineer, who used it to cut manufacturing defects by up to 98%. Adapted for software by Theodo (presented by co-founder/Group CTO Fabrice Bernhard), where a small project run fully under this method reached ~0.3 defects per 1,000 lines of code — one to two orders of magnitude below the industry average — without the huge upfront-spec overhead of aerospace-grade processes.
+A structured method for turning a single defect into a permanent quality improvement. Originated by Sadao Nomura, a former Toyota engineer, who used it to cut manufacturing defects by up to 98%. Adapted for software, where a small project run fully under this method reached ~0.3 defects per 1,000 lines of code — one to two orders of magnitude below the industry average — without the huge upfront-spec overhead of aerospace-grade processes.
 
 **Defect** = any unexpected behavior for the user; the gap between the behavior that occurred and the behavior that was expected.
 
@@ -54,9 +54,9 @@ When there are several candidate eradication measures and they need to be triage
 
 Pick a small number of top-scoring, low-risk items per cycle rather than attempting all candidates at once — batching too much at once causes the fire-fighting/large-refactor instability this method is meant to avoid.
 
-## Team cadence (optional, reference practice from Theodo)
+## Team cadence (optional, reference practice)
 
-For teams running this continuously rather than as a one-off, Theodo's adaptation uses:
+For teams running this continuously rather than as a one-off, this adaptation uses:
 - **One bug-fix analysis per day**, owned by the tech lead: review the diff, log the root cause, check the codebase for similar latent defects.
 - **A short daily sync** (10–15 min, "Bug Fix Analysis Coffee") where the team proposes countermeasures together — new lint rule, an edge-case fixture, a small fix-driven refactor.
 - React within 24 hours of the defect surfacing, so the analysis happens while context is still fresh.
@@ -65,7 +65,7 @@ Suggest this cadence only if the user is setting up an ongoing team practice, no
 
 ## Reducing A-defects: "Right the First Time" (optional technique)
 
-To specifically drive down Stage-A defects (caught while coding), Theodo uses a constraint: a developer gets **one manual test/refresh attempt** per feature; if it fails on that first try, it counts as an A-defect. This pushes developers toward upfront design and TDD (so correctness is checked via fast terminal test runs instead of repeated manual clicking), and teams that nail a feature on the first attempt can be recognized publicly (e.g. a Slack bot shout-out). Offer this only as a targeted technique for A-defects, not as a general eradication measure for other stages.
+To specifically drive down Stage-A defects (caught while coding), use a constraint: a developer gets **one manual test/refresh attempt** per feature; if it fails on that first try, it counts as an A-defect. This pushes developers toward upfront design and TDD (so correctness is checked via fast terminal test runs instead of repeated manual clicking), and teams that nail a feature on the first attempt can be recognized publicly (e.g. a Slack bot shout-out). Offer this only as a targeted technique for A-defects, not as a general eradication measure for other stages.
 
 ## Gotchas
 
