@@ -6,6 +6,9 @@ description: >
   Go package organization, Go imports, Go internal package, Go init function, Go module proxy,
   Go versioning, Go major version, Go replace directive, Go workspace, Go vendor,
   Go dependency management, GOPATH vs modules, GOPROXY, GOPRIVATE, go install vs go get.
+  DO NOT USE when: user is asking purely about directory/folder layout (cmd/, internal/, pkg/)
+  with no go.mod, versioning, or dependency question involved — use the `golang` skill's
+  Project Layout reference directly instead.
 user-invocable: false
 ---
 
@@ -27,20 +30,14 @@ go mod verify                          # check deps haven't been tampered with
 
 ---
 
-## Package Organization Decision Table
+## Package Organization
 
-| Directory | Purpose | Visibility |
-|---|---|---|
-| `cmd/appname/` | Entry point (`package main`) | — |
-| `internal/` | Private packages | Compiler-enforced: can't be imported from outside module |
-| `pkg/` | Public library packages | Convention only (not enforced) |
-| Root | Small projects, single-package libraries | Depends on exported names |
+For the full `cmd/` / `internal/` / `pkg/` decision table and layout examples, see [Project Layout](../references/project-layout.md) in the parent `golang` skill — it's the canonical source for directory structure.
 
-**Rules:**
+Quick rules specific to modules:
+- `internal/` is compiler-enforced: it can't be imported from outside the module boundary it sits under
 - One `package main` per binary in `cmd/`
-- Use `internal/` liberally — it's the safest default
 - Don't create `pkg/` unless you have real external consumers
-- Package name = directory name (by convention)
 
 ---
 
@@ -111,3 +108,4 @@ Remove `replace` directives before releasing — they are for local development 
 | Read When | File |
 |---|---|
 | go.mod syntax, go.sum, MVS, workspaces, proxies, private modules | [Modules Deep Dive](references/modules-deep-dive.md) |
+| cmd/, internal/, pkg/ directory decisions and layout examples | [Project Layout](../references/project-layout.md) |

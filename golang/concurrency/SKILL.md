@@ -6,6 +6,8 @@ description: >
   sync.Once, Go context, context.WithCancel, context.WithTimeout, Go data race, race condition in Go,
   Go concurrency patterns, fan-in fan-out, worker pool, Go channel direction, buffered channel,
   Go deadlock, -race flag, errgroup, Go concurrent map, Go goroutine leak.
+  DO NOT USE when: user needs general concurrency theory unrelated to Go, or is asking about
+  goroutines only as background context with no code to write or review.
 user-invocable: false
 ---
 
@@ -26,7 +28,7 @@ Before approving any goroutine-spawning code, confirm all of these:
 3. **Bounded fan-out** — never one goroutine per item unbounded. Use a **worker pool** with fixed concurrency under load.
 4. **Channel coupling** — an **unbuffered** channel blocks the sender until a receiver is ready; buffer it or use a pool when you don't want that coupling.
 5. **Errors** — propagate goroutine errors and cancel siblings with **`errgroup.Group`**; don't silently drop them.
-6. **Loop-variable capture** — pre-Go 1.22, a goroutine closing over a `range` variable captures the *shared* var; pin it (`id := id`) or rely on Go 1.22+ per-iteration scoping.
+6. **Loop-variable capture** — pre-Go 1.22, a goroutine closing over a `range` variable captures the *shared* var. See [Closures](../references/functions-methods-pointers.md#closures) for the pin fix and Go 1.22+ per-iteration scoping.
 7. **No shared mutable state** without a `sync.Mutex`/atomic — and prove it with **`go test -race ./...`**.
 
 ---
