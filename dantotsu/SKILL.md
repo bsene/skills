@@ -12,6 +12,7 @@ A structured method for turning a single defect into a permanent quality improve
 Two principles carry over directly from the manufacturing original and matter more than any specific template:
 - **Classify by where a defect escaped, not by severity.** Severity triage optimizes for "what do we fix first"; stage classification optimizes for "what part of our process is leaking" — which is what actually drives systemic improvement.
 - **Analyze both occurrence and outflow.** Why did the defect happen (prevention), and separately, why wasn't it caught sooner (detection). Conflating the two loses the detection-gap signal, which is usually a process/tooling fix rather than a code fix.
+- **Check hypotheses against facts, not against how plausible they feel.** The main risk in a whys chain isn't lack of expertise — it's the *feeling* of having understood ("avoir compris") standing in for actually understanding ("comprendre"). Competence in the domain makes this worse, not better: an experienced reader accepts a plausible-sounding cause too quickly precisely because it fits prior experience. Each link in the chain should be checked against something verifiable (the diff, the logs, the ticket history) before moving to the next "why".
 
 ## Detection stages
 
@@ -43,6 +44,7 @@ Work through these steps in order. Don't skip ahead to root cause before the def
 6. **Distill a learning-sharing item.** Before proposing fixes, write a short, shareable summary of the misconception or gap uncovered in steps 4–5 (a PR/Jira comment, a Slack message, a one-slide recap) that lets a teammate who wasn't involved understand it in under a minute. A root cause that only lives in one person's head doesn't prevent the next occurrence — this is what actually spreads the learning.
 7. **Propose countermeasures.** Short-term, containment-level fixes: patch the immediate occurrence, stop the bleeding (hotfix, rollback, manual workaround). These don't need to be elegant or prevent recurrence — they need to be fast.
 8. **Design eradication measures.** Go deeper than the countermeasure: what permanent change (process, tooling, automated check, documentation, training) makes this entire class of defect structurally unable to recur — including recurring undetected until a late stage? Prefer **micro-guardrails**: small, automated, reversible checks (a one-line lint rule, a single added test, a doc snippet linked from the PR template) over large refactors. A tiny guardrail that ships beats a sweeping fix that never lands or introduces its own defects. Don't label something eradication if it only addresses this one instance.
+9. **Follow the eradication measure through to verified non-recurrence.** This is "weak point management": flagging the weak point and proposing a fix isn't the end of the loop — the loop only closes once the guardrail is confirmed to actually catch the next occurrence (or enough time/cycles have passed without recurrence). If the user is tracking this over time, ask them to check back rather than treating step 8 as the finish line.
 
 ## Prioritizing eradication measures (optional, for recurring/team use)
 
@@ -61,7 +63,7 @@ Pick a small number of top-scoring, low-risk items per cycle rather than attempt
 
 For teams running this continuously rather than as a one-off, this adaptation uses:
 - **One bug-fix analysis per day**, owned by the tech lead: review the diff, log the root cause, check the codebase for similar latent defects.
-- **A short daily sync** (10–15 min, "Bug Fix Analysis Coffee") where the team proposes countermeasures together — new lint rule, an edge-case fixture, a small fix-driven refactor.
+- **A short daily sync** (10–15 min, "Bug Fix Analysis Coffee") where the team proposes countermeasures together — new lint rule, an edge-case fixture, a small fix-driven refactor. Frame this as a help chain, not a command chain: the tone is "let's look at where the process didn't go as expected and figure out a countermeasure together," not "stop doing X, do Y instead." The point is coaching people toward catching their own gaps, not assigning blame.
 - React within 24 hours of the defect surfacing, so the analysis happens while context is still fresh.
 
 Suggest this cadence only if the user is setting up an ongoing team practice, not for a single defect write-up.
@@ -81,6 +83,7 @@ To specifically drive down Stage-A defects (caught while coding), use a constrai
 - Eradication doesn't mean "big refactor." Prefer the smallest automated check that closes the gap; oversized fixes are more likely to get deprioritized or introduce their own defects.
 - Classify by stage, not severity — resist the urge to reintroduce a Low/Medium/High axis; it optimizes for the wrong question here.
 - Write the final report in the same language the user used to describe the defect.
+- Watch for two failure modes that both masquerade as rigor: **"magical thinking"** — assuming there must be one single root cause that explains everything, so the chain stops the moment *a* plausible answer appears — and **"diffuse causation"** — treating everything as connected to everything, which can be used to justify almost any proposed action. Both skip the actual verification step; a real whys chain stays narrow and keeps checking each link against evidence.
 
 ## Output template
 
