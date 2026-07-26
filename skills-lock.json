@@ -7,6 +7,12 @@
       "skillPath": "git-hero/SKILL.md",
       "computedHash": "963be2ee8364e8b56c92ff67acf9057861f496cc334e7dc8b589661d47a1a011"
     },
+    "simple": {
+      "source": "bsene/skills",
+      "sourceType": "github",
+      "skillPath": "simple/SKILL.md",
+      "computedHash": "8d939a00ac59250801e9942cbcc88afcfdf805cde20db214fcd82e04ebc6327e"
+    },
     "skill-optimizer": {
       "source": "mcollina/skills",
       "sourceType": "github",
