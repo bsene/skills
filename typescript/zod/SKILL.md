@@ -12,7 +12,7 @@ user-invocable: false
 
 # Zod v4 Best Practices
 
-Requires TypeScript v5.5+ with `"strict": true`.
+Requires TypeScript v5.5+ with `"strict": true` ([Compiler Options](https://www.typescriptlang.org/tsconfig/#strict)). Zod itself is not part of the TypeScript project; this skill covers the community pattern for runtime validation that pairs with TypeScript's static types.
 
 ## Quick Reference
 
@@ -86,4 +86,7 @@ if (!result.success) {
 }
 ```
 
-→ Full annotated examples and patterns: `references/zod.md`
+## Read On Demand
+
+- Quick boundary-validation example: `example.md`.
+- Full annotated examples and patterns (composition, transforms, branded types, discriminated unions, async validation): `references/zod.md`.
