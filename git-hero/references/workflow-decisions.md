@@ -86,6 +86,29 @@ develop ──●───●───●───●───●──●──
 **Pros:** Clear release process, parallel development, hotfix isolation.
 **Cons:** Complex, many long-lived branches, merge overhead.
 
+### Ship / Show / Ask
+
+```
+main ──●───●──────●────●─────●────
+        \         PR    PR (merge
+      (Ship,   (Show, merge  waits for
+      no PR)   immediately)  feedback = Ask)
+```
+
+**Best for:** High-trust teams (any size) who want PR-based feedback without a mandatory approval gate blocking every merge.
+
+**Rules:**
+- Ship — commit directly to mainline, no PR, no review wait (established patterns, unremarkable fixes)
+- Show — open a PR, merge immediately once checks pass, feedback happens after the fact
+- Ask — open a PR and wait for feedback before merging (genuine uncertainty, experiments)
+- Author decides the mode per change and merges their own PR
+- Short-lived branches, rebased on mainline often; feature toggles keep mainline releasable
+
+**Pros:** CI speed + PR feedback culture, no approval-queue bottleneck, avoids rubber-stamp reviews.
+**Cons:** Needs real team trust and feature-flag discipline; not suited to regulated/mandatory-review environments.
+
+Source: https://martinfowler.com/articles/ship-show-ask.html
+
 ## Branch Naming Conventions
 
 ```
