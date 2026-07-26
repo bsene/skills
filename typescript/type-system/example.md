@@ -1,20 +1,21 @@
 ```typescript
-// Type system example: discriminated union
-interface Success {
-  type: "success";
-  data: string;
-}
-interface Failure {
-  type: "failure";
-  error: Error;
-}
-type Result = Success | Failure;
+// Exhaustiveness checking with assertNever
+type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; side: number };
 
-function handle(result: Result) {
-  if (result.type === "success") {
-    console.log(result.data);
-  } else {
-    console.error(result.error);
+function assertNever(x: never): never {
+  throw new Error(`Unhandled case: ${JSON.stringify(x)}`);
+}
+
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.side ** 2;
+    default:
+      return assertNever(shape); // compile error if a new Shape variant is added and unhandled
   }
 }
 ```

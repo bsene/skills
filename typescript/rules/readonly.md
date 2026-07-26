@@ -9,7 +9,7 @@ metadata:
 
 # Use `readonly` to signal immutability
 
-`readonly` on a property prevents reassignment after initialization. It communicates intent and catches accidental mutations at compile time.
+`readonly` on a property prevents reassignment after initialization. It communicates intent and catches accidental mutations at compile time. Reference: [Readonly Properties](https://www.typescriptlang.org/docs/handbook/2/objects.html#readonly-properties).
 
 ## Property immutability
 
