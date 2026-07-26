@@ -1,10 +1,10 @@
 # skills
 
-Claude Code skill library — domain packs Claude activates on demand to bring deep expertise into any conversation.
+A coding-agent skill library — domain expertise packs that load on demand for any compatible assistant.
 
 ## Why it exists
 
-Claude is great at generic software help, bad at being an expert in one specific craft. Each skill loads a focused knowledge pack (workflow + reference) so Claude acts as a specialist when you need one — and gets out of the way otherwise.
+Every coding assistant is broad by default; to be sharp on a specific craft you ship a focused knowledge pack into a shared location the host reads from. When your prompt touches the right topic, the matching skill activates automatically.
 
 **Install → describe your problem → get a tailored workflow.** No manual loading, no configuration.
 
@@ -34,7 +34,7 @@ Claude is great at generic software help, bad at being an expert in one specific
 ## Add a skill
 
 1. Create `skill-name/SKILL.md` with frontmatter (`name`, `description`) and your core workflow
-2. Commit — Claude will pick it up automatically
+2. Push to a shared repo the assistant reads from
 
 See [writing-a-good-claude-md](/skills/writing-a-good-claude-md/SKILL.md) for quality guidance and the router pattern (nested sub-skills).
 
