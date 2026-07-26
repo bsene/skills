@@ -37,6 +37,9 @@ csc -k myapp.scm
 cat myapp.c
 ```
 
+For the full `csc`/`csi` option list, runtime (`-:...`) options, `(declare ...)` reference, and
+static-linking/deployment details, see `cheatsheet.md`.
+
 ---
 
 ## Writing & Distributing Eggs

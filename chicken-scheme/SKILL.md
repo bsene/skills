@@ -119,6 +119,7 @@ runs the same source interpreted.
 | Read When | File |
 |---|---|
 | Modules, imports, tail recursion, call/cc, macros, records | [Core Language](references/core-language.md) |
-| Scripting, shebang, CLI tools, compiler flag examples, egg structure | [Scripting & CLI](references/scripting-cli.md) |
+| Scripting, shebang, CLI tools, everyday compiler flag examples, egg structure | [Scripting & CLI](references/scripting-cli.md) |
 | FFI: foreign-lambda, callbacks, C interop, embedding | [FFI Guide](references/ffi.md) |
 | Egg authoring, testing, and publishing workflow | [Egg System](references/eggs.md) |
+| Full `csi`/`csc` flag reference, runtime options, `(declare ...)` reference, deployment/static linking | [CLI & Compiler Cheatsheet](references/cheatsheet.md) |
