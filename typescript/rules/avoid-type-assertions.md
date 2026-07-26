@@ -10,7 +10,7 @@ metadata:
 # Avoid type assertions
 
 Type assertions promise correctness without proving it — the compiler cannot verify them.
-Use narrowing and validation instead.
+Use narrowing and validation instead. Reference: [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions).
 
 ## Banned patterns
 
@@ -40,7 +40,7 @@ if (isUser(data)) { /* data is User */ }
 const user = UserSchema.parse(apiResponse); // User — proven at runtime
 ```
 
-**`satisfies` for shape checking without widening:**
+**`satisfies` for shape checking without widening** ([reference](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)):
 ```typescript
 const config = { host: "localhost", port: 3000 } satisfies Config;
 ```
@@ -53,7 +53,7 @@ const config = { host: "localhost", port: 3000 } satisfies Config;
 
 ## `as const` is not a type assertion
 
-`as const` converts object literals to literal types — it narrows, not widens. Not banned.
+`as const` converts object literals to literal types — it narrows, not widens. Not banned. See [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions).
 
 ```diff
 - const req = { method: "GET" } as HttpConfig;   // assertion — banned

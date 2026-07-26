@@ -18,6 +18,8 @@ user-invocable: false
 
 # TypeScript
 
+Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html). Rule files below link to the specific handbook section they encode; when a rule and the handbook disagree, the handbook wins and the rule should be updated.
+
 ## Route to Sub-skills
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
@@ -75,27 +77,17 @@ else res.status(200).json(result);
 
 ## TypeScript at Scale
 
-1. Enable `"strict": true` globally; enforce in CI
+1. Enable `"strict": true` globally; enforce in CI ([Compiler Options](https://www.typescriptlang.org/tsconfig/#strict))
 2. Use `@ts-expect-error` over `@ts-ignore`
 3. Track `any` usage via `@typescript-eslint/no-explicit-any`
-4. Keep API/DTO types separate from domain types — map at boundaries
-5. Validate external inputs (API bodies, env vars, queues) with Zod at boundaries
-6. Publish domain contracts as `@org/contracts`; use project references for boundaries
-
-```typescript
-// Domain vs Transport — map at boundary
-type UserDTO = { user_id: string; display_name: string; created_at: string };
-type User = { id: string; name: string; createdAt: Date };
-
-function toDomain(dto: UserDTO): User {
-  return { id: dto.user_id, name: dto.display_name, createdAt: new Date(dto.created_at) };
-}
-```
+4. Keep API/DTO types separate from domain types — map at boundaries (full example: `references/user-example.md`)
+5. Validate external inputs (API bodies, env vars, queues) with Zod at boundaries (full example: `zod/example.md`)
+6. Publish domain contracts as `@org/contracts`; use project references for boundaries ([Project References](https://www.typescriptlang.org/docs/handbook/project-references.html))
 
 ## Read On Demand
 
-- User example: see `references/user-example.md`.
-- Zod example: see `references/zod-example.md`.
+- Domain vs. DTO mapping, full example: `references/user-example.md`.
+- Zod boundary-validation example: `zod/example.md` (deeper annotated patterns in `zod/references/zod.md`).
 - ECMAScript edition history (ES1 1997 → ES2025): see `../javascript/references/ecmascript-history.md`. Use when choosing `tsconfig` `target`/`lib`, judging what downlevels vs. needs a polyfill, or which edition first shipped a feature.
 
 ## JavaScript foundation

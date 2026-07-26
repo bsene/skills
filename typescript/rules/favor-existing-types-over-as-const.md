@@ -10,7 +10,7 @@ metadata:
 # Favor existing types over `as const`
 
 `as const` is useful for deriving types from values when no type exists yet.
-When a type already exists, annotate with it — don't recreate it from a const.
+When a type already exists, annotate with it — don't recreate it from a const. Reference: [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions).
 
 ## Banned patterns
 
@@ -43,7 +43,7 @@ type Config = typeof DEFAULT_CONFIG; // now two sources of truth
 const DEFAULT_CONFIG: Config = { retries: 3, timeout: 5000 };
 ```
 
-**`satisfies` for shape checking without losing inference:**
+**`satisfies` for shape checking without losing inference** ([reference](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)):
 
 ```typescript
 const palette = {

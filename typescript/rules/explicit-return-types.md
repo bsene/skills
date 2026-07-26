@@ -9,7 +9,7 @@ metadata:
 
 # Annotate function return types explicitly
 
-TypeScript infers return types, but inference can silently widen to `any` when calling untyped or loosely-typed dependencies. Explicit return types catch this at the function boundary.
+TypeScript infers return types, but inference can silently widen to `any` when calling untyped or loosely-typed dependencies. Explicit return types catch this at the function boundary. Reference: [Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html).
 
 ## Banned patterns
 
@@ -48,7 +48,7 @@ function findRole(userId: string): Role | null {
 }
 ```
 
-`noImplicitAny` forces TypeScript to error when it cannot infer a type. It is included in `"strict": true`. Never disable it.
+[`noImplicitAny`](https://www.typescriptlang.org/tsconfig/#noImplicitAny) forces TypeScript to error when it cannot infer a type. It is included in `"strict": true`. Never disable it.
 
 ## Exceptions
 
