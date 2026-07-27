@@ -16,7 +16,7 @@ description: >
 
 1. **Start with an analogy** — compare the code to something from everyday life
 2. **Pick the right C4 level** — match diagram depth to the question; default Level 2 (Container)
-3. **Draw the diagram** — use the `c4-diagram` skill (level selector, DSL rules, rendering all live there)
+3. **Draw the diagram** — render it as an ASCII box diagram directly in the response (no external tooling). Pick the C4 level per step 2, then build boxes/arrows with plain characters (`+ - | v ^ <- ->`), keeping lines within ~80 columns so it stays readable in a terminal or chat window. Label each box with the component name (and a one-line responsibility if it fits), and label arrows with the action or event that flows along them.
 4. **Walk through the code** — trace inputs to outputs in narrative form: what enters, which functions/modules touch it in order, where state changes, what exits. Name the data, not just the steps.
 5. **Highlight a gotcha** — what's a common mistake or misconception?
 
@@ -36,7 +36,21 @@ Keep explanations conversational. For complex concepts, use multiple analogies.
 
 > **Analogy:** This auth service is like a bouncer at a club — it checks your ID (token) before letting you into any room (endpoint).
 >
-> *(C4 Container diagram here — generated via `c4-diagram` skill)*
+> ```
+> +--------+   token    +----------------+   validate   +-------------+
+> | Client | ---------> | AuthMiddleware | -----------> | TokenCache  |
+> +--------+            +----------------+              +-------------+
+>                                |  claims
+>                                v
+>                        +---------------+
+>                        |  UserService  |
+>                        +---------------+
+>                                |  user record / UnauthorizedError
+>                                v
+>                        +---------------+
+>                        |   Endpoint    |
+>                        +---------------+
+> ```
 >
 > **Walkthrough:** Request arrives at the HTTP adapter → `AuthMiddleware` validates the JWT → decoded claims passed to `UserService.resolve()` → user record returned or `UnauthorizedError` thrown.
 >
@@ -46,7 +60,17 @@ Keep explanations conversational. For complex concepts, use multiple analogies.
 
 > **Analogy:** This checkout pipeline is like a relay race — each service passes a baton (order event) to the next leg before it can proceed.
 >
-> *(C4 Context diagram here — generated via `c4-diagram` skill)*
+> ```
+> +---------------+  order.created   +------------------+  stock.reserved   +-----------------+
+> | OrderService  | ---------------> | InventoryService | -----------------> | PaymentService  |
+> +---------------+                  +------------------+                    +-----------------+
+>        ^                                    |                                      |
+>        | compensating event (on failure)    |                                      | payment.captured
+>        +------------------------------------+                                      v
+>                                                                          +----------------------+
+>                                                                          | NotificationService  |
+>                                                                          +----------------------+
+> ```
 >
 > **Walkthrough:** `OrderService` emits `order.created` to the message bus → `InventoryService` reserves stock and emits `stock.reserved` → `PaymentService` charges and emits `payment.captured` → `NotificationService` sends confirmation email. Failure at any step emits a compensating event to roll back upstream.
 >
