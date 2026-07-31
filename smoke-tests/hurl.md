@@ -122,6 +122,8 @@ hurl --variables-file smoke-tests/vars.env smoke-tests/*.hurl
 ```
 base_url=http://localhost:3000
 test_email=smoke@example.com
+# placeholder — inject the real value via a CI secret at runtime, never commit an
+# actual password. Use a dedicated low-privilege smoke-test account, not a real user.
 test_password=password123
 ```
 
@@ -131,18 +133,21 @@ test_password=password123
 
 ```bash
 # Run all .hurl files as test suite
-hurl --test smoke-tests/*.hurl
+hurl --test --max-time 10 smoke-tests/*.hurl
 
-# With variables file
-hurl --test --variables-file smoke-tests/vars.env smoke-tests/*.hurl
+# With variables file — prefer this over --variable key=$SECRET for anything
+# sensitive; CLI args are visible to other processes via ps/proc and often get
+# echoed into CI logs, whereas a variables file written from a secret is not.
+hurl --test --max-time 10 --variables-file smoke-tests/vars.env smoke-tests/*.hurl
 
 # HTML report
-hurl --test --variables-file smoke-tests/vars.env --report-html report/ smoke-tests/*.hurl
+hurl --test --max-time 10 --variables-file smoke-tests/vars.env --report-html report/ smoke-tests/*.hurl
 
-# Verbose — shows request/response for debugging
+# Verbose — shows request/response for debugging. Only run against a sandboxed/
+# non-production target: verbose output includes captured tokens and secrets.
 hurl --test --verbose smoke-tests/health.hurl
 
-# Very verbose — includes full headers + body
+# Very verbose — includes full headers + body. Same caution as above, doubly so.
 hurl --test --very-verbose smoke-tests/auth.hurl
 ```
 
@@ -152,17 +157,29 @@ hurl --test --very-verbose smoke-tests/auth.hurl
 
 ```yaml
 - name: Install Hurl
-  run: curl -LsSf https://hurl.dev/install.sh | bash
+  # Pin an exact version and verify its checksum — piping install.sh straight from
+  # the web (curl | bash with no pin/verification) means a compromised or hijacked
+  # hurl.dev serves arbitrary code with your CI job's permissions and secrets.
+  run: |
+    HURL_VERSION=4.3.0
+    curl -LO https://github.com/Orange-OpenSource/hurl/releases/download/${HURL_VERSION}/hurl_${HURL_VERSION}_amd64.deb
+    echo "<pin-expected-sha256-here>  hurl_${HURL_VERSION}_amd64.deb" | sha256sum -c -
+    sudo dpkg -i hurl_${HURL_VERSION}_amd64.deb
 
 - name: Run Smoke Tests
   id: smoke
   env:
+    # Pass secrets as env vars, not interpolated into the command string — CLI args
+    # are visible to other processes on the runner via ps/proc and are more likely
+    # to leak into logs than an env var referenced inside the run script.
     APP_URL: ${{ env.DEPLOY_URL }}
+    SMOKE_EMAIL: ${{ secrets.SMOKE_EMAIL }}
+    SMOKE_PASSWORD: ${{ secrets.SMOKE_PASSWORD }}
   run: |
-    hurl --test \
-      --variable base_url=$APP_URL \
-      --variable test_email=${{ secrets.SMOKE_EMAIL }} \
-      --variable test_password=${{ secrets.SMOKE_PASSWORD }} \
+    hurl --test --max-time 10 \
+      --variable base_url="$APP_URL" \
+      --variable test_email="$SMOKE_EMAIL" \
+      --variable test_password="$SMOKE_PASSWORD" \
       smoke-tests/*.hurl
 
 - name: Run Full Test Suite
