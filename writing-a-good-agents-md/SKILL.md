@@ -2,21 +2,23 @@
 name: writing-a-good-agents-md
 description: >
   Write, review, audit, or improve AGENTS.md files — the open, tool-agnostic
-  standard for giving AI coding agents persistent project context — as well as
-  the harness-specific files that wrap or import it (CLAUDE.md for Claude Code,
-  .cursorrules/.cursor/rules for Cursor, GEMINI.md for Gemini CLI, Copilot
-  instructions, .windsurfrules, OpenCode/Zed config, etc). Use this skill
-  whenever the user wants to create a new AGENTS.md from scratch, audit an
-  existing context file for bloat or anti-patterns, improve instruction
-  quality, apply progressive disclosure, split monolithic context into
-  referenced sub-documents, reconcile multiple tool-specific files into one
-  shared source of truth, or understand AGENTS.md best practices. Trigger even
-  for casual mentions like "help me write my AGENTS.md", "is my CLAUDE.md
-  good?", "what should go in agents.md?", "my agent keeps ignoring my
-  instructions", or "I have a .cursorrules and a CLAUDE.md, how do I unify
-  them?". Treat AGENTS.md, CLAUDE.md, and other harness-specific instruction
-  files as the same underlying problem — the specific filename almost never
-  changes the guidance.
+  standard for giving AI coding agents persistent project context — plus the
+  harness-specific files that wrap or import it (CLAUDE.md, .cursorrules/
+  .cursor/rules, GEMINI.md, Copilot instructions, .windsurfrules, OpenCode/
+  Zed config, etc). Use whenever the user wants to create a new AGENTS.md
+  from scratch, audit an existing context file for bloat or anti-patterns,
+  apply progressive disclosure, split monolithic context into sub-documents,
+  reconcile multiple tool-specific files into one source of truth, or
+  understand AGENTS.md best practices. Trigger for casual mentions like
+  "help me write my AGENTS.md", "is my CLAUDE.md good?", "my agent keeps
+  ignoring my instructions", or "I have a .cursorrules and a CLAUDE.md, how
+  do I unify them?". Treat AGENTS.md, CLAUDE.md, and other harness-specific
+  files as the same problem — the filename rarely changes the guidance.
+metadata:
+  source: https://www.humanlayer.dev/blog/writing-a-good-claude-md
+  author: Kyle (HumanLayer), generalized for AGENTS.md
+  standard: https://agents.md/
+  version: "1.0"
 ---
 
 # Writing a Good AGENTS.md
