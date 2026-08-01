@@ -6,16 +6,14 @@ description: >
   work with a principled, evidence-based framework.
 
   TRIGGER when: user says Kano, "should we build this?", "is this feature worth it?",
-  "feature prioritization", "feature triage", "what should we build?", "must-have vs
-  nice-to-have", "feature classification", "refuse this feature", "say no to features",
-  "build the right thing", "alienation vs autonomisation", "feature factory"; user wants
-  to decide whether a feature is worth implementing; user questions the value of a story
-  or ticket before starting work.
+  "feature prioritization", "feature triage", "must-have vs nice-to-have", "feature
+  classification", "refuse this feature", "say no to features", "build the right thing",
+  "feature factory"; user wants to decide whether a feature is worth implementing; user
+  questions the value of a story or ticket before starting work.
 
-  DO NOT USE when: the feature decision is already made and the question is purely about
-  implementation technique (use `tcrdd` or `testing` instead); performing market research
-  or competitive analysis (this is developer-level triage, not product management); the
-  user needs help writing tests or code.
+  DO NOT USE when: the decision is already made and the question is purely implementation
+  technique (use `tcrdd` or `testing` instead); performing market research or competitive
+  analysis; the user needs help writing tests or code.
 
   Prefer this over `tcrdd` when the question is "should we build this?" rather than
   "how should we build this?"
