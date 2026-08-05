@@ -55,6 +55,18 @@ A classic Mikado target. Typical leaf sequence:
 
 ---
 
+## When the goal isn't actionable
+
+A goal needs a starting point and success criteria. If you can't state either, don't
+try to attempt it naively — you'll get noise, not real prerequisites. Instead:
+
+1. Decompose the goal into smaller candidate goals until one is actionable.
+2. Treat that smaller goal as a stand-in root and start the naive-attempt loop there.
+3. This is riskier than starting from a genuinely actionable goal — the decomposition
+   itself is a guess — so expect to revise the map more as real prerequisites surface.
+
+---
+
 ## Solo / informal use
 
 For small tasks, the method can be done mentally. For anything touching more than
@@ -76,3 +88,8 @@ When reviewing or generating refactoring code, enforce these rules:
    implementation, stop, add it to the map, and revert. Do not chain fixes.
 5. **Prefer TDD.** Fast test feedback makes error discovery immediate, shrinking
    the identify-prerequisites step dramatically.
+6. **Don't add a node for code that doesn't block the goal.** Code isn't a piece of
+   art — ugly code you pass on the way to the goal stays ugly unless it's actually a
+   prerequisite. Adding "fix this while I'm here" nodes bloats the map and dilutes
+   focus. If a naive attempt succeeds but the resulting leaf doesn't serve the goal,
+   discard it rather than committing it (see the main loop).

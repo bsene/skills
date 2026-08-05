@@ -37,7 +37,7 @@ method surfaces those dependencies visually so you can remove them one by one, s
 
 | Term | Meaning |
 |---|---|
-| **Goal** | The root node. What you ultimately want to achieve. Circle it twice. |
+| **Goal** | The root node. Must define two things: a **starting point** (what's true now) and **success criteria** (what "done" looks like). A goal missing either is not actionable — decompose it until you find a prerequisite that has both. Circle it twice. |
 | **Prerequisite** | A dependency that must be resolved before its parent node can be done. |
 | **Leaf node** | A node with no further prerequisites. Safe to implement immediately. |
 | **Mikado Map** | The full tree of goal + prerequisites. Your "save game" for the refactoring. |
@@ -55,7 +55,9 @@ MIKADO LOOP
 ③ Every error = a prerequisite bubble
 ④ REVERT (always, immediately)
 ⑤ Pick a leaf → repeat from ②
-⑥ Leaf passes cleanly → commit → prune
+⑥ Leaf passes cleanly → ask: does this still serve the goal?
+   → no: discard, do NOT commit, pick the next leaf
+   → yes: commit → prune
 ⑦ Repeat until goal is reached
 
 RULES
@@ -79,6 +81,7 @@ RULES
 | Skipping the graph for "small" refactors | "Start with even a 3-node graph. It prevents scope creep." |
 | Using mocks to avoid test data setup pain | "Use Test Data Builders as Mikado leaf nodes instead." |
 | Long-lived refactoring branches | "Work on main. Only commit leaves that don't break anything." |
+| Committing a leaf just because it's green | "Passing isn't enough — does it actually serve the goal? If not, discard it and move to the next prerequisite." |
 
 ---
 
@@ -109,8 +112,8 @@ After any naive attempt: **"Revert now — `git checkout .` — your map is save
 
 | Read When | File |
 |---|---|
-| Starting a graph, populating prerequisites, evaluating leaves | [Graph Building](references/graph-building.md) |
-| Execution order, committing strategy, legacy code, large refactors, hygiene rules | [Execution & Situations](references/execution-and-situations.md) |
+| Starting a graph, populating prerequisites, evaluating leaves, shared prerequisites | [Graph Building](references/graph-building.md) |
+| Execution order, committing strategy, legacy code, large refactors, hygiene rules, non-actionable goals | [Execution & Situations](references/execution-and-situations.md) |
 
 ---
 

@@ -20,6 +20,11 @@ have prerequisites. The graph grows depth-first until you reach nodes that:
 - Can be implemented without touching anything else (leaves), OR
 - Map to a single atomic refactoring from Fowler's catalog.
 
+**A prerequisite can serve more than one parent.** The map is a DAG, not a strict
+tree — if the same prerequisite surfaces under two different parents, don't duplicate
+it. Reference the existing node and implement it once. In Mermaid this is just two
+arrows pointing at the same node id.
+
 ---
 
 ## What makes a good leaf?
