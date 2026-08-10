@@ -1,19 +1,9 @@
 ---
-name: typescript-type-system
-description: >
-  Deep dive into TypeScript's type system — narrowing, discriminated unions, mapped types, conditional types, type guards, branding, and escape hatches.
-  TRIGGER when: user asks about unknown vs any, type narrowing, discriminated unions, exhaustiveness checking,
-  mapped types, conditional types, infer keyword, user-defined type guards, type branding, companion object pattern,
-  as const, escape hatches, type assertion, how do I narrow a type, how do I write a type predicate,
-  how to create nominal types, how to prevent structural aliasing,
-  make illegal states unrepresentable, illegal states, state machine types, entity lifecycle types,
-  optional field anti-pattern, discriminated union state modeling,
-  interface vs type alias, when to use interface vs type, enum best practices, typescript enum,
-  const enum, readonly property, ReadonlyArray, lazy object initialization, barrel exports,
-  when to use generics, generic naming conventions, no interface prefix.
-  DO NOT USE when: runtime/schema validation at boundaries (parsing external input, API responses) →
-  use `typescript-zod`; plain naming or JS idiom questions → use `javascript`.
-user-invocable: false
+name: type-system
+description: Deep dive into TypeScript's type system — narrowing, discriminated unions, mapped/conditional types, type guards, branding, and escape hatches. Reference bundle for the `typescript` skill; not independently triggered.
+metadata:
+  role: reference-bundle
+  parent-skill: typescript
 ---
 
 # TypeScript Type System
@@ -165,26 +155,9 @@ function createUserId(id: string): UserId { return id as UserId; }
 
 **Companion object pattern** — Bind the same name to both a type and const value. One import covers annotation and utilities.
 
-**`as const`** — Freeze values to literal types. Use on configs/arrays to derive union types **only when no type exists yet**. If a type already exists, annotate with it instead. See [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions).
+**`as const`** — Freeze values to literal types, but only when no type exists yet for what you're deriving. If a type already exists, annotate with it instead — see `rules/favor-existing-types-over-as-const.md` for the full rationale and examples.
 
-```typescript
-// Good — no existing type; deriving is the intention
-const ROLES = ["admin", "user", "guest"] as const;
-type Role = (typeof ROLES)[number]; // "admin" | "user" | "guest"
-
-// Bad — Role already exists; don't derive it again
-type Role = "admin" | "user" | "guest";
-const ROLES = ["admin", "user", "guest"] as const;        // ← redundant
-type RoleAgain = (typeof ROLES)[number];                  // ← duplicate
-
-// Good — annotate with the existing type
-type Role = "admin" | "user" | "guest";
-const ROLES: Role[] = ["admin", "user", "guest"];
-```
-
-⚠️ See rule: `rules/favor-existing-types-over-as-const.md`
-
-**Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed.
+**Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed. See `rules/avoid-type-assertions.md` for banned patterns and alternatives.
 
 ---
 
@@ -206,6 +179,8 @@ interface Repository<T> {
 // type — union (can't be done with interface)
 type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
 ```
+
+**Why `interface extends` over `type &` for composition:** TypeScript caches an interface's resolved shape by name, so it doesn't get recomputed each time it's referenced; a `type` intersection is recomputed at each use site. Interfaces also catch conflicting property types across the merged shapes as a compile error, where an intersection can silently collapse the conflicting property to `never`. This gap narrows a lot under the Go-ported TypeScript 7 compiler, since the overall baseline gets much faster — but `interface extends` remains the safer default for composed object shapes; reach for `type` when you need unions, primitives, tuples, or mapped/conditional types that `interface` can't express.
 
 Do NOT prefix interfaces with `I`. See `rules/no-interface-prefix.md`.
 
