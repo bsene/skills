@@ -1,11 +1,5 @@
----
-name: avoid-type-assertions
-description: >
-  Prevent type assertions (as T, <T>, as unknown as T, !) that bypass type checker.
-  Use narrowing, type guards, Zod validation, or satisfies instead.
-metadata:
-  tags: typescript, type-safety, type-assertions, narrowing
----
+<!-- Reference rule, reached only via typescript/SKILL.md's rules table. No skill-style frontmatter needed. -->
+<!-- tags: typescript, type-safety, type-assertions, narrowing -->
 
 # Avoid type assertions
 

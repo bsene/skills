@@ -1,11 +1,5 @@
----
-name: no-interface-prefix
-description: >
-  Do not prefix interface names with I (e.g. IUser, IFoo).
-  Use plain PascalCase names for all interfaces.
-metadata:
-  tags: typescript, naming, interfaces, conventions
----
+<!-- Reference rule, reached only via typescript/SKILL.md's rules table. No skill-style frontmatter needed. -->
+<!-- tags: typescript, naming, interfaces, conventions -->
 
 # Do not prefix interfaces with `I`
 

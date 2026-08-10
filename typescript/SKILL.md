@@ -22,8 +22,10 @@ Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/han
 
 ## Route to Sub-skills
 
-→ **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/` sub-skill
-→ **Zod** (schema validation, transforms, coercion, branded types…) → `zod/` sub-skill
+`type-system/` and `zod/` are reference bundles read on demand from this router — they are not independently discovered skills, so their own frontmatter is intentionally minimal (no duplicate trigger list needed).
+
+→ **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
+→ **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
 → **JavaScript conventions** (naming, `this`-handling, barrel files, arrays, null/undefined) → `javascript` skill
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `oop-principles` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `oop-principles` skill
