@@ -1,13 +1,9 @@
 ---
-name: typescript-zod
-description: >
-  Zod v4 best practices — schema design, error handling, transforms, coercion, branded types, and boundary validation.
-  TRIGGER when: user mentions zod, zod validation, zod schema, zod v4, zod parse, zod transform, zod coerce,
-  zod branded types, zod error handling, runtime validation, validate API response, schema composition,
-  zod object, zod mini, zod infer, zod v3 to v4, migrate from zod v3, upgrade zod, zod breaking changes.
-  DO NOT USE when: the question is pure compile-time typing with no runtime validation (discriminated
-  unions, generics, narrowing, `as const`) → use `typescript-type-system`.
-user-invocable: false
+name: zod
+description: Zod v4 best practices — schema design, error handling, transforms, coercion, branded types, and boundary validation. Reference bundle for the `typescript` skill; not independently triggered.
+metadata:
+  role: reference-bundle
+  parent-skill: typescript
 ---
 
 # Zod v4 Best Practices

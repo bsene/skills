@@ -1,11 +1,5 @@
----
-name: explicit-return-types
-description: >
-  Always annotate function return types explicitly. Prevents silent `any` propagation
-  from untyped dependencies and makes intent clear at the call site.
-metadata:
-  tags: typescript, type-safety, return-types, noImplicitAny
----
+<!-- Reference rule, reached only via typescript/SKILL.md's rules table. No skill-style frontmatter needed. -->
+<!-- tags: typescript, type-safety, return-types, noImplicitAny -->
 
 # Annotate function return types explicitly
 

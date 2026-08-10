@@ -1,10 +1,10 @@
 # Release Gates for TypeScript Skill
 
 ## Activation Rate
-- Target: **≥ 90 %** activation across all models.
+- Target: **≥ 90 %** activation across all models.
 
 ## Token Cost
-- Target: **≤ 10 %** of baseline token usage.
+- Target: **≤ 10 %** of baseline token usage.
 
 ## Run History
 - Each optimizer run is logged in `run-history.md`.

@@ -1,11 +1,5 @@
----
-name: favor-existing-types-over-as-const
-description: >
-  When a TypeScript type already exists, use it directly instead of using `as const`
-  to derive a new type from a value literal.
-metadata:
-  tags: typescript, type-safety, as-const, types
----
+<!-- Reference rule, reached only via typescript/SKILL.md's rules table. No skill-style frontmatter needed. -->
+<!-- tags: typescript, type-safety, as-const, types -->
 
 # Favor existing types over `as const`
 

@@ -1,11 +1,5 @@
----
-name: readonly
-description: >
-  Mark properties and arrays as readonly to signal immutability and prevent accidental mutation.
-  Use ReadonlyArray<T> or readonly T[] for immutable arrays.
-metadata:
-  tags: typescript, immutability, readonly, react
----
+<!-- Reference rule, reached only via typescript/SKILL.md's rules table. No skill-style frontmatter needed. -->
+<!-- tags: typescript, immutability, readonly, react -->
 
 # Use `readonly` to signal immutability
 
