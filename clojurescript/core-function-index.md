@@ -8,6 +8,7 @@ This file is a category index (what's available, grouped by purpose) rather than
 - **Define**: `def`, `defn`, `defn-`, `let`, `letfn`, `declare`, `ns`
 - **Branch**: `if`, `if-not`, `when`, `when-not`, `when-let`, `if-let`, `when-first`, `when-some`, `if-some`, `cond`, `condp`, `case`
 - **Compare/logic**: `=`, `not=`, `and`, `or`, `not`, `identical?`, `compare`
+- **Recursion**: `loop`/`recur` (self-recursion, tail position, stack-safe), `trampoline` (mutual recursion — see this skill's Recursion section), `letfn` (declaring mutually-recursive local fns), `declare` (forward-declaring vars for top-level mutual recursion), `memoize` (caching overlapping-subproblem recursion — see this skill's Recursion section for its cold-cache caveat)
 
 ## Functions
 - **Create**: `fn`, `defn`, `defn-`, `#(...)` reader shorthand, `identity`, `constantly`, `comp`, `complement`, `partial`, `juxt`, `memoize`, `fnil`, `every-pred`, `some-fn`
