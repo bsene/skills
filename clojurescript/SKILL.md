@@ -13,6 +13,8 @@ ClojureScript (CLJS) is Clojure that compiles to JavaScript via the Google Closu
 
 This skill covers writing idiomatic CLJS, JS interop, dependency/build configuration, and the newer native async/await support. When in doubt about compiler flags or interop mechanics, check `references/` rather than guessing — CLJS has a lot of build-tooling surface area that's easy to get subtly wrong.
 
+> **Not for nbb.** [Babashka/nbb](https://github.com/babashka/nbb) runs CLJS through an SCI interpreter (no Google Closure Compiler, no `:optimizations`/`:advanced`, no externs) for fast-starting Node.js scripts — a different language surface from what this skill covers. Use the `clojurescript-nbb` skill for `nbb.edn` projects or anything run via `nbb script.cljs`/`npx nbb`.
+
 ## Gotchas
 
 - **`:optimizations` defaults to `:none`**, not `:advanced` — a project with no explicit `:optimizations` setting is running unoptimized dev output.
@@ -23,6 +25,7 @@ This skill covers writing idiomatic CLJS, JS interop, dependency/build configura
 - **`^:async` metadata goes on the `fn`/name only, never the arg vector**, and `await` only works inside a function actually marked `:async` — a nested `fn` doesn't inherit it and needs its own `^:async` (see `references/async-functions.md`).
 - **An `:async` function always returns a `Promise`**, even when the body looks like it returns a plain value.
 - **Truthiness differs from JS.** Only `false` and `nil` are falsy — `0`, `""`, `js/NaN`, `[]`, and `(array)` are all truthy. `(if 0 "yes" "no")` → `"yes"`, unlike JS. Easy to get backwards when translating JS/TS conditionals.
+- **No automatic tail-call optimization, same as JVM Clojure.** CLJS functions run as ordinary JS function calls, and most JS engines don't reliably implement proper tail calls either — deep non-tail self-recursion will blow the JS call stack on large/unbounded input, even though it "works" for small test inputs. Reach for `recur` (self-recursion, tail position only — see below), `trampoline` (mutual recursion), or wrap the recursive case in `lazy-seq` (sequence-producing recursion) rather than plain recursive calls whenever the input size isn't small and fixed.
 
 ## Core language cheat sheet
 
@@ -48,6 +51,15 @@ CLJS syntax is essentially Clojure's, so standard Clojure knowledge (immutable p
 
 For consuming Closure Library, npm packages, foreign (non-Closure-compatible) JS, and CLJS libraries — including externs, advanced-compilation pitfalls, and CLJSJS — see `references/dependencies-and-interop.md` before guessing at a `:require`/`:import` shape or writing an externs file from scratch.
 
+## Recursion
+
+Because CLJS has no automatic TCO (see Gotchas), which recursion tool to reach for depends on the shape of the problem:
+
+- **`recur`** — self-recursion only (a function calling itself, directly, not through an intermediate function), and only from the tail position. Compiles to a real loop, so it's stack-safe for arbitrarily large input. This is the default choice for producing a scalar or a small, fixed-size result — e.g. summing a collection with `loop`/`recur` rather than a plain recursive call.
+- **`trampoline`** — for **mutual** recursion (function A calls B calls A), where `recur` doesn't apply because it only optimizes self-calls. Wrap each recursive tail call in `#(...)` and drive the whole thing with `(trampoline f args...)`; `trampoline` keeps calling the returned function until it gets back a non-function value. Don't reach for `trampoline` on a self-recursion — `recur` is simpler and equally stack-safe there.
+- **`lazy-seq`** — for recursion that produces a sequence, especially an unbounded/large one. Wrapping the recursive call in `lazy-seq` breaks the recursion into on-demand steps, so callers only pay for the elements they actually realize (`take`, `first`, etc.). This is usually the better fit over `loop`/`recur` whenever the output size varies or could be large — let `take`/`drop` on the caller side decide how much to compute.
+- **`memoize`** — trades space for time by caching by argument, useful for expensive recursive/mutually-recursive definitions with overlapping subproblems. Caveat: memoizing alone doesn't fix a stack-overflow risk — a cold cache still has to recurse all the way down on the first large call. If the recursion is deep, build the cache bottom-up by mapping the memoized function over a lazy range/seq (`(map f (range))`) rather than calling it directly on a large `n`.
+
 ## Async / promises
 
 CLJS added native `^:async` functions with an `await` macro (since v1.12.145) as a lighter-weight alternative to `core.async` for promise-based code. This is a newer feature that's easy to get wrong or not know about at all — **read `references/async-functions.md` before writing or reviewing any CLJS code that deals with `Promise`s, `fetch`, or `async`/`await`-shaped logic** (see Gotchas above for the two most common mistakes). One more rule worth holding in mind: prefer `Promise/all` (via `mapv`) over `map` when you need to await several promises produced in a loop.
@@ -70,7 +82,7 @@ For the full list of compiler options (`:optimizations`, `:target`, `:main`, `:n
 
 - **Immutability and pure functions first.** Reach for persistent data structures (maps, vectors, sets) and pure transformations over mutable state, `atom`s, or `set!`. Only use an `atom`/`volatile!` for genuine local mutable state (e.g. component-local UI state), not as a default variable substitute.
 - **Data over classes.** Model domain data as plain maps/records rather than JS-style classes with methods, unless polymorphism genuinely calls for `defprotocol`/`deftype`/`defrecord` or a JS class is required at an interop boundary (e.g. a React component).
-- **Sequence/threading idioms over loops.** Prefer `map`/`filter`/`reduce`/`keep`/`for` and `->`/`->>` threading over `for`/`while`-style imperative loops, index juggling, or manual accumulation, unless performance profiling justifies `loop`/`recur` or a transient.
+- **Sequence/threading idioms over loops.** Prefer `map`/`filter`/`reduce`/`keep`/`for` and `->`/`->>` threading over `for`/`while`-style imperative loops, index juggling, or manual accumulation. This is a style preference, not a stack-safety rule: `loop`/`recur` is the *correct* (not just a perf-justified) choice for genuinely tail-recursive, scalar-producing logic — see Recursion above — reach for a transient only when profiling justifies it.
 - **Destructuring over manual accessors.** Use `let`/fn-arg destructuring (`{:keys [...]}`, `[a b & rest]`) instead of repeated `(get m :k)` or positional indexing.
 - **Small composed functions over long procedural bodies.** Break logic into small, named, testable functions and compose them, rather than one large function with sequential mutation-heavy steps.
 - **Idiomatic control flow.** Prefer `cond`/`case`/`condp` and `when`/`if-let`/`when-let` over nested `if`s or JS-style early-return chains; prefer `^:async`/`await` or `core.async` (per the async section above) over manual `.then` chains.
