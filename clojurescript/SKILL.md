@@ -1,6 +1,6 @@
 ---
 name: clojurescript
-description: Write, review, debug, and configure ClojureScript code and projects. Use this whenever the user mentions ClojureScript, .cljs/.cljc files, shadow-cljs, figwheel, the CLJS compiler, JS interop from Clojure, Reagent/re-frame/Reagent-style UI code, or asks to convert JS/TS logic into ClojureScript. Also use it for questions about CLJS compiler options (:optimizations, :main, :npm-deps, :externs, etc.), consuming JS/npm libraries from CLJS, source maps, Google Closure Library usage, or the newer ^:async/await function support. Trigger even if the user just pastes CLJS code with an error and asks "what's wrong here" or asks to set up a new CLJS project. Do NOT use for nbb (babashka/nbb) scripts, `nbb.edn` projects, or anything meant to run via `nbb script.cljs`/`npx nbb` — those have a different (SCI-interpreted, no-Closure-Compiler) language surface; use the clojurescript-nbb skill for those instead.
+description: Write, review, debug, and configure ClojureScript code and projects. Use this whenever the user mentions ClojureScript, .cljs/.cljc files, shadow-cljs, figwheel, the CLJS compiler, JS interop from Clojure, Reagent/re-frame/Reagent-style UI code, or asks to convert JS/TS logic into ClojureScript. Also use it for questions about CLJS compiler options (:optimizations, :main, :npm-deps, :externs, etc.), consuming JS/npm libraries from CLJS, source maps, Google Closure Library usage, or the newer ^:async/await function support. Also trigger for CLJS recursion/stack-overflow/trampoline questions. Trigger even if the user just pastes CLJS code with an error and asks "what's wrong here" or asks to set up a new CLJS project. Do NOT use for nbb (babashka/nbb) scripts, `nbb.edn` projects, or anything meant to run via `nbb script.cljs`/`npx nbb` — those have a different (SCI-interpreted, no-Closure-Compiler) language surface; use the clojurescript-nbb skill for those instead.
 compatibility: No special tools required to consult this skill. Actually building or running code needs a CLJS toolchain (shadow-cljs, Clojure CLI, or Leiningen) and a JS runtime (browser or Node.js), but the skill itself is pure reference/instruction content.
 metadata:
   version: "1.0.0"
@@ -13,7 +13,7 @@ ClojureScript (CLJS) is Clojure that compiles to JavaScript via the Google Closu
 
 This skill covers writing idiomatic CLJS, JS interop, dependency/build configuration, and the newer native async/await support. When in doubt about compiler flags or interop mechanics, check `references/` rather than guessing — CLJS has a lot of build-tooling surface area that's easy to get subtly wrong.
 
-> **Not for nbb.** [Babashka/nbb](https://github.com/babashka/nbb) runs CLJS through an SCI interpreter (no Google Closure Compiler, no `:optimizations`/`:advanced`, no externs) for fast-starting Node.js scripts — a different language surface from what this skill covers. Use the `clojurescript-nbb` skill for `nbb.edn` projects or anything run via `nbb script.cljs`/`npx nbb`.
+> **Not for nbb.** [Babashka/nbb](https://github.com/babashka/nbb) runs CLJS through an SCI interpreter (no Google Closure Compiler, no `:optimizations`/`:advanced`, no externs) for fast-starting Node.js scripts — a different language surface from what this skill covers. Use the `clojurescript-nbb` skill for `nbb.edn` projects, anything run via `nbb script.cljs`/`npx nbb`, or when working from [nbb's own examples](https://github.com/babashka/nbb/tree/main/examples).
 
 ## Gotchas
 
@@ -68,7 +68,7 @@ If the codebase already uses `core.async` (`go`, `<!`, channels) for async contr
 
 ## External resources
 
-For idiomatic-Clojure background/mindset reading (design patterns translated to Clojure idioms, `core.async` worked examples, FP mindset shifts) beyond this skill's own reference material, see `references/external-resources.md`, which points to relevant posts on Janet A. Carr's Clojure blog (https://blog.janetacarr.com/). Use it as supplementary color/perspective, not as the source of truth for CLJS-specific mechanics — those stay in this skill's other reference files.
+For idiomatic-Clojure background/mindset reading (design patterns translated to Clojure idioms, `core.async` worked examples, FP mindset shifts) beyond this skill's own reference material, plus community-curated library lists and real-world example codebases, see `references/external-resources.md`. Use it as supplementary color/perspective and pointers, not as the source of truth for CLJS-specific mechanics — those stay in this skill's other reference files.
 
 ## Build & compiler configuration
 

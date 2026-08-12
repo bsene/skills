@@ -9,7 +9,9 @@ a dependency belongs to before writing the require.
 
 ## 1. npm packages (via `:npm-deps` or `:target :bundle`)
 
-Modern shadow-cljs projects consume npm packages directly, the same way JS/TS does:
+There are two different conventions in the wild here, and mixing them up is a common source of confusion:
+
+**shadow-cljs (most common in practice today)** consumes npm packages directly via a string-form require, the same way JS/TS does:
 
 ```clojure
 (ns my.app.core
@@ -25,9 +27,30 @@ Modern shadow-cljs projects consume npm packages directly, the same way JS/TS do
   `:refer` destructures named exports.
 - Under shadow-cljs, npm deps just need to be present in `node_modules` (via
   `package.json`) — no separate `:npm-deps` compiler-option map is needed.
-- Under the raw Clojure CLI / `cljs.main` toolchain, use the compiler's `:npm-deps`
-  map (package name → version) plus `:install-deps true`, or hand off to Webpack via
-  `:target :bundle` — see `references/compiler-options.md`.
+- **This string-require form is a shadow-cljs convention, not something documented
+  on ClojureScript.org's own reference pages** — don't present it as "the" standard
+  CLJS syntax without qualification when the project isn't using shadow-cljs.
+
+**Stock `cljs.main`/Clojure CLI** (the officially-documented path, per the
+[ClojureScript with Webpack guide](https://clojurescript.org/guides/webpack)) instead
+requires the npm package with ordinary **symbol-form** require, once `:npm-deps` +
+`:install-deps` (or `:target :bundle` + a bundler) makes it resolvable as a
+namespace:
+
+```clojure
+(ns hello-bundler.core
+  (:require [react]))
+
+(.log js/console react/Component)
+```
+
+- Set `:npm-deps {"react" "..."}` (or `:install-deps true`) plus `:target :bundle`,
+  then hand the compiler's output to Webpack/Metro via `:bundle-cmd` — see
+  `references/compiler-options.md`.
+- Which convention applies depends entirely on the toolchain the project already
+  uses — check for a `shadow-cljs.edn` (string-form) vs a `deps.edn`/`build.edn`
+  driving `cljs.main` directly (symbol-form) before writing a require, rather than
+  assuming.
 
 ### npm + `:advanced` optimization
 
@@ -78,7 +101,7 @@ the compiler config:
 ```clojure
 :foreign-libs [{:file "vendor/some-lib.js"
                  :provides ["some.lib"]
-                 :global-exports {some.lib SomeGlobal}}]
+                 :global-exports '{some.lib SomeGlobal}}]
 ```
 
 - `:file` — path to the JS source.
@@ -87,7 +110,10 @@ the compiler config:
 - `:module-type` — `:commonjs`, `:amd`, or `:es6` if the file uses one of those
   module systems; omit for a plain global-exporting script.
 - `:global-exports` — maps the provided namespace to the global var/object the
-  script attaches to `window`/`global`, so CLJS knows how to reach it.
+  script attaches to `window`/`global`, so CLJS knows how to reach it. **The map
+  must be quoted** (`'{some.lib SomeGlobal}`) since the keys/values are plain
+  symbols, not resolvable vars — an unquoted map here is a common copy-paste bug.
+  String keys/values (`{"some.lib" "SomeGlobal"}`) work too and don't need quoting.
 
 This is the older, pre-npm-interop mechanism (sometimes bundled historically via
 CLJSJS packages, which wrapped popular JS libs as `:foreign-libs`-ready jars).
