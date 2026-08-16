@@ -24,6 +24,7 @@ Recommended `.gitconfig` settings grouped by purpose, with explanations.
 ```ini
 [pull]
     rebase = true
+    # rebase = merges   # alternative: rebase but PRESERVE local merge commits (cleaner shared history)
 
 [merge]
     tool = vimdiff
@@ -31,13 +32,18 @@ Recommended `.gitconfig` settings grouped by purpose, with explanations.
 
 [rerere]
     enabled = true
+
+[core]
+    ignoreCase = true
 ```
 
 | Setting | Effect |
 | ------- | ------ |
 | `pull.rebase = true` | `git pull` rebases instead of creating merge commits — keeps history linear |
+| `pull.rebase = merges` | Same, but keeps any merge commits you made locally instead of flattening them (`git rebase --rebase-merges` under the hood) |
 | `conflictstyle = diff3` | Shows base version in conflict markers (3-way), making resolution easier |
 | `rerere.enabled = true` | Records conflict resolutions and auto-applies them on repeat encounters |
+| `core.ignoreCase = true` | Makes Git treat filenames as case-insensitive for status/diff — avoids false "renames" on case-insensitive filesystems (macOS/Windows) |
 
 ## Branch & Init
 
@@ -180,6 +186,7 @@ Copy this as a starting point and customize:
 
 [core]
     autocrlf = input
+    ignoreCase = true
 
 [pull]
     rebase = true
