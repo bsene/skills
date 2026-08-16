@@ -7,14 +7,12 @@ description: >
   ideas feel safe, and the cognitive-load through-line. Diagnose what works, what's missing, then rewrite.
 
   TRIGGER when: user wants to improve communication, "make this message clearer", "review my email/Slack",
-  "analyze this transcript", "why did this message land badly", prep for a meeting/pitch/presentation/talk,
-  "how do I say this", be more convincing / persuasive / assertive, handle a tough or trap question, talk to
-  executives / C-level / leadership, structure my idea, get taken seriously, "is this too long-winded".
-
-  DO NOT USE when: the user wants raw text generated with no analysis or coaching intent (just write it);
-  pure marketing/copywriting asset production; translation; or writing code/docs/specs. For deciding whether
-  a feature is worth building use `kano`; for editing code prose use the relevant language skill.
+  "analyze this transcript", prep for a meeting/pitch/presentation, "how do I say this", be more convincing /
+  persuasive / assertive, handle a tough question, talk to executives, structure my idea, "is this too long-winded".
+  DO NOT USE for raw text generation with no analysis, marketing/copywriting, translation, or code/docs —
+  use `kano` for feature decisions, language skills for code prose.
 ---
+
 
 # Communication: analyze & sharpen how you speak and write
 

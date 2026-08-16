@@ -4,16 +4,16 @@ description: >
   Testing strategy and philosophy — design feedback, test quality audit, BDD review, architecture decisions,
   and test strategy for AI coding agents.
 
-  TRIGGER when: strategy (testing strategy, testing approach, testing philosophy, testing methodology, how should I test, what tests to write, testing best practices),
-  quality (test quality, brittle tests, flaky tests, slow tests, hard-to-maintain tests, testing anti-patterns),
-  scope (unit vs integration vs e2e, testing layers, testing architecture, how much to test),
-  mocking (when to use mocks, mocking strategy, test doubles),
-  review (review my test suite, check my tests, BDD review, test desiderata),
+  TRIGGER when: strategy (testing approach, philosophy, methodology, how should I test, what tests to write),
+  quality (brittle/flaky/slow/hard-to-maintain tests, testing anti-patterns),
+  scope (unit vs integration vs e2e, testing layers, how much to test),
+  mocking (when to use mocks, test doubles), review (review my test suite, BDD review),
   context (testing legacy codebase, adding tests to existing code),
-  AI agents (testing strategy for AI-generated code, should the AI write its own tests, can I trust AI-written tests, multi-agent testing pipeline, TDD cadence for agents, vibe coding test strategy).
-  DO NOT USE when: user needs interactive TDD cadence with red/green/refactor loops for a human driving the keyboard — use `tcrdd` instead. If an AI agent is driving instead, see "Testing With AI Coding Agents" below first — the micro-step loop doesn't apply the same way.
-  DO NOT USE when: user asks about smoke tests specifically — use `smoke-tests` instead.
+  AI agents (testing strategy for AI-generated code, should the AI write its own tests, multi-agent testing).
+  DO NOT USE for interactive TDD cadence with red/green/refactor loops — use `tcrdd` instead.
+  DO NOT USE for smoke tests specifically — use `smoke-tests` instead.
 ---
+
 
 # Testing — Strategy & Philosophy
 
