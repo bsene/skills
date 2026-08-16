@@ -1,5 +1,5 @@
 ---
-name: golang-web
+name: web
 description: >
   Go web development — HTTP server, handlers, middleware, routing, JSON encoding, XML, templates.
   TRIGGER when: user asks about Go HTTP server, net/http, Go handler, Go middleware,

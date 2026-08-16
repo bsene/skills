@@ -1,5 +1,5 @@
 ---
-name: golang-concurrency
+name: concurrency
 description: >
   Go concurrency — goroutines, channels, select, sync primitives, context, and data race prevention.
   TRIGGER when: user asks about goroutines, Go channels, Go select, sync.Mutex, sync.WaitGroup,
