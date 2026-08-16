@@ -62,12 +62,27 @@ Before each phase (**interactive mode only** — skip in autonomous mode, see Mo
 
 - Ask the user for the **smallest next behaviour** they want to add (in autonomous mode, pick the smallest next behaviour yourself).
 - Write _only enough_ of a test to fail — stop at the first compile error or failed assertion.
+- If every way to pass the candidate test needs a low-priority transformation (see table below), that test is too big — look for a smaller intervening test first.
 
 ### GREEN — Write the minimum production code
 
 - Write _only_ the code that makes the currently failing test pass. Nothing more.
 - Resist the urge to generalise, add helpers, or handle future cases — those are for later tests.
 - No `@Injectable`, no logger, no Zod — unless the failing test explicitly requires it.
+
+**Transformation priority** — use the lowest-numbered move on this ladder that makes the test pass. Reaching for a higher number is a signal the test was too big (go back and split it):
+
+1. No code → a stub return
+2. Stub → a literal constant
+3. Constant → a richer constant
+4. Constant → a variable/argument
+5. One statement → more statements
+6. Straight line → a branch (`if`)
+7. Scalar → an array/collection
+8. `if` → a loop (`while`)
+9. Loop → recursion
+10. Inline expression → an extracted function
+11. Reassigning an existing variable
 
 ### REFACTOR
 
@@ -123,6 +138,7 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 | Need visual flowcharts for each phase | [git-gamble theory page](https://git-gamble.is-cool.dev/theory.html)                                  |
 | Want the original TCR rationale       | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                  |
 | Want deeper TDD cycle theory          | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
+| Want the full derivation of the transformation ladder above | [The Transformation Priority Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html) |
 
 ## Upstream
 
