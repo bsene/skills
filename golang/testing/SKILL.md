@@ -1,5 +1,5 @@
 ---
-name: golang-testing
+name: testing
 description: >
   Go testing — table-driven tests, test helpers, benchmarks, fuzz testing, profiling, and testify.
   TRIGGER when: user asks about Go testing, go test, testing package, table-driven tests in Go,
