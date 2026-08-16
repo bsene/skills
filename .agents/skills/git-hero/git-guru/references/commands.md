@@ -41,7 +41,11 @@ git init                          # init new repo
 git init --bare                   # bare repo (server-side)
 git clone <url>                   # clone remote
 git clone --depth=1 <url>         # shallow clone (last commit only)
+git clone --depth=<n> <url>       # shallow clone, last n commits only
+git clone --shallow-since=<date> <url>  # shallow clone from a given date
 git clone --branch <tag> <url>    # clone specific branch/tag
+scalar clone <url>                # optimized clone for very large/heavy repos (built-in Git tooling)
+git fetch --unshallow              # convert a shallow clone back to full history
 ```
 
 ---
@@ -59,6 +63,7 @@ git commit -m "message"           # commit staged changes
 git commit -am "message"          # stage tracked files + commit
 git commit --amend                # amend last commit (message or content)
 git commit --amend --no-edit      # amend without changing message
+git commit --author "Name <email>"  # set author on the fly (e.g. committing on someone's behalf)
 ```
 
 ---
@@ -68,12 +73,17 @@ git commit --amend --no-edit      # amend without changing message
 ```bash
 git branch                        # list local branches
 git branch -a                     # list all branches (incl. remote)
-git branch <name>                 # create branch
+git branch -r                     # list remote-tracking branches only
+git branch -avv [glob]            # local + remote branches, upstream tracking info, optional name filter
+git branch <name> [<start-point>] # create branch (defaults to HEAD)
 git branch -d <name>              # delete merged branch
 git branch -D <name>              # force delete branch
 git branch -m old new             # rename branch
+git branch --merged               # branches already merged into current
+git branch --no-merged            # branches NOT yet merged into current
 git switch <name>                 # switch to branch
 git switch -c <name>              # create + switch
+git switch -c <name> <start-point> # create + switch, based off a specific ref
 git checkout <name>               # switch (older syntax)
 git checkout -b <name>            # create + switch (older syntax)
 git checkout <sha>                # detach HEAD at a specific commit
@@ -93,6 +103,8 @@ git merge --continue              # continue after conflict resolution
 git rebase <branch>               # rebase current branch onto <branch>
 git rebase -i HEAD~3              # interactive rebase (last 3 commits)
 git rebase --onto main feature bugfix  # advanced: graft subtree
+git rebase -r <new-base> [<branch>]    # move a whole branch (incl. merges it received) onto a new base
+git rebase --onto <target> <start-exclusive> [<branch>]  # move everything after <start> onto <target>
 git rebase --abort                # abort in-progress rebase
 git rebase --continue             # continue after resolving conflict
 
@@ -174,12 +186,15 @@ git clean -fd                     # remove untracked files/dirs ⚠️
 
 # ── Staged changes ────────────────────────────────────────────
 git restore --staged <file>       # unstage (keep in working dir)
+git restore --staged --worktree <paths>  # unstage AND discard working dir changes for those paths ⚠️
 
 # ── Commits (local, not pushed) ───────────────────────────────
 git commit --amend                # edit last commit
 git reset --soft HEAD~1           # undo last commit, keep staged
 git reset --mixed HEAD~1          # undo last commit, keep in WD (default)
 git reset --hard HEAD~1           # undo last commit, discard changes ⚠️
+git reset --keep HEAD~1           # undo last commit, but keep uncommitted WD changes safe (fails if they'd conflict)
+git reset --keep <branch>@{1}     # safer undo after a successful merge/rebase/cherry-pick — preserves uncommitted work
 
 # ── Commits (already pushed) ──────────────────────────────────
 git revert <sha>                  # create an inverse commit (safe)
@@ -214,15 +229,21 @@ git log                           # full log
 git log --oneline --graph --all   # visual branch graph
 git log --author="Name"           # filter by author
 git log --since="2 weeks ago"     # filter by date
-git log -S "searchterm"           # find commits that add/remove string
+git log -S "searchterm"           # find commits that add/remove string (pickaxe: content added/removed)
+git log -G "regex"                # find commits where a matching line was added/removed (regex diff search)
+git log -L <start>,<end>:<file>   # trace how a specific line range / function evolved over time
 git log --follow <file>           # file history including renames
 git log main..feature             # commits in feature not in main
+git shortlog -n                   # commits grouped by author, sorted by count
 
 git show <sha>                    # show a commit + its diff
 git diff <sha1>..<sha2>           # diff between two commits
 git diff main..feature            # diff between branches
 git blame <file>                  # show who wrote each line
 git bisect start/good/bad/reset   # binary search for bug
+git bisect run <script>           # fully automate bisection with a pass/fail script (exit 0 = good)
+git bisect log > file             # save the current bisect session
+git bisect replay file            # replay a saved bisect session
 
 git reflog                        # history of HEAD positions
 
