@@ -9,10 +9,14 @@
 | Amend last commit (not pushed)    | `git commit --amend`                            |
 | Undo last commit, keep changes    | `git reset --soft HEAD~1`                       |
 | Undo last commit, discard changes | `git reset --hard HEAD~1` ⚠️                    |
+| Undo last commit, but keep any uncommitted WD changes safe | `git reset --keep HEAD~1`     |
 | Undo a pushed commit (safe)       | `git revert <sha>`                              |
 | Undo a pull                       | `git reset --hard ORIG_HEAD` ⚠️                 |
-| Undo a merge                      | `git reset --hard ORIG_HEAD` ⚠️                 |
+| Undo a merge (successful)         | `git reset --keep <branch>@{1}` — safer, preserves uncommitted work |
+| Undo a merge (in progress)        | `git merge --abort`                             |
 | Undo a rebase                     | `git reset --hard ORIG_HEAD` (or via reflog) ⚠️ |
+
+> `<branch>@{1}` refers to where the branch pointer was *before* the last strong operation (merge, rebase, cherry-pick, commit, pull, reset). `git reset --keep` is a gentler alternative to `--hard`: it moves HEAD back but refuses (rather than silently discarding) if it would overwrite uncommitted working-directory changes.
 
 ## Changing a commit message
 
@@ -67,6 +71,18 @@ git cherry-pick <sha>
 git checkout wrong-branch
 git reset --hard HEAD~1  # remove from wrong branch
 ```
+
+## Adding content to an old commit
+
+Fold new changes into a specific older commit, instead of a new one:
+
+```bash
+git add <changed-files>
+git commit --fixup <old-sha>          # creates a "fixup! ..." commit
+git rebase -i -r --autosquash <old-sha>~1   # auto-reorders + squashes it into <old-sha>
+```
+
+`--autosquash` finds the `fixup!`-prefixed commit and folds it into `<old-sha>` automatically — no manual reordering in the interactive rebase editor. The `-r` flag preserves any merges in the range being rebased.
 
 ## Resolving a conflict
 

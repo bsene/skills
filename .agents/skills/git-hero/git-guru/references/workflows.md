@@ -105,21 +105,66 @@ Developers commit **directly to `main`** (or via very short-lived branches < 2 d
 
 ---
 
+## Ship / Show / Ask
+
+A branching strategy that combines Pull Request feedback with Continuous Integration speed. Introduced by Rouan Wilsenach (martinfowler.com, 2021). Every change is independently categorized as one of three modes, chosen by the author making the change.
+
+### The three modes
+
+| Mode | What happens | Works great when |
+| ---- | ------------ | ----------------- |
+| **Ship** | Commit straight to mainline. No PR, no review wait. | Established pattern, unremarkable bug fix, doc update, applying feedback already discussed |
+| **Show** | Open a PR, but merge it immediately once automated checks pass — don't wait for approval. The PR exists as a space for feedback *after* the change is already live. | Interesting approach/refactor worth sharing; confident in the change but want visibility |
+| **Ask** | Open a PR and wait for feedback before merging. | Genuinely unsure of the approach, want discussion first, experiments, "will this work?" |
+
+```
+main ──●───●──────●────●─────●────
+        \         PR    PR (merge
+      (Ship,   (Show, merge  waits for
+      no PR)   immediately)  feedback = Ask)
+```
+
+### Rules
+
+- Approval is **never** a requirement to merge — authors merge their own Pull Requests.
+- The author decides whether a change is Ship, Show, or Ask, and controls when it goes live.
+- Branches stay short-lived and get rebased on mainline often.
+- Keep mainline releasable with standard CI/CD techniques (feature toggles, etc.) — this applies even to Ship-level changes.
+- Not opening a PR is not a pass on talking to the team — synchronous conversation (calls, pairing) still matters, especially before starting a change.
+
+### The balance
+
+There's no fixed ratio — it shifts with trust and familiarity. High-trust, experienced teams Ship more; teams still building shared standards Show and Ask more. A junior engineer might mostly Show/Ask; a senior engineer mostly Ships but occasionally Shows a new technique. Teams stuck in "mostly Ask" often have an underlying trust problem — mandatory-approval policies are a band-aid, not a fix; more Showing (plus training, pairing) builds the trust that removes the need for it.
+
+### Pros / Cons
+
+| Pros                                              | Cons                                                    |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| Best of CI speed and PR feedback culture           | Requires real team trust and a shared quality bar        |
+| No PR-approval queue bottleneck                     | Needs feature-flag discipline to keep mainline releasable |
+| Scales naturally with trust (seniors ship, juniors ask more) | Not a fit for heavily regulated / mandatory-review environments |
+| Avoids the "rubber-stamp approval" anti-pattern    | Async review happens after merge, not before             |
+
+Source: https://martinfowler.com/articles/ship-show-ask.html
+
+---
+
 ## Choosing a workflow
 
-| Factor            | GitFlow         | GitHub Flow  | Trunk-Based     |
-| ----------------- | --------------- | ------------ | --------------- |
-| Release cadence   | Scheduled       | Continuous   | Continuous      |
-| Team size         | Any             | Small/medium | Medium/large    |
-| CI/CD maturity    | Low needed      | Medium       | High required   |
-| Branch complexity | High            | Low          | Minimal         |
-| Best for          | Libraries, apps | Web services | Large tech orgs |
+| Factor            | GitFlow         | GitHub Flow  | Trunk-Based     | Ship/Show/Ask                      |
+| ----------------- | --------------- | ------------ | --------------- | ----------------------------------- |
+| Release cadence   | Scheduled       | Continuous   | Continuous      | Continuous                          |
+| Team size         | Any             | Small/medium | Medium/large    | Small/medium, high-trust            |
+| CI/CD maturity    | Low needed      | Medium       | High required   | High required                       |
+| Branch complexity | High            | Low          | Minimal         | Low (short branches, no approval gate) |
+| Best for          | Libraries, apps | Web services | Large tech orgs | High-trust teams wanting PR feedback without blocking merges |
 
 **Quick rule of thumb:**
 
 - Versioned software (v1.0, v2.3…) → **GitFlow**
 - Web service, continuous deploy, small team → **GitHub Flow**
 - High-velocity team, strong CI/CD, feature flags → **Trunk-Based**
+- High-trust team that wants PR feedback without blocking on approval → **Ship/Show/Ask**
 
 ---
 

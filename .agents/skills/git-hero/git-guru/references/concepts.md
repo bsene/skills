@@ -43,6 +43,10 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 
 A commit that encapsulates a single, coherent, logical change. It should be self-contained — the project should compile and work after applying it. Atomic commits make history readable, bisecting easy, and cherry-picking safe.
 
+### Commit-ish
+
+Any expression that unambiguously resolves to a commit: a SHA, a branch name, a tag, `HEAD`, `HEAD~1`, `<branch>@{1}`, etc. Most Git commands that take "a commit" actually accept any commit-ish.
+
 ### Branch (branche)
 
 A branch is a named reference that points to the last commit of a chain. A branch does **not** "contain" commits — it is merely a **pointer** (a movable label) on a commit. This pointer advances each time a new commit is created on that branch.
@@ -168,6 +172,16 @@ The reflog is a local log of all positions HEAD has visited. It's your safety ne
 git reflog          # see history of HEAD positions
 git reset --hard HEAD@{3}  # go back to a previous position
 ```
+
+### `<branch>@{1}` — branch-specific undo point
+
+Shorthand for "where this branch's tip pointed one position ago in its own reflog." It's the natural undo point right after a strong operation (merge, rebase, cherry-pick, commit, pull, reset):
+
+```bash
+git reset --keep <branch>@{1}   # undo the last operation on <branch>, safely
+```
+
+`--keep` is gentler than `--hard`: it moves the pointer back but refuses instead of discarding if it would clobber uncommitted working-directory changes.
 
 ### Revision syntaxes
 
