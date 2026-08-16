@@ -1,5 +1,5 @@
 ---
-name: golang-types-and-interfaces
+name: types-and-interfaces
 description: >
   Go type system — structs, interfaces, embedding, composition, generics, slices, maps, enums with iota.
   TRIGGER when: user asks about Go structs, Go interfaces, Go embedding, composition in Go,

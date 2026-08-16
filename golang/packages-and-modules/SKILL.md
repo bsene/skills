@@ -1,5 +1,5 @@
 ---
-name: golang-packages-and-modules
+name: packages-and-modules
 description: >
   Go modules and packages — go.mod, go.sum, versioning, proxies, internal packages, init functions.
   TRIGGER when: user asks about Go modules, go mod init, go mod tidy, go.mod, go.sum,

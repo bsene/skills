@@ -1,5 +1,5 @@
 ---
-name: golang-error-handling
+name: error-handling
 description: >
   Go error handling — error interface, custom error types, wrapping, sentinel errors, errors.Is/As, panic/recover.
   TRIGGER when: user asks about Go error handling, if err != nil, custom errors, error wrapping,
