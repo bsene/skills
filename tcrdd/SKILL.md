@@ -30,6 +30,41 @@ Red/green/refactor driven by `git-gamble`: each phase runs the tests and auto-co
 - **Interactive** (a human is in the loop): use the approval gates below — plan approval, then diff approval before each `git-gamble`.
 - **Autonomous** (no human available to approve, e.g. running unattended): **just run the loop.** Approval gates are optional — skip them and proceed. Still commit per phase and still take one baby step at a time. Do **not** freeze waiting for an approval that will never come.
 
+## Agentic Execution — running unattended as an autonomous coding agent
+
+Autonomous mode (see **Mode** above) says "just run the loop." These are the guardrails that
+make that safe to actually leave unattended, rather than just permission to skip approvals.
+
+- **Verify, never self-report.** A phase is only GREEN/RED-as-expected if it's backed by an
+  actual test-runner tool call whose output you inspected — exit code, pass/fail counts, the
+  works. Never advance the loop, commit, or tell the orchestrator/user "tests pass" on the
+  basis of your own prediction of what the code should do. If the tool call didn't happen,
+  the phase didn't happen.
+- **Stuck-loop limit.** If `git-gamble` reverts the *same* candidate step more than twice in a
+  row, stop retrying at that size — split it smaller (per the transformation ladder) before
+  trying again. If a second round of splitting also stalls, **halt and report a blocker**
+  instead of continuing to loop or reaching for a higher-numbered transformation just to
+  escape. Forcing a bigger move to get unstuck is exactly the failure TCRDD exists to prevent.
+- **Budget the run.** Before starting, note a rough ceiling (iteration count, wall-clock, or
+  token budget) for the feature. Hitting it is a stop condition, not a reason to rush the
+  remaining steps by batching them — see "one baby step at a time" above.
+- **Tag commits by phase.** Prefix each phase's commit message with `[RED]`, `[GREEN]`, or
+  `[REFACTOR]` (and squash to a clean final message per **REPEAT**). This is what makes an
+  unattended run auditable after the fact, when no one watched the diffs live.
+- **Handoff contract.** When TCRDD is invoked as a subagent/tool call by an orchestrator (or
+  you're reporting back after an unattended run), end with a structured status rather than
+  just stopping:
+  - `done` — feature complete, commits squashed, tests green.
+  - `blocked-stuck` — stuck-loop limit hit; include the last failing test and what was tried.
+  - `blocked-budget` — budget exceeded mid-feature; include current state and next planned step.
+  - `blocked-ambiguous` — the smallest-next-behaviour choice needs a human call the agent
+    isn't positioned to make (see RED: "ask the user... in autonomous mode, pick it yourself" —
+    this is the escape hatch for when even that isn't safe to guess).
+- **Isolate concurrent runs.** If more than one agent instance might touch the same repo at
+  once (a swarm, or parallel features), give each its own git worktree. `git-gamble`'s
+  commit/revert cycle assumes exclusive control of the working tree — two agents sharing one
+  will revert each other's in-flight work.
+
 ## Pragmatics — when to skip or downgrade the loop
 
 TDD is a discipline, not dogma. Per Uncle Bob's own pragmatics, skip TCRDD (or downgrade to a
@@ -113,9 +148,23 @@ Before each phase (**interactive mode only** — skip in autonomous mode, see Mo
 6. Straight line → a branch (`if`)
 7. Scalar → an array/collection
 8. `if` → a loop (`while`)
-9. Loop → recursion
-10. Inline expression → an extracted function
-11. Reassigning an existing variable
+9. Reassigning an existing variable
+10. Loop → recursion (bounded/shallow depth only — see TCO note below)
+11. Inline expression → an extracted function
+12. `(case)` — adding a case/else-if to an existing `switch`/`if`
+
+`(case)` is always the last resort, never the first move. If every way to pass a
+candidate test needs a `switch`/`else-if` branch, the test was too big — go back
+and find a smaller intervening test instead of reaching for step 12.
+
+> **TCO note (JS/TS/Node):** V8 does not implement proper tail-call optimization
+> (it shipped in the ES6 spec but no major engine adopted PTC, and it was later
+> dropped from serious consideration). That's why `while`-loop + reassignment
+> (steps 8–9) rank *above* recursion (step 10) here — the reverse of the ordering
+> you'd use in a language with guaranteed TCO (Clojure's `recur`, Scheme, etc.).
+> Reach for recursion only when `n`/depth is small and bounded; for anything
+> that could grow large, unwind to a loop before it becomes a stack-overflow risk
+> in production.
 
 ### REFACTOR
 
@@ -159,6 +208,7 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 | Situation                            | Action                                                                                |
 | ------------------------------------ | ------------------------------------------------------------------------------------- |
 | `git-gamble` reverts your change     | The step was too large — split it into smaller increments and try again               |
+| Same-size step reverts >2x in a row (autonomous) | Stop retrying at that size. Split smaller once; if that also stalls, halt and report a `blocked-stuck` status instead of looping or forcing a bigger transformation |
 | Tests are flaky (pass/fail randomly) | Fix or isolate the flaky test before continuing the cycle                             |
 | `git-gamble` is not installed        | Run tests manually; `git commit` on expected result, `git reset --hard` on unexpected |
 
@@ -172,6 +222,7 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 | Want the original TCR rationale       | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                  |
 | Want deeper TDD cycle theory          | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
 | Want the full derivation of the transformation ladder above | [The Transformation Priority Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html) |
+| Want to see why `(case)` is last and why tail-recursion/language runtime changes the ladder's order | [Fib. The T-P Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FibTPP.html) |
 | Unsure whether a specific piece of code is a legitimate TCRDD exception | [The Pragmatics of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/03/06/ThePragmaticsOfTDD.html) |
 
 ## Upstream
