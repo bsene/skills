@@ -11,7 +11,11 @@ description: >
 
   DO NOT USE when: retrofitting tests onto existing code without behaviour change (use
   `testing` instead); one-off bug fix where per-phase commits add noise; no runnable test
-  command available.
+  command available; trivial code (getters/setters, one-line/obvious functions, bare member
+  variables — covered indirectly by other tests); GUI/layout code that has to be fiddled into
+  place by trial and error; a genuine one-shot throwaway script; thin wrapping of a trusted
+  third-party framework/DB/HTTP client you aren't testing the internals of. See Pragmatics
+  below.
 
   Prefer this over `testing` when cadence and commit discipline matter, not just test
   authoring.
@@ -25,6 +29,35 @@ Red/green/refactor driven by `git-gamble`: each phase runs the tests and auto-co
 
 - **Interactive** (a human is in the loop): use the approval gates below — plan approval, then diff approval before each `git-gamble`.
 - **Autonomous** (no human available to approve, e.g. running unattended): **just run the loop.** Approval gates are optional — skip them and proceed. Still commit per phase and still take one baby step at a time. Do **not** freeze waiting for an approval that will never come.
+
+## Pragmatics — when to skip or downgrade the loop
+
+TDD is a discipline, not dogma. Per Uncle Bob's own pragmatics, skip TCRDD (or downgrade to a
+lighter cadence) in these cases — everything else still gets the full loop:
+
+- **Trivial code** — getters/setters, bare member variables, one-line or obviously trivial
+  functions. These get exercised indirectly by the tests of whatever calls them; writing a
+  RED/GREEN cycle for each one is ceremony without signal.
+- **GUI / layout code** — anything that has to be *fiddled* into place by trial and error
+  (font sizes, RGB values, XY positions, spacing). Don't force a failing test first here.
+  Instead:
+  - Extract any real logic out of the GUI layer into a plain module and TCRDD *that* module.
+    The GUI itself should be thin glue — wiring, not behavior.
+  - For the fiddly glue itself, either fiddle first and write tests after the fact, or fiddle,
+    then delete and re-write test-first once you know the shape. Both are legitimate; pick
+    per judgement call, not per rule.
+- **Trusted third-party code** — frameworks, databases, web servers, SDKs you have no reason
+  to distrust. Mock the boundary and TCRDD *your* code against the mock; don't write tests
+  that re-verify the third party's behavior. Exception: if you suspect it's actually broken,
+  or a real call is cheap/fast/predictable enough that mocking is overkill — then it's fine
+  to test through it.
+- **Genuine one-shot throwaway work** — a script or program that will be run once and
+  discarded (e.g. generating a one-off asset), especially in a REPL-driven / exploratory
+  context. Skip the loop entirely.
+
+None of this licenses skipping TCRDD because a task merely *feels* inconvenient or slow. The
+default is still: make every effort to TDD any code with lasting production value. These are
+narrow, recognizable exceptions — not a general escape hatch.
 
 ## Workflow
 
@@ -139,6 +172,7 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 | Want the original TCR rationale       | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                  |
 | Want deeper TDD cycle theory          | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
 | Want the full derivation of the transformation ladder above | [The Transformation Priority Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html) |
+| Unsure whether a specific piece of code is a legitimate TCRDD exception | [The Pragmatics of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/03/06/ThePragmaticsOfTDD.html) |
 
 ## Upstream
 
