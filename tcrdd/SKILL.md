@@ -136,7 +136,7 @@ Before each phase (**interactive mode only** — skip in autonomous mode, see Mo
 
 - Write _only_ the code that makes the currently failing test pass. Nothing more.
 - Resist the urge to generalise, add helpers, or handle future cases — those are for later tests.
-- No `@Injectable`, no logger, no Zod — unless the failing test explicitly requires it.
+- No extra dependencies, loggers, or validators — unless the failing test explicitly requires it.
 
 **Transformation priority** — use the lowest-numbered move on this ladder that makes the test pass. Reaching for a higher number is a signal the test was too big (go back and split it):
 
