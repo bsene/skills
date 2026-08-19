@@ -145,26 +145,17 @@ Before each phase (**interactive mode only** — skip in autonomous mode, see Mo
 3. Constant → a richer constant
 4. Constant → a variable/argument
 5. One statement → more statements
-6. Straight line → a branch (`if`)
+6. Straight line → a branch
 7. Scalar → an array/collection
-8. `if` → a loop (`while`)
+8. Branch → a loop
 9. Reassigning an existing variable
-10. Loop → recursion (bounded/shallow depth only — see TCO note below)
+10. Loop → recursion (bounded/shallow depth only)
 11. Inline expression → an extracted function
-12. `(case)` — adding a case/else-if to an existing `switch`/`if`
+12. Adding a case to an existing multi-branch conditional
 
-`(case)` is always the last resort, never the first move. If every way to pass a
-candidate test needs a `switch`/`else-if` branch, the test was too big — go back
+Step 12 is always the last resort, never the first move. If every way to pass a
+candidate test needs a multi-branch conditional, the test was too big — go back
 and find a smaller intervening test instead of reaching for step 12.
-
-> **TCO note (JS/TS/Node):** V8 does not implement proper tail-call optimization
-> (it shipped in the ES6 spec but no major engine adopted PTC, and it was later
-> dropped from serious consideration). That's why `while`-loop + reassignment
-> (steps 8–9) rank *above* recursion (step 10) here — the reverse of the ordering
-> you'd use in a language with guaranteed TCO (Clojure's `recur`, Scheme, etc.).
-> Reach for recursion only when `n`/depth is small and bounded; for anything
-> that could grow large, unwind to a loop before it becomes a stack-overflow risk
-> in production.
 
 ### REFACTOR
 
@@ -222,7 +213,7 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 | Want the original TCR rationale       | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                  |
 | Want deeper TDD cycle theory          | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
 | Want the full derivation of the transformation ladder above | [The Transformation Priority Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html) |
-| Want to see why `(case)` is last and why tail-recursion/language runtime changes the ladder's order | [Fib. The T-P Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FibTPP.html) |
+| Want to see why adding a case is last and why tail-recursion/language runtime changes the ladder's order | [Fib. The T-P Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FibTPP.html) |
 | Unsure whether a specific piece of code is a legitimate TCRDD exception | [The Pragmatics of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/03/06/ThePragmaticsOfTDD.html) |
 
 ## Upstream
