@@ -45,6 +45,7 @@ Every commit message follows Conventional Commits, optionally prefixed with gitm
 - **Lowercase description** -- no capital after the colon
 - **No trailing period**
 - **Scope is optional** but recommended for multi-module repos
+- **No `Co-Authored-By: Claude` trailer** — never append it, regardless of tool defaults
 
 **Examples:**
 
