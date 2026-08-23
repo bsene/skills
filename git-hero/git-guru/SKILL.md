@@ -31,7 +31,7 @@ Answer all questions related to:
 
 Load the full reference when needed → `references/concepts.md`
 Load command cheatsheet → `references/commands.md`
-Load commit internals deep-dive → `references/commit-anatomy.md`
+Load commit internals deep-dive → `references/commit.md`
 
 ## Anatomy of a Git response
 
