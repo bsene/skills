@@ -155,9 +155,9 @@ function createUserId(id: string): UserId { return id as UserId; }
 
 **Companion object pattern** — Bind the same name to both a type and const value. One import covers annotation and utilities.
 
-**`as const`** — Freeze values to literal types, but only when no type exists yet for what you're deriving. If a type already exists, annotate with it instead — see `rules/favor-existing-types-over-as-const.md` for the full rationale and examples.
+**`as const`** — Freeze values to literal types, but only when no type exists yet for what you're deriving. If a type already exists, annotate with it instead — see `../rules/favor-existing-types-over-as-const.md` for the full rationale and examples.
 
-**Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed. See `rules/avoid-type-assertions.md` for banned patterns and alternatives.
+**Escape hatches** — `as T`, `!`, `!:` override TypeScript checks. Last resort; frequent use signals refactoring needed. See `../rules/avoid-type-assertions.md` for banned patterns and alternatives.
 
 ---
 
@@ -182,7 +182,7 @@ type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
 
 **Why `interface extends` over `type &` for composition:** TypeScript caches an interface's resolved shape by name, so it doesn't get recomputed each time it's referenced; a `type` intersection is recomputed at each use site. Interfaces also catch conflicting property types across the merged shapes as a compile error, where an intersection can silently collapse the conflicting property to `never`. This gap narrows a lot under the Go-ported TypeScript 7 compiler, since the overall baseline gets much faster — but `interface extends` remains the safer default for composed object shapes; reach for `type` when you need unions, primitives, tuples, or mapped/conditional types that `interface` can't express.
 
-Do NOT prefix interfaces with `I`. See `rules/no-interface-prefix.md`.
+Do NOT prefix interfaces with `I`. See `../rules/no-interface-prefix.md`.
 
 ---
 
@@ -246,7 +246,7 @@ const config = { host: "localhost", port: 3000 };
 let config: Config = { host: "localhost", port: 3000 };
 ```
 
-→ Full examples with runnable code: `references/type-system.md`
+→ Full examples with runnable code: `example.md`
 → Exhaustiveness-checking example: `example.md`
 
 ---
