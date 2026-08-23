@@ -10,7 +10,7 @@ description: >
   TypeScript composition, or functional TypeScript. Even if they just say "compose these
   functions", "pipe this data", or "make this more functional", use this skill.
   DO NOT USE when: the user is designing class-based OOP architecture or asking about SOLID
-  principles — use `oop-principles` instead.
+  principles — use `object-oriented-programming` instead.
 ---
 
 # Composing Software in JavaScript
@@ -108,4 +108,4 @@ Scenario: `.benchmarks/scenarios/composing-software-001-compose-vs-inherit.md`
 | claude-sonnet-4-6 | 33%     | 100% | +67%  |
 | claude-haiku-4-5  | 0%      | 83%  | +83%  |
 
-> **PASS** (run 2026-06-25, strongest signal). Decisive — haiku 0→83, opus 17→100. Baselines reach for `extends`; the skill enforces composition (factory/mixin) and correctly DEFERS the SRP follow-up to `oop-principles` (anti-trigger holds). Gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25, strongest signal). Decisive — haiku 0→83, opus 17→100. Baselines reach for `extends`; the skill enforces composition (factory/mixin) and correctly DEFERS the SRP follow-up to `object-oriented-programming` (anti-trigger holds). Gate per `skill-optimizer/release-gates.md`.
