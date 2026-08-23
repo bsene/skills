@@ -9,8 +9,8 @@ description: >
   ports (inbound port, outbound port, application port),
   layers (domain layer, application core, infrastructure layer, use case),
   isolation (dependency inversion in practice, testable business logic, decouple framework, boundary protection).
-  DO NOT USE when: user asks about general OOP/SOLID principles in the abstract — use `oop-principles` instead.
-  Note: DIP from `oop-principles/solid` is the theoretical foundation of this pattern.
+  DO NOT USE when: user asks about general OOP/SOLID principles in the abstract — use `object-oriented-programming` instead.
+  Note: DIP from `object-oriented-programming`'s SOLID reference is the theoretical foundation of this pattern.
 ---
 
 # Ports and Adapters Architecture
