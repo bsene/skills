@@ -41,4 +41,4 @@ Conventions and rules for idiomatic JavaScript. TypeScript builds on these — w
 |---|---|---|
 | TypeScript-specific features (types, generics, `as const`, `readonly`) | `typescript` | Type-system rules on top of JS conventions |
 | Function composition, pipe, currying, FP patterns | `composing-software` | FP-flavored design beyond raw JS idioms |
-| OOP / SOLID / design patterns | `oop-principles` | Class-based architecture |
+| OOP / SOLID / design patterns | `object-oriented-programming` | Class-based architecture |

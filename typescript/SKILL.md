@@ -3,7 +3,7 @@ name: typescript
 description: >
   TypeScript-specific best-practices and rule enforcement — type safety, runtime validation,
   error handling, and TS-only conventions. Routes to type-system and Zod sub-skills, the
-  `javascript` skill for JS-foundation rules, and `oop-principles` for design patterns and SOLID.
+  `javascript` skill for JS-foundation rules, and `object-oriented-programming` for design patterns and SOLID.
 
   TRIGGER when: language (TypeScript, TS, .ts, .tsx, idiomatic TypeScript),
   type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing),
@@ -27,8 +27,8 @@ Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/han
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
 → **JavaScript conventions** (naming, `this`-handling, barrel files, arrays, null/undefined) → `javascript` skill
-→ **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `oop-principles` skill
-→ **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `oop-principles` skill
+→ **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
+→ **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 
 ---
 

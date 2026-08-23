@@ -3,7 +3,7 @@ name: cupid-checker
 description: >
   Review code against the CUPID properties for joyful coding: Composable, Unix philosophy, Predictable, Idiomatic, and Domain-based. Use this skill whenever the user wants to assess code quality using CUPID, asks "is this code CUPID?", wants a code review framed around CUPID principles, mentions any of the five CUPID properties by name, asks how to make code more joyful or habitable, or wants to refactor/improve code using Dan North's CUPID framework. Also trigger when the user pastes code and asks for feedback on structure, naming, dependencies, predictability, or domain alignment — even if they don't explicitly mention CUPID.
   DO NOT USE when: user wants specific refactoring techniques for code smells — use `refactoring` instead.
-  DO NOT USE when: user wants SOLID principle analysis — use `oop-principles` instead.
+  DO NOT USE when: user wants SOLID principle analysis — use `object-oriented-programming` instead.
 ---
 
 # CUPID Checker

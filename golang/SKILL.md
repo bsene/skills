@@ -106,7 +106,7 @@ Every type has a usable zero value — no null surprises.
 | Situation | Skill | Why |
 |---|---|---|
 | General testing philosophy (not Go-specific) | `testing` | Language-agnostic testing strategy and philosophy |
-| OOP design principles | `oop-principles` | SOLID, design patterns (language-agnostic) |
+| OOP design principles | `object-oriented-programming` | SOLID, design patterns (language-agnostic) |
 | Hexagonal architecture in Go | `ports-adapters-architecture` | Ports and adapters pattern |
 
 ## Benchmark
