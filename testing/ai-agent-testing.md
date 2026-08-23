@@ -92,3 +92,5 @@ These hold regardless of who's typing:
 - Letting the coding agent edit acceptance tests to make them pass — always a red flag, not a fix.
 - Skipping Gherkin review entirely because "the agent wrote it" — spec drift is exactly what acceptance tests are supposed to catch, so an unreviewed spec is an unverified guardrail.
 - Applying agent-era batch cadence to a human pairing session, or vice versa — the two cadences solve different memory problems; match the cadence to who's driving.
+- An agent asked to "test the code" reaching for SRP/SOLID checks (method counts, responsibility assertions) instead of behavior — test what the code does; leave architecture to static analysis or the refactorer agent.
+- An agent optimizing for a small diff by appending new tests wherever is cheapest instead of grouping them with the related scenario — prefer well-structured, clearly grouped tests over minimal diffs, even when that means touching more of the file.

@@ -71,8 +71,9 @@ Smart design can resolve apparent conflicts. For example:
 - Tests break when you refactor variable names
 - Tests fail when you move code from one file to another
 - Tests coupled to class structure or private methods
+- Tests that assert design/architecture rules directly — method counts, responsibility checks, SRP/SOLID compliance — rather than observable behavior
 
-**TestDesiderata lens:** Structural insensitivity too low. Solution: Test behavior, not implementation.
+**TestDesiderata lens:** Structural insensitivity too low. Solution: Test behavior, not implementation. Architectural rules like SRP describe how code is structured, not what it must do — enforce them with static analysis or review, not runtime tests.
 
 #### Readability Issues
 - 50-line test setup; actual assertion is 1 line

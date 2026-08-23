@@ -73,9 +73,9 @@ The test body should have three clearly separated phases:
 
 Read all test names in sequence. Do they tell a coherent story of what the class does?
 
-**Violations:** Gaps (obvious untested behaviours), overlap (duplicate behaviours with different names), or order chaos (unrelated tests scattered).
+**Violations:** Gaps (obvious untested behaviours), overlap (duplicate behaviours with different names), or order chaos (unrelated tests scattered) — including a new test simply appended at the end of the file to keep the diff small rather than placed near the scenario it belongs to.
 
-**Fix:** Reorder tests by scenario or feature area; flag obvious missing behaviours.
+**Fix:** Reorder tests by scenario or feature area; flag obvious missing behaviours. Prefer well-structured, clearly grouped tests over minimal diffs — a larger diff that keeps the suite reading as a coherent story beats a small one that scatters it.
 
 ---
 
@@ -97,6 +97,7 @@ Flag this as a **design smell** (not just a naming issue). Suggest introducing a
 | No `# Given/When/Then` in complex test | Structure unclear | Add phase comments |
 | 10 asserts in one test | Multiple behaviours | Split into focused tests |
 | Test name describes implementation | Tests _how_, not _what_ | Rename to describe the observable outcome |
+| New test appended at file end to keep the diff small | Order chaos — breaks the suite's story | Group with related tests, even if the diff grows |
 
 ---
 

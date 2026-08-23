@@ -38,6 +38,8 @@ processor.process(order);
 expect(db.find(order.id)).toBeDefined();
 ```
 
+**This runs one direction only.** Hard-to-test code is a signal to fix the design — it does not mean tests should assert the design itself. SRP and other architectural rules (dependency count, layering, method count) describe how code is structured, not what it does. A test that checks `OrderProcessor` has exactly two dependencies or one public method is testing architecture, not behavior — it will pass on broken code and fail on a harmless refactor. Test the behavior the design enables (`process()` saves the order and notifies the customer), and enforce SRP/SOLID with static analysis or code review instead.
+
 ### Principle 2: Mocks are a Smell — Prefer Fakes
 
 Mocks assert on implementation details (which methods were called, in what order). Fakes implement the real interface with in-memory behavior. Mock-heavy tests survive bugs because they only check that methods were invoked, not what actually happened.

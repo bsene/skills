@@ -29,6 +29,7 @@ Testing is not verification after the fact. It is feedback on design. A test tha
 | Tests are specification, not verification | Name tests as sentences describing behavior | Tests named after implementation details |
 | Mocks are a smell, not a strategy | Prefer real collaborators or fakes | Mock-heavy suites that survive bugs |
 | Pure functions are the testability ideal | Push I/O to the edges; keep business logic pure | Business logic tangled with side effects |
+| Test behavior, not design principles | SRP and other architectural rules guide *how* code is structured; assert *what* the code does, not whether it obeys a design rule | Tests that count methods, check class responsibilities, or assert SOLID compliance instead of observable outcomes |
 
 These hold regardless of who's writing the code — see below for what changes, and what doesn't, when an AI agent is doing the writing.
 
@@ -72,6 +73,7 @@ Strict red/green/refactor exists to manage *human* short-term memory. Agents hav
 | The author can test their own code | Don't let the same agent instance test the code it just wrote — it will produce tests that codify the bug. Separate test-writer from coder role |
 | Code review is how you catch problems | Coverage + mutation testing + complexity metrics become the primary trust signal, especially at scale where nobody's reading every diff |
 | Acceptance tests are fixable like any other test | Treat Gherkin/acceptance tests as guardrails an agent should not be allowed to loosen to make them pass |
+| Smaller diff = better | An agent optimizing for diff size will append tests wherever is cheapest instead of grouping them with related scenarios. Prefer well-structured, clearly grouped tests over minimal diffs — restructure the test file when it keeps the suite readable |
 
 Full multi-agent pipeline (specifier → test-writer → coder → refactorer → architect), the "semantic distance" pattern for preventing cheating, and mutation-testing gotchas: see [Testing With AI Coding Agents](references/ai-agent-testing.md).
 
@@ -88,6 +90,8 @@ Full multi-agent pipeline (specifier → test-writer → coder → refactorer �
 | Skip legacy testing | Risk increases over time | Start with integration tests for safety |
 | AI agent tests its own code | Tests get written to match the bug | Separate test-writer role from coder role |
 | Agent "fixes" a failing acceptance test | Loosening the assertion defeats the guardrail | Treat acceptance tests as immutable by the coding agent |
+| Testing for SRP/architecture compliance | Confuses a structural design rule with a behavioral spec; couples the test to how the code is organized rather than what it does | Assert observable behavior; enforce architecture with static analysis/lint, not tests |
+| Appending tests wherever is fastest to minimize the diff | Breaks Principle 5 (tests collectively document the class) — order chaos, harder to read as a spec | Prefer well-structured, clearly grouped tests over minimal diffs; place new tests with the related scenario even if the diff grows |
 
 ---
 
