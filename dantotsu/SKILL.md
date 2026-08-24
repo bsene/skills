@@ -87,23 +87,9 @@ To specifically drive down Stage-A defects (caught while coding), use a constrai
 
 ## Output template
 
-For a single defect analysis, use exactly this structure — it's the default and should stay this size unless the user asks for the extras below:
+For a single defect analysis, use the structured template in [`_template.md`](_template.md). It defines the full document structure — metadata table, problem statement, causal chain, root-cause analysis, detection-failure causes, countermeasure, and eradication — with inline guidance comments in each section.
 
-```markdown
-# [TITLE]
-
-date: [DATE]
-detection stage: [STAGE LETTER]
-
-## Root cause analysis
-
-## Countermeasures
-
-## Eradication
-
-```
-
-Fill "Root cause analysis" with the defect description, the recurrence check, the full 5-whys chain, and the "why not caught earlier" analysis. Keep "Countermeasures" and "Eradication" strictly separate.
+Fill the "Causal Chain" and "Root Cause of Occurrence" sections with the defect description, the recurrence check, the full 5-whys chain, and the "why not caught earlier" analysis (the latter goes in "Detection Failure Causes"). Keep "Countermeasure" and "Eradication" strictly separate.
 
 If the user also wants the learning-sharing item or the prioritization scoring captured in the document, add optional `## Learning to share` and `## Prioritization` sections — don't add them by default, only when asked or when clearly working at team/recurring level.
 
