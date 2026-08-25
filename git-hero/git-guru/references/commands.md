@@ -28,6 +28,7 @@ git config --global pull.rebase true         # pull = fetch + rebase
 git config --global push.default current    # push current branch
 git config --global push.autoSetupRemote true  # auto-track on first push
 git config --global init.defaultBranch main
+git config --global core.ignoreCase true    # case-change handling on case-insensitive filesystems (macOS/Windows)
 git config --global alias.lg "log --oneline --graph --all"
 git config --list --show-origin              # see all config
 ```
