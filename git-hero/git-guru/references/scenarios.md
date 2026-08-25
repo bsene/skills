@@ -53,6 +53,15 @@ git rebase -i HEAD~3        # lists last 3 commits in editor
 git push --force-with-lease --force-if-includes origin <branch>
 ```
 
+**Manual version (no alias) — same result, one editor prompt:**
+
+```bash
+git commit --no-verify --fixup reword:<sha>
+git rebase -i -r --autosquash <sha>~1
+```
+
+> `--no-verify` skips commit hooks on the throwaway fixup commit (it never needs to pass lint/tests on its own). This is exactly what the `autoreword` alias below automates.
+
 **Pro tip — `autoreword` alias (older commits, no double editor prompt):**
 
 ```bash

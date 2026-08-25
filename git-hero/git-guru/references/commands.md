@@ -54,9 +54,11 @@ git fetch --unshallow              # convert a shallow clone back to full histor
 
 ```bash
 git status                        # current state of working dir + stage
+git status -u                     # include untracked files (and their contents in untracked dirs)
 git add <file>                    # stage a file
 git add .                         # stage all changes
 git add -p                        # interactive staging by hunk
+                                   #   s = split hunk further, y = stage this hunk, n = skip it
 git diff                          # unstaged changes
 git diff --staged                 # staged changes (vs last commit)
 git commit -m "message"           # commit staged changes
@@ -99,16 +101,19 @@ git merge --no-ff <branch>        # always create merge commit
 git merge --ff-only <branch>      # fast-forward only (fail if not possible)
 git merge --abort                 # abort in-progress merge
 git merge --continue              # continue after conflict resolution
+git merge --squash <branch>       # apply all of a branch's changes as uncommitted work, without a merge commit and without closing the branch (still needs a `git commit` after)
 
 git rebase <branch>               # rebase current branch onto <branch>
 git rebase -i HEAD~3              # interactive rebase (last 3 commits)
 git rebase --onto main feature bugfix  # advanced: graft subtree
 git rebase -r <new-base> [<branch>]    # move a whole branch (incl. merges it received) onto a new base
+git rebase -r -i <ref>             # combined: clean up local history (reword/squash/fixup/drop) while preserving any merges, from <ref> onward
 git rebase --onto <target> <start-exclusive> [<branch>]  # move everything after <start> onto <target>
 git rebase --abort                # abort in-progress rebase
 git rebase --continue             # continue after resolving conflict
 
 git cherry-pick <sha>             # apply a single commit
+git cherry-pick -x <sha>          # same, but appends "(cherry picked from commit <sha>)" to the message — keeps traceability back to the source commit
 git cherry-pick <sha1>..<sha2>    # apply a range (exclusive sha1)
 git cherry-pick --abort
 git cherry-pick --continue
@@ -131,9 +136,11 @@ git fetch --prune                 # fetch + remove stale tracking branches
 
 git pull                          # fetch + merge
 git pull --rebase                 # fetch + rebase (cleaner history)
+git pull --rebase=merges          # fetch + rebase, but preserve any local merge commits instead of flattening them
 
 git push origin <branch>          # push branch
 git push -u origin <branch>       # push + set upstream tracking
+git push --all                    # push all local branches at once
 git push --force-with-lease --force-if-includes  # safest force push ⚠️
 git push --force-with-lease       # safer: fails if remote changed since last fetch ⚠️
 git push --force                  # overwrite remote unconditionally ⚠️⚠️
@@ -228,6 +235,7 @@ git branch rescue <sha>           # rescue into a branch
 git log                           # full log
 git log --oneline --graph --all   # visual branch graph
 git log --author="Name"           # filter by author
+git log --grep -i -E "<pattern>"  # search commit messages (-i case-insensitive, -E extended regex)
 git log --since="2 weeks ago"     # filter by date
 git log -S "searchterm"           # find commits that add/remove string (pickaxe: content added/removed)
 git log -G "regex"                # find commits where a matching line was added/removed (regex diff search)
@@ -241,6 +249,7 @@ git diff <sha1>..<sha2>           # diff between two commits
 git diff main..feature            # diff between branches
 git blame <file>                  # show who wrote each line
 git bisect start/good/bad/reset   # binary search for bug
+git bisect skip                   # can't test this commit (e.g. doesn't build) — Git picks a different one
 git bisect run <script>           # fully automate bisection with a pass/fail script (exit 0 = good)
 git bisect log > file             # save the current bisect session
 git bisect replay file            # replay a saved bisect session
