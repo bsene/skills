@@ -13,7 +13,8 @@ description: >
   ts-conventions (readonly modifier, return type annotations, interface prefix, `as const`),
   contracts (domain vs DTO, monorepo types, API contract types).
   DO NOT USE when: user asks generic JS questions with no TS angle — use `javascript` instead.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # TypeScript
