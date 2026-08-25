@@ -8,7 +8,8 @@ description: >
   Go deadlock, -race flag, errgroup, Go concurrent map, Go goroutine leak.
   DO NOT USE when: user needs general concurrency theory unrelated to Go, or is asking about
   goroutines only as background context with no code to write or review.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go Concurrency

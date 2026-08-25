@@ -11,7 +11,8 @@ description: >
   tooling (Go modules, generics, table-driven tests, go vet),
   ask (idiomatic Go, Go best practices, Go code review, how to write Go).
   DO NOT USE when: user mentions "go" only as a verb in a different-language context.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go

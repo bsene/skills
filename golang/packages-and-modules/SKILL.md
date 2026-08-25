@@ -9,7 +9,8 @@ description: >
   DO NOT USE when: user is asking purely about directory/folder layout (cmd/, internal/, pkg/)
   with no go.mod, versioning, or dependency question involved — use the `golang` skill's
   Project Layout reference directly instead.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go Packages and Modules

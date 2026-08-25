@@ -12,7 +12,8 @@ description: >
   ALSO APPLIES to TypeScript — load alongside `typescript` on `.ts`/`.tsx`; for type-system rules
   (generics, `as`, interfaces, narrowing) route to `typescript` / `typescript-type-system`.
   DO NOT USE as primary skill for type-system questions — this skill still applies for naming and JS idioms.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 

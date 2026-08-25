@@ -9,7 +9,8 @@ description: >
   Go graceful shutdown, Go HTTP client.
   DO NOT USE when: non-web JSON/struct marshaling or general Go with no HTTP server/handler/router →
   use the relevant `golang` sub-skill; non-Go web work.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go Web Development
