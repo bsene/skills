@@ -5,17 +5,14 @@ description: >
   and auto-revert on failure, gated by user approval before code and before committing.
 
   TRIGGER when: user says TCRDD, TCR, TDD, red-green-refactor, "test-first", "write the test
-  first", "let's TDD this", "baby steps", "commit on green", "revert on failure", "go step by
-  step with tests"; user wants approval-gated pair programming on a feature; user wants
-  disciplined test-then-code cadence with automatic commits.
+  first", "let's TDD this", "baby steps", "commit on green", "revert on failure", or "go
+  step by step with tests"; user wants approval-gated pair programming or a disciplined
+  test-then-code cadence with automatic commits.
 
   DO NOT USE when: retrofitting tests onto existing code without behaviour change (use
-  `testing` instead); one-off bug fix where per-phase commits add noise; no runnable test
-  command available; trivial code (getters/setters, one-line/obvious functions, bare member
-  variables — covered indirectly by other tests); GUI/layout code that has to be fiddled into
-  place by trial and error; a genuine one-shot throwaway script; thin wrapping of a trusted
-  third-party framework/DB/HTTP client you aren't testing the internals of. See Pragmatics
-  below.
+  `testing`); one-off bug fix where per-phase commits add noise; no runnable test command;
+  trivial code covered indirectly by other tests; GUI/layout fiddling; throwaway scripts; or
+  thin wrapping of a trusted third-party framework you aren't testing internally.
 
   Prefer this over `testing` when cadence and commit discipline matter, not just test
   authoring.
