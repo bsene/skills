@@ -8,7 +8,8 @@ description: >
   Go error interface, handling errors in Go, Go error patterns.
   DO NOT USE when: user needs general error-handling philosophy outside Go, or panic/recover
   questions unrelated to Go's error interface.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go Error Handling

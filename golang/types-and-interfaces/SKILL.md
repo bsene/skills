@@ -9,7 +9,8 @@ description: >
   Go composition vs inheritance, Go polymorphism.
   DO NOT USE when: user asks about OOP design principles or composition/polymorphism in a
   language-agnostic way with no Go code involved — use `object-oriented-programming` instead.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go Types and Interfaces

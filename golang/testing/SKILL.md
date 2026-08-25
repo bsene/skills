@@ -7,7 +7,8 @@ description: >
   Go test coverage, testify, Go mock, Go test patterns, Go test organization, TestMain,
   t.Cleanup, t.Parallel, Go golden files, Go httptest.
   DO NOT USE when: user needs general testing philosophy (not Go-specific) — use `testing` skill instead.
-user-invocable: false
+metadata:
+  user-invocable: "false"
 ---
 
 # Go Testing
