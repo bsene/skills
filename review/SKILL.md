@@ -82,6 +82,29 @@ conventional message (`fix(cart): clamp coupon discount at zero`).
 
 ---
 
+## Deep-Rigor Mode
+
+When the user asks for a strict / thorough / "thermo-nuclear" review (e.g. "/review --strict",
+"deep review", "rigorous review", "code quality audit"), layer the
+[thermo-nuclear-code-quality-review](references/thermo-nuclear-code-quality-review.md) rubric
+on top of the workflow above:
+
+- Run the standard workflow (diff → severity tiers → questions → fixes).
+- Then re-run the diff against the thermo-nuclear rubric: hunt for "code judo" moves that
+  delete whole categories of complexity, flag files crossing 1000 lines, spaghetti growth,
+  boundary leaks, unnecessary wrappers/casts, and missed decompositions.
+- Promote those structural findings into the `Blockers`/`Concerns` tiers before approval.
+- Approval bar rises: correct behavior is not enough — no clear structural regression and
+  no obvious missed simplification.
+
+## References
+
+- [thermo-nuclear-code-quality-review](references/thermo-nuclear-code-quality-review.md) —
+  deep-rigor rubric for ambitious structural simplification. Source:
+  <https://github.com/cursor/plugins/tree/3347cbab5b54136f6fba0994c3a01a56f7fb7fca/cursor-team-kit/skills/thermo-nuclear-code-quality-review>
+
+---
+
 ## Guardrails
 
 - Never skip diff step — reconstructed diffs miss context and whitespace changes
