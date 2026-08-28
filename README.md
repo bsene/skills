@@ -53,4 +53,4 @@ See [writing-a-good-agents-md](/skills/writing-a-good-agents-md/SKILL.md) for qu
 
 ---
 
-**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Aug 23, 2026
+**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Aug 29, 2026
