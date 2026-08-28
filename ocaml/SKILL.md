@@ -23,7 +23,11 @@ let total_ttc (price_ht : float) (tax_rate : float) : float = price_ht *. (1. +.
 
 If the user is confused about what type something is, the answer is to ask the tools, not to preemptively annotate everything: `ocamlc -i file.ml` prints the full inferred signature of a file without touching it, `dune utop <dir>` / `dune build @check` do the same interactively, and the `ocaml` toplevel (or `utop`) reports the inferred type after every expression you enter.
 
-When reading an inference error, use the same left-to-right method the compiler uses: trace the expression from the outside in, starting from the most generic possible type (`'a`), and add one constraint at a time as each construct is encountered (a function application pins down an arrow type, an `if` pins its branches to the same type, an arithmetic operator pins its operands to `int` or `float`, etc.). The reported error is usually the *last* constraint that couldn't be satisfied, not the first place something looks wrong — so when a message says a variable "occurs inside" a type it's supposed to equal (an infinite/recursive type), walk back through the constraints in order rather than staring at the flagged line.
+When reading an inference error, trace the expression the way the compiler does:
+
+- Start from the most generic type (`'a`), add one constraint per construct: function application pins an arrow type, `if` pins its branches to the same type, arithmetic pins its operands to `int` or `float`.
+- The reported error is the *last* constraint that couldn't be satisfied, not the actual mistake site — locate the real one by walking constraints in order.
+- A message saying a variable "occurs inside" a type it's supposed to equal means an infinite/recursive type — walk the constraints back in order rather than staring at the flagged line.
 
 ## Core language cheat sheet
 
@@ -50,11 +54,11 @@ When reading an inference error, use the same left-to-right method the compiler 
 - **Modules (`module Foo = struct ... end`) and signatures (`.mli` files or `module type`)** are the OCaml analogue of TS interfaces + implementation, but enforced at compile time with no structural escape hatch. A `.mli` file next to a `.ml` file restricts what's visible outside the module — the closest OCaml equivalent to `export`/`private`.
 - **No classes-by-default culture.** OCaml has an object system (`class`, `object ... end`) but idiomatic OCaml reaches for modules + records + functions first, objects/classes rarely. Don't default to translating a JS class into an OCaml class — translate it into a module exposing functions over a record type instead.
 
-## Why mutation and equality behave the way they do
+## Runtime model (background)
 
-Worth having once, since it explains several "why is it like that" questions at once rather than each looking like an arbitrary rule: an OCaml value is either an unboxed integer or a pointer to a heap-allocated **block**. Tuples, arrays, records, and non-constant variant constructors are all just blocks (a header word + N value words) — `(1, 2)`, `[| 1; 2 |]`, and `{ a = 1; b = 2 }` all have the same underlying shape, a pointer to a 2-word block. A `ref` is nothing special either — it's a one-field mutable record, which is why `ref`/`:=`/`!` compose with everything else instead of being a distinct language feature. A `list` is exactly the linked list you'd hand-roll in JS or Java (each `::` cell is a 2-word block), except the type system guarantees it's well-formed, so there's no null-pointer case to check for — pattern matching on `[]` vs `x :: xs` forces you to handle the empty case at compile time.
+An OCaml value is either an unboxed integer or a pointer to a heap **block**; a `ref` is just a one-field mutable record, which is why `ref`/`:=`/`!` compose with everything else instead of being a distinct language feature. Full walkthrough (lists, closures, why `==` vs `=` differ): [references/runtime-model.md](references/runtime-model.md).
 
-This also explains the equality asymmetry above: `==` just compares the two words (pointer or unboxed int) in constant time; `=` has to walk into the blocks and can loop forever on a value that points back into itself. And a function that closes over outer variables is represented the same way — a block containing a code pointer plus the captured environment — which is why closures in OCaml aren't a special runtime object, just another pointer-to-block value like everything else.
+## Project structure: dune, opam, Alcotest
 
 ### Initializing a new project
 
@@ -67,9 +71,6 @@ dune init proj <name>
 (prefix with `opam exec --` if the user hasn't run `eval $(opam env)` in the current shell). This creates a `<name>/` directory with `bin/`, `lib/`, and `test/` subdirectories (each with their own `dune` file), a top-level `dune-project`, and a generated `<name>.opam`. `bin/main.ml` is the entry point and is runnable immediately with `dune exec <name>`, `dune build` compiles, `dune runtest`/`dune test` runs the Alcotest suite already wired up in `test/`. This is the right default when the user asks to "set up a new dune project" — it gives them the conventional three-directory layout (below) for free, rather than the minimal single-file setup.
 
 For a throwaway single-file project, or to show what dune actually requires under the hood, the bare minimum is two files: a `dune-project` with just `(lang dune 3.6)` (or later), and a `dune` file with an `executable` stanza, e.g. `(executable (name foo))`, sitting next to `foo.ml`. No `bin`/`lib`/`test` split is required — dune only needs a `dune` file in each directory containing something to build.
-
-
-## Project structure: dune, opam, Alcotest
 
 A typical dune project the user will hand you:
 
@@ -106,7 +107,11 @@ test/
 - `Printf.printf "%d\n" x` / `Printf.printf "%s\n" x` for quick print-debugging (`%d` int, `%s` string, `%f` float, `%b` bool — printf format specifiers are type-checked at compile time, so a mismatched specifier is itself a compile error, not a runtime surprise).
 - "This expression has type X but an expression was expected of type Y" almost always means: read the *inferred* type first, then find where your usage disagrees with it — the error location is often the second use site, not the actual mistake. Apply the left-to-right constraint walk from the type inference section above rather than guessing.
 - A common beginner trap: forgetting a `match` arm compiles with only a *warning* (non-exhaustive pattern match) unless warnings are promoted to errors in the dune stanza — don't assume "it compiled" means every case is handled; check the warning output too.
-- The type-checking rules for the core constructs are fixed and worth having memorized rather than re-derived each time: `if e1 then e2 else e3` requires `e1 : bool` and `e2`/`e3` the same type; `if e1 then e2` (no `else`) requires `e2 : unit`; `while`/`for` loop bodies must be `unit`; a sequence `e1; e2` requires `e1 : unit` (if it isn't, wrap it with `ignore e1; e2` or `let _ = e1 in e2`); a `match`/`try-with` requires every branch's right-hand side to share one type and (for `match`) every pattern to share the type of the scrutinee.
+- Core typing rules (fixed — don't re-derive):
+  - `if e1 then e2 else e3` requires `e1 : bool` and `e2`/`e3` the same type; `if e1 then e2` (no `else`) requires `e2 : unit`.
+  - `while`/`for` loop bodies must be `unit`.
+  - Sequence `e1; e2` requires `e1 : unit` — if it isn't, write `ignore e1; e2` or `let _ = e1 in e2`.
+  - `match`/`try-with`: every branch's right-hand side shares one type; every `match` pattern shares the scrutinee's type.
 
 ## Style defaults
 
