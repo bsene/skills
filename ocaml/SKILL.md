@@ -56,6 +56,19 @@ Worth having once, since it explains several "why is it like that" questions at 
 
 This also explains the equality asymmetry above: `==` just compares the two words (pointer or unboxed int) in constant time; `=` has to walk into the blocks and can loop forever on a value that points back into itself. And a function that closes over outer variables is represented the same way — a block containing a code pointer plus the captured environment — which is why closures in OCaml aren't a special runtime object, just another pointer-to-block value like everything else.
 
+### Initializing a new project
+
+Don't hand-write `dune-project`/`dune` files from scratch when scaffolding a new project — use dune's own generator, then adjust:
+
+```
+dune init proj <name>
+```
+
+(prefix with `opam exec --` if the user hasn't run `eval $(opam env)` in the current shell). This creates a `<name>/` directory with `bin/`, `lib/`, and `test/` subdirectories (each with their own `dune` file), a top-level `dune-project`, and a generated `<name>.opam`. `bin/main.ml` is the entry point and is runnable immediately with `dune exec <name>`, `dune build` compiles, `dune runtest`/`dune test` runs the Alcotest suite already wired up in `test/`. This is the right default when the user asks to "set up a new dune project" — it gives them the conventional three-directory layout (below) for free, rather than the minimal single-file setup.
+
+For a throwaway single-file project, or to show what dune actually requires under the hood, the bare minimum is two files: a `dune-project` with just `(lang dune 3.6)` (or later), and a `dune` file with an `executable` stanza, e.g. `(executable (name foo))`, sitting next to `foo.ml`. No `bin`/`lib`/`test` split is required — dune only needs a `dune` file in each directory containing something to build.
+
+
 ## Project structure: dune, opam, Alcotest
 
 A typical dune project the user will hand you:
