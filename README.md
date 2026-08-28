@@ -35,6 +35,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Idiomatic Ruby / Rails | [ruby](/skills/ruby/SKILL.md) | Style, GoF patterns, RSpec/Minitest testing |
 | CHICKEN Scheme | [chicken-scheme](/skills/chicken-scheme/SKILL.md) | Write / package / debug Scheme programs |
 | OCaml | [ocaml](/skills/ocaml/SKILL.md) | Write/review/debug OCaml and dune projects |
+| ReScript | [rescript](/skills/rescript/SKILL.md) | Write/debug ReScript, JSX v4, JS interop |
 | Git as a craft | [git-hero](/skills/git-hero/SKILL.md), plus sub-skills | Atomic commits, gitmoji, CLI guru (FR / EN), GitLab DAG |
 | REST API design | [rest-api-design](/skills/rest-api-design/SKILL.md) | URIs, verbs, pagination, errors, security, HATEOAS |
 | System diagrams | [c4-diagram](/skills/c4-diagram/SKILL.md) + [explain-code](/skills/explain-code/SKILL.md) | C4 / Mermaid diagrams and code walkthroughs |
