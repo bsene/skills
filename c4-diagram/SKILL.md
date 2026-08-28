@@ -22,6 +22,7 @@ description: >
 
 | Question type | C4 level | Structurizr view type |
 |---|---|---|
+| "Show the whole organisation / all systems" | **Supporting — System Landscape** | `systemLandscape` (no Mermaid equivalent) |
 | "What does this system do?" / "Who uses it?" | **Level 1 — Context** | `systemContext` |
 | "What are the main services/apps/databases?" | **Level 2 — Container** | `container` |
 | "How is this service structured internally?" | **Level 3 — Component** | `component` |
@@ -36,6 +37,7 @@ description: >
 | Quick inline preview in chat | Mermaid → `references/c4-mermaid.md` |
 | Export PNG/SVG for docs/wiki | Structurizr → `references/c4-structurizr.md` |
 | Multiple views from one model | Structurizr |
+| Organisation-wide system landscape | Structurizr (no Mermaid C4 equivalent) |
 | Dynamic / numbered interaction flow | Either (`C4Dynamic` or Structurizr `dynamic`) |
 | Deployment / infrastructure view | Structurizr (Mermaid `C4Deployment` is limited) |
 | Class/method level detail (Level 4) | Mermaid `classDiagram` — no Structurizr equivalent |

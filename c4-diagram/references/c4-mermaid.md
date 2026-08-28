@@ -10,6 +10,8 @@ C4Dynamic      — Numbered interaction flow
 C4Deployment   — Infrastructure mapping
 ```
 
+No `System Landscape` equivalent exists in Mermaid C4 — for an organisation-wide view use Structurizr `systemLandscape`.
+
 ---
 
 ## Elements
