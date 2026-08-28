@@ -72,6 +72,21 @@ service -> repo "Uses"
 
 ## View Types
 
+### System Landscape (enterprise / organisation-wide)
+
+Spans every person and software system in the model. Unlike the levelled views, it takes **no** software-system scope argument — it covers the whole landscape.
+
+```
+views {
+  systemLandscape "Landscape" {
+    include *
+    autoLayout
+  }
+}
+```
+
+No Mermaid C4 equivalent — use Structurizr for an organisation-wide view.
+
 ### System Context (Level 1)
 
 ```
@@ -126,6 +141,8 @@ views {
 Deployment grammar:
 - `containerInstance <identifier> [deploymentGroups] [tags]` — instance of a defined container
 - `softwareSystemInstance <identifier> [deploymentGroups] [tags]` — instance of a non-decomposed system (no containers)
+
+> Fragment — the `web`, `api`, `db`, `email` elements referenced below must be defined elsewhere in the same `model { }` block; shown here for the deployment grammar only, not a standalone workspace.
 
 ```
 model {
@@ -361,6 +378,7 @@ The `structurizr/cli` image is archived (Feb 2026) but functional. The active re
 | Quick inline preview in chat | Mermaid |
 | Export PNG/SVG for docs/wiki | Structurizr |
 | Multiple views from one model | Structurizr |
+| Organisation-wide system landscape | Structurizr (no Mermaid C4 equivalent) |
 | Dynamic / numbered interaction flow | Either (`C4Dynamic` or Structurizr `dynamic`) |
 | Deployment / infrastructure view | Structurizr (Mermaid `C4Deployment` is limited) |
 | Class/method level detail (Level 4) | Mermaid `classDiagram` — no Structurizr equivalent |
