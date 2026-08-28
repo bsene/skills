@@ -1,6 +1,6 @@
 ---
 name: ocaml
-description: Write, review, debug, and explain OCaml code and dune projects. Use whenever the user mentions OCaml, .ml/.mli files, dune, dune-project, opam, Alcotest, katas or exercises written in OCaml, or asks to convert JS/TS/PHP logic into OCaml. Trigger even if the user just pastes OCaml code with a compiler error and asks "what's wrong here", asks to set up a new dune project, or asks for the OCaml idiom for something they already know how to do in JS/TS. The user is an experienced JS/TS/PHP developer but a genuine OCaml beginner — explanations should assume strong general programming skill and zero OCaml-specific knowledge, never the reverse.
+description: Write, review, debug, and explain OCaml code and dune projects. Use whenever the user mentions OCaml, .ml/.mli files, dune, dune-project, opam, Alcotest, qcheck, mutaml, camelot, dead_code_analyzer, property-based testing, mutation testing, katas or exercises written in OCaml, or asks to convert JS/TS/PHP logic into OCaml. Trigger even if the user just pastes OCaml code with a compiler error and asks "what's wrong here", asks to set up a new dune project, or asks for the OCaml idiom for something they already know how to do in JS/TS. The user is an experienced JS/TS/PHP developer but a genuine OCaml beginner — explanations should assume strong general programming skill and zero OCaml-specific knowledge, never the reverse.
 ---
 
 # OCaml
@@ -100,6 +100,8 @@ test/
       [ ("area", [ Alcotest.test_case "circle" `Quick test_area_of_circle ]) ]
   ```
   `Alcotest.check` takes a **testable** (`Alcotest.float epsilon`, `Alcotest.int`, `Alcotest.string`, `Alcotest.(list int)`, etc.) — for custom types you either derive one with `Alcotest.testable pp equal` or compare projected primitive fields. Alcotest test names show up in `dune runtest` output, so name them for what they assert, not generic ("area of a zero-radius circle is zero", not "test1").
+
+The Alcotest shape above is **unit testing** — fixed examples you hand-pick. Real dune projects layer two more test types on top of it: **property-based testing** (qcheck, random inputs + shrinking to prove invariants) and **mutation testing** (mutaml, inject faults to prove your tests would catch a bug). Two adjacent quality tools — style linting (camelot) and dead-code analysis (dead_code_analyzer) — fill gaps the compiler doesn't. When to reach for each and the one-line idiom: [references/testing-and-quality.md](references/testing-and-quality.md).
 
 ## Debugging & compiler errors
 
