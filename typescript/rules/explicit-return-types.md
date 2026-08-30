@@ -55,16 +55,4 @@ function findRole(userId: string): Role | null {
   const handler: RequestHandler = (req, res) => { res.send("ok"); };
   ```
 
-## `@ts-expect-error` over `@ts-ignore`
-
-When suppression is truly needed:
-
-```typescript
-// Bad — silences all errors, even future unrelated ones
-// @ts-ignore
-doSomethingUntyped();
-
-// Good — errors if the suppression becomes unnecessary
-// @ts-expect-error: third-party lib missing types
-doSomethingUntyped();
-```
+`@ts-expect-error` over `@ts-ignore`: see `avoid-type-assertions.md`.
