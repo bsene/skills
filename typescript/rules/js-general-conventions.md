@@ -9,7 +9,7 @@ metadata:
 
 # Use JavaScript general conventions
 
-These idioms apply to all JavaScript. TypeScript builds on them — type features augment, they do not replace these conventions.
+These idioms apply to all JavaScript. TypeScript builds on them — type features augment, they do not replace these conventions. Syntax reference (const/let, destructuring, template literals, optional chaining): [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
 ## Naming
 
@@ -21,41 +21,12 @@ These idioms apply to all JavaScript. TypeScript builds on them — type feature
 | Files | `kebab-case` | `user-service.ts` |
 | Boolean variables/props | `is/has/can` prefix | `isLoading`, `hasPermission` |
 
-## Variable declarations
+## Idioms
 
-```typescript
-const count = 0;       // prefer const
-let message = "hello"; // let when reassignment needed
-// never var
-```
-
-## Modern syntax idioms
-
-```typescript
-// Destructuring over repeated property access
-const { id, name } = user;
-const [first, ...rest] = items;
-
-// Template literals over concatenation
-const msg = `User ${name} created at ${date}`;
-
-// Optional chaining + nullish coalescing
-const city = user?.address?.city ?? "Unknown";
-
-// Short-circuit for defaults
-const timeout = options.timeout ?? 5000;
-
-// Arrow functions for callbacks
-const ids = users.map(u => u.id);
-```
-
-## Equality
-
-```typescript
-x === y  // always strict equality
-x !== y  // always strict inequality
-// never == or !=
-```
+- `const` by default; `let` only when reassignment is needed; never `var`.
+- Destructuring over repeated property access; template literals over concatenation.
+- Optional chaining (`?.`) + nullish coalescing (`??`) over verbose guard chains.
+- Always strict equality (`===` / `!==`); never `==`. Sole exception: `== null` to test null+undefined together (see `null-undefined.md`).
 
 ## Functions
 
@@ -75,6 +46,6 @@ users.filter(u => u.active).map(u => u.id);
 |---|---|---|
 | `var x` | Hoisted, function-scoped, unexpected | `const` or `let` |
 | `"foo" + bar + "baz"` | Verbose, error-prone | Template literal |
-| `==` / `!=` (loose equality) | Coercion surprises | `===` / `!==` — sole exception: `== null` to test null+undefined together (see `null-undefined.md`) |
+| `==` / `!=` (loose equality) | Coercion surprises | `===` / `!==` |
 | Namespace-style imports (`import * as X`) when named imports work | Verbose | Named imports |
 | Excessive type annotations on obvious inferences | Noise | Let TS infer |

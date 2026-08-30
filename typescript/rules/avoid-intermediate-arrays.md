@@ -58,7 +58,7 @@ for (const n of arr) {
 
 The spread variant degrades quadratically — never use it in a reducer accumulator.
 
-Source: Nenashev, "Avoid intermediate arrays (filter/map) to make Javascript fast" (dev.to, 2024).
+Source: [Nenashev, "Avoid intermediate arrays (filter/map) to make Javascript fast"](https://dev.to/alexander-nenashev/avoid-intermediate-arrays-in-js-5bkg) (dev.to, 2024).
 
 ## Exceptions
 
@@ -72,7 +72,3 @@ Source: Nenashev, "Avoid intermediate arrays (filter/map) to make Javascript fas
 No off-the-shelf ESLint rule enforces this cleanly. `unicorn/no-array-reduce` takes the
 opposite stance and should be **disabled** on performance-sensitive code. Rely on code
 review and profiling, not lint.
-
-## Related
-
-- Future rules in this set: avoid iterators/generators, pre-allocate arrays, avoid spread in loops.
