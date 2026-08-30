@@ -26,8 +26,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | OOP principles review | [object-oriented-programming](/skills/object-oriented-programming/SKILL.md) | SOLID, GoF patterns, calisthenics, tell-don't-ask |
 | CUPID review | [cupid-checker](/skills/cupid-checker/SKILL.md) | Composable, Unixy, Predictable, Idiomatic, Domain-aligned |
 | Hexagonal architecture | [ports-adapters-architecture](/skills/ports-adapters-architecture/SKILL.md) | Apply the hex pattern to domain boundaries |
-| Plain JavaScript rules | [javascript](/skills/javascript/SKILL.md) | Name things right, handle `this`, avoid null traps |
-| TypeScript mastery | [typescript](/skills/typescript/SKILL.md), [type-system](/skills/typescript/type-system), [zod](/skills/typescript/zod) | Strict types, error handling, runtime validation |
+| JavaScript & TypeScript mastery | [typescript](/skills/typescript/SKILL.md), [type-system](/skills/typescript/type-system), [zod](/skills/typescript/zod) | Strict types, JS idioms, runtime validation |
 | ClojureScript | [clojurescript](/skills/clojurescript/SKILL.md) | Write/debug/configure CLJS + JS interop |
 | Functional composition | [composing-software](/skills/composing-software/SKILL.md) | Pipe → compose → combine techniques in JS |
 | Monoid abstraction | [monoids](/skills/monoids/SKILL.md) | Recognize/apply monoids in TS and CLJS |
