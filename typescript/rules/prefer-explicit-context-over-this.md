@@ -97,4 +97,4 @@ calculateArea({ width: 5, height: 10 }); // 50, always
 
 Often slightly more verbose, but radically more predictable — it removes a whole class of runtime bugs.
 
-> Broader functional framing (pure functions, composition, isolating side effects): see the `composing-software` skill. This rule is the narrow, mechanical `this`-binding case.
+> Broader functional framing (pure functions, composition, isolating side effects): see `../composition/SKILL.md`. This rule is the narrow, mechanical `this`-binding case.
