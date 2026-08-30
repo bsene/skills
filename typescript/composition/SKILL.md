@@ -1,6 +1,6 @@
 ---
 name: composition
-description: Functional programming composition in JavaScript/TypeScript — pipe/compose, currying, point-free, pure functions, factories, functional mixins. Reference bundle for the `typescript` skill; not independently triggered. For class-based OOP architecture or SOLID principles, the parent routes to `object-oriented-programming`.
+description: Functional programming composition in JavaScript/TypeScript — pipe/compose, currying, point-free, pure functions, factories, functional mixins, monoids. Reference bundle for the `typescript` skill; not independently triggered. For class-based OOP architecture or SOLID principles, the parent routes to `object-oriented-programming`.
 metadata:
   role: reference-bundle
   parent-skill: typescript
@@ -41,6 +41,7 @@ Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/
 | Writing pure functions, composing with pipe/compose, debugging pipelines | [Pure Functions & Composition](references/pure-functions-and-composition.md) |
 | Currying, partial application, data-last convention, point-free style | [Currying & Point-Free](references/currying-and-point-free.md) |
 | Factory functions, functional mixins, object composition patterns | [Object Composition & Factories](references/object-composition-and-factories.md) |
+| Aggregating/merging/reducing data — merge, combine, shopping carts, permissions, counters | [Monoids](references/monoids.md) |
 
 ---
 
