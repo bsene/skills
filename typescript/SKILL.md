@@ -17,7 +17,7 @@ description: >
   this binding, detached method, barrel file, index.js, array chains, filter().map(), intermediate
   arrays, hot path, GC pressure, null vs undefined, sentinel value, camelCase, PascalCase),
   contracts (domain vs DTO, monorepo types, API contract types),
-  composition (pipe, compose, currying, partial application, point-free, pure functions, functional mixin, factory function, object composition),
+  composition (pipe, compose, currying, partial application, point-free, pure functions, functional mixin, factory function, object composition, monoid, merge, aggregate, reduce, fold, shopping cart merge, permissions merge, combine these objects),
   ask (idiomatic JS/TS, JS/TS conventions, JS/TS best practices, JS/TS code review,
   "compose these functions", "pipe this data", "make this more functional").
 metadata:
@@ -34,7 +34,7 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Rule
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
-→ **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins…) → `composition/SKILL.md`
+→ **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, monoids…) → `composition/SKILL.md`
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 

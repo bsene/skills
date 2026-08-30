@@ -1,13 +1,13 @@
 ---
 name: monoids
-description: Recognize and apply the monoid abstraction (binary associative operation + neutral element) in TypeScript and Clojure/ClojureScript code. Use whenever the user is combining, aggregating, merging, or reducing data — shopping carts, permissions/roles, metrics and counters, event logs, config objects, or any `reduce`/`fold`/`merge-with` over a collection — even if they don't use the word "monoid". Also use when reviewing code that special-cases empty lists/collections, when discussing Map-Reduce or parallel aggregation (including `pmap`-based reduction), or when designing a generic `combine`/`merge`/`empty` API instead of ad hoc merge logic. Trigger this for "how do I merge these two X" or "what's a clean way to aggregate Y" style questions in either language, not just explicit monoid/algebra questions.
+description: Recognize and apply the monoid abstraction (binary associative operation + neutral element) in Clojure/ClojureScript code. Use whenever the user is combining, aggregating, merging, or reducing data — metrics and counters, event logs, config objects, or any `reduce`/`fold`/`merge-with` over a collection — even if they don't use the word "monoid". Also use when reviewing code that special-cases empty lists/collections, when discussing Map-Reduce or parallel aggregation (including `pmap`-based reduction), or when designing a generic `combine`/`merge`/`empty` API instead of ad hoc merge logic. Trigger this for "how do I merge these two X" or "what's a clean way to aggregate Y" style questions, not just explicit monoid/algebra questions. For TypeScript idioms, route to the `typescript` skill instead.
 ---
 
 # Monoïdes
 
 Un monoïde est une structure minimaliste : un ensemble de valeurs + une opération binaire **associative** (`combine`) + un **élément neutre** (`empty`). Rien de plus. Reconnaître cette structure dans du code métier permet de remplacer une logique de fusion ad hoc — source fréquente de bugs sur les cas limites — par une API générique et testée une fois pour toutes.
 
-Cette skill couvre TypeScript et Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change (réification explicite d'une interface `Monoid<T>` en TS, vs fonctions variadiques déjà associatives en Clojure — `merge-with`, `into`, `+`).
+Cette skill couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change. L'idiomatique TypeScript (interface `Monoid<T>`, folds, monoïdes métier) vit désormais dans le skill typescript → `../typescript/composition/references/monoids.md` ; routez les questions TS vers cette référence.
 
 Source de référence : [Les monoïdes : une abstraction omniprésente (evryg)](https://kb.evryg.com/fr/ingenierie-logicielle-avancee/fondations/les-monoides-une-abstraction-omnipresente)
 
@@ -17,168 +17,11 @@ Le signal à repérer, ce n'est pas le mot "monoïde" — c'est un des patterns 
 
 - Une fonction `merge(a, b)`, `combine(a, b)` ou `add(a, b)` codée à la main pour un type précis
 - Un `reduce`/`fold` sur une liste avec une valeur initiale arbitraire
-- Un `if (list.length === 0) throw / return null` avant un calcul d'agrégat
+- Un `if (list.length === 0) throw / return nil` avant un calcul d'agrégat
 - L'envie de paralléliser un calcul d'agrégation (Map-Reduce, agrégation par partition Kafka, etc.)
-- Une modélisation métier qui "s'additionne" naturellement : panier, permissions, compteurs, logs, config
+- Une modélisation métier qui "s'additionne" naturellement : permissions, compteurs, logs, config
 
 Si un de ces patterns apparaît, propose activement la structure monoïdale plutôt que d'attendre que l'utilisateur la nomme.
-
----
-
-## TypeScript
-
-### L'interface de base
-
-```typescript
-interface Monoid<T> {
-  empty: T;
-  combine: (a: T, b: T) => T;
-}
-```
-
-Deux lois doivent tenir — les rappeler quand tu proposes un monoïde custom, car ce sont elles qui justifient qu'on puisse paralléliser et court-circuiter les cas vides :
-
-- **Associativité** : `combine(combine(a, b), c) === combine(a, combine(b, c))`
-- **Neutralité** : `combine(a, empty) === a` et `combine(empty, a) === a`
-
-Un `fold` générique marche pour n'importe quel monoïde :
-
-```typescript
-function fold<T>(monoid: Monoid<T>, items: T[]): T {
-  return items.reduce(monoid.combine, monoid.empty);
-}
-```
-
-### Monoïdes de base
-
-```typescript
-const numberSum: Monoid<number> = { empty: 0, combine: (a, b) => a + b };
-
-const stringConcat: Monoid<string> = { empty: "", combine: (a, b) => a + b };
-
-const arrayConcat = <T>(): Monoid<T[]> => ({
-  empty: [],
-  combine: (a, b) => [...a, ...b],
-});
-
-const boolAnd: Monoid<boolean> = { empty: true, combine: (a, b) => a && b };
-const boolOr: Monoid<boolean> = { empty: false, combine: (a, b) => a || b };
-
-// Fonctions A -> A avec la composition
-const endoCompose = <A>(): Monoid<(a: A) => A> => ({
-  empty: (a) => a,
-  combine: (f, g) => (a) => g(f(a)),
-});
-```
-
-### Associativité → parallélisation
-
-L'associativité garantit que l'ordre de regroupement n'importe pas — d'où la parallélisation type Map-Reduce : découper, réduire chaque segment indépendamment, combiner les résultats partiels.
-
-```typescript
-function parallelFold<T>(monoid: Monoid<T>, items: T[], chunks = 4): T {
-  const size = Math.ceil(items.length / chunks);
-  const partials = Array.from({ length: chunks }, (_, i) =>
-    fold(monoid, items.slice(i * size, (i + 1) * size))
-  );
-  return fold(monoid, partials);
-}
-```
-
-Cas d'usage typique : agréger des métriques par partition Kafka, puis combiner les agrégats partiels — un `reduce` distribué est un fold monoïdal.
-
-### Modélisation métier
-
-Cas récurrents où repérer un monoïde évite de la logique ad hoc :
-
-```typescript
-// Panier d'achat — le panier vide est le neutre
-interface Cart {
-  items: Map<string, number>;
-}
-
-const cartMonoid: Monoid<Cart> = {
-  empty: { items: new Map() },
-  combine: (a, b) => {
-    const items = new Map(a.items);
-    for (const [id, qty] of b.items) {
-      items.set(id, (items.get(id) ?? 0) + qty);
-    }
-    return { items };
-  },
-};
-
-// Permissions — l'absence de permission est le neutre
-type Permissions = Set<string>;
-
-const permissionsMonoid: Monoid<Permissions> = {
-  empty: new Set(),
-  combine: (a, b) => new Set([...a, ...b]),
-};
-
-// Logs / événements — concaténation temporelle
-type EventLog<E> = E[];
-const eventLogMonoid = <E>(): Monoid<EventLog<E>> => arrayConcat<E>();
-```
-
-Autres domaines à reconnaître : métriques et compteurs (additifs), moyennes pondérées (monoïde produit somme+poids), config objects fusionnés couche par couche.
-
-### Élément neutre → robustesse
-
-L'élément neutre élimine la branche spéciale pour le cas vide :
-
-```typescript
-// Sans monoïde : cas particulier à gérer
-function sumUnsafe(nums: number[]): number {
-  if (nums.length === 0) throw new Error("empty list");
-  return nums.reduce((a, b) => a + b);
-}
-
-// Avec monoïde : le neutre gère naturellement le cas vide
-function sumSafe(nums: number[]): number {
-  return fold(numberSum, nums); // [] -> 0, sans exception ni Option
-}
-```
-
-Quand tu vois une API qui retourne `Option<Result>` ou lève une exception juste pour le cas "liste vide", propose de vérifier si le domaine a un neutre naturel plutôt que d'ajouter une branche de gestion d'erreur.
-
-### Composabilité
-
-Trois patterns de composition à réutiliser plutôt que réinventer :
-
-```typescript
-// 1. Produit de monoïdes — combine composante par composante
-function productMonoid<A, B>(ma: Monoid<A>, mb: Monoid<B>): Monoid<[A, B]> {
-  return {
-    empty: [ma.empty, mb.empty],
-    combine: ([a1, b1], [a2, b2]) => [ma.combine(a1, a2), mb.combine(b1, b2)],
-  };
-}
-// Utile pour agréger plusieurs métriques d'un coup : fold(productMonoid(count, sum), ...)
-
-// 2. Fonctions X -> M vers un monoïde
-function functionMonoid<X, M>(m: Monoid<M>): Monoid<(x: X) => M> {
-  return {
-    empty: () => m.empty,
-    combine: (f, g) => (x) => m.combine(f(x), g(x)),
-  };
-}
-
-// 3. Map<K, V> où V est un monoïde — fusion par clé
-function mapMonoid<K, V>(mv: Monoid<V>): Monoid<Map<K, V>> {
-  return {
-    empty: new Map(),
-    combine: (a, b) => {
-      const result = new Map(a);
-      for (const [k, v] of b) {
-        result.set(k, result.has(k) ? mv.combine(result.get(k)!, v) : v);
-      }
-      return result;
-    },
-  };
-}
-// Ex : compteurs d'événements par type/topic Kafka : mapMonoid<string, number>(numberSum)
-```
 
 ---
 
@@ -228,7 +71,7 @@ En pratique, préfère les fonctions core ci-dessous plutôt que réifier — c'
 (parallel-fold + 0 (range 1000000) 4)
 ```
 
-`pmap` distribue sur les cœurs disponibles ; l'associativité de `f` garantit que le regroupement en chunks n'affecte pas le résultat — même logique que le Map-Reduce Kafka évoqué côté TypeScript.
+`pmap` distribue sur les cœurs disponibles ; l'associativité de `f` garantit que le regroupement en chunks n'affecte pas le résultat — c'est la même logique que le fold monoïdal distribué.
 
 ### Modélisation métier
 
@@ -257,7 +100,7 @@ Les fonctions variadiques encodent le neutre nativement — le cas "collection v
 (merge-with + {})    ;; => {}
 ```
 
-Contrairement à TS où il faut construire explicitement `numberSum.empty`, ici le neutre est souvent déjà le comportement par défaut de la fonction à arité 0 — un signal que la fonction a été conçue avec l'algèbre en tête.
+Ici le neutre est souvent déjà le comportement par défaut de la fonction à arité 0 — un signal que la fonction a été conçue avec l'algèbre en tête.
 
 ### Composabilité
 
@@ -294,4 +137,4 @@ Contrairement à TS où il faut construire explicitement `numberSum.empty`, ici 
 
 - Ne force pas l'abstraction si l'opération n'est pas vraiment associative (ex : soustraction, division) — vérifie la loi avant de la proposer, un contre-exemple rapide suffit.
 - S'il n'existe pas de neutre naturel dans le domaine, ce n'est peut-être pas un monoïde mais un semigroupe (associatif sans neutre) — le signaler plutôt que d'inventer une valeur neutre artificielle.
-- Reste pragmatique : l'objectif est de remplacer du code ad hoc buggé par une API générique, pas d'imposer du vocabulaire fonctionnel pour faire savant. En TS, si `Array.prototype.reduce` suffit et que le code est déjà clair, ne propose pas de sur-architecturer. En Clojure, si `merge-with`/`reduce` avec une fonction core suffit, ne propose pas de réifier un `Monoid` inutilement.
+- Reste pragmatique : l'objectif est de remplacer du code ad hoc buggé par une API générique, pas d'imposer du vocabulaire fonctionnel pour faire savant. En Clojure, si `merge-with`/`reduce` avec une fonction core suffit, ne propose pas de réifier un `Monoid` inutilement.
