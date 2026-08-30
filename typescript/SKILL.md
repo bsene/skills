@@ -1,23 +1,28 @@
 ---
 name: typescript
 description: >
-  TypeScript-specific best-practices and rule enforcement — type safety, runtime validation,
-  error handling, and TS-only conventions. Routes to type-system and Zod sub-skills, the
-  `javascript` skill for JS-foundation rules, and `object-oriented-programming` for design patterns and SOLID.
+  JavaScript & TypeScript best-practices and rule enforcement — JS idioms (naming, `this`-handling,
+  module structure, nullability, iteration performance) and TS-specific type safety, runtime
+  validation, and error handling. Routes to type-system and Zod sub-skills and
+  `object-oriented-programming` for design patterns and SOLID.
 
-  TRIGGER when: language (TypeScript, TS, .ts, .tsx, idiomatic TypeScript),
+  TRIGGER when: language (TypeScript, TS, .ts, .tsx, JavaScript, JS, .js, .mjs, .cjs, Node.js,
+  browser JS, ESM, CommonJS),
   type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing),
   safety (strict mode, any vs unknown, ts-expect-error, ts-ignore, type assertions),
   runtime (Zod, schema validation, runtime type checks, parse/safeParse),
   errors (error handling without throwing, union return errors, Result type),
   ts-conventions (readonly modifier, return type annotations, interface prefix, `as const`),
-  contracts (domain vs DTO, monorepo types, API contract types).
-  DO NOT USE when: user asks generic JS questions with no TS angle — use `javascript` instead.
+  js-idioms (const/let, destructuring, optional chaining, nullish coalescing, arrow functions,
+  this binding, detached method, barrel file, index.js, array chains, filter().map(), intermediate
+  arrays, hot path, GC pressure, null vs undefined, sentinel value, camelCase, PascalCase),
+  contracts (domain vs DTO, monorepo types, API contract types),
+  ask (idiomatic JS/TS, JS/TS conventions, JS/TS best practices, JS/TS code review).
 metadata:
   user-invocable: "false"
 ---
 
-# TypeScript
+# JavaScript & TypeScript
 
 Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html). Rule files below link to the specific handbook section they encode; when a rule and the handbook disagree, the handbook wins and the rule should be updated.
 
@@ -27,7 +32,6 @@ Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/han
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
-→ **JavaScript conventions** (naming, `this`-handling, barrel files, arrays, null/undefined) → `javascript` skill
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 
@@ -91,13 +95,21 @@ else res.status(200).json(result);
 
 - Domain vs. DTO mapping, full example: `references/user-example.md`.
 - Zod boundary-validation example: `zod/example.md` (deeper annotated patterns in `zod/references/zod.md`).
-- ECMAScript edition history (ES1 1997 → ES2025): see `../javascript/references/ecmascript-history.md`. Use when choosing `tsconfig` `target`/`lib`, judging what downlevels vs. needs a polyfill, or which edition first shipped a feature.
+- ECMAScript edition history (ES1 1997 → ES2025): see `references/ecmascript-history.md`. Use when judging which edition first shipped a feature, what needs a polyfill on older runtimes, which syntax is safe for a target environment, or choosing `tsconfig` `target`/`lib`.
 
-## JavaScript foundation
+## Rules (JavaScript & TypeScript, always apply)
 
-TypeScript augments JavaScript — it does not replace JS conventions. Apply the `javascript` skill's rules (naming, `this`-handling, barrel files, intermediate arrays, null/undefined) **in addition** to the TS-specific rules below.
+### JavaScript foundation
 
-## Rules (TypeScript-specific, always apply)
+| Rule | File |
+|---|---|
+| Use JavaScript general conventions (naming, const/let, destructuring, template literals) | `rules/js-general-conventions.md` |
+| Prefer explicit context (params) over implicit `this` | `rules/prefer-explicit-context-over-this.md` |
+| Do not use barrel files (`index.js`/`index.ts` re-exports) | `rules/no-barrel-files.md` |
+| Avoid intermediate arrays on hot paths (`filter().map()` chains) | `rules/avoid-intermediate-arrays.md` |
+| `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
+
+### TypeScript-specific
 
 | Rule | File |
 |---|---|
