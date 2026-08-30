@@ -1,17 +1,12 @@
 ---
-name: composing-software
-description: >
-  Apply functional programming composition techniques in JavaScript and TypeScript. Use this skill
-  whenever the user asks about function composition, pipe, compose, currying, partial
-  application, point-free style, pure functions, immutability, functors, monads, lenses,
-  functional mixins, factory functions, or object composition. Also trigger when the user
-  asks how to avoid class inheritance, how to build reusable abstractions in JavaScript
-  or TypeScript, how to compose async operations, how to reduce coupling through FP patterns,
-  TypeScript composition, or functional TypeScript. Even if they just say "compose these
-  functions", "pipe this data", or "make this more functional", use this skill.
-  DO NOT USE when: the user is designing class-based OOP architecture or asking about SOLID
-  principles — use `object-oriented-programming` instead.
+name: composition
+description: Functional programming composition in JavaScript/TypeScript — pipe/compose, currying, point-free, pure functions, factories, functional mixins, functors, monads, lenses, transducers. Reference bundle for the `typescript` skill; not independently triggered. For class-based OOP architecture or SOLID principles, the parent routes to `object-oriented-programming`.
+metadata:
+  role: reference-bundle
+  parent-skill: typescript
 ---
+
+# Composing Software in JavaScript & TypeScript
 
 # Composing Software in JavaScript
 

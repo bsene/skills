@@ -17,7 +17,9 @@ description: >
   this binding, detached method, barrel file, index.js, array chains, filter().map(), intermediate
   arrays, hot path, GC pressure, null vs undefined, sentinel value, camelCase, PascalCase),
   contracts (domain vs DTO, monorepo types, API contract types),
-  ask (idiomatic JS/TS, JS/TS conventions, JS/TS best practices, JS/TS code review).
+  composition (pipe, compose, currying, partial application, point-free, pure functions, functors, monads, lenses, functional mixin, factory function, object composition, transducers),
+  ask (idiomatic JS/TS, JS/TS conventions, JS/TS best practices, JS/TS code review,
+  "compose these functions", "pipe this data", "make this more functional").
 metadata:
   user-invocable: "false"
 ---
@@ -32,6 +34,7 @@ Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/han
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
+→ **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, functors/monads/lenses…) → `composition/SKILL.md`
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 
@@ -126,6 +129,7 @@ else res.status(200).json(result);
 This router has no scenario of its own. Gate data lives in the leaf footers:
 
 - `type-system/SKILL.md` → `## Benchmark` (scenario `typescript-001`, run 2026-06-14, SOFT PASS).
+- `composition/SKILL.md` → `## Benchmark` (scenario `composing-software-001`, run 2026-06-25, PASS).
 - Historical optimizer runs: `run-history.md`. Per-skill gate targets: `RELEASE_GATES.md`.
 
 Gate per `skill-optimizer/release-gates.md`.
