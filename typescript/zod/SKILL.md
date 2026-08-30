@@ -8,7 +8,7 @@ metadata:
 
 # Zod v4 Best Practices
 
-Requires TypeScript v5.5+ with `"strict": true` ([Compiler Options](https://www.typescriptlang.org/tsconfig/#strict)). Zod itself is not part of the TypeScript project; this skill covers the community pattern for runtime validation that pairs with TypeScript's static types.
+Primary reference: [official Zod docs](https://zod.dev). Requires TypeScript v5.5+ with `"strict": true` ([Compiler Options](https://www.typescriptlang.org/tsconfig/#strict)). Zod itself is not part of the TypeScript project; this skill covers the community pattern for runtime validation that pairs with TypeScript's static types. When the docs and a rule here disagree, the docs win and the rule should be updated.
 
 ## Quick Reference
 
@@ -85,4 +85,4 @@ if (!result.success) {
 ## Read On Demand
 
 - Quick boundary-validation example: `example.md`.
-- Full annotated examples and patterns (composition, transforms, branded types, discriminated unions, async validation): `references/zod.md`.
+- Full annotated example: `references/zod.md`. For API behavior (transforms, coercion, error trees, `@zod/mini`), the [official Zod docs](https://zod.dev) are the source of truth — don't restate them here.

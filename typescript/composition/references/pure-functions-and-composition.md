@@ -83,23 +83,6 @@ const asyncPipe = (...fns) => x => fns.reduce((p, f) => p.then(f), Promise.resol
 const processOrder = asyncPipe(validateOrder, chargeCard, sendConfirmation);
 ```
 
----
+> Never build arrays with a spread accumulator in a loop — `(acc, x) => [...acc, x]` inside `reduce` is the ~893× anti-pattern this repo's perf rule bans. See `../../rules/avoid-intermediate-arrays.md`.
 
-## Reduce Is the Foundation
-
-`reduce` can express `map`, `filter`, and function composition itself:
-
-```js
-// map via reduce
-const map = (fn, arr) =>
-  arr.reduce((acc, item) => [...acc, fn(item)], []);
-
-// filter via reduce
-const filter = (fn, arr) =>
-  arr.reduce((acc, item) => fn(item) ? [...acc, item] : acc, []);
-
-// compose via reduceRight
-const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
-```
-
-**Redux reducers** follow the same pattern: `(state, action) => newState`. They must be pure, and handle unknown action types by returning state unchanged.
+**Redux reducers** follow the composition pattern: `(state, action) => newState`. They must be pure, and handle unknown action types by returning state unchanged.

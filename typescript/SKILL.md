@@ -17,7 +17,7 @@ description: >
   this binding, detached method, barrel file, index.js, array chains, filter().map(), intermediate
   arrays, hot path, GC pressure, null vs undefined, sentinel value, camelCase, PascalCase),
   contracts (domain vs DTO, monorepo types, API contract types),
-  composition (pipe, compose, currying, partial application, point-free, pure functions, functors, monads, lenses, functional mixin, factory function, object composition, transducers),
+  composition (pipe, compose, currying, partial application, point-free, pure functions, functional mixin, factory function, object composition),
   ask (idiomatic JS/TS, JS/TS conventions, JS/TS best practices, JS/TS code review,
   "compose these functions", "pipe this data", "make this more functional").
 metadata:
@@ -26,7 +26,7 @@ metadata:
 
 # JavaScript & TypeScript
 
-Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html). Rule files below link to the specific handbook section they encode; when a rule and the handbook disagree, the handbook wins and the rule should be updated.
+Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Rule files below link to the specific docs section they encode; when a rule and the official docs disagree, the docs win and the rule should be updated.
 
 ## Route to Sub-skills
 
@@ -34,7 +34,7 @@ Primary reference: [TypeScript Handbook](https://www.typescriptlang.org/docs/han
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
-→ **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, functors/monads/lenses…) → `composition/SKILL.md`
+→ **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins…) → `composition/SKILL.md`
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 
@@ -98,7 +98,7 @@ else res.status(200).json(result);
 
 - Domain vs. DTO mapping, full example: `references/user-example.md`.
 - Zod boundary-validation example: `zod/example.md` (deeper annotated patterns in `zod/references/zod.md`).
-- ECMAScript edition history (ES1 1997 → ES2025): see `references/ecmascript-history.md`. Use when judging which edition first shipped a feature, what needs a polyfill on older runtimes, which syntax is safe for a target environment, or choosing `tsconfig` `target`/`lib`.
+- ECMAScript edition history (ES1 1997 → ES2025): see [MDN's JavaScript editions timeline](https://developer.mozilla.org/en-US/docs/Web/JavaScript/New_in_JavaScript). Use when judging which edition first shipped a feature, what needs a polyfill on older runtimes, which syntax is safe for a target environment, or choosing `tsconfig` `target`/`lib`.
 
 ## Rules (JavaScript & TypeScript, always apply)
 

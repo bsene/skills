@@ -8,7 +8,7 @@ metadata:
 
 # TypeScript Type System
 
-Primary reference: [TypeScript Handbook — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) and [Everyday Types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).
+Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Section links below point at the exact page each concept comes from.
 
 ## Quick Concept Index
 
@@ -31,39 +31,9 @@ Primary reference: [TypeScript Handbook — Narrowing](https://www.typescriptlan
 
 **`unknown` vs `any`** — `any` disables checking; `unknown` forces narrowing before use. Default to `unknown` for external data (JSON.parse, API responses, user input). See [The `unknown` type](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type).
 
-```typescript
-function process(value: unknown) {
-  if (typeof value === "string") value.toUpperCase(); // OK — narrowed
-  value.toUpperCase();                                // Error — unknown not narrowed
-}
-```
-
 **Type narrowing** — TypeScript narrows union types through `typeof`, `instanceof`, `in`, equality checks, truthiness, and `Array.isArray`. Narrowing eliminates impossible branches. See [Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
 
-```typescript
-function format(val: string | number | null) {
-  if (val === null) return "—";
-  if (typeof val === "number") return val.toFixed(2);
-  return val.trim();  // TS knows val is string here
-}
-```
-
 **Discriminated unions** — A shared literal tag field (`kind`, `type`, `status`) lets `switch`/`if` dispatch on shape. Essential for Redux actions, WebSocket messages, API variants. See [Discriminated Unions](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions).
-
-```typescript
-type Event =
-  | { kind: "login";  userId: string }
-  | { kind: "logout"; userId: string; reason: string }
-  | { kind: "error";  message: string };
-
-function handle(e: Event) {
-  switch (e.kind) {
-    case "login":  return greet(e.userId);
-    case "logout": return log(e.userId, e.reason);
-    case "error":  return alert(e.message);
-  }
-}
-```
 
 **Make Illegal States Unrepresentable** — Model each state of an entity lifecycle as its own type in a discriminated union. Eliminates incoherent field combinations that optional fields allow.
 
@@ -112,35 +82,11 @@ function handleTask(task: Task): void {
 
 **Exhaustiveness checking** — `assertNever(value: never)` produces a compile error when a new union member is added but not handled. Full runnable example: `example.md`. See [Exhaustiveness checking](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking).
 
-```typescript
-function assertNever(x: never): never {
-  throw new Error(`Unhandled case: ${JSON.stringify(x)}`);
-}
-// Add a new Event variant → handle()'s switch breaks at compile time
-```
-
 **Mapped types** — Transform every key of an existing type: `{ [K in keyof T]?: T[K] }`. Built-ins: `Partial`, `Required`, `Readonly`, `Pick`, `Record`. See [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html).
-
-```typescript
-type Flags<T> = { [K in keyof T]: boolean };
-// Flags<{ name: string; age: number }> → { name: boolean; age: boolean }
-```
 
 **Conditional types** — Type-level ternary: `T extends U ? X : Y`. With `infer`, extract type arguments at the type level. See [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html).
 
-```typescript
-type Unwrap<T> = T extends Promise<infer U> ? U : T;
-// Unwrap<Promise<string>> → string
-// Unwrap<number>          → number
-```
-
 **User-defined type guards** — Return `value is T` to carry narrowing across function boundaries, where TypeScript can't infer the refinement. See [User-Defined Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates).
-
-```typescript
-function isUser(v: unknown): v is User {
-  return typeof v === "object" && v !== null && "id" in v;
-}
-```
 
 **Type branding** — Prevents mixing structurally identical types (`UserId` vs `SessionToken`) at zero runtime cost. Use `unique symbol` for full nominal safety.
 

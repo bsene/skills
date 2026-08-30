@@ -16,6 +16,20 @@ Use narrowing and validation instead. Reference: [Type Assertions](https://www.t
 | `value!` | Hides real nullability |
 | `// @ts-ignore` | Silences errors instead of fixing |
 
+## `@ts-expect-error` over `@ts-ignore`
+
+When suppression is truly needed:
+
+```typescript
+// Bad — silences all errors, even future unrelated ones
+// @ts-ignore
+doSomethingUntyped();
+
+// Good — errors if the suppression becomes unnecessary
+// @ts-expect-error: third-party lib missing types
+doSomethingUntyped();
+```
+
 ## Use instead
 
 **Type guard (narrowing at runtime):**

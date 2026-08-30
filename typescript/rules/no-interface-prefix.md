@@ -3,7 +3,7 @@
 
 # Do not prefix interfaces with `I`
 
-The TypeScript standard library, compiler, and all major style guides (Airbnb, Google, Angular, React) use plain PascalCase names — not `IFoo`. Reference: [Interfaces](https://www.typescriptlang.org/docs/handbook/2/objects.html).
+The TypeScript standard library, compiler, and all major style guides ([Airbnb](https://github.com/airbnb/javascript#naming--uppercase), [Google](https://google.github.io/styleguide/jsguide.html#naming), Angular, React) use plain PascalCase names — not `IFoo`.
 
 ## Banned patterns
 

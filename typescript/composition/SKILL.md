@@ -1,14 +1,12 @@
 ---
 name: composition
-description: Functional programming composition in JavaScript/TypeScript — pipe/compose, currying, point-free, pure functions, factories, functional mixins, functors, monads, lenses, transducers. Reference bundle for the `typescript` skill; not independently triggered. For class-based OOP architecture or SOLID principles, the parent routes to `object-oriented-programming`.
+description: Functional programming composition in JavaScript/TypeScript — pipe/compose, currying, point-free, pure functions, factories, functional mixins. Reference bundle for the `typescript` skill; not independently triggered. For class-based OOP architecture or SOLID principles, the parent routes to `object-oriented-programming`.
 metadata:
   role: reference-bundle
   parent-skill: typescript
 ---
 
 # Composing Software in JavaScript & TypeScript
-
-# Composing Software in JavaScript
 
 Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc) series.
 
@@ -33,9 +31,6 @@ Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/
 | **Currying** | Transform `(a, b) => c` into `a => b => c` |
 | **Partial application** | Fix some arguments, return a function for the rest |
 | **Point-free** | Define functions without mentioning their arguments |
-| **Functor** | A container with a `.map()` method that obeys functor laws |
-| **Monad** | A functor that also flattens nested contexts via `.chain()` |
-| **Lens** | A composable getter/setter pair for immutable nested state |
 
 ---
 
@@ -46,8 +41,6 @@ Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/
 | Writing pure functions, composing with pipe/compose, debugging pipelines | [Pure Functions & Composition](references/pure-functions-and-composition.md) |
 | Currying, partial application, data-last convention, point-free style | [Currying & Point-Free](references/currying-and-point-free.md) |
 | Factory functions, functional mixins, object composition patterns | [Object Composition & Factories](references/object-composition-and-factories.md) |
-| Working with functors, monads, or lenses | [Functors, Monads & Lenses](references/functors-monads-lenses.md) |
-| Optimizing data pipelines, avoiding intermediate allocations | [Transducers](references/transducers.md) |
 
 ---
 
@@ -73,7 +66,7 @@ When designing a new abstraction, ask:
 | Side effects mixed with logic | Hard to test, unpredictable | Isolate effects to system edges |
 | Multi-argument functions in pipelines | Can't compose without wrapper | Curry + data-last convention |
 | Writing tests after the fact with mocks | Mocks reveal coupling; tests don't shape design | Write pure functions; integration-test I/O |
-| Chaining array methods for large data | Intermediate allocations at each step | Transducers for performance-critical paths |
+| Chaining array methods for large data | Intermediate allocations at each step | Single-pass `reduce`, but never with a spread accumulator — see `../rules/avoid-intermediate-arrays.md` |
 
 ---
 
