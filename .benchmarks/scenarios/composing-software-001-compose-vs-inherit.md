@@ -1,6 +1,6 @@
 ---
 id: composing-software-001-compose-vs-inherit
-skill: composing-software
+skill: typescript-composition
 ---
 
 # Prompt
