@@ -89,3 +89,18 @@ When the user wants to apply or review Ports & Adapters:
 
 - **Alistair Cockburn** — [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)
 - **Martin Fowler** — [Ports and Adapters Pattern](https://martinfowler.com/bliki/HexagonalArchitecture.html)
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/ports-adapters-001-hexagonal-refactor.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/ports-adapters-001-hexagonal-refactor.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **NEUTRAL (run 2026-08-31)**. All models 100% with and without — hexagonal refactor at ceiling. The port-naming BLOCKER did not bite here but still needs the Phase-7 scoping fix. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

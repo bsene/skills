@@ -135,8 +135,8 @@ else res.status(200).json(result);
 
 This router has no scenario of its own. Gate data lives in the leaf footers:
 
-- `type-system/SKILL.md` → `## Benchmark` (scenario `typescript-001`, run 2026-06-14, SOFT PASS).
-- `composition/SKILL.md` → `## Benchmark` (scenario `composing-software-001`, run 2026-06-25, PASS).
+- `type-system/SKILL.md` → `## Benchmark` (scenarios `typescript-001` PASS and `typescript-002` SOFT PASS, run 2026-08-31).
+- `composition/SKILL.md` → `## Benchmark` (scenario `composing-software-001`, run 2026-08-31, PASS).
 - Historical optimizer runs: `run-history.md`. Per-skill gate targets: `RELEASE_GATES.md`.
 
-Gate per `skill-optimizer/release-gates.md`.
+Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

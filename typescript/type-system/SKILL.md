@@ -216,24 +216,25 @@ let config: Config = { host: "localhost", port: 3000 };
 
 ---
 
+
 ## Benchmark
 
-Scenario: `.benchmarks/scenarios/typescript-001-illegal-states.md` · Run: 2026-06-14
+Scenario: `.benchmarks/scenarios/typescript-001-illegal-states.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/typescript-001-illegal-states.json`
 
-| Model             | Without | With | Delta |
-| ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | 100%    | 100% | +0%   |
-| claude-sonnet-4-6 | 83%     | 100% | +17%  |
-| claude-haiku-4-5  | 100%    | 100% | +0%   |
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 67%     | 83%     | +16%   |
+| claude-haiku-4-5  | 67%     | 83%     | +16%   |
 
-> **SOFT PASS** (ceiling effect — frontier baselines already produce textbook discriminated unions). Only lift is shared-base on sonnet.
+> **PASS (run 2026-08-31)**. Gains on all models — the 2026-06-14 SOFT PASS ceiling effect is partly overcome. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
 
-Scenario: `.benchmarks/scenarios/typescript-002-state-transitions.md` · Run: 2026-06-25 (N=3 averages) *(harder variant — typed transitions + branded ids)*
+Scenario: `.benchmarks/scenarios/typescript-002-state-transitions.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/typescript-002-state-transitions.json`
 
-| Model             | Without | With | Delta |
-| ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | 67%     | 67%  | +0%   |
-| claude-sonnet-4-6 | 72%     | 67%  | −5%   |
-| claude-haiku-4-5  | 56%     | 67%  | +11%  |
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 83%     | 83%     | +0%   |
+| claude-sonnet-4-6 | 83%     | 83%     | +0%   |
+| claude-haiku-4-5  | 67%     | 83%     | +16%   |
 
-> **NEUTRAL** (re-run 2026-06-25, N=3). The earlier single-run haiku **−16% was noise** — across three samples haiku is **+11%** (56→67) with no real regression on any model (sonnet −5% is one criterion of within-run variance). The scenario is genuinely hard: even with the skill, opus caps at 67% (4/6), so it doesn't yet differentiate frontier models. No triage needed; to push the ceiling, sharpen the compile-time-transition guidance. Gate per `skill-optimizer/release-gates.md`.
+> **SOFT PASS (run 2026-08-31)**. Haiku +16 (67→83); opus at ceiling. Sonnet's 2026-06-25 N=3 −5% did not reproduce (0 here). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -123,3 +123,18 @@ for _, tt := range tests {
 | Read When | File |
 |---|---|
 | Full examples: table-driven, TestMain, parallel, golden files, httptest, testify, benchmarks, fuzz, pprof | [Testing Patterns](references/testing-patterns.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-testing-001-table-driven.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-testing-001-table-driven.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **NEUTRAL (run 2026-08-31)**. All models 100% with and without — table-driven tests are default behavior at this task size. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

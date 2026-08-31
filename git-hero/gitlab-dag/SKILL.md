@@ -94,3 +94,18 @@ When writing or reviewing `.gitlab-ci.yml` snippets:
 3. Prefer `$[[ matrix.X ]]` expressions over manually listing all combinations
 4. Include artifact handling (`artifacts:` block) when jobs produce outputs consumed by dependents
 5. Validate the math: list total job count when using `parallel:matrix` (must be ≤ 200)
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/gitlab-dag-001-pipeline-dag.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/gitlab-dag-001-pipeline-dag.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 67%     | 100%    | +33%   |
+| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+
+> **PASS (run 2026-08-31)**. Lift on all models; baselines flatten dependency structure that the DAG view makes explicit. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -148,4 +148,4 @@ Scenario: `.benchmarks/scenarios/golang-concurrency-001-goroutine-leak.md`
 | claude-sonnet-4-6 | 61%     | 72%  | +11%  |
 | claude-haiku-4-5  | 50%     | 78%  | +28%  |
 
-> **PASS** (run 2026-06-25, N=3 averages). First pass was NEUTRAL (zero lift) — the leak/race/errgroup guidance was buried in tables. After front-loading the **"Reviewing concurrent Go — check every time"** checklist, the skill lifts every model — haiku 50→78 (+28). Imperative top-level checklist > buried table for salience (per `activation-design`). Gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25, N=3 averages). First pass was NEUTRAL (zero lift) — the leak/race/errgroup guidance was buried in tables. After front-loading the **"Reviewing concurrent Go — check every time"** checklist, the skill lifts every model — haiku 50→78 (+28). Imperative top-level checklist > buried table for salience (per `activation-design`). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
