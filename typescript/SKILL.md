@@ -8,11 +8,14 @@ description: >
 
   TRIGGER when: language (TypeScript, TS, .ts, .tsx, JavaScript, JS, .js, .mjs, .cjs, Node.js,
   browser JS, ESM, CommonJS),
-  type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing),
-  safety (strict mode, any vs unknown, ts-expect-error, ts-ignore, type assertions),
+  type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing,
+  variance, contravariance),
+  safety (strict mode, any vs unknown, ts-expect-error, ts-ignore, type assertions,
+  noUncheckedIndexedAccess, noImplicitReturns),
   runtime (Zod, schema validation, runtime type checks, parse/safeParse),
   errors (error handling without throwing, union return errors, Result type),
-  ts-conventions (readonly modifier, return type annotations, interface prefix, `as const`),
+  ts-conventions (readonly modifier, return type annotations, module organization, namespace, export default,
+  interface prefix, `.d.ts`, ambient declaration, declaration file, `as const`),
   js-idioms (const/let, destructuring, optional chaining, nullish coalescing, arrow functions,
   this binding, detached method, barrel file, index.js, array chains, filter().map(), intermediate
   arrays, hot path, GC pressure, null vs undefined, sentinel value, camelCase, PascalCase),
@@ -87,7 +90,7 @@ else res.status(200).json(result);
 
 ## TypeScript at Scale
 
-1. Enable `"strict": true` globally; enforce in CI ([Compiler Options](https://www.typescriptlang.org/tsconfig/#strict))
+1. Enable `"strict": true` globally; enforce in CI ([Compiler Options](https://www.typescriptlang.org/tsconfig/#strict)); layer on the flags not included in strict: [`noUncheckedIndexedAccess`](https://www.typescriptlang.org/tsconfig/#noUncheckedIndexedAccess), [`noImplicitReturns`](https://www.typescriptlang.org/tsconfig/#noImplicitReturns), [`noFallthroughCasesInSwitch`](https://www.typescriptlang.org/tsconfig/#noFallthroughCasesInSwitch), [`noUnusedLocals`](https://www.typescriptlang.org/tsconfig/#noUnusedLocals), [`noUnusedParameters`](https://www.typescriptlang.org/tsconfig/#noUnusedParameters)
 2. Use `@ts-expect-error` over `@ts-ignore`
 3. Track `any` usage via `@typescript-eslint/no-explicit-any`
 4. Keep API/DTO types separate from domain types — map at boundaries (full example: `references/user-example.md`)
@@ -121,6 +124,8 @@ else res.status(200).json(result);
 | Do not prefix interfaces with `I` | `rules/no-interface-prefix.md` |
 | Mark properties and arrays `readonly` to signal immutability | `rules/readonly.md` |
 | Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
+| Use modules instead of namespaces; prefer named exports | `rules/module-organization.md` |
+| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts` | `rules/js-interop-declarations.md` |
 
 ---
 
