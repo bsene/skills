@@ -18,7 +18,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Review the diff | [review](/skills/review/SKILL.md) | Read actual diff, tier feedback, apply fixes |
 | Show changes as diffs | [show-me-the-code](/skills/show-me-the-code/SKILL.md) | Every code change as a unified diff |
 | Root-cause a defect | [dantotsu](/skills/dantotsu/SKILL.md) | Turn one defect into permanent quality gain |
-| Test the right things | [testing](/skills/testing/SKILL.md) | Tiered testing philosophy, desiderata for any lang |
+| Test the right things | [testing](/skills/testing/SKILL.md) | Tiered testing philosophy, desiderata, mocking best practices (Khorikov) for any lang |
 | Write smoke tests | [smoke-tests](/skills/smoke-tests/SKILL.md) | Identify + gate CI on critical-path validation |
 | TDD rigorously | [tcrdd](/skills/tcrdd/SKILL.md) | Test-Commit-Revert workflows with test-first discipline |
 | Fix code bloaters | [refactoring](/skills/refactoring/SKILL.md) | Detect long methods, large classes, primitive obsession |
