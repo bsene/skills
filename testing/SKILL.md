@@ -92,6 +92,9 @@ Full multi-agent pipeline (specifier → test-writer → coder → refactorer �
 | Agent "fixes" a failing acceptance test | Loosening the assertion defeats the guardrail | Treat acceptance tests as immutable by the coding agent |
 | Testing for SRP/architecture compliance | Confuses a structural design rule with a behavioral spec; couples the test to how the code is organized rather than what it does | Assert observable behavior; enforce architecture with static analysis/lint, not tests |
 | Appending tests wherever is fastest to minimize the diff | Breaks Principle 5 (tests collectively document the class) — order chaos, harder to read as a spec | Prefer well-structured, clearly grouped tests over minimal diffs; place new tests with the related scenario even if the diff grows |
+| Asserting on stubs (queries) | Couples the test to how the SUT reads data — fails on harmless refactor | Assert on mocks (commands) only; stubs provide inputs and are never asserted |
+| Mocking third-party libraries | Every test breaks on upgrade; the mock may lie about real behavior | Write a thin adapter you own; mock the adapter |
+| Testing private methods / exposing private state | Fragile and insufficient coverage — bypasses the public API where bugs live | Extract to a public unit or test through the public API |
 
 ---
 
@@ -146,6 +149,7 @@ agent wrote the original tangled version — "hard to test" is still the design 
 | Auditing test quality against the 12 desiderata properties | [TestDesiderata — Quality Audit](references/testdesiderata.md) |
 | Reviewing tests for BDD compliance and structure | [BDD Test Review](references/bdd-review.md) |
 | Directing an AI coding agent: cadence, multi-agent pipeline, trust model | [Testing With AI Coding Agents](references/ai-agent-testing.md) |
+| Judging whether/what to mock: mock vs stub, edge-only mocking, mocking third-party libs | [Mocks & Fragility](references/mocks-and-fragility.md) |
 | Identifying and writing smoke tests for CI gates | Dedicated `smoke-tests` skill (was `references/smoke-tests.md`) |
 
 ---
