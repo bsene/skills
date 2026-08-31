@@ -110,3 +110,18 @@ on top of the workflow above:
 - Never skip diff step — reconstructed diffs miss context and whitespace changes
 - Grill-me questions cover design intent only, not style
 - Commit only after approval + green tests + clean lint
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/review-001-severity-tiers.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/review-001-severity-tiers.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 83%     | +16%   |
+| claude-sonnet-4-6 | 83%     | 67%     | −16%   |
+| claude-haiku-4-5  | 83%     | 83%     | +0%   |
+
+> **NEG (run 2026-08-31)**. Sonnet −16 on the severity-tier boundary; opus +16. Classification ambiguous between criteria and tier table — diagnostic c5-only re-run queued before any edit (cap reached). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

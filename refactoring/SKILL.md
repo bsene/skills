@@ -102,4 +102,4 @@ Scenario: `.benchmarks/scenarios/refactoring-001-long-method.md` · Run: 2026-06
 | claude-sonnet-4-6 | 33%     | 100% | +67%  |
 | claude-haiku-4-5  | 0%      | 100% | +100% |
 
-> **PASS** (strongest signal). Decisive on weak models (haiku 0→100%): enforces smell-naming, Extract-Method-first, in-place scope, rule-of-three. Keep as-is. Gate per `skill-optimizer/release-gates.md`.
+> **PASS** (strongest signal). Decisive on weak models (haiku 0→100%): enforces smell-naming, Extract-Method-first, in-place scope, rule-of-three. Keep as-is. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

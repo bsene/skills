@@ -148,3 +148,18 @@ No frontmatter, no required fields — `AGENTS.md` is plain Markdown by design, 
 |---|---|
 | Full detail on all 6 principles with examples and reasoning | [Six Principles Detailed](references/six-principles-detailed.md) |
 | Anti-patterns table, local/directory-scoped files, writing workflow | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/writing-a-good-agents-md-001-consolidate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/writing-a-good-agents-md-001-consolidate.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 50%     | 100%    | +50%   |
+| claude-sonnet-4-6 | 67%     | 100%    | +33%   |
+| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+
+> **PASS (run 2026-08-31)**. Gains on all models; consolidation criteria land. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

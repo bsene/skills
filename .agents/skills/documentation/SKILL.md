@@ -107,3 +107,18 @@ Quick decision tree:
 | How-to guide | Does it solve the stated problem for an experienced user? |
 | Reference | Can the user find a specific fact in under 30 seconds? |
 | Explanation | Does the user understand the *why*, not just the *what*? |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/documentation-001-diaxis-split.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/documentation-001-diaxis-split.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 67%     | 100%    | +33%   |
+
+> **PASS (run 2026-08-31)**. Haiku +33 (67→100); frontier models already at ceiling. No regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

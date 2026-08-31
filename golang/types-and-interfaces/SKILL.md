@@ -123,3 +123,18 @@ See [Collections & Generics](references/collections-generics.md) for full enum, 
 | Struct embedding mechanics, promoted fields/methods, struct tags | [Structs & Composition](references/structs-composition.md) |
 | Standard library interfaces, type assertions, type switches | [Interfaces Deep Dive](references/interfaces.md) |
 | Slice internals, map patterns, generics syntax, type constraints | [Collections & Generics](references/collections-generics.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-types-and-interfaces-001-consumer-interface.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-types-and-interfaces-001-consumer-interface.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 83%     | 100%    | +17%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **SOFT PASS (run 2026-08-31)**. Opus/sonnet +17; haiku at ceiling. Consumer-side interface definition is half-default already. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

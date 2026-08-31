@@ -83,6 +83,7 @@ Enable readline: `chicken-install breadline`, then add to `~/.csirc`:
 - **`csc` on Windows** may conflict with the C# compiler — use a full path or rename.
 - **No `use` in CHICKEN 5** — replace `(use foo)` with `(import foo)`.
 - **Dynamic loading** requires a shared library on the `CHICKEN_REPOSITORY_PATH`.
+- **CLI arguments**: read via `(command-line-arguments)` from `(chicken process-context)` — not `(argv)`, and not Racket's `command-line` form.
 - **`call/cc` is powerful but sharp** — prefer high-level abstractions (threads, conditions) over raw continuations in application code.
 - **Unsafe mode** (`-unsafe`) disables all safety checks — only use for hot inner loops after profiling.
 
@@ -95,8 +96,9 @@ Enable readline: `chicken-install breadline`, then add to `~/.csirc`:
 ```scheme
 ;;; count.scm
 (import (chicken base)
-        (chicken file)        ; read-string
-        medea)                ; egg: read-json — NOT (use medea)
+        (chicken process-context)  ; command-line-arguments
+        (chicken file)             ; read-string
+        medea)                     ; egg: read-json — NOT (use medea)
 
 (define data (with-input-from-file (car (command-line-arguments)) read-json))
 (printf "~a records~%" (length data))
@@ -123,3 +125,18 @@ runs the same source interpreted.
 | FFI: foreign-lambda, callbacks, C interop, embedding | [FFI Guide](references/ffi.md) |
 | Egg authoring, testing, and publishing workflow | [Egg System](references/eggs.md) |
 | Full `csi`/`csc` flag reference, runtime options, `(declare ...)` reference, deployment/static linking | [CLI & Compiler Cheatsheet](references/cheatsheet.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/chicken-scheme-001-chicken5-migration.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/chicken-scheme-001-chicken5-migration.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 83%     | 100%    | +17%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 100%    | 83%     | −17%   |
+
+> **SOFT PASS (run 2026-08-31)**. Salience re-run (process-context pitfall bullet + import added to the integrated example, wf_9a5588bc): opus's args-idiom miss cleared (+17). Haiku shows a one-criterion `csc -static`/`-deploy` dip on an untouched criterion — single-run noise suspect; targeted c4 re-run on the follow-up list. No edit left this cycle (cap reached). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

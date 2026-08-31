@@ -63,3 +63,18 @@ GFM is a superset of standard Markdown with GitHub-specific extensions for issue
 - **Footnotes are not supported in GitHub wikis.**
 - **Color swatches** (`` `#hex` ``, `` `rgb()` ``, `` `hsl()` ``) only render in issues, PRs, and discussions — not in plain `.md` file views.
 - **Custom anchors** (`<a name="">`) are not included in the auto-generated table of contents.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/markdown-001-wiki-limits.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/markdown-001-wiki-limits.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 80%     | 100%    | +20%   |
+
+> **SOFT PASS (run 2026-08-31)**. Haiku +20 (80→100); opus/sonnet at ceiling. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -94,3 +94,18 @@ Fill the "Causal Chain" and "Root Cause of Occurrence" sections with the defect 
 If the user also wants the learning-sharing item or the prioritization scoring captured in the document, add optional `## Learning to share` and `## Prioritization` sections — don't add them by default, only when asked or when clearly working at team/recurring level.
 
 If the user wants this saved as a file rather than shown inline, write it as a Markdown (.md) file.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/dantotsu-001-escape-stage.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/dantotsu-001-escape-stage.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+
+> **PASS (run 2026-08-31)**. Small uniform gains; baselines partially apply the stage-classification-first rule unaided. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

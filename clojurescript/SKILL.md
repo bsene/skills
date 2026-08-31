@@ -62,7 +62,14 @@ Because CLJS has no automatic TCO (see Gotchas), which recursion tool to reach f
 
 ## Async / promises
 
-CLJS added native `^:async` functions with an `await` macro (since v1.12.145) as a lighter-weight alternative to `core.async` for promise-based code. This is a newer feature that's easy to get wrong or not know about at all — **read `references/async-functions.md` before writing or reviewing any CLJS code that deals with `Promise`s, `fetch`, or `async`/`await`-shaped logic** (see Gotchas above for the two most common mistakes). One more rule worth holding in mind: prefer `Promise/all` (via `mapv`) over `map` when you need to await several promises produced in a loop.
+CLJS added native `^:async` functions with an `await` macro (since v1.12.145) as a lighter-weight alternative to `core.async` for promise-based code. This is a newer feature that's easy to get wrong or not know about at all — **read `references/async-functions.md` before writing or reviewing any CLJS code that deals with `Promise`s, `fetch`, or `async`/`await`-shaped logic** (see Gotchas above for the two most common mistakes).
+
+The single most common typo — `^:async` sits on the function **name**, never the argument vector:
+
+```clojure
+(defn ^:async load-user [id] (await (fetch-user id)))  ; ✅ name
+(defn load-user ^:async [id] ...)                      ; ❌ arg vector — never
+``` One more rule worth holding in mind: prefer `Promise/all` (via `mapv`) over `map` when you need to await several promises produced in a loop.
 
 If the codebase already uses `core.async` (`go`, `<!`, channels) for async control flow, stay consistent with that style rather than mixing in `^:async`/`await` unless asked to migrate.
 
@@ -94,3 +101,18 @@ If the surrounding codebase has an established (even if less idiomatic) conventi
 
 Other working-style notes:
 - When debugging, ask whether the error is happening under `:none` (dev) or `:advanced`/`:simple` (prod) optimizations — the failure modes are very different (the former is usually a logic/require bug, the latter is very often a renaming/externs issue).
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/clojurescript-001-async-await.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/clojurescript-001-async-await.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **PASS (run 2026-08-31)**. Salience re-run (✅/❌ `^:async`-placement pair added to the Async section, wf_9a5588bc): sonnet's arg-vector typo cleared (+17); gains on all models. The prior single-run sonnet −17 was a salience gap, not noise. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

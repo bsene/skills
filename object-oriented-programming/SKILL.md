@@ -106,3 +106,18 @@ Full rule-by-rule checklist with TS/NestJS examples and gotchas: `references/obj
 - `references/patterns.md` — GoF + modern TS pattern catalog with trade-offs
 - `references/tell-dont-ask.md` — encapsulation deep dive
 - `references/object-calisthenics.md` — Jeff Bay's 9 rules, NestJS/DDD-flavored
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/solid-001-god-class.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/solid-001-god-class.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **SOFT PASS (run 2026-08-31)**. Sonnet +17; opus/haiku at ceiling on god-class decomposition. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

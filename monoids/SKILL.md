@@ -138,3 +138,18 @@ Ici le neutre est souvent déjà le comportement par défaut de la fonction à a
 - Ne force pas l'abstraction si l'opération n'est pas vraiment associative (ex : soustraction, division) — vérifie la loi avant de la proposer, un contre-exemple rapide suffit.
 - S'il n'existe pas de neutre naturel dans le domaine, ce n'est peut-être pas un monoïde mais un semigroupe (associatif sans neutre) — le signaler plutôt que d'inventer une valeur neutre artificielle.
 - Reste pragmatique : l'objectif est de remplacer du code ad hoc buggé par une API générique, pas d'imposer du vocabulaire fonctionnel pour faire savant. En Clojure, si `merge-with`/`reduce` avec une fonction core suffit, ne propose pas de réifier un `Monoid` inutilement.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/monoids-001-parallel-merge.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/monoids-001-parallel-merge.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **SOFT PASS (run 2026-08-31)**. Flat deltas are the expected finding: the French-language body (`# Monoïdes`) does not activate for English-prompted runs (audit Warning). Sonnet +17 (83→100); opus/haiku unchanged. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -80,3 +80,18 @@ Run in order, stop at first success. Native `svg`/`png` export does not exist in
 
 → Structurizr DSL syntax: `references/c4-structurizr.md`
 → Mermaid C4 syntax: `references/c4-mermaid.md`
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/c4-diagram-001-container-view.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/c4-diagram-001-container-view.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **PASS (run 2026-08-31)**. Opus +33 (67→100); sonnet/haiku already at ceiling. No regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -121,3 +121,18 @@ Props are labeled arguments, optional props arrive as `option` (`~onOk=?`), and 
 - Total functions: return `option`/`Result` for expected failures rather than throwing; reserve `throw`/`JsExn` for the genuinely exceptional, and declare binding-side exceptions with `@throws` so they stay visible in types.
 - Modules of functions over classes — there are no classes; translate a JS class into a module exposing functions over a record type.
 - Keep `external` bindings in dedicated edge modules (an `Externals.res` per library is the common shape) so interop stays at the fringe and domain code stays typed end-to-end.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/rescript-001-v12-migration.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/rescript-001-v12-migration.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 17%     | 67%     | +50%   |
+| claude-sonnet-4-6 | 33%     | 50%     | +17%   |
+| claude-haiku-4-5  | 50%     | 67%     | +17%   |
+
+> **PASS (run 2026-08-31)**. Opus +50; gains on all models. The flagship example's `*.` syntax BLOCKER is a separate content fix (Phase 7), not a gate item. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

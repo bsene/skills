@@ -75,3 +75,18 @@ Keep explanations conversational. For complex concepts, use multiple analogies.
 > **Walkthrough:** `OrderService` emits `order.created` to the message bus → `InventoryService` reserves stock and emits `stock.reserved` → `PaymentService` charges and emits `payment.captured` → `NotificationService` sends confirmation email. Failure at any step emits a compensating event to roll back upstream.
 >
 > **Gotcha:** Each service is independently deployable but the saga has no central coordinator — debugging a failed order requires tracing correlation IDs across 4 service logs.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/explain-code-001-worker-walkthrough.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/explain-code-001-worker-walkthrough.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 50%     | 100%    | +50%   |
+| claude-sonnet-4-6 | 50%     | 100%    | +50%   |
+| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+
+> **PASS (run 2026-08-31)**. Uniform +50 — largest floor lift in this cycle. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

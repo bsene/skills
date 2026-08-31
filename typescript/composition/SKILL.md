@@ -87,14 +87,15 @@ Classes (only when a framework forces it)
 
 ---
 
+
 ## Benchmark
 
-Scenario: `.benchmarks/scenarios/composing-software-001-compose-vs-inherit.md`
+Scenario: `.benchmarks/scenarios/composing-software-001-compose-vs-inherit.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/composing-software-001-compose-vs-inherit.json`
 
-| Model             | Without | With | Delta |
-| ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | 17%     | 100% | +83%  |
-| claude-sonnet-4-6 | 33%     | 100% | +67%  |
-| claude-haiku-4-5  | 0%      | 83%  | +83%  |
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 33%     | 67%     | +34%   |
+| claude-sonnet-4-6 | 50%     | 83%     | +33%   |
+| claude-haiku-4-5  | 50%     | 100%    | +50%   |
 
-> **PASS** (run 2026-06-25, strongest signal). Decisive — haiku 0→83, opus 17→100. Baselines reach for `extends`; the skill enforces composition (factory/mixin) and correctly DEFERS the SRP follow-up to `object-oriented-programming` (anti-trigger holds). Gate per `skill-optimizer/release-gates.md`.
+> **PASS (run 2026-08-31)**. Lift on every model; baselines still reach for `extends` where factory/composition fits better. Consistent with the 2026-06-25 run (strongest signal). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -120,3 +120,18 @@ The Alcotest shape above is **unit testing** — fixed examples you hand-pick. R
 - Favor small, composable functions over long imperative bodies — `List.map`/`List.filter`/`List.fold_left` over hand-rolled loops with `ref` accumulators, unless performance or clarity genuinely calls for the latter.
 - Favor pattern matching over `if`/`else` chains once there are more than two cases, especially over a variant type — it's both more idiomatic and gets exhaustiveness checking for free.
 - Keep functions total where reasonable (return `option`/`result` for partiality) rather than raising exceptions for expected failure cases; reserve exceptions for genuinely exceptional/programmer-error conditions.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/ocaml-001-equality-semantics.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/ocaml-001-equality-semantics.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 83%     | −17%   |
+| claude-sonnet-4-6 | 83%     | 83%     | +0%   |
+| claude-haiku-4-5  | 83%     | 83%     | +0%   |
+
+> **NEG (run 2026-08-31)**. Opus −17 (100→83): runtime-model grounding missed — the Runtime Model section is a one-liner punting to references. Sonnet/haiku unchanged. Follow-up: expand the one-liner (cap reached this cycle). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

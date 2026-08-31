@@ -174,3 +174,18 @@ suite never starts.
 |-----------|------|
 | Need Hurl template, variables, CI snippet, patterns | [`references/hurl.md`](references/hurl.md) |
 | No Hurl available / need a curl+jq shell script template | [`references/curl.md`](references/curl.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/smoke-tests-001-ci-gate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/smoke-tests-001-ci-gate.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 50%     | 100%    | +50%   |
+| claude-sonnet-4-6 | 33%     | 100%    | +67%   |
+| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+
+> **PASS (run 2026-08-31)**. Uniform gains; CI-gate criteria land on all models. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
