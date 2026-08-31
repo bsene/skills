@@ -5,6 +5,21 @@
 
 TypeScript infers return types, but inference can silently widen to `any` when calling untyped or loosely-typed dependencies. Explicit return types catch this at the function boundary. Reference: [Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html).
 
+## Inference-first policy
+
+- Infer local, obvious, private expressions; redundant annotations are noise.
+- Annotate exported and public API parameters and return types.
+- Annotate when the inferred type would be `any`, too broad, or a semantically important union.
+- Enable `noImplicitAny` — included in `strict: true`.
+
+```typescript
+// Good — local inference; the result is already narrowed and stable
+const activeUsers = users.filter(user => user.isActive);
+
+// Good — public boundary documents its contract
+export function getUser(id: string): User | undefined { ... }
+```
+
 ## Banned patterns
 
 ```typescript
