@@ -1,6 +1,6 @@
 ---
 id: solid-001-god-class
-skill: oop-principles-solid
+skill: object-oriented-programming
 ---
 
 # Prompt
