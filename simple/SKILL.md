@@ -48,3 +48,18 @@ Useful to cite when explaining _why_ a simpler version is better, not just asser
 - "La perfection est atteinte, non pas lorsqu'il n'y a plus rien à ajouter, mais lorsqu'il n'y a plus rien à retirer." — Antoine de Saint-Exupéry
 - "La simplicité est la sophistication suprême." — Leonardo da Vinci
 - "given choice between complexity or one on one against t-rex, grug take t-rex: at least grug see t-rex." — grugbrain.dev
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/simple-001-root-cause-fix.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/simple-001-root-cause-fix.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 83%     | 100%    | +17%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+
+> **SOFT PASS (run 2026-08-31)**. Small uniform gains; no regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

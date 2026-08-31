@@ -112,4 +112,4 @@ Scenario: `.benchmarks/scenarios/golang-error-handling-001-wrap-vs-format.md`
 | claude-sonnet-4-6 | 83%     | 100% | +17%  |
 | claude-haiku-4-5  | 50%     | 83%  | +33%  |
 
-> **PASS** (run 2026-06-25). Strong lift on weak models (haiku +33, sonnet +17); opus saturated. Skill flips `%v`→`%w` and the `panic`→returned-error fix that baselines under-apply. Gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25). Strong lift on weak models (haiku +33, sonnet +17); opus saturated. Skill flips `%v`→`%w` and the `panic`→returned-error fix that baselines under-apply. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

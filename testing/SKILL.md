@@ -162,3 +162,17 @@ For deeper dives into specific testing contexts, route to these specialized skil
 |-----------|------------------|-----|
 | Need to practice TDD workflow interactively, human-paced | `tcrdd` | Hands-on kata-style practice with immediate feedback |
 | Identifying or writing smoke tests specifically | `smoke-tests` | Dedicated triggers, template, CI integration |
+
+---
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/testing-001-agent-test-strategy.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/testing-001-agent-test-strategy.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- a/testing/SKILL.md
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 67%     | 100%    | +33%   |
+
+> **PASS (run 2026-08-31)**. Opus and haiku +33; sonnet at ceiling. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

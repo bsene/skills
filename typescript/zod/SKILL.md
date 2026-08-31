@@ -86,3 +86,18 @@ if (!result.success) {
 
 - Quick boundary-validation example: `example.md`.
 - Full annotated example: `references/zod.md`. For API behavior (transforms, coercion, error trees, `@zod/mini`), the [official Zod docs](https://zod.dev) are the source of truth — don't restate them here.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/zod-001-v4-migration.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/zod-001-v4-migration.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 50%     | 83%     | +33%   |
+| claude-sonnet-4-6 | 50%     | 83%     | +33%   |
+| claude-haiku-4-5  | 67%     | 100%    | +33%   |
+
+> **PASS (run 2026-08-31)**. Uniform +33 on every model — the v4 migration checklist applies cleanly. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

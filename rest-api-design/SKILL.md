@@ -265,4 +265,4 @@ Scenario: `.benchmarks/scenarios/rest-api-001-status-code.md` · Run: 2026-06-14
 | claude-sonnet-4-6 | 40%     | 60%  | +20%  |
 | claude-haiku-4-5  | 40%     | 60%  | +20%  |
 
-> **PASS.** Flips the core 400-vs-422 call on all 3 models (every baseline wrongly chose 422). Weaker models under-apply secondary idempotency/409 guidance — candidate for higher salience. Gate per `skill-optimizer/release-gates.md`.
+> **PASS.** Flips the core 400-vs-422 call on all 3 models (every baseline wrongly chose 422). Weaker models under-apply secondary idempotency/409 guidance — candidate for higher salience. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

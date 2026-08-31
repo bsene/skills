@@ -135,4 +135,14 @@ Scenario: `.benchmarks/scenarios/communication-001-message-coaching.md`
 | claude-sonnet-4-6 | 71%     | 100% | +29%  |
 | claude-haiku-4-5  | 71%     | 86%  | +15%  |
 
-> **PASS** (run 2026-06-25). Gains on all three models (sonnet +29). Skill reliably adds conclusion-first Pyramid structure, the de-risk/pilot move, and a concrete rewrite that baselines partly miss. Gate per `skill-optimizer/release-gates.md`.
+> **PASS** (run 2026-06-25). Gains on all three models (sonnet +29). Skill reliably adds conclusion-first Pyramid structure, the de-risk/pilot move, and a concrete rewrite that baselines partly miss. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+Scenario: `.benchmarks/scenarios/communication-002-reframe-tough-question.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/communication-002-reframe-tough-question.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%  | +0%   |
+| claude-sonnet-4-6 | 100%    | 100%  | +0%   |
+| claude-haiku-4-5  | 100%    | 100%  | +0%   |
+
+> **NEUTRAL (run 2026-08-31)**. All models 100% with and without — reframing a tough question is already default behavior on this task; communication-001 above carries the skill's evidence. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

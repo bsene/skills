@@ -277,19 +277,15 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 
 ---
 
+
 ## Benchmark
 
-Scenario: `.benchmarks/scenarios/tcrdd-001-red-green.md`
+Scenario: `.benchmarks/scenarios/tcrdd-001-red-green.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/tcrdd-001-red-green.json`
 
-| Model             | Without | With (pre-fix) | With (post-fix) | Delta (post-fix) |
-| ----------------- | ------- | -------------- | --------------- | ---------------- |
-| claude-opus-4-8   | 100%    | 100%           | 100%            | +0%              |
-| claude-sonnet-4-6 | 100%    | 33% (-67%)     | 100%            | +0%              |
-| claude-haiku-4-5  | 83%     | 17% (-66%)     | 83%             | +0%              |
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 50%     | 100%    | +50%   |
+| claude-sonnet-4-6 | 83%     | 67%     | −16%   |
+| claude-haiku-4-5  | 50%     | 67%     | +17%   |
 
-> **Pre-fix: FAIL** (run 2026-06-14) — heavy approval-gating froze sonnet and made haiku one-shot.
-> **Post-fix: regression CLEARED** (run 2026-06-25) — after the **Mode** (autonomous path) + **one-step-at-a-time** guard, every model ran a proper RED→GREEN loop in autonomous mode: sonnet no longer freezes, haiku no longer one-shots. No negative delta remains.
-> The skill is now behavior-neutral on this task (models already do TCRDD well unaided); the fix removes the harm. Gate per `skill-optimizer/release-gates.md`: **PASS** (no negative delta on the critical scenario).
-> Caveat: single-run, graded from agent self-reports; freeze/one-shot/revert signals directly observed.
-> **Stale as of 2026-08-24:** this run predates the switch from `git-gamble` to native git
-> (stage-all / commit / `reset --hard`, see Workflow). Not yet re-run against the new mechanic.
+> **NEG (run 2026-08-31)**. Opus +50 / haiku +17, but sonnet −16: GREEN-phase minimal-implementation discipline is crowded out by the agentic-guardrail machinery. Post-native-git rewrite holds (no universal regression; the 2026-06-14 FAIL is cleared). GREEN workflow line on the follow-up list. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

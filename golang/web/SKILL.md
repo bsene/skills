@@ -161,3 +161,18 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 |---|---|
 | ServeMux patterns, middleware composition, graceful shutdown, timeouts | [HTTP Server](references/http-server.md) |
 | encoding/json details, XML, html/template patterns | [JSON & Templates](references/json-templates.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-web-001-handler-audit.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-web-001-handler-audit.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 100%    | +0%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **NEUTRAL (run 2026-08-31)**. All models 100% with and without — handler-audit criteria at ceiling. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

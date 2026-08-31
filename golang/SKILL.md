@@ -19,6 +19,8 @@ metadata:
 
 Write simple, explicit, readable Go. The language rewards clarity over cleverness.
 
+"Simple" means obvious, not minimal — standard idioms (`defer f.Close()`, `%w`-wrapped errors, immediate `if err != nil` checks) ARE the clarity, not cleverness. Never strip a required idiom in the name of simplicity.
+
 ## Route to Sub-skills
 
 → **Error handling** (error interface, wrapping, sentinel errors, panic/recover) → `error-handling/` sub-skill
@@ -110,14 +112,18 @@ Every type has a usable zero value — no null surprises.
 | OOP design principles | `object-oriented-programming` | SOLID, design patterns (language-agnostic) |
 | Hexagonal architecture in Go | `ports-adapters-architecture` | Ports and adapters pattern |
 
+
+---
+
+
 ## Benchmark
 
-Scenario: `.benchmarks/scenarios/golang-router-001-idiomatic.md` · Run: 2026-06-26
+Scenario: `.benchmarks/scenarios/golang-router-001-idiomatic.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/golang-router-001-idiomatic.json`
 
-| Model             | Without | With | Delta |
-| ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | 100%    | 100% | +0%   |
-| claude-sonnet-4-6 | 100%    | 100% | +0%   |
-| claude-haiku-4-5  | 83%     | 83%  | +0%   |
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 83%     | 100%    | +17%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 67%     | 83%     | +16%   |
 
-> **NEUTRAL** (no regression). On idiomatic `readConfig` all baselines already use `defer f.Close()`, `%w`-wrapped errors, immediate error checks, and avoid over-abstraction — the feared "clarity over cleverness suppresses idioms" regression did not appear (haiku's one miss is identical with and without the skill). The router's fundamentals are not load-bearing on a straight-line task. Follow-up: a harder scenario (concurrency-vs-simplicity trade-off, or a dispatch case) to find real lift. Gate per `skill-optimizer/release-gates.md`.
+> **PASS (run 2026-08-31)**. Over-broad-'simplicity' regression cleared after the intro edit ('idioms ARE the clarity', wf_9a5588bc): opus's lost `defer f.Close()` criterion is back with-skill on all models. Supersedes the 2026-06-26 NEUTRAL run. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

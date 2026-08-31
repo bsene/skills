@@ -141,4 +141,4 @@ Scenario: `.benchmarks/scenarios/kano-001-feature-triage.md` · Run: 2026-06-14
 | claude-sonnet-4-6 | 80%     | 100% | +20%  |
 | claude-haiku-4-5  | 80%     | 100% | +20%  |
 
-> **PASS.** Uniform +20%; load-bearing lift is forcing explicit Kano classification (all baselines skipped the vocabulary). Gate per `skill-optimizer/release-gates.md`.
+> **PASS.** Uniform +20%; load-bearing lift is forcing explicit Kano classification (all baselines skipped the vocabulary). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

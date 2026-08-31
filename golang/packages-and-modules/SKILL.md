@@ -110,3 +110,18 @@ Remove `replace` directives before releasing — they are for local development 
 |---|---|
 | go.mod syntax, go.sum, MVS, workspaces, proxies, private modules | [Modules Deep Dive](references/modules-deep-dive.md) |
 | cmd/, internal/, pkg/ directory decisions and layout examples | [Project Layout](../references/project-layout.md) |
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/golang-packages-and-modules-001-module-mechanics.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-packages-and-modules-001-module-mechanics.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 100%    | 83%     | −17%   |
+| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
+| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+
+> **NEG (run 2026-08-31)**. Opus −17 (100→83): MVS version selection missed — the skill's versioning table has no MVS line (it punts to the reference). No edit this cycle (cap reached); 'MVS picks the highest *required* version, never auto-upgrades' is on the follow-up list. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

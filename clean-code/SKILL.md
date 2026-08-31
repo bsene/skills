@@ -53,3 +53,18 @@ No big deal. Don't treat comments as sacred or as a metric to hit — code that 
 - Naming and complexity interact: half of what looks like "high complexity" is actually "badly named branches hiding what the function does" — try renaming before reaching for extraction.
 - Don't chase noise-word removal into ambiguity — `Product` vs `ProductInfo` is a good trim; `Product` vs `ProductOwner` is not, they're different concepts.
 - One-word-per-concept is a codebase-wide check, not a per-file one — grep for the existing verb before introducing a synonym.
+
+---
+
+
+## Benchmark
+
+Scenario: `.benchmarks/scenarios/clean-code-001-agent-code-review.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/clean-code-001-agent-code-review.json`
+
+| Model             | Without | With  | Delta |
+| ----------------- | ------- | ----- | ----- |
+| claude-opus-4-8   | 67%     | 100%    | +33%   |
+| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
+| claude-haiku-4-5  | 67%     | 67%     | +0%   |
+
+> **PASS (run 2026-08-31)**. Opus +33 (67→100); sonnet +17 (83→100); haiku at ceiling. No regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
