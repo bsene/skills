@@ -1,6 +1,6 @@
 ---
 name: type-system
-description: Deep dive into TypeScript's type system — narrowing, discriminated unions, mapped/conditional types, type guards, branding, and escape hatches. Reference bundle for the `typescript` skill; not independently triggered.
+description: Deep dive into TypeScript's type system — structural typing, type erasure, narrowing, discriminated unions, mapped/conditional types, type guards, branding, and escape hatches. Reference bundle for the `typescript` skill; not independently triggered.
 metadata:
   role: reference-bundle
   parent-skill: typescript
@@ -15,12 +15,15 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Sect
 | Problem / Topic                              | Concept                        |
 | -------------------------------------------- | ------------------------------ |
 | Safely handle API responses / JSON.parse     | `unknown` vs `any`             |
+| Reuse an object without tying it to a class name | Structural typing          |
+| Explain why static types do not validate runtime data | Type erasure          |
 | Narrow a union based on runtime checks       | Type narrowing & refinement    |
 | Route on message type with different shapes  | Discriminated unions           |
 | Model entity lifecycle without invalid states | Make Illegal States Unrepresentable |
 | Fail at compile time when a case is missed   | Exhaustiveness / `assertNever` |
 | Create `Partial`, `Readonly`, or custom maps | Mapped types                   |
 | Unwrap `Promise<T>`, filter union members    | Conditional types + `infer`    |
+| Why a callback with a wider parameter type is rejected (TS2345) | Variance (covariance / contravariance) |
 | Carry narrowing across function boundaries   | User-defined type guards       |
 | Prevent mixing `UserId` and `SessionToken`   | Type branding (nominal types)  |
 | Pair a type and utility under one import     | Companion object pattern       |
@@ -28,6 +31,20 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Sect
 | Last-resort override of TypeScript's checks  | Escape hatches (`as T`, `!`)   |
 
 ## Concepts
+
+**Structural typing** — Compatibility is determined by shape, not by nominal inheritance. Prefer the narrowest useful shape; a name alone does not prevent mixing semantically different values. Use branding for domain IDs.
+
+Avoid empty structures; they accept almost every value:
+
+```typescript
+// Bad — no contract
+interface Empty {}
+type Anything = {};
+```
+
+See *Type branding* below for the full example.
+
+**Type erasure** — Static `T` values do not survive into emitted JavaScript as runtime checks. Validate data that crosses a runtime boundary with Zod — see `../zod/SKILL.md`.
 
 **`unknown` vs `any`** — `any` disables checking; `unknown` forces narrowing before use. Default to `unknown` for external data (JSON.parse, API responses, user input). See [The `unknown` type](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type).
 
@@ -87,6 +104,8 @@ function handleTask(task: Task): void {
 **Conditional types** — Type-level ternary: `T extends U ? X : Y`. With `infer`, extract type arguments at the type level. See [Conditional Types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html).
 
 **User-defined type guards** — Return `value is T` to carry narrowing across function boundaries, where TypeScript can't infer the refinement. See [User-Defined Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates).
+
+**Variance** — Functions are covariant in their return type and contravariant in their parameters, so a handler with a narrower parameter type is not assignable where a wider one is expected (the classic TS2345). Under [strictFunctionTypes](https://www.typescriptlang.org/tsconfig/#strictFunctionTypes) this is checked only for function-*property* syntax — method syntax stays bivariant — so declare callback-typed options as properties. The docs demonstrate both by example but never name or generalize the rule.
 
 **Type branding** — Prevents mixing structurally identical types (`UserId` vs `SessionToken`) at zero runtime cost. Use `unique symbol` for full nominal safety.
 
