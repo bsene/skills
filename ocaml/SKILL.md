@@ -54,9 +54,16 @@ When reading an inference error, trace the expression the way the compiler does:
 - **Modules (`module Foo = struct ... end`) and signatures (`.mli` files or `module type`)** are the OCaml analogue of TS interfaces + implementation, but enforced at compile time with no structural escape hatch. A `.mli` file next to a `.ml` file restricts what's visible outside the module — the closest OCaml equivalent to `export`/`private`.
 - **No classes-by-default culture.** OCaml has an object system (`class`, `object ... end`) but idiomatic OCaml reaches for modules + records + functions first, objects/classes rarely. Don't default to translating a JS class into an OCaml class — translate it into a module exposing functions over a record type instead.
 
-## Runtime model (background)
+## Runtime model (use this when explaining equality or mutation)
 
-An OCaml value is either an unboxed integer or a pointer to a heap **block**; a `ref` is just a one-field mutable record, which is why `ref`/`:=`/`!` compose with everything else instead of being a distinct language feature. Full walkthrough (lists, closures, why `==` vs `=` differ): [references/runtime-model.md](references/runtime-model.md).
+Ground any answer about `=` vs `==`, mutation, or "why is it like that" in this model, and state it explicitly — it is not optional background:
+
+- An OCaml value is either an unboxed integer or a pointer to a heap **block** (a header word + N value words).
+- Tuples, arrays, records, and non-constant variant constructors are all just blocks — `{ x = 1.; y = 2. }` is a pointer to a 2-word block, so two records with identical fields are still two separately allocated blocks.
+- A `ref` is just a one-field mutable record, a `list` is a chain of 2-word `::` cells, a closure is a block with a code pointer plus its captured environment — which is why `ref`/`:=`/`!` compose with everything else instead of being a distinct language feature.
+- Consequence for equality: `==` compares only the two words (constant time, even on cyclic values); `=` walks into the blocks and can loop forever on a cycle.
+
+Full walkthrough: [references/runtime-model.md](references/runtime-model.md).
 
 ## Project structure: dune, opam, Alcotest
 
@@ -135,3 +142,13 @@ Scenario: `.benchmarks/scenarios/ocaml-001-equality-semantics.md` · Run: 2026-0
 | claude-haiku-4-5  | 83%     | 83%     | +0%   |
 
 > **NEG (run 2026-08-31)**. Opus −17 (100→83): runtime-model grounding missed — the Runtime Model section is a one-liner punting to references. Sonnet/haiku unchanged. Follow-up: expand the one-liner (cap reached this cycle). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+Scenario: `.benchmarks/scenarios/ocaml-001-equality-semantics.md` · Run: 2026-09-01 (salience re-run `wf_aae2e0cb`) · Log: `.benchmarks/runs/2026-09-01/ocaml-001-equality-semantics.triage-rerun.json`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 83%  | +0%   |
+| claude-sonnet-4-6 | 83%     | 83%  | +0%   |
+| claude-haiku-4-5  | 83%     | 100% | +17%  |
+
+> **PASS (run 2026-09-01)**. Salience re-run (runtime-model one-liner promoted to an imperative inline section, wf_aae2e0cb): the 2026-08-31 opus regression is gone (−17 → +0) and the universal c5 grounding criterion cleared with-skill on haiku (83→100). Opus/sonnet still miss c5 in both conditions; opus without-skill also dropped 100→83 this run, so some baseline noise is in play. Follow-up: next cycle, check whether opus/sonnet need the grounding tied directly into the equality cheat-sheet bullet rather than its own section. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
