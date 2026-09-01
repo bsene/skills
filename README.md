@@ -31,6 +31,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Monoid abstraction              | [monoids](/skills/monoids/SKILL.md)                                                                                                                                    | Recognize/apply monoids in TS and CLJS                         |
 | Idiomatic Go                    | [golang](/skills/golang/SKILL.md), plus sub-skills                                                                                                                     | Project layout, error-handling, concurrency, generics, testing |
 | Idiomatic Ruby / Rails          | [ruby](/skills/ruby/SKILL.md)                                                                                                                                          | Style, GoF patterns, RSpec/Minitest testing                    |
+| Verify PHP against php.net      | [php](/skills/php/SKILL.md)                                                                                                                                            | Check signatures, edge returns, PHP 8 removals                 |
 | CHICKEN Scheme                  | [chicken-scheme](/skills/chicken-scheme/SKILL.md)                                                                                                                      | Write / package / debug Scheme programs                        |
 | OCaml                           | [ocaml](/skills/ocaml/SKILL.md)                                                                                                                                        | Write/review/debug OCaml and dune projects                     |
 | ReScript                        | [rescript](/skills/rescript/SKILL.md)                                                                                                                                  | Write/debug ReScript, JSX v4, JS interop                       |
@@ -51,4 +52,4 @@ See [writing-a-good-agents-md](/skills/writing-a-good-agents-md/SKILL.md) for qu
 
 ---
 
-**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Aug 31, 2026
+**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Sep 1, 2026
