@@ -1,76 +1,45 @@
 ---
 name: writing-a-good-agents-md
 description: >
-  Write, review, audit, or improve AGENTS.md files — the open, tool-agnostic
-  standard for giving AI coding agents persistent project context — plus the
-  harness-specific files that wrap or import it (CLAUDE.md, .cursorrules/
-  .cursor/rules, GEMINI.md, Copilot instructions, .windsurfrules, OpenCode/
-  Zed config, etc). Use whenever the user wants to create a new AGENTS.md
-  from scratch, audit an existing context file for bloat or anti-patterns,
-  apply progressive disclosure, split monolithic context into sub-documents,
-  reconcile multiple tool-specific files into one source of truth, or
-  understand AGENTS.md best practices. Trigger for casual mentions like
-  "help me write my AGENTS.md", "is my CLAUDE.md good?", "my agent keeps
-  ignoring my instructions", or "I have a .cursorrules and a CLAUDE.md, how
-  do I unify them?". Treat AGENTS.md, CLAUDE.md, and other harness-specific
-  files as the same problem — the filename rarely changes the guidance.
+  Write, audit, or improve AGENTS.md — the tool-agnostic context file for
+  coding agents — plus harness adapters (CLAUDE.md, .cursorrules, GEMINI.md,
+  Copilot instructions). Use when creating one from scratch, auditing for
+  bloat or anti-patterns, consolidating multiple tool files into one source
+  of truth, or applying progressive disclosure.
 metadata:
   source: https://www.humanlayer.dev/blog/writing-a-good-claude-md
   author: Kyle (HumanLayer), generalized for AGENTS.md
   standard: https://agents.md/
-  version: "1.0"
+  version: "2.0"
 ---
 
 # Writing a Good AGENTS.md
 
-> Adapted from **"Writing a good CLAUDE.md"** by [Kyle](https://twitter.com/0xblacklight) (November 25, 2025), published on the [HumanLayer Blog](https://www.humanlayer.dev/blog/writing-a-good-claude-md), and generalized to [agents.md](https://agents.md/), the open convention now read natively by 30+ coding agents (Codex, Cursor, Gemini CLI, GitHub Copilot, Windsurf, Zed, OpenCode, and others).
+Help users write, audit, and improve `AGENTS.md` — and the harness-specific files that sit alongside or import it.
 
-Help users write, audit, and improve `AGENTS.md` — and, where relevant, the harness-specific file that sits alongside or imports it.
-
----
-
-## Core Mental Model
+## Core Model
 
 `AGENTS.md` is an **onboarding document**, not a configuration dump. It answers three questions:
 
-- **WHY** — What is the purpose of this project and its components?
-- **WHAT** — What is the tech stack, project structure, and map of the codebase?
-- **HOW** — How does the agent actually work on this project? (build, test, verify commands)
+- **WHY** — purpose of the project and its components
+- **WHAT** — stack, structure, map of the codebase
+- **HOW** — build, test, verify commands the agent runs
 
-Everything else should live elsewhere: linter config, one-off instructions, or a referenced sub-document.
-
-This file is read by many different agents, each with its own harness-specific quirks (see [Harness Compatibility](#harness-compatibility-agentsmd-vs-claudemd-vs-others) below), but the underlying authoring discipline is identical across all of them.
-
----
-
-## The Six Principles (Summary)
-
-| # | Principle | Key Rule |
-|---|---|---|
-| 1 | Less is More | Budget a limited instruction count; target < 150 lines, ideally under ~50–100 |
-| 2 | Universally Applicable Only | Every instruction must apply to every task in the codebase |
-| 3 | Progressive Disclosure | Give the agent a map to find info, not all info upfront |
-| 4 | Don't Use the Agent as a Linter | Code style belongs in deterministic tools, not AGENTS.md |
-| 5 | Craft Manually | Never trust an auto-generated AGENTS.md as a finished product; write every line intentionally |
-| 6 | Understand Why Agents Skip Instructions | Content judged irrelevant or unnecessary gets skipped, ignored, or actively hurts task success — make every line count |
-
----
+Everything else lives elsewhere: linter config, sub-documents, one-off instructions.
 
 ## Audit Checklist
 
-| Check                      | Question                                                                                |
-| --------------------------- | ---------------------------------------------------------------------------------------- |
-| **Universality**           | Is every instruction applicable to _every_ task the agent might do?                     |
-| **Length**                 | Is it under ~150 lines? Could it be under 50–100?                                       |
-| **Linter work**            | Does it include code style rules that a formatter/linter could enforce instead?         |
-| **Stale snippets**         | Does it paste code that could go stale? Use `file:line` refs instead                    |
-| **Instruction count**      | Count discrete rules. Is it approaching 20–30+?                                         |
-| **Auto-generated**         | Does it look like raw `/init` or similar auto-generated output? If so, it needs a rewrite |
-| **Progressive disclosure** | Are domain-specific docs referenced rather than inlined?                                |
-| **Hotfix accumulation**    | Are there specific one-off instructions that suggest workarounds rather than structure? |
-| **Duplication across tools** | Is the same content copy-pasted into CLAUDE.md, .cursorrules, GEMINI.md, etc. instead of imported from one source? |
-
----
+| Check | Question |
+|---|---|
+| **Universality** | Does every instruction apply to every task? |
+| **Length** | Under ~150 lines? Ideally 50–100? |
+| **Linter work** | Code style rules a formatter could enforce instead? |
+| **Stale snippets** | Pasted code that could go stale? Use `file:line` refs |
+| **Instruction count** | Approaching 20–30+ discrete rules? |
+| **Auto-generated** | Raw `/init` output? Rewrite from scratch, don't prune |
+| **Progressive disclosure** | Domain docs referenced, not inlined? |
+| **Hotfix accumulation** | One-off workarounds instead of structure? |
+| **Duplication across tools** | Same content pasted into CLAUDE.md/.cursorrules instead of imported? |
 
 ## Template: Minimal AGENTS.md
 
@@ -99,7 +68,6 @@ Always verify your changes compile and tests pass before considering a task done
 
 - Never modify files in `<generated-dir>/`.
 - Never commit `.env` or any file containing secrets.
-- [Any other hard constraint the agent must never violate]
 
 ## Git
 
@@ -109,57 +77,44 @@ Always verify your changes compile and tests pass before considering a task done
 
 Read these files when relevant to your current task — don't read all of them upfront:
 
-| File                          | When to read                |
-| ------------------------------ | ---------------------------- |
-| `agent_docs/architecture.md`  | Understanding system design |
-| `agent_docs/database.md`      | Working with data models    |
-| `agent_docs/testing.md`       | Writing or running tests    |
-| `agent_docs/deployment.md`    | Deploying or CI/CD work     |
+| File                         | When to read                |
+| ---------------------------- | --------------------------- |
+| `agent_docs/architecture.md` | Understanding system design |
+| `agent_docs/database.md`     | Working with data models    |
+| `agent_docs/testing.md`      | Writing or running tests    |
+| `agent_docs/deployment.md`   | Deploying or CI/CD work     |
 ```
 
-No frontmatter, no required fields — `AGENTS.md` is plain Markdown by design, which is exactly what makes it portable across harnesses.
+No frontmatter, no required fields — plain Markdown by design, which is what makes it portable across harnesses.
 
----
+## Harness Adapters
 
-## Harness Compatibility: AGENTS.md vs CLAUDE.md vs Others
+`AGENTS.md` is the shared source of truth; harness files are thin adapters, never copies:
 
-`AGENTS.md` is the shared, tool-agnostic file. Most harness-specific files are best treated as **thin adapters** on top of it rather than independent documents:
+| Harness | Adapter |
+|---|---|
+| Claude Code | `CLAUDE.md` whose first line imports it: `@AGENTS.md` |
+| Cursor | Short `.mdc` rule referencing it; glob scoping only for Cursor-specific rules |
+| Gemini CLI | `GEMINI.md` — same relationship as CLAUDE.md |
+| Codex, Windsurf, Zed, OpenCode | Read `AGENTS.md` natively; no adapter |
 
-| Harness | Native file | How it relates to AGENTS.md |
-|---|---|---|
-| Claude Code | `CLAUDE.md` | Does **not** read `AGENTS.md` automatically. Point it there with a one-line import (`@AGENTS.md` as the first line of `CLAUDE.md`), or run `/init` in a repo that already has an `AGENTS.md` — Claude Code will read and incorporate it. |
-| OpenAI Codex, many others | `AGENTS.md` | Native, no adapter needed. |
-| Cursor | `.cursor/rules/*.mdc` (or legacy `.cursorrules`) | Supports glob-scoped frontmatter `AGENTS.md` doesn't have; keep shared content in `AGENTS.md` and use the MDC file only for Cursor-specific scoping. |
-| Gemini CLI | `GEMINI.md` | Same relationship as CLAUDE.md — treat as an adapter, not a duplicate. |
-| GitHub Copilot | Copilot instructions file | Reference or align with the root `AGENTS.md` rather than re-authoring. |
-| Windsurf, Zed, OpenCode, others | Varies | Check current docs; the trend across the ecosystem is to read `AGENTS.md` natively or via a short import. |
-
-**Practical guidance:**
-- If the user works with a single tool, just write `AGENTS.md` (or that tool's native filename directly) — don't over-engineer a multi-file setup they don't need.
-- If the user works across multiple tools/teammates, put shared instructions in `AGENTS.md` and keep tool-specific files as short adapters (imports, or a couple of lines for tool-only features like Cursor's glob-scoped rules).
-- Never copy-paste the same content into three files. That triples the maintenance burden and guarantees drift.
-- Nested/directory-local files: several harnesses (Claude Code, Cursor, others) support subdirectory-scoped instruction files, loaded only when the agent is working in that directory. This is progressive disclosure at the filesystem level — see [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md).
-
----
+Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-paste: three copies guarantee drift.
 
 ## Read On Demand
 
 | Read When | File |
 |---|---|
-| Full detail on all 6 principles with examples and reasoning | [Six Principles Detailed](references/six-principles-detailed.md) |
-| Anti-patterns table, local/directory-scoped files, writing workflow | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md) |
-
----
-
+| Principle details, research evidence, reasoning | [Six Principles Detailed](references/six-principles-detailed.md) |
+| Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md) |
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/writing-a-good-agents-md-001-consolidate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/writing-a-good-agents-md-001-consolidate.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 50%     | 100%    | +50%   |
-| claude-sonnet-4-6 | 67%     | 100%    | +33%   |
-| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 50%     | 100% | +50%  |
+| claude-sonnet-4-6 | 67%     | 100% | +33%  |
+| claude-haiku-4-5  | 83%     | 100% | +17%  |
 
 > **PASS (run 2026-08-31)**. Gains on all models; consolidation criteria land. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
