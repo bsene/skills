@@ -28,6 +28,11 @@ There is no application build step. Useful checks include:
 - Name reference files descriptively, e.g. `references/testing-and-quality.md`.
 - Keep `SKILL.md` focused; move detailed material to references and link it on demand.
 
+## OCaml Tooling
+
+- Implement OCaml tooling and helper executables in **OCaml**, not Python or another language. The committed example is the ocamllsp client at `.pi/ocamllsp_client/` (a dune project, stdlib + `unix` + `yojson`, built with `opam exec --switch=camelot -- dune build`).
+- Follow suit for new tooling: OCaml implementation, dune project, keep it under `.pi/`.
+
 ## Testing Guidelines
 
 There is no conventional unit-test suite. Validate changes by checking Markdown rendering, links, frontmatter syntax, and the accuracy of every command or example. For benchmark changes, run the benchmark scripts directly and include the results in the PR.

@@ -27,6 +27,11 @@ bin/
 *.test
 *.out
 
+# OCaml (dune)
+_build/
+*.install
+!.pi/ocamllsp_client/bin/
+
 # Clojure / Clojurescript
 .clj-kondo/
 
