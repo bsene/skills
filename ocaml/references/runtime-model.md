@@ -12,6 +12,8 @@ A `list` is exactly the linked list you'd hand-roll in JS or Java (each `::` cel
 
 A function that closes over outer variables is represented the same way — a block containing a code pointer plus the captured environment — which is why closures in OCaml aren't a special runtime object, just another pointer-to-block value like everything else.
 
+A raised exception value is likewise just an ordinary block, and its type `exn` is an **open / extensible variant** — the runtime can carry any `exception` you declare, not a fixed closed set.
+
 ## Why `==` and `=` differ
 
 `==` just compares the two words (pointer or unboxed int) in constant time; `=` has to walk into the blocks and can loop forever on a value that points back into itself (e.g. a value built with `let rec`).
