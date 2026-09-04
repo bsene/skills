@@ -2,6 +2,12 @@
 
 All optimizer runs for the TypeScript skill are recorded here.
 
+## Release Gates
+
+- Activation Rate target: **≥ 90 %** across all models.
+- Token Cost target: **≤ 10 %** of baseline token usage.
+- Run `skill-optimizer run --skill typescript`; log timestamp, model, activation %, token delta, and any regressions below.
+
 | Timestamp | Model | Activation % | Token Delta | Notes |
 |-----------|-------|--------------|-------------|-------|
 | 2026-04-05 10:00 | claude-opus-4-6 | 88 % | +5 % | Initial run – below target.
