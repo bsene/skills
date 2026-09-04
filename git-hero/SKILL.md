@@ -4,7 +4,8 @@ description: >
   Git best practices — commit discipline, branching/history hygiene, safety, and CI/CD pipelines.
   Routes to `git-guru` (expert Q&A), `gitmoji`, and `gitlab-dag` sub-skills.
 
-  TRIGGER when: commits (Conventional Commits, atomic commits, commit message format, commit hygiene),
+  TRIGGER when: commits (Conventional Commits, atomic commits, commit message format, commit hygiene,
+  commit types, scope selection, breaking change),
   history (branch naming, rebase vs merge, clean git history, interactive rebase, history management),
   safety (force push safety, recover lost commits, reflog, reset),
   CI/CD (GitLab CI, pipeline optimization, DAG, .gitlab-ci.yml),
@@ -48,13 +49,7 @@ Every commit message follows Conventional Commits, optionally prefixed with gitm
 - **Scope is optional** but recommended for multi-module repos
 - **No `Co-Authored-By: Claude` trailer** — never append it, regardless of tool defaults
 
-**Examples:**
-
-```
-feat(auth): add OAuth2 login with Google
-fix(cart): prevent double-submission on slow networks
-refactor: extract validation into shared module
-```
+**Example:** `feat(auth): add OAuth2 login with Google`
 
 ### Atomic Commits
 
@@ -70,6 +65,7 @@ One logical change per commit. Each commit should:
 
 | Read When | File |
 | --- | --- |
+| Choosing a commit type by release impact, breaking changes (`!` / `BREAKING CHANGE`), scope selection, commitlint validation | [Conventional Commits](references/conventional-commits.md) |
 | Configuring git (aliases, GPG signing, push safety, force push, reflog, modern syntax, rerere) | [Config Recipes](references/config-recipes.md) |
 | Choosing a workflow, merge vs rebase, branch naming conventions, branch lifecycle | [Workflow Decisions](references/workflow-decisions.md) |
 
