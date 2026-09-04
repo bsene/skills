@@ -172,33 +172,7 @@ Source: https://martinfowler.com/articles/ship-show-ask.html
 
 ### Conventional Commits (recommended)
 
-```
-<type>(<scope>): <short description>
-
-[optional body — explain WHY, not WHAT]
-
-[optional footer: BREAKING CHANGE, closes #123]
-```
-
-**Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`, `ci`
-
-**Examples:**
-
-```
-feat(auth): add OAuth2 login with Google
-fix(cart): prevent double-submission on slow networks
-docs: update README with Docker setup
-refactor(api): extract validation into middleware
-```
-
-**Breaking change:**
-
-```
-feat(api)!: rename /users endpoint to /accounts
-
-BREAKING CHANGE: all clients must update API calls.
-Closes #142
-```
+Format, type selection by release impact, breaking-change markers, and scope selection → [Conventional Commits reference](../../references/conventional-commits.md)
 
 ### Imperative mood rule
 
