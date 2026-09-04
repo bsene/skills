@@ -16,24 +16,28 @@ FastCart is a Next.js e-commerce platform for grocery chains. It uses
 TypeScript, Prisma, PostgreSQL, and deploys on Vercel.
 
 ## Stack
+
 - Next.js 14 App Router
 - PostgreSQL + Prisma
 - Tailwind
 - Vercel
 
 ## Style rules
+
 - Always use async/await, never .then()
 - Use descriptive variable names
 - Prefer named exports
 - Keep components under 200 lines
 
 ## Request validation middleware
+
 Here is our middleware so you know how it works:
 
 (paste of 25 lines of `src/middleware/validate.ts` — this copy has
 already drifted from the real file after last month's refactor)
 
 ## Things to remember
+
 - IMPORTANT: when you edit the checkout total calculation, you MUST also
   update src/legacy/totals.py — the legacy dashboard still reads from it.
   Temporary workaround, added in March.
@@ -43,6 +47,7 @@ already drifted from the real file after last month's refactor)
 - Be helpful and concise.
 
 ## Git
+
 - Use conventional commits.
 - Don't force-push to main.
 ```

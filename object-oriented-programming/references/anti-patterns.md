@@ -5,6 +5,7 @@ Common code smells from class-oriented thinking in TypeScript/JavaScript and the
 ## 1. The Checksum Calculator (Class with no state)
 
 ### Anti-Pattern
+
 ```typescript
 class ChecksumCalculator {
   static calculate(data: string): string {
@@ -22,11 +23,13 @@ class ChecksumCalculator {
 ```
 
 **Problem:**
+
 - Unnecessarily wraps utility functions in a class
 - No state to manage, just utility functions
 - Constructor is never called, object never instantiated
 
 ### Fix (Utility object)
+
 ```typescript
 const ChecksumCalculator = {
   calculate(data: string): string {
@@ -40,11 +43,12 @@ const ChecksumCalculator = {
   // Private helper (truly hidden from consumers)
   _helperMethod(): void {
     // now not exposed
-  }
+  },
 } as const;
 ```
 
 Or as standalone functions:
+
 ```typescript
 export function calculateChecksum(data: string): string {
   // implementation
@@ -64,6 +68,7 @@ function helperMethod(): void {
 ## 2. The Service Class (Single method class)
 
 ### Anti-Pattern
+
 ```typescript
 class UserRegistrationService {
   constructor(private userParams: UserInput) {}
@@ -93,12 +98,14 @@ const user = await new UserRegistrationService(params).call();
 ```
 
 **Problem:**
+
 - Temporary object created and discarded immediately
 - No persistent state (only temporary variables)
 - Single entry point (`call`)
 - Unnecessary object allocation
 
 ### Fix (Function)
+
 ```typescript
 async function registerUser(userParams: UserInput): Promise<User> {
   validateParams(userParams);
@@ -128,6 +135,7 @@ const user = await registerUser(params);
 ## 3. The Decorator Pattern (Over-engineered)
 
 ### Anti-Pattern
+
 ```typescript
 class DiscountDecorator {
   constructor(private item: Item) {}
@@ -160,11 +168,13 @@ item = new TaxDecorator(item);
 ```
 
 **Problem:**
+
 - Lots of boilerplate wrapper classes
 - Hard to compose and test
 - Overkill for simple transformations
 
 ### Fix (composition + functions)
+
 ```typescript
 const applyDiscount = (price: number, percent: number): number =>
   price * (1 - percent / 100);
@@ -184,6 +194,7 @@ Advanced: configure via higher-order functions, e.g. `const withDiscount = (pct:
 ## 4. The Builder Pattern (Invalid after construction)
 
 ### Anti-Pattern
+
 ```typescript
 class ReportBuilder {
   data: unknown | null = null;
@@ -207,19 +218,18 @@ class ReportBuilder {
 }
 
 // Usage
-const report = new ReportBuilder()
-  .setData(data)
-  .setFormat("pdf")
-  .build();
+const report = new ReportBuilder().setData(data).setFormat("pdf").build();
 ```
 
 **Problem:**
+
 - Object is invalid immediately after construction
 - Requires multiple chained setters before use
 - Encourages invalid intermediate states
 - Error checking at build time instead of construction time
 
 ### Fix (use a function)
+
 ```typescript
 function buildReport(data: unknown, format: string): Report {
   if (!data) throw new Error("Data is required");
@@ -232,6 +242,7 @@ const report = buildReport(data, "pdf");
 ```
 
 Or use a configuration object:
+
 ```typescript
 interface ReportConfig {
   data: unknown;
@@ -253,6 +264,7 @@ const report = buildReport({ data, format: "pdf" });
 ## 5. Over-inheritance (Tight coupling to framework)
 
 ### Anti-Pattern
+
 ```typescript
 // If using an ORM like TypeORM or Sequelize
 @Entity()
@@ -275,12 +287,14 @@ class User extends BaseEntity {
 ```
 
 **Problem:**
+
 - Tight coupling to the framework
 - Entity class has decorator side effects
 - Hard to test without database
 - Entity logic mixed with persistence logic
 
 ### Fix (Composition + separate repository)
+
 ```typescript
 // Pure domain object
 interface User {
@@ -315,6 +329,7 @@ class UserRepository {
 ## 6. The Data Class with Boilerplate
 
 ### Anti-Pattern
+
 ```typescript
 class Person {
   name: string;
@@ -330,11 +345,13 @@ class Person {
 ```
 
 **Problem:**
+
 - Repeats property names 2+ times (error-prone)
 - Lots of boilerplate for no behavior
 - Tempts you to add logic that doesn't belong
 
 ### Fix 1 (Type alias — simplest)
+
 ```typescript
 type Person = {
   name: string;
@@ -346,6 +363,7 @@ const person: Person = { name: "Alice", age: 30, email: "alice@example.com" };
 ```
 
 ### Fix 2 (Interface)
+
 ```typescript
 interface Person {
   name: string;
@@ -357,18 +375,20 @@ const person: Person = { name: "Alice", age: 30, email: "alice@example.com" };
 ```
 
 ### Fix 3 (Object literal)
+
 ```typescript
 const person = { name: "Alice", age: 30, email: "alice@example.com" };
 // Type is inferred: { name: string; age: number; email: string }
 ```
 
 ### Fix 4 (Class with shorthand constructor, if you need methods later)
+
 ```typescript
 class Person {
   constructor(
     public name: string,
     public age: number,
-    public email: string
+    public email: string,
   ) {}
 }
 
@@ -380,6 +400,7 @@ const person = new Person("Alice", 30, "alice@example.com");
 ## 7. Logic mixed with data (Fat domain object)
 
 ### Anti-Pattern
+
 ```typescript
 class User {
   birthYear: number;
@@ -406,12 +427,14 @@ class User {
 ```
 
 **Problem:**
+
 - Logic is tightly coupled to data
 - Hard to test (need User objects)
 - Hard to reuse (must instantiate)
 - Business logic buried in domain model
 
 ### Fix (separate concerns)
+
 ```typescript
 // Pure data
 type User = {
@@ -422,8 +445,7 @@ type User = {
 const calculateAge = (birthYear: number): number =>
   new Date().getFullYear() - birthYear;
 
-const isAdult = (age: number): boolean =>
-  age >= 18;
+const isAdult = (age: number): boolean => age >= 18;
 
 const getTaxBracket = (age: number): string => {
   if (age < 18) return "minor";
@@ -439,6 +461,7 @@ const adult = isAdult(age);
 ```
 
 Benefits:
+
 - Logic is testable without instantiation
 - Easy to reuse functions in different contexts
 - Clear separation of concerns
@@ -449,6 +472,7 @@ Benefits:
 ## 8. Unclear public/private boundaries
 
 ### Anti-Pattern
+
 ```typescript
 class Config {
   static getApiKey(): string {
@@ -461,15 +485,17 @@ class Config {
   }
 }
 
-Config.decryptKey();  // ❌ Still accessible despite intent to hide
+Config.decryptKey(); // ❌ Still accessible despite intent to hide
 ```
 
 **Problem:**
+
 - No true privacy in static methods
 - Confusing API surface
 - Doesn't prevent misuse
 
 ### Fix (use functions with module scope)
+
 ```typescript
 // Private to module
 function decryptKey(): string {
@@ -485,6 +511,7 @@ export function getApiKey(): string {
 ```
 
 Or use closures:
+
 ```typescript
 export const createConfig = () => {
   const decryptKey = (): string => {
@@ -494,14 +521,14 @@ export const createConfig = () => {
   return {
     getApiKey(): string {
       return process.env.API_KEY || "";
-    }
+    },
   };
 };
 
 // Usage
 const config = createConfig();
-config.getApiKey();      // ✅ Works
-config.decryptKey();     // ❌ Property does not exist
+config.getApiKey(); // ✅ Works
+config.decryptKey(); // ❌ Property does not exist
 ```
 
 ---
@@ -509,6 +536,7 @@ config.decryptKey();     // ❌ Property does not exist
 ## 9. Optional parameters creating invalid states
 
 ### Anti-Pattern
+
 ```typescript
 interface OrderParams {
   user?: User;
@@ -534,16 +562,18 @@ class Order {
   }
 }
 
-const order = new Order();  // ❌ Valid object, but invalid state
-order.process();            // ❌ Exception at runtime
+const order = new Order(); // ❌ Valid object, but invalid state
+order.process(); // ❌ Exception at runtime
 ```
 
 **Problem:**
+
 - Object can exist in invalid states
 - Errors caught at process time, not construction time
 - TypeScript doesn't warn about missing required data
 
 ### Fix (require all args in constructor)
+
 ```typescript
 interface OrderParams {
   user: User;
@@ -576,6 +606,7 @@ const validOrder = new Order({ user, items, total });
 ```
 
 Or use a function:
+
 ```typescript
 function processOrder(user: User, items: Item[], total: number): void {
   if (!user) throw new Error("User required");

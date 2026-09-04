@@ -56,14 +56,14 @@ Complex/repeated condition? → Introduce Variable (name it)
 if (user) {
   if (user.isActive) {
     if (user.account.isPremium) {
-      if (user.account.stripeStatus === 'active') doIt();
+      if (user.account.stripeStatus === "active") doIt();
     }
   }
 }
 // ✅ Guard clauses
 if (!user || !user.isActive) return;
 if (!user.account.isPremium) return;
-if (user.account.stripeStatus !== 'active') return;
+if (user.account.stripeStatus !== "active") return;
 doIt();
 ```
 
@@ -73,10 +73,10 @@ doIt();
 
 Apply **Rule of Three**:
 
-| Occurrences | Action |
-|-------------|--------|
-| 1–2 | leave it; note but don't extract — two points rarely reveal the right abstraction |
-| 3+ | proceed |
+| Occurrences | Action                                                                            |
+| ----------- | --------------------------------------------------------------------------------- |
+| 1–2         | leave it; note but don't extract — two points rarely reveal the right abstraction |
+| 3+          | proceed                                                                           |
 
 - Exact same code? → **Extract Method** once, call from multiple sites
 - Similar, varies by type? → **Replace Conditional with Polymorphism**
@@ -89,10 +89,16 @@ Apply **Rule of Three**:
 ```typescript
 // ❌ Order computes a customer concern
 class Order {
-  getCustomerTax() { return this.customer.calculateTax(); }
+  getCustomerTax() {
+    return this.customer.calculateTax();
+  }
 }
 // ✅ Move to Customer
-class Customer { calculateTax() { /* moved */ } }
+class Customer {
+  calculateTax() {
+    /* moved */
+  }
+}
 ```
 
 ---
@@ -108,7 +114,12 @@ class Customer { calculateTax() { /* moved */ } }
 connectToDatabase(host, port, username, password);
 query(host, port, username, password, sql);
 // ✅
-class DatabaseConfig { host; port; username; password; }
+class DatabaseConfig {
+  host;
+  port;
+  username;
+  password;
+}
 class Database {
   constructor(config: DatabaseConfig) {}
   query(sql: string) {}
@@ -119,21 +130,25 @@ class Database {
 
 ## Scenario 7: Name Doesn't Express Intent
 
-| Target | Apply |
-|--------|-------|
-| Variable / parameter | **Rename** |
-| Complex expression | **Introduce Variable**, then **Rename** the intermediate |
-| Method / function | **Rename**; consider **Extract Method** |
-| Class | **Rename**; consider **Extract Class** / **Move Class** |
+| Target               | Apply                                                    |
+| -------------------- | -------------------------------------------------------- |
+| Variable / parameter | **Rename**                                               |
+| Complex expression   | **Introduce Variable**, then **Rename** the intermediate |
+| Method / function    | **Rename**; consider **Extract Method**                  |
+| Class                | **Rename**; consider **Extract Class** / **Move Class**  |
 
 ```typescript
 // ❌
 const d = calculateTotal(items);
-function calc(x: any): any { return x * 1.15; }
+function calc(x: any): any {
+  return x * 1.15;
+}
 // ✅
 const TAX_RATE = 1.15;
 const totalWithTax = calculateTotalWithTax(items);
-function applyTaxRate(amount: number): number { return amount * TAX_RATE; }
+function applyTaxRate(amount: number): number {
+  return amount * TAX_RATE;
+}
 ```
 
 ---
@@ -149,7 +164,7 @@ When multiple issues present, apply in this order — each step often reveals th
 5. **Move Method / Field** — adjust responsibilities
 6. **Replace Conditional with Polymorphism** — introduce types
 
-See SKILL.md *When NOT to Refactor* for exceptions and guardrails.
+See SKILL.md _When NOT to Refactor_ for exceptions and guardrails.
 
 ---
 

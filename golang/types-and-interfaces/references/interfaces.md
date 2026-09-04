@@ -26,20 +26,20 @@ var _ Writer = (*MyType)(nil)
 
 The most important interfaces to know:
 
-| Interface | Package | Methods | Used for |
-|---|---|---|---|
-| `error` | builtin | `Error() string` | All error handling |
-| `io.Reader` | io | `Read(p []byte) (n int, err error)` | Reading bytes from any source |
-| `io.Writer` | io | `Write(p []byte) (n int, err error)` | Writing bytes to any destination |
-| `io.Closer` | io | `Close() error` | Releasing resources |
-| `io.ReadWriter` | io | `Read` + `Write` | Bidirectional byte streams |
-| `io.ReadCloser` | io | `Read` + `Close` | HTTP response bodies, files |
-| `fmt.Stringer` | fmt | `String() string` | Custom string representation |
-| `sort.Interface` | sort | `Len`, `Less`, `Swap` | Custom sorting |
-| `http.Handler` | net/http | `ServeHTTP(w, r)` | HTTP request handling |
-| `json.Marshaler` | encoding/json | `MarshalJSON() ([]byte, error)` | Custom JSON encoding |
-| `json.Unmarshaler` | encoding/json | `UnmarshalJSON([]byte) error` | Custom JSON decoding |
-| `context.Context` | context | `Deadline`, `Done`, `Err`, `Value` | Cancellation, deadlines, request-scoped values |
+| Interface          | Package       | Methods                              | Used for                                       |
+| ------------------ | ------------- | ------------------------------------ | ---------------------------------------------- |
+| `error`            | builtin       | `Error() string`                     | All error handling                             |
+| `io.Reader`        | io            | `Read(p []byte) (n int, err error)`  | Reading bytes from any source                  |
+| `io.Writer`        | io            | `Write(p []byte) (n int, err error)` | Writing bytes to any destination               |
+| `io.Closer`        | io            | `Close() error`                      | Releasing resources                            |
+| `io.ReadWriter`    | io            | `Read` + `Write`                     | Bidirectional byte streams                     |
+| `io.ReadCloser`    | io            | `Read` + `Close`                     | HTTP response bodies, files                    |
+| `fmt.Stringer`     | fmt           | `String() string`                    | Custom string representation                   |
+| `sort.Interface`   | sort          | `Len`, `Less`, `Swap`                | Custom sorting                                 |
+| `http.Handler`     | net/http      | `ServeHTTP(w, r)`                    | HTTP request handling                          |
+| `json.Marshaler`   | encoding/json | `MarshalJSON() ([]byte, error)`      | Custom JSON encoding                           |
+| `json.Unmarshaler` | encoding/json | `UnmarshalJSON([]byte) error`        | Custom JSON decoding                           |
+| `context.Context`  | context       | `Deadline`, `Done`, `Err`, `Value`   | Cancellation, deadlines, request-scoped values |
 
 ---
 

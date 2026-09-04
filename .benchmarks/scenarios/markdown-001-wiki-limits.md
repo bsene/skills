@@ -17,13 +17,16 @@ The page:
 # Billing Integration Guide
 
 ## Overview
+
 FastCart sends invoice events to your webhook endpoint.
 
 ## Setup & Configuration
+
 1. Create an API key
 2. Configure your webhook endpoint[^1]
 
 ## Branding
+
 Our brand blue is `#4A90D9`.
 
 [^1]: Webhooks must respond within 5 seconds or the event is retried.

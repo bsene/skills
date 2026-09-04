@@ -40,14 +40,14 @@ type User struct {
 }
 ```
 
-| Tag | Purpose |
-|---|---|
-| `json:"name"` | JSON field name for `encoding/json` |
-| `json:",omitempty"` | Omit field from JSON when zero value |
-| `json:"-"` | Never include in JSON |
-| `db:"column"` | Database column mapping (sqlx, etc.) |
+| Tag                   | Purpose                              |
+| --------------------- | ------------------------------------ |
+| `json:"name"`         | JSON field name for `encoding/json`  |
+| `json:",omitempty"`   | Omit field from JSON when zero value |
+| `json:"-"`            | Never include in JSON                |
+| `db:"column"`         | Database column mapping (sqlx, etc.) |
 | `validate:"required"` | Validation rules (validator package) |
-| `yaml:"key"` | YAML field name |
+| `yaml:"key"`          | YAML field name                      |
 
 ---
 
@@ -82,12 +82,14 @@ d.Animal.Name    // same thing, explicit access
 ### Embedding Rules
 
 - Promoted methods can satisfy interfaces:
+
   ```go
   type Speaker interface { Speak() string }
   var s Speaker = Dog{Animal: Animal{Name: "Rex"}} // Dog satisfies Speaker via Animal
   ```
 
 - If outer type defines the same method, it shadows the promoted one:
+
   ```go
   func (d Dog) Speak() string { return d.Name + " barks" }
   // Dog.Speak() now returns "Rex barks", not "Rex speaks"

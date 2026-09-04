@@ -2,7 +2,7 @@
 
 Background on the three test types and two quality tools a real dune project reaches for. The unit-testing framework (Alcotest) is covered inline in SKILL.md; this reference covers the rest and ties them together. Loaded on demand.
 
-The mental model: **unit tests** prove specific examples work, **property-based tests** prove invariants hold over a space of inputs, **mutation tests** prove your tests would *catch* a bug if one were introduced. They are layered, not interchangeable — each catches what the layer above misses.
+The mental model: **unit tests** prove specific examples work, **property-based tests** prove invariants hold over a space of inputs, **mutation tests** prove your tests would _catch_ a bug if one were introduced. They are layered, not interchangeable — each catches what the layer above misses.
 
 ## Unit tests — Alcotest
 
@@ -10,7 +10,7 @@ See the Alcotest shape in SKILL.md (`Alcotest.run` + `Alcotest.test_case ... `Qu
 
 ## Property-based testing — qcheck
 
-qcheck ([c-cube/qcheck](https://github.com/c-cube/qcheck)) generates random inputs from an **arbitrary** (a generator + printer + shrinker bundled together), runs a *property* (a predicate that should hold for every input), and on failure **shrinks** the counterexample down to the minimal failing case. Reach for it when:
+qcheck ([c-cube/qcheck](https://github.com/c-cube/qcheck)) generates random inputs from an **arbitrary** (a generator + printer + shrinker bundled together), runs a _property_ (a predicate that should hold for every input), and on failure **shrinks** the counterexample down to the minimal failing case. Reach for it when:
 
 - You can state an **invariant** (`List.rev (List.rev l) = l`, `sort l` has the same elements as `l`).
 - You want a **round-trip** check (encode then decode returns the original).

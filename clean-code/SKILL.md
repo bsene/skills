@@ -12,6 +12,7 @@ Three checks to run on any piece of code: naming, complexity, comments. Each has
 Every module, file, function, class, and variable name must reveal intention on its own — no need to read the body to know what it does.
 
 Operational checks, in order:
+
 1. **Intention-revealing**: name says what it does/holds, not how (`elapsedTimeInDays`, not `d`). If you need a comment to explain a name, the name failed.
 2. **No confusion**: don't use names that differ in ways that are hard to spot (`userList` vs `usersList`), and don't call something a `list` unless it's actually a `List` type. Don't use two names for the same concept, or one name for two concepts.
 3. **Reduce noise**: strip noise words that add no meaning — `data`, `info`, `manager`, `object`, `Impl`. `ProductInfo` vs `Product` — if both exist, the names are indistinguishable in practice. Prefer the shorter one and let context (folder, type) carry the rest.
@@ -23,12 +24,14 @@ Operational checks, in order:
 ## 2. Cyclomatic complexity
 
 Budget, per function:
+
 - **Human-authored code: ≤ 4**
 - **Agent-authored code (Claude/AI-generated): ≤ 6**
 
 Count: start at 1, +1 per `if`, `else if`, `case`, `for`, `while`, `catch`, `&&`/`||` in a condition, ternary. If a function crosses the budget, refactor before considering it done — don't leave it and move on.
 
 Refactor moves, roughly in order of preference:
+
 1. **Guard clauses / early return** — flatten nested conditionals instead of `if/else` pyramids.
 2. **Extract method** — pull a branch or loop body into a named function; the extraction itself often clarifies intent (see Naming above).
 3. **Replace conditional with lookup/map** — `switch`/`if` chains selecting a value or behavior become an object/map lookup.
@@ -41,8 +44,8 @@ Don't refactor purely to hit the number — a clean 5 beats a contorted 4. The b
 
 No big deal. Don't treat comments as sacred or as a metric to hit — code that needs a comment to be understood should usually be rewritten first (better name, extracted function), but if a comment is the clearest way to convey something, just write it.
 
-- Prefer self-documenting code over comments explaining *what* code does.
-- Comments earn their place explaining *why* — a non-obvious tradeoff, a workaround for an external constraint, a deliberate deviation from the "obvious" approach.
+- Prefer self-documenting code over comments explaining _what_ code does.
+- Comments earn their place explaining _why_ — a non-obvious tradeoff, a workaround for an external constraint, a deliberate deviation from the "obvious" approach.
 - Delete comments that just restate the code (`// increment i` above `i++`).
 - Stale comments (describing behavior the code no longer has) are worse than no comment — flag them for removal on sight.
 - TODOs are fine when they carry real information (why deferred, ideally by whom/when); a bare `// TODO` isn't worth keeping.
@@ -56,15 +59,14 @@ No big deal. Don't treat comments as sacred or as a metric to hit — code that 
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/clean-code-001-agent-code-review.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/clean-code-001-agent-code-review.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 67%     | 67%     | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 67%     | 67%  | +0%   |
 
 > **PASS (run 2026-08-31)**. Opus +33 (67→100); sonnet +17 (83→100); haiku at ceiling. No regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

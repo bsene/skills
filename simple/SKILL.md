@@ -51,15 +51,14 @@ Useful to cite when explaining _why_ a simpler version is better, not just asser
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/simple-001-root-cause-fix.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/simple-001-root-cause-fix.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 83%     | 100%    | +17%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 100% | +17%  |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 83%     | 100% | +17%  |
 
 > **SOFT PASS (run 2026-08-31)**. Small uniform gains; no regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

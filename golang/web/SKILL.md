@@ -53,12 +53,12 @@ mux.HandleFunc("GET /health", healthHandler)
 
 ## Routing Decision Table
 
-| Need | Approach |
-|---|---|
-| Simple REST API (Go 1.22+) | `http.NewServeMux` with method+pattern: `"GET /api/users/{id}"` |
-| Complex routing, groups, middleware chaining | `chi` router |
-| Pre-Go 1.22 projects needing path params | `gorilla/mux` or `chi` |
-| gRPC services | `google.golang.org/grpc` |
+| Need                                         | Approach                                                        |
+| -------------------------------------------- | --------------------------------------------------------------- |
+| Simple REST API (Go 1.22+)                   | `http.NewServeMux` with method+pattern: `"GET /api/users/{id}"` |
+| Complex routing, groups, middleware chaining | `chi` router                                                    |
+| Pre-Go 1.22 projects needing path params     | `gorilla/mux` or `chi`                                          |
+| gRPC services                                | `google.golang.org/grpc`                                        |
 
 ### Go 1.22+ Enhanced ServeMux
 
@@ -111,15 +111,15 @@ handler := logging(auth(mux))
 
 ## JSON Quick Reference
 
-| Operation | Code |
-|---|---|
-| Struct → JSON bytes | `json.Marshal(v)` |
-| JSON bytes → struct | `json.Unmarshal(data, &v)` |
-| Write JSON to response | `json.NewEncoder(w).Encode(v)` |
+| Operation              | Code                                 |
+| ---------------------- | ------------------------------------ |
+| Struct → JSON bytes    | `json.Marshal(v)`                    |
+| JSON bytes → struct    | `json.Unmarshal(data, &v)`           |
+| Write JSON to response | `json.NewEncoder(w).Encode(v)`       |
 | Read JSON from request | `json.NewDecoder(r.Body).Decode(&v)` |
-| Omit zero-value field | Tag: `json:",omitempty"` |
-| Rename field | Tag: `json:"field_name"` |
-| Ignore field | Tag: `json:"-"` |
+| Omit zero-value field  | Tag: `json:",omitempty"`             |
+| Rename field           | Tag: `json:"field_name"`             |
+| Ignore field           | Tag: `json:"-"`                      |
 
 ```go
 func createUser(w http.ResponseWriter, r *http.Request) {
@@ -145,34 +145,33 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Not closing `resp.Body` on HTTP client calls | Resource leak | `defer resp.Body.Close()` after nil-error check |
-| Writing after `http.Error` | Double write, corrupted response | `return` after `http.Error(w, ...)` |
-| Panic in handlers without recover | Server crashes on one bad request | Add recover middleware |
-| Global default mux | No middleware control, test pollution | Create `http.NewServeMux()` explicitly |
-| Unbounded request body | DoS vector | `http.MaxBytesReader(w, r.Body, maxBytes)` |
+| Anti-pattern                                 | Problem                               | Fix                                             |
+| -------------------------------------------- | ------------------------------------- | ----------------------------------------------- |
+| Not closing `resp.Body` on HTTP client calls | Resource leak                         | `defer resp.Body.Close()` after nil-error check |
+| Writing after `http.Error`                   | Double write, corrupted response      | `return` after `http.Error(w, ...)`             |
+| Panic in handlers without recover            | Server crashes on one bad request     | Add recover middleware                          |
+| Global default mux                           | No middleware control, test pollution | Create `http.NewServeMux()` explicitly          |
+| Unbounded request body                       | DoS vector                            | `http.MaxBytesReader(w, r.Body, maxBytes)`      |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| ServeMux patterns, middleware composition, graceful shutdown, timeouts | [HTTP Server](references/http-server.md) |
-| encoding/json details, XML, html/template patterns | [JSON & Templates](references/json-templates.md) |
+| Read When                                                              | File                                             |
+| ---------------------------------------------------------------------- | ------------------------------------------------ |
+| ServeMux patterns, middleware composition, graceful shutdown, timeouts | [HTTP Server](references/http-server.md)         |
+| encoding/json details, XML, html/template patterns                     | [JSON & Templates](references/json-templates.md) |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/golang-web-001-handler-audit.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-web-001-handler-audit.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **NEUTRAL (run 2026-08-31)**. All models 100% with and without — handler-audit criteria at ceiling. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

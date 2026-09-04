@@ -8,10 +8,10 @@ When a type already exists, annotate with it — don't recreate it from a const.
 
 ## Banned patterns
 
-| Pattern | Problem |
-|---|---|
-| `const STATUSES = ["a", "b"] as const; type S = typeof STATUSES[number]` | Derives type from value when type already exists elsewhere |
-| `const config = { host: "localhost" } as const; type Cfg = typeof config` | Redundant type reconstruction |
+| Pattern                                                                   | Problem                                                    |
+| ------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `const STATUSES = ["a", "b"] as const; type S = typeof STATUSES[number]`  | Derives type from value when type already exists elsewhere |
+| `const config = { host: "localhost" } as const; type Cfg = typeof config` | Redundant type reconstruction                              |
 
 ## Use instead
 

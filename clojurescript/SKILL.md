@@ -66,7 +66,7 @@ CLJS added native `^:async` functions with an `await` macro (since v1.12.145) as
 
 The single most common typo — `^:async` sits on the function **name**, never the argument vector:
 
-```clojure
+````clojure
 (defn ^:async load-user [id] (await (fetch-user id)))  ; ✅ name
 (defn load-user ^:async [id] ...)                      ; ❌ arg vector — never
 ``` One more rule worth holding in mind: prefer `Promise/all` (via `mapv`) over `map` when you need to await several promises produced in a loop.
@@ -116,3 +116,4 @@ Scenario: `.benchmarks/scenarios/clojurescript-001-async-await.md` · Run: 2026-
 | claude-haiku-4-5  | 100%    | 100%    | +0%   |
 
 > **PASS (run 2026-08-31)**. Salience re-run (✅/❌ `^:async`-placement pair added to the Async section, wf_9a5588bc): sonnet's arg-vector typo cleared (+17); gains on all models. The prior single-run sonnet −17 was a salience gap, not noise. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+````

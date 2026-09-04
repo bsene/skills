@@ -41,15 +41,14 @@ Clamping each price at 0 prevents a refunded line item from reducing the cart to
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/show-me-the-code-001-diff-response.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/show-me-the-code-001-diff-response.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 33%     | 100%    | +67%   |
-| claude-sonnet-4-6 | 33%     | 83%     | +50%   |
-| claude-haiku-4-5  | 17%     | 83%     | +66%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 33%     | 100% | +67%  |
+| claude-sonnet-4-6 | 33%     | 83%  | +50%  |
+| claude-haiku-4-5  | 17%     | 83%  | +66%  |
 
 > **PASS (run 2026-08-31)**. Large uniform gains; no regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

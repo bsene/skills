@@ -63,23 +63,22 @@ One logical change per commit. Each commit should:
 
 ## Read On Demand
 
-| Read When | File |
-| --- | --- |
+| Read When                                                                                                                    | File                                                       |
+| ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | Choosing a commit type by release impact, breaking changes (`!` / `BREAKING CHANGE`), scope selection, commitlint validation | [Conventional Commits](references/conventional-commits.md) |
-| Configuring git (aliases, GPG signing, push safety, force push, reflog, modern syntax, rerere) | [Config Recipes](references/config-recipes.md) |
-| Choosing a workflow, merge vs rebase, branch naming conventions, branch lifecycle | [Workflow Decisions](references/workflow-decisions.md) |
+| Configuring git (aliases, GPG signing, push safety, force push, reflog, modern syntax, rerere)                               | [Config Recipes](references/config-recipes.md)             |
+| Choosing a workflow, merge vs rebase, branch naming conventions, branch lifecycle                                            | [Workflow Decisions](references/workflow-decisions.md)     |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/git-hero-001-atomic-commits.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/git-hero-001-atomic-commits.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **NEUTRAL (run 2026-08-31)**. All models 100% with and without — atomic-commit guidance is at ceiling on this scenario; the router's value is triage, not code change. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

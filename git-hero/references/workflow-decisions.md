@@ -4,14 +4,14 @@ Decision matrices for choosing workflows, branching strategies, and merge vs reb
 
 ## Merge vs Rebase Decision Matrix
 
-| Scenario | Use | Why |
-| -------- | --- | --- |
-| Syncing your branch with upstream | `git pull --rebase` | Keeps your commits on top, avoids noise merge commits |
-| Landing feature into main | `git merge --no-ff` | Preserves feature boundary as a merge commit |
-| Shared branch (others have pulled it) | `git merge` | Never rewrite shared history |
-| Cleaning up local commits before PR | `git rebase -i` | Squash fixups, reword messages, reorder |
-| Undoing a merged feature | `git revert -m 1 <merge-sha>` | Safe undo without rewriting history |
-| Updating a long-lived branch (develop) | `git merge` | Rebase would rewrite too many shared commits |
+| Scenario                               | Use                           | Why                                                   |
+| -------------------------------------- | ----------------------------- | ----------------------------------------------------- |
+| Syncing your branch with upstream      | `git pull --rebase`           | Keeps your commits on top, avoids noise merge commits |
+| Landing feature into main              | `git merge --no-ff`           | Preserves feature boundary as a merge commit          |
+| Shared branch (others have pulled it)  | `git merge`                   | Never rewrite shared history                          |
+| Cleaning up local commits before PR    | `git rebase -i`               | Squash fixups, reword messages, reorder               |
+| Undoing a merged feature               | `git revert -m 1 <merge-sha>` | Safe undo without rewriting history                   |
+| Updating a long-lived branch (develop) | `git merge`                   | Rebase would rewrite too many shared commits          |
 
 ### The Golden Rule
 
@@ -33,6 +33,7 @@ main ─────●────●────●────●────
 **Best for:** Small teams (1-3), continuous deployment, high trust.
 
 **Rules:**
+
 - Branch from main, merge back within hours (1 day max)
 - Feature flags for incomplete work
 - No long-lived branches
@@ -53,6 +54,7 @@ main ────●────●─────────●────●
 **Best for:** Teams of 3-10, frequent releases, code review culture.
 
 **Rules:**
+
 - Main is always deployable
 - Branch for every change (feature, fix, chore)
 - Open PR for review before merging
@@ -77,6 +79,7 @@ develop ──●───●───●───●───●──●──
 **Best for:** Large teams (10+), scheduled releases, multiple versions in production.
 
 **Rules:**
+
 - `main` — production-ready only, tagged releases
 - `develop` — integration branch for next release
 - `feature/*` — branch from develop, merge back to develop
@@ -98,6 +101,7 @@ main ──●───●──────●────●─────●
 **Best for:** High-trust teams (any size) who want PR-based feedback without a mandatory approval gate blocking every merge.
 
 **Rules:**
+
 - Ship — commit directly to mainline, no PR, no review wait (established patterns, unremarkable fixes)
 - Show — open a PR, merge immediately once checks pass, feedback happens after the fact
 - Ask — open a PR and wait for feedback before merging (genuine uncertainty, experiments)
@@ -115,13 +119,13 @@ Source: https://martinfowler.com/articles/ship-show-ask.html
 <type>/<ticket-or-slug>
 ```
 
-| Prefix | Purpose | Example |
-| ------ | ------- | ------- |
-| `feature/` | New functionality | `feature/oauth-login` |
-| `fix/` | Bug fix | `fix/cart-double-submit` |
-| `hotfix/` | Urgent production fix | `hotfix/payment-timeout` |
-| `release/` | Release preparation | `release/2.1.0` |
-| `chore/` | Maintenance, tooling | `chore/upgrade-eslint` |
+| Prefix     | Purpose               | Example                  |
+| ---------- | --------------------- | ------------------------ |
+| `feature/` | New functionality     | `feature/oauth-login`    |
+| `fix/`     | Bug fix               | `fix/cart-double-submit` |
+| `hotfix/`  | Urgent production fix | `hotfix/payment-timeout` |
+| `release/` | Release preparation   | `release/2.1.0`          |
+| `chore/`   | Maintenance, tooling  | `chore/upgrade-eslint`   |
 
 ## Branch Lifecycle Checklist
 
@@ -140,12 +144,12 @@ git push origin --delete feature/oauth-login  # delete remote
 
 ## When to Squash
 
-| Situation | Strategy |
-| --------- | -------- |
-| Feature branch with clean atomic commits | Merge as-is (`--no-ff`) |
-| Feature branch with messy WIP commits | Squash into 1-3 logical commits before merging |
-| Single-commit fix | Fast-forward or `--no-ff` (team preference) |
-| Large refactor with meaningful stages | Keep individual commits, rebase to clean up fixups |
+| Situation                                | Strategy                                           |
+| ---------------------------------------- | -------------------------------------------------- |
+| Feature branch with clean atomic commits | Merge as-is (`--no-ff`)                            |
+| Feature branch with messy WIP commits    | Squash into 1-3 logical commits before merging     |
+| Single-commit fix                        | Fast-forward or `--no-ff` (team preference)        |
+| Large refactor with meaningful stages    | Keep individual commits, rebase to clean up fixups |
 
 **Squash workflow:**
 

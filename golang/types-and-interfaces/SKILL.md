@@ -21,13 +21,13 @@ Go has no classes, no inheritance, no `implements` keyword. It uses composition,
 
 ## Interface Design Rules
 
-| Rule | Rationale |
-|---|---|
-| Accept interfaces, return structs | Callers define the contract they need; implementations stay concrete |
-| Keep interfaces small (1-3 methods) | `io.Reader` is the gold standard — one method, universally useful |
-| Define interfaces at the consumer site | The package that *uses* the interface defines it, not the package that implements it |
-| Implicit satisfaction — no `implements` | Types satisfy interfaces by having the right methods, no declaration needed |
-| Don't export interfaces from implementation packages | Let consumers define what they need |
+| Rule                                                 | Rationale                                                                            |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Accept interfaces, return structs                    | Callers define the contract they need; implementations stay concrete                 |
+| Keep interfaces small (1-3 methods)                  | `io.Reader` is the gold standard — one method, universally useful                    |
+| Define interfaces at the consumer site               | The package that _uses_ the interface defines it, not the package that implements it |
+| Implicit satisfaction — no `implements`              | Types satisfy interfaces by having the right methods, no declaration needed          |
+| Don't export interfaces from implementation packages | Let consumers define what they need                                                  |
 
 ```go
 // Consumer defines the interface it needs
@@ -47,13 +47,13 @@ func (s *PostgresStore) FindByID(ctx context.Context, id string) (*User, error) 
 
 ## Composition Decision Table
 
-| Need | Go pattern | Not this |
-|---|---|---|
-| Reuse behavior | Struct embedding | Inheritance |
-| Polymorphism | Interfaces | Abstract base class |
-| Has-a relationship | Regular field | Embedding |
-| Extend interface contract | Interface embedding | Interface inheritance |
-| Share code across types | Package-level functions | Base class methods |
+| Need                      | Go pattern              | Not this              |
+| ------------------------- | ----------------------- | --------------------- |
+| Reuse behavior            | Struct embedding        | Inheritance           |
+| Polymorphism              | Interfaces              | Abstract base class   |
+| Has-a relationship        | Regular field           | Embedding             |
+| Extend interface contract | Interface embedding     | Interface inheritance |
+| Share code across types   | Package-level functions | Base class methods    |
 
 ```go
 // Embedding — promoted methods
@@ -74,11 +74,11 @@ type ReadCloser interface {
 
 ## Generics Quick Guide (Go 1.18+)
 
-| Use generics when | Don't use generics when |
-|---|---|
-| Writing containers (stack, queue, set) | An interface already solves it |
-| Algorithms over any ordered/comparable type | It adds complexity without reducing duplication |
-| Reducing duplication across type-safe functions | Only 1-2 concrete types exist |
+| Use generics when                               | Don't use generics when                         |
+| ----------------------------------------------- | ----------------------------------------------- |
+| Writing containers (stack, queue, set)          | An interface already solves it                  |
+| Algorithms over any ordered/comparable type     | It adds complexity without reducing duplication |
+| Reducing duplication across type-safe functions | Only 1-2 concrete types exist                   |
 
 ```go
 func Map[T, U any](s []T, f func(T) U) []U {
@@ -106,35 +106,34 @@ See [Collections & Generics](references/collections-generics.md) for full enum, 
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Interface pollution (10+ methods) | Weak abstraction, hard to implement/mock | See Interface Design Rules — keep interfaces small (1-3 methods) |
-| Premature interfaces | Interface defined before second implementation exists | Wait until you need polymorphism |
-| Embedding for code reuse without is-a | Promoted methods leak into API surface | Use a regular field instead |
-| `any` / `interface{}` everywhere | Erases type safety | Use specific interfaces or generics |
-| Generics for 1-2 concrete types | Over-engineering | See Generics Quick Guide — write the concrete functions |
+| Anti-pattern                          | Problem                                               | Fix                                                              |
+| ------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------- |
+| Interface pollution (10+ methods)     | Weak abstraction, hard to implement/mock              | See Interface Design Rules — keep interfaces small (1-3 methods) |
+| Premature interfaces                  | Interface defined before second implementation exists | Wait until you need polymorphism                                 |
+| Embedding for code reuse without is-a | Promoted methods leak into API surface                | Use a regular field instead                                      |
+| `any` / `interface{}` everywhere      | Erases type safety                                    | Use specific interfaces or generics                              |
+| Generics for 1-2 concrete types       | Over-engineering                                      | See Generics Quick Guide — write the concrete functions          |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Struct embedding mechanics, promoted fields/methods, struct tags | [Structs & Composition](references/structs-composition.md) |
-| Standard library interfaces, type assertions, type switches | [Interfaces Deep Dive](references/interfaces.md) |
+| Read When                                                        | File                                                         |
+| ---------------------------------------------------------------- | ------------------------------------------------------------ |
+| Struct embedding mechanics, promoted fields/methods, struct tags | [Structs & Composition](references/structs-composition.md)   |
+| Standard library interfaces, type assertions, type switches      | [Interfaces Deep Dive](references/interfaces.md)             |
 | Slice internals, map patterns, generics syntax, type constraints | [Collections & Generics](references/collections-generics.md) |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/golang-types-and-interfaces-001-consumer-interface.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-types-and-interfaces-001-consumer-interface.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 83%     | 100%    | +17%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 100% | +17%  |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **SOFT PASS (run 2026-08-31)**. Opus/sonnet +17; haiku at ceiling. Consumer-side interface definition is half-default already. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

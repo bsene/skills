@@ -182,11 +182,11 @@ type UserID int
 
 ### Standard Library Generic Packages (Go 1.21+)
 
-| Package | Key functions |
-|---|---|
+| Package  | Key functions                                                         |
+| -------- | --------------------------------------------------------------------- |
 | `slices` | `Sort`, `Contains`, `Index`, `Compact`, `Delete`, `Insert`, `Reverse` |
-| `maps` | `Keys`, `Values`, `Clone`, `DeleteFunc`, `Equal` |
-| `cmp` | `Compare`, `Or`, `Ordered` constraint |
+| `maps`   | `Keys`, `Values`, `Clone`, `DeleteFunc`, `Equal`                      |
+| `cmp`    | `Compare`, `Or`, `Ordered` constraint                                 |
 
 ```go
 import "slices"

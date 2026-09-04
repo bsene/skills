@@ -246,10 +246,10 @@ for i := 0; i < cap(sem); i++ {
 
 ## Channel Axioms
 
-| Operation | nil channel | closed channel | open channel |
-|---|---|---|---|
-| Send `ch <-` | Block forever | **Panic** | Send or block |
-| Receive `<-ch` | Block forever | Zero value, `ok=false` | Receive or block |
-| Close `close(ch)` | **Panic** | **Panic** | Close |
+| Operation         | nil channel   | closed channel         | open channel     |
+| ----------------- | ------------- | ---------------------- | ---------------- |
+| Send `ch <-`      | Block forever | **Panic**              | Send or block    |
+| Receive `<-ch`    | Block forever | Zero value, `ok=false` | Receive or block |
+| Close `close(ch)` | **Panic**     | **Panic**              | Close            |
 
 These rules explain many deadlocks and panics. Memorize them.

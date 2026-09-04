@@ -2,12 +2,12 @@
 
 ## Value vs Pointer Receiver
 
-| Use pointer receiver `*T` when | Use value receiver `T` when |
-|---|---|
-| Method modifies the receiver | Receiver is small and read-only |
-| Receiver is a large struct (avoids copy) | Receiver is a map, func, or chan (already reference types) |
-| Consistency — if any method uses `*T`, all should | Receiver is a small struct or basic type |
-| Method must appear in `*T`'s method set (for interface satisfaction) | Immutability is important for safety |
+| Use pointer receiver `*T` when                                       | Use value receiver `T` when                                |
+| -------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Method modifies the receiver                                         | Receiver is small and read-only                            |
+| Receiver is a large struct (avoids copy)                             | Receiver is a map, func, or chan (already reference types) |
+| Consistency — if any method uses `*T`, all should                    | Receiver is a small struct or basic type                   |
+| Method must appear in `*T`'s method set (for interface satisfaction) | Immutability is important for safety                       |
 
 ```go
 type Account struct {
@@ -33,9 +33,9 @@ func (a Account) Balance() int {
 
 Method sets determine which interfaces a type satisfies:
 
-| Type | Method set includes |
-|---|---|
-| `T` (value) | Methods with value receiver `T` only |
+| Type           | Method set includes                                       |
+| -------------- | --------------------------------------------------------- |
+| `T` (value)    | Methods with value receiver `T` only                      |
 | `*T` (pointer) | Methods with value receiver `T` AND pointer receiver `*T` |
 
 This means a value `T` cannot satisfy an interface that requires a pointer-receiver method:

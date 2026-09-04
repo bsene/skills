@@ -15,15 +15,16 @@ and extra GC pressure. Collapse the chain into a single pass.
 
 ## Banned patterns
 
-| Pattern | Problem |
-|---|---|
-| `arr.filter(p).map(f)` | 2 passes, 1 intermediate array |
-| `arr.filter(p).map(f).filter(q)` | N passes, N−1 intermediate arrays |
+| Pattern                                             | Problem                                              |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| `arr.filter(p).map(f)`                              | 2 passes, 1 intermediate array                       |
+| `arr.filter(p).map(f).filter(q)`                    | N passes, N−1 intermediate arrays                    |
 | `arr.reduce((r, n) => p(n) ? [...r, f(n)] : r, [])` | New array **per element** — worst case, O(n²) copies |
 
 ## Use instead
 
 **Single `reduce` with `push` (functional style):**
+
 ```typescript
 arr.reduce<number[]>((acc, n) => {
   if (n.num > 0.5) acc.push(n.num * 2);
@@ -32,6 +33,7 @@ arr.reduce<number[]>((acc, n) => {
 ```
 
 **`for…of` loop (imperative, often clearest):**
+
 ```typescript
 const out: number[] = [];
 for (const n of arr) {
@@ -40,6 +42,7 @@ for (const n of arr) {
 ```
 
 **Diff — classic filter+map chain:**
+
 ```diff
 - const doubled = arr.filter(n => n.num > 0.5).map(n => n.num * 2);
 + const doubled = arr.reduce<number[]>((acc, n) => {
@@ -50,11 +53,11 @@ for (const n of arr) {
 
 ## Benchmark (Chrome 124, n=10000)
 
-| Approach | Relative cost |
-|---|---|
-| `reduce + push` | 1.00× (baseline) |
-| `filter + map` | ~1.55× |
-| `reduce` with spread `[...r, x]` | ~893× |
+| Approach                         | Relative cost    |
+| -------------------------------- | ---------------- |
+| `reduce + push`                  | 1.00× (baseline) |
+| `filter + map`                   | ~1.55×           |
+| `reduce` with spread `[...r, x]` | ~893×            |
 
 The spread variant degrades quadratically — never use it in a reducer accumulator.
 

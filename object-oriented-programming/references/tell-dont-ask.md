@@ -1,6 +1,6 @@
 # Tell Don't Ask (Encapsulation)
 
-When you *do* use a class, follow **Tell Don't Ask**: instead of *asking* an object for its data and acting on it externally, *tell* the object what to do and let it use its own data internally. This co-locates data with the behavior that operates on it.
+When you _do_ use a class, follow **Tell Don't Ask**: instead of _asking_ an object for its data and acting on it externally, _tell_ the object what to do and let it use its own data internally. This co-locates data with the behavior that operates on it.
 
 ## Identifying "Ask" Style (the problem)
 
@@ -15,6 +15,7 @@ if (order.status === "pending" && order.total > 1000) {
 ```
 
 Red flags:
+
 - Chains of getters used to make a decision
 - `if (obj.getX() > obj.getLimit())` outside the class
 - External code setting state after reading state (`get` then `set`)
@@ -50,6 +51,7 @@ The caller **tells** the object what to do; the object **decides** how.
 ## Nuance: When Getters Are Fine
 
 Martin Fowler doesn't strictly follow TDA. Query methods are legitimate when:
+
 - The object **transforms** data for callers (formatting, aggregation)
 - It's a **value object** or DTO whose purpose is to carry data
 - You're crossing **architectural layers** (persistence, serialization)
@@ -59,15 +61,16 @@ The goal is **co-locating behavior with data**, not eliminating accessors. Don't
 
 ## Quick Reference
 
-| Ask (avoid) | Tell (prefer) |
-|---|---|
+| Ask (avoid)                                | Tell (prefer)                                        |
+| ------------------------------------------ | ---------------------------------------------------- |
 | `if (a.value > a.limit) a.alarm.warn(...)` | `a.setValue(newVal)` — alarm logic inside `setValue` |
-| `if (cart.items.length === 0) showEmpty()` | `if (cart.isEmpty()) showEmpty()` |
-| `order.status = order.computeNextStatus()` | `order.advance()` |
+| `if (cart.items.length === 0) showEmpty()` | `if (cart.isEmpty()) showEmpty()`                    |
+| `order.status = order.computeNextStatus()` | `order.advance()`                                    |
 
 ## Review Checklist
 
 For each class under review:
+
 1. List all getters — are any used only for external decisions?
 2. Find conditionals reading from a single object's fields — can they move in?
 3. Look for setter chains (`setA`, `setB`, `setC`) — could that be one `configure(...)` call?

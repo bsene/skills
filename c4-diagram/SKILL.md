@@ -20,28 +20,28 @@ description: >
 
 ## C4 Level Selector
 
-| Question type | C4 level | Structurizr view type |
-|---|---|---|
-| "Show the whole organisation / all systems" | **Supporting — System Landscape** | `systemLandscape` (no Mermaid equivalent) |
-| "What does this system do?" / "Who uses it?" | **Level 1 — Context** | `systemContext` |
-| "What are the main services/apps/databases?" | **Level 2 — Container** | `container` |
-| "How is this service structured internally?" | **Level 3 — Component** | `component` |
-| "How does this specific class/module work?" | **Level 4 — Code** | No diagram — Level 4 has no C4 diagram equivalent |
+| Question type                                | C4 level                          | Structurizr view type                             |
+| -------------------------------------------- | --------------------------------- | ------------------------------------------------- |
+| "Show the whole organisation / all systems"  | **Supporting — System Landscape** | `systemLandscape` (no Mermaid equivalent)         |
+| "What does this system do?" / "Who uses it?" | **Level 1 — Context**             | `systemContext`                                   |
+| "What are the main services/apps/databases?" | **Level 2 — Container**           | `container`                                       |
+| "How is this service structured internally?" | **Level 3 — Component**           | `component`                                       |
+| "How does this specific class/module work?"  | **Level 4 — Code**                | No diagram — Level 4 has no C4 diagram equivalent |
 
 **Default to Level 2 (Container)** — it covers most "show me the architecture" requests. Level 1 for stakeholder overviews, Level 3 for deep dives into a single service.
 
 ## Tool Selector
 
-| Need | Use |
-|---|---|
-| Quick inline preview in chat | Mermaid → `references/c4-mermaid.md` |
-| Export PNG/SVG for docs/wiki | Structurizr → `references/c4-structurizr.md` |
-| Multiple views from one model | Structurizr |
-| Organisation-wide system landscape | Structurizr (no Mermaid C4 equivalent) |
-| Dynamic / numbered interaction flow | Either (`C4Dynamic` or Structurizr `dynamic`) |
-| Deployment / infrastructure view | Structurizr (Mermaid `C4Deployment` is limited) |
+| Need                                | Use                                                |
+| ----------------------------------- | -------------------------------------------------- |
+| Quick inline preview in chat        | Mermaid → `references/c4-mermaid.md`               |
+| Export PNG/SVG for docs/wiki        | Structurizr → `references/c4-structurizr.md`       |
+| Multiple views from one model       | Structurizr                                        |
+| Organisation-wide system landscape  | Structurizr (no Mermaid C4 equivalent)             |
+| Dynamic / numbered interaction flow | Either (`C4Dynamic` or Structurizr `dynamic`)      |
+| Deployment / infrastructure view    | Structurizr (Mermaid `C4Deployment` is limited)    |
 | Class/method level detail (Level 4) | Mermaid `classDiagram` — no Structurizr equivalent |
-| No tooling available | Mermaid |
+| No tooling available                | Mermaid                                            |
 
 **Default to Structurizr DSL** unless the user explicitly wants a quick Mermaid preview.
 
@@ -59,19 +59,23 @@ description: >
 Run in order, stop at first success. Native `svg`/`png` export does not exist in the Structurizr CLI — always export to PlantUML/Mermaid/D2 first, then render with that tool.
 
 1. **CLI available** (binary is `structurizr.sh` from local install / Docker, or `structurizr-cli` from Homebrew/Scoop) — save DSL to `/tmp/<name>.dsl`, then:
+
    ```bash
    structurizr.sh export -workspace /tmp/<name>.dsl -format plantuml -output /tmp/structurizr-out/
    # render the .puml to SVG/PNG with `plantuml /tmp/structurizr-out/*.puml`
    ```
+
    Share output path with user.
 
 2. **Docker available** — save DSL to `/tmp/<name>.dsl`, give user:
+
    ```bash
    # Active replacement (recommended):
    docker run -it --rm -p 8080:8080 -v /tmp:/usr/local/structurizr structurizr/structurizr local
    # Legacy (archived but functional):
    docker run -it --rm -p 8080:8080 -v /tmp:/usr/local/structurizr structurizr/lite
    ```
+
    Point to `http://localhost:8080`.
 
 3. **Neither** — output DSL as a ` ```dsl ` code block. Note: paste at `https://playground.structurizr.com/` to render online.
@@ -83,15 +87,14 @@ Run in order, stop at first success. Native `svg`/`png` export does not exist in
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/c4-diagram-001-container-view.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/c4-diagram-001-container-view.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **PASS (run 2026-08-31)**. Opus +33 (67→100); sonnet/haiku already at ceiling. No regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

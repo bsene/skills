@@ -10,7 +10,11 @@ I just joined the team and I've never touched this part of the codebase. Walk me
 ```typescript
 // worker/queue.ts
 export class OrderWorker {
-  constructor(private queue: Queue, private payments: PaymentGateway, private mailer: Mailer) {}
+  constructor(
+    private queue: Queue,
+    private payments: PaymentGateway,
+    private mailer: Mailer,
+  ) {}
 
   async tick() {
     const batch = await this.queue.claim(10, { visibilityTimeout: 30 });

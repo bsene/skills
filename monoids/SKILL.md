@@ -27,7 +27,7 @@ Si un de ces patterns apparaît, propose activement la structure monoïdale plut
 
 ## Clojure / ClojureScript
 
-En Clojure, l'abstraction est souvent implicite : le langage encourage `reduce` sur des fonctions déjà associatives avec un neutre naturel, plutôt que de réifier une interface `Monoid`. Beaucoup de fonctions core (`+`, `*`, `str`, `into`, `merge-with`, `concat`, `clojure.set/union`) *sont déjà* le monoïde — leur arité 0 encode directement le neutre.
+En Clojure, l'abstraction est souvent implicite : le langage encourage `reduce` sur des fonctions déjà associatives avec un neutre naturel, plutôt que de réifier une interface `Monoid`. Beaucoup de fonctions core (`+`, `*`, `str`, `into`, `merge-with`, `concat`, `clojure.set/union`) _sont déjà_ le monoïde — leur arité 0 encode directement le neutre.
 
 ### L'interface (si besoin de la réifier explicitement)
 
@@ -141,15 +141,14 @@ Ici le neutre est souvent déjà le comportement par défaut de la fonction à a
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/monoids-001-parallel-merge.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/monoids-001-parallel-merge.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **SOFT PASS (run 2026-08-31)**. Flat deltas are the expected finding: the French-language body (`# Monoïdes`) does not activate for English-prompted runs (audit Warning). Sonnet +17 (83→100); opus/haiku unchanged. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

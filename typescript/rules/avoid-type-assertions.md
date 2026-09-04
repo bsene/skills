@@ -8,13 +8,13 @@ Use narrowing and validation instead. Reference: [Type Assertions](https://www.t
 
 ## Banned patterns
 
-| Pattern | Problem |
-|---|---|
-| `value as SomeType` | Unsound — compiler takes your word |
-| `<SomeType>value` | Legacy syntax, same problem |
-| `value as unknown as SomeType` | Force-cast — always wrong |
-| `value!` | Hides real nullability |
-| `// @ts-ignore` | Silences errors instead of fixing |
+| Pattern                        | Problem                            |
+| ------------------------------ | ---------------------------------- |
+| `value as SomeType`            | Unsound — compiler takes your word |
+| `<SomeType>value`              | Legacy syntax, same problem        |
+| `value as unknown as SomeType` | Force-cast — always wrong          |
+| `value!`                       | Hides real nullability             |
+| `// @ts-ignore`                | Silences errors instead of fixing  |
 
 ## `@ts-expect-error` over `@ts-ignore`
 
@@ -33,27 +33,35 @@ doSomethingUntyped();
 ## Use instead
 
 **Type guard (narrowing at runtime):**
+
 ```typescript
 function isUser(value: unknown): value is User {
   return (
-    typeof value === "object" && value !== null &&
-    "id" in value && typeof (value as Record<string, unknown>).id === "string"
+    typeof value === "object" &&
+    value !== null &&
+    "id" in value &&
+    typeof (value as Record<string, unknown>).id === "string"
   );
 }
-if (isUser(data)) { /* data is User */ }
+if (isUser(data)) {
+  /* data is User */
+}
 ```
 
 **Zod at boundaries (preferred for external data):**
+
 ```typescript
 const user = UserSchema.parse(apiResponse); // User — proven at runtime
 ```
 
 **`satisfies` for shape checking without widening** ([reference](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)):
+
 ```typescript
 const config = { host: "localhost", port: 3000 } satisfies Config;
 ```
 
 **Fix return types instead of asserting:**
+
 ```diff
 - function getUser(id: string) { return userMap.get(id) as User; }
 + function getUser(id: string): User | undefined { return userMap.get(id); }

@@ -83,7 +83,7 @@ own `:require`:
 - `:require` for Closure namespaces that are themselves `goog.provide`d (mirrors
   CLJS-to-CLJS requires).
 - `:import` for Closure **classes/enums/constructors** specifically (e.g. `goog
-  Timer`, `goog.async Debouncer`) — mirrors JVM Clojure's `:import` for Java
+Timer`, `goog.async Debouncer`) — mirrors JVM Clojure's `:import` for Java
   classes, and is the CLJS-side equivalent for Closure's constructor-style APIs.
 - Because Closure Library is written for Closure's compiler, it survives
   `:advanced` renaming safely — no externs needed for it.
@@ -131,7 +131,7 @@ off-limits for renaming:
 ```javascript
 // externs.js
 var SomeGlobal = {};
-SomeGlobal.doThing = function(x) {};
+SomeGlobal.doThing = function (x) {};
 ```
 
 ```clojure
@@ -159,11 +159,11 @@ SomeGlobal.doThing = function(x) {};
 
 ## Decision guide
 
-| Dependency is... | Use |
-|---|---|
-| Published to npm | `["pkg-name" :as x]` string-form require |
-| Part of Closure Library | `:require`/`:import` symbol-form, `goog.*` namespace |
-| A vendored/local JS file, no npm distribution | `:foreign-libs` entry |
+| Dependency is...                                  | Use                                                                         |
+| ------------------------------------------------- | --------------------------------------------------------------------------- |
+| Published to npm                                  | `["pkg-name" :as x]` string-form require                                    |
+| Part of Closure Library                           | `:require`/`:import` symbol-form, `goog.*` namespace                        |
+| A vendored/local JS file, no npm distribution     | `:foreign-libs` entry                                                       |
 | Any of the above, breaking only under `:advanced` | Add/check externs first; fall back to `goog.object/get` string-keyed access |
 
 ## CLJS libraries (normal case)

@@ -24,13 +24,13 @@ replace github.com/user/shared => ../shared
 exclude github.com/user/broken v1.0.0
 ```
 
-| Directive | Purpose |
-|---|---|
-| `module` | Module path (used as import prefix) |
-| `go` | Minimum Go version |
-| `require` | Direct and indirect dependencies |
-| `replace` | Override dependency source (local dev, forks) |
-| `exclude` | Skip specific versions |
+| Directive | Purpose                                        |
+| --------- | ---------------------------------------------- |
+| `module`  | Module path (used as import prefix)            |
+| `go`      | Minimum Go version                             |
+| `require` | Direct and indirect dependencies               |
+| `replace` | Override dependency source (local dev, forks)  |
+| `exclude` | Skip specific versions                         |
 | `retract` | Mark own versions as bad (for library authors) |
 
 ---
@@ -57,6 +57,7 @@ Go uses the minimum version that satisfies all requirements — not the latest.
 If A requires `lib v1.2.0` and B requires `lib v1.3.0`, Go selects `v1.3.0` (minimum that works for both). It will **not** upgrade to `v1.5.0` even if available.
 
 Upgrade explicitly:
+
 ```bash
 go get github.com/user/lib@latest        # latest version
 go get github.com/user/lib@v1.5.0        # specific version
@@ -127,11 +128,11 @@ Set these in your shell profile or CI environment.
 
 ## go install vs go get
 
-| Command | Purpose | Modifies go.mod? |
-|---|---|---|
-| `go install pkg@version` | Install a binary tool | No |
-| `go get pkg@version` | Add/update dependency in go.mod | Yes |
-| `go get -u ./...` | Update all dependencies | Yes |
+| Command                  | Purpose                         | Modifies go.mod? |
+| ------------------------ | ------------------------------- | ---------------- |
+| `go install pkg@version` | Install a binary tool           | No               |
+| `go get pkg@version`     | Add/update dependency in go.mod | Yes              |
+| `go get -u ./...`        | Update all dependencies         | Yes              |
 
 ```bash
 # Install tools

@@ -18,7 +18,7 @@ interface Props {
 }
 
 function sum(nums: readonly number[]): number {
-  return nums.reduce((a, b) => a + b, 0);  // no mutation; correct on any readonly array
+  return nums.reduce((a, b) => a + b, 0); // no mutation; correct on any readonly array
 }
 ```
 
@@ -26,4 +26,4 @@ Prevents accidental `this.props.userId = ...` or `this.state.isLoading = ...` â€
 
 ## Caveat
 
-`readonly` prevents *you* from mutating, but not code that holds a mutable reference to the same object. It is a compile-time check, not a runtime freeze. For deep immutability, use `Object.freeze` or an immutable data library.
+`readonly` prevents _you_ from mutating, but not code that holds a mutable reference to the same object. It is a compile-time check, not a runtime freeze. For deep immutability, use `Object.freeze` or an immutable data library.

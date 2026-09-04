@@ -28,26 +28,26 @@ build-frontend:
   stage: build
 
 build-backend:
-  stage: build  # runs in parallel with build-frontend
+  stage: build # runs in parallel with build-frontend
 
 test-frontend:
-  stage: test   # waits for BOTH build jobs even though it only needs build-frontend
+  stage: test # waits for BOTH build jobs even though it only needs build-frontend
 
 # DAG (fast): test-frontend starts the moment build-frontend finishes
 test-frontend:
   stage: test
-  needs: [build-frontend]   # ignores build-backend's status entirely
+  needs: [build-frontend] # ignores build-backend's status entirely
 ```
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Writing `needs:` dependencies, artifact control, immediate-start jobs | [needs: Keyword Reference](references/needs-keyword.md) |
-| Using `parallel:`, `parallel:matrix`, or 1:1 matrix expressions | [Parallel & Matrix Patterns](references/parallel-and-matrix.md) |
-| DRY patterns (YAML anchors, `!reference`), full pipeline examples | [DRY Patterns & Examples](references/dry-patterns-and-examples.md) |
+| Read When                                                             | File                                                               |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Writing `needs:` dependencies, artifact control, immediate-start jobs | [needs: Keyword Reference](references/needs-keyword.md)            |
+| Using `parallel:`, `parallel:matrix`, or 1:1 matrix expressions       | [Parallel & Matrix Patterns](references/parallel-and-matrix.md)    |
+| DRY patterns (YAML anchors, `!reference`), full pipeline examples     | [DRY Patterns & Examples](references/dry-patterns-and-examples.md) |
 
 ---
 
@@ -97,15 +97,14 @@ When writing or reviewing `.gitlab-ci.yml` snippets:
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/gitlab-dag-001-pipeline-dag.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/gitlab-dag-001-pipeline-dag.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 67%     | 100%    | +33%   |
-| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 67%     | 100% | +33%  |
+| claude-haiku-4-5  | 50%     | 100% | +50%  |
 
 > **PASS (run 2026-08-31)**. Lift on all models; baselines flatten dependency structure that the DAG view makes explicit. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -20,23 +20,23 @@ If smoke tests fail, the build is broken. Full suite doesn't run.
 
 ## Identify Existing Smoke Tests
 
-| Pattern | Detection |
-|---------|-----------|
-| `smoke-tests/` directory | Convention-based directory |
-| `*.hurl` files | Hurl scenario files |
-| `smoke.sh` / `smoke-test.sh` | curl-based shell script |
-| `# @smoke` / `# @critical` comment | Grep for tag |
+| Pattern                            | Detection                  |
+| ---------------------------------- | -------------------------- |
+| `smoke-tests/` directory           | Convention-based directory |
+| `*.hurl` files                     | Hurl scenario files        |
+| `smoke.sh` / `smoke-test.sh`       | curl-based shell script    |
+| `# @smoke` / `# @critical` comment | Grep for tag               |
 
 ---
 
 ## Tool Selection
 
-| Use Hurl | Use curl |
-|----------|----------|
-| Multi-step flows (capture token, chain requests) | Single request / quick one-off check |
-| Need structured JSONPath assertions | Simplest possible CI dependency (curl is preinstalled almost everywhere) |
-| Want a readable, declarative file per scenario | No appetite to install the `hurl` binary |
-| Want built-in HTML/JUnit reports | Assertions are trivial (status code, one field) via `jq` |
+| Use Hurl                                         | Use curl                                                                 |
+| ------------------------------------------------ | ------------------------------------------------------------------------ |
+| Multi-step flows (capture token, chain requests) | Single request / quick one-off check                                     |
+| Need structured JSONPath assertions              | Simplest possible CI dependency (curl is preinstalled almost everywhere) |
+| Want a readable, declarative file per scenario   | No appetite to install the `hurl` binary                                 |
+| Want built-in HTML/JUnit reports                 | Assertions are trivial (status code, one field) via `jq`                 |
 
 Default to **Hurl** for anything beyond a single request — it's purpose-built for exactly this and stays declarative. Reach for **curl** (+ `jq` for JSON, plain shell for status checks) only when Hurl isn't installable in the target environment or the check is a one-liner.
 
@@ -65,14 +65,14 @@ BASE_URL=https://staging.example.com bash smoke-tests/smoke.sh
 
 ## Quality Table
 
-| Aspect | Do | Don't |
-|--------|-----|-------|
-| Scope | Test critical workflows | Test every edge case |
-| Setup | Minimal, reusable fixtures | Complex multi-step setup |
-| Assertions | 1–3 per request, focused | Many assertions per request |
-| Time | <100ms per request | Slow, resource-heavy tests |
-| Maintenance | Stable, rarely change | Break on implementation changes |
-| Coverage | Broad paths, not deep | Deep internal behavior |
+| Aspect      | Do                         | Don't                           |
+| ----------- | -------------------------- | ------------------------------- |
+| Scope       | Test critical workflows    | Test every edge case            |
+| Setup       | Minimal, reusable fixtures | Complex multi-step setup        |
+| Assertions  | 1–3 per request, focused   | Many assertions per request     |
+| Time        | <100ms per request         | Slow, resource-heavy tests      |
+| Maintenance | Stable, rarely change      | Break on implementation changes |
+| Coverage    | Broad paths, not deep      | Deep internal behavior          |
 
 ---
 
@@ -170,22 +170,21 @@ suite never starts.
 
 ## Read On Demand
 
-| Read When | File |
-|-----------|------|
-| Need Hurl template, variables, CI snippet, patterns | [`references/hurl.md`](references/hurl.md) |
+| Read When                                                | File                                       |
+| -------------------------------------------------------- | ------------------------------------------ |
+| Need Hurl template, variables, CI snippet, patterns      | [`references/hurl.md`](references/hurl.md) |
 | No Hurl available / need a curl+jq shell script template | [`references/curl.md`](references/curl.md) |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/smoke-tests-001-ci-gate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/smoke-tests-001-ci-gate.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 50%     | 100%    | +50%   |
-| claude-sonnet-4-6 | 33%     | 100%    | +67%   |
-| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 50%     | 100% | +50%  |
+| claude-sonnet-4-6 | 33%     | 100% | +67%  |
+| claude-haiku-4-5  | 50%     | 100% | +50%  |
 
 > **PASS (run 2026-08-31)**. Uniform gains; CI-gate criteria land on all models. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -17,6 +17,7 @@ When the user presents a refactoring goal, help them:
 
 For each prerequisite node, apply the same loop recursively. A prerequisite may itself
 have prerequisites. The graph grows depth-first until you reach nodes that:
+
 - Can be implemented without touching anything else (leaves), OR
 - Map to a single atomic refactoring from Fowler's catalog.
 
@@ -30,6 +31,7 @@ arrows pointing at the same node id.
 ## What makes a good leaf?
 
 A leaf node is ready to implement when:
+
 - It compiles/passes tests after the change with NO other modifications needed.
 - It can be expressed as **one atomic commit** (a single refactoring gesture: rename,
   extract method, move class, add parameter, etc.).

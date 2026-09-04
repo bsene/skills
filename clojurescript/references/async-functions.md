@@ -16,7 +16,7 @@ style** rather than mixing in `^:async`/`await` unless asked to migrate.
 
 `^:async` goes on the **function itself** (the `fn`/`defn`/named-fn head),
 **never on the arg vector**. This is the #1 beginner mistake — putting the
-metadata on the arg vector compiles but does *not* make the function async, so
+metadata on the arg vector compiles but does _not_ make the function async, so
 `await` inside it fails silently or throws.
 
 ```clojure
@@ -65,7 +65,7 @@ as a plain value in a non-async caller.
 ## Nested `fn` does not inherit `^:async`
 
 `^:async` is per-function. A nested `fn` inside an `^:async` function is a
-**separate** function that is *not* async unless it carries its own `^:async`.
+**separate** function that is _not_ async unless it carries its own `^:async`.
 `await` in the nested fn will fail unless that fn is also marked `^:async`.
 
 ```clojure
@@ -81,7 +81,7 @@ outer `await` wraps awkwardly.
 
 ## Awaiting many promises: `js/Promise.all` via `mapv`
 
-To await a *collection* of promises in parallel (fan-out, then join), use
+To await a _collection_ of promises in parallel (fan-out, then join), use
 `js/Promise.all` — not a `map` of `await`ed calls (which would serialize). The
 idiomatic shape is to build the promises with `mapv` (a vector, since
 `js/Promise.all` wants an array-like), then `await` the joined promise:
@@ -96,7 +96,7 @@ idiomatic shape is to build the promises with `mapv` (a vector, since
 Prefer `mapv` over `map` here — `js/Promise.all` iterates the input as a JS
 array, and a CLJS lazy seq is not array-like; `mapv` produces a vector that
 interop-converts cleanly. `pmap` is the JVM-Clojure tool for this and does
-*not* exist in CLJS (single-threaded event loop).
+_not_ exist in CLJS (single-threaded event loop).
 
 ## Mixing with `core.async`
 
@@ -114,13 +114,13 @@ take callback. Prefer picking **one** model per module.
 
 ## Common pitfalls (quick list)
 
-| Symptom | Likely cause | Fix |
-|---|---|---|
-| `await` not recognized / compiles wrong | `^:async` on the arg vector, not the fn head | Move `^:async` to the `fn`/`defn` head |
-| Caller gets a `Promise` instead of the value | Forgetting an `:async` fn always returns a Promise | `await` the call (or `.then` it) |
-| `await` throws inside a nested `fn` | Nested `fn` not marked `^:async` | Add `^:async` to the nested `fn` |
-| Serialized instead of parallel awaits | `await` in a `map`/loop body, one-by-one | Build promises with `mapv`, `await` `js/Promise.all` |
-| "Works in dev, breaks in prod" | Awaiting a non-thenable under `:advanced` renaming | Use `js/await` (macro), not a hand-written `.then`; ensure externs for hand-rolled JS interop |
+| Symptom                                      | Likely cause                                       | Fix                                                                                           |
+| -------------------------------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `await` not recognized / compiles wrong      | `^:async` on the arg vector, not the fn head       | Move `^:async` to the `fn`/`defn` head                                                        |
+| Caller gets a `Promise` instead of the value | Forgetting an `:async` fn always returns a Promise | `await` the call (or `.then` it)                                                              |
+| `await` throws inside a nested `fn`          | Nested `fn` not marked `^:async`                   | Add `^:async` to the nested `fn`                                                              |
+| Serialized instead of parallel awaits        | `await` in a `map`/loop body, one-by-one           | Build promises with `mapv`, `await` `js/Promise.all`                                          |
+| "Works in dev, breaks in prod"               | Awaiting a non-thenable under `:advanced` renaming | Use `js/await` (macro), not a hand-written `.then`; ensure externs for hand-rolled JS interop |
 
 ## Minimum version note
 
