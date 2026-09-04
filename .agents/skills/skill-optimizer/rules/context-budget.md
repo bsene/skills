@@ -10,12 +10,14 @@ metadata:
 ## Compression priorities
 
 Keep:
+
 - trigger lists
 - decision tables
 - short checklists
 - one integrated example per high-value scenario
 
 Trim:
+
 - repeated background explanations
 - duplicate examples with the same lesson
 - low-signal prose that does not change behavior
@@ -30,6 +32,7 @@ Only promote details to `SKILL.md` when repeated eval failures show they are bei
 ## Budget checks
 
 Before shipping a skill update, ask:
+
 1. Which added lines are behavior-critical?
 2. Could this section be expressed as a checklist/table?
 3. Does each example teach a unique failure mode?

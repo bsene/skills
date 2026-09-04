@@ -23,12 +23,12 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 
 ## Read On Demand
 
-| Read When                                                              | File                                                       |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Identifying code smells or reviewing a diff/PR for bloaters            | [Code Smell Catalog](references/smells.md)                 |
-| Deciding which refactoring technique to use                            | [Refactoring Techniques](references/techniques.md)         |
-| Choosing the right pattern, scenario-based decisions, or review workflow | [Decision Guide](references/decision-guide.md)            |
-| **Only** when user asks where a pattern applies in a specific language | [Language Idioms](references/language-idioms.md)            |
+| Read When                                                                | File                                               |
+| ------------------------------------------------------------------------ | -------------------------------------------------- |
+| Identifying code smells or reviewing a diff/PR for bloaters              | [Code Smell Catalog](references/smells.md)         |
+| Deciding which refactoring technique to use                              | [Refactoring Techniques](references/techniques.md) |
+| Choosing the right pattern, scenario-based decisions, or review workflow | [Decision Guide](references/decision-guide.md)     |
+| **Only** when user asks where a pattern applies in a specific language   | [Language Idioms](references/language-idioms.md)   |
 
 ---
 
@@ -43,15 +43,15 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 
 ## Smells → Techniques (Quick Reference)
 
-| Smell                   | Detection Signal                               | Technique(s)                     |
-| ----------------------- | ---------------------------------------------- | -------------------------------- |
-| **Long Method**         | >10 lines, multiple responsibilities           | Extract Method _(Rule of Three)_ |
-| **Large Class**         | >10 methods, multiple concerns, hard to test   | Extract Class _(Rule of Three)_  |
-| **Primitive Obsession** | String/int constants for domain concepts       | Create Type/Object               |
-| **Long Parameter List** | >3-4 parameters, related params                | Introduce Parameter Object       |
-| **Data Clumps**         | Same variables in multiple places              | Extract Class                    |
-| **Comments**            | Code needs a comment to be understood (see smells.md for subtypes) | Extract Method/Variable, Rename, Introduce Assertion, Write Tests |
-| **Uncommunicative Name** | Name needs a comment, single letters, generic placeholders, missing units | Rename / Introduce Variable      |
+| Smell                    | Detection Signal                                                          | Technique(s)                                                      |
+| ------------------------ | ------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| **Long Method**          | >10 lines, multiple responsibilities                                      | Extract Method _(Rule of Three)_                                  |
+| **Large Class**          | >10 methods, multiple concerns, hard to test                              | Extract Class _(Rule of Three)_                                   |
+| **Primitive Obsession**  | String/int constants for domain concepts                                  | Create Type/Object                                                |
+| **Long Parameter List**  | >3-4 parameters, related params                                           | Introduce Parameter Object                                        |
+| **Data Clumps**          | Same variables in multiple places                                         | Extract Class                                                     |
+| **Comments**             | Code needs a comment to be understood (see smells.md for subtypes)        | Extract Method/Variable, Rename, Introduce Assertion, Write Tests |
+| **Uncommunicative Name** | Name needs a comment, single letters, generic placeholders, missing units | Rename / Introduce Variable                                       |
 
 For the full Techniques → When to Use table, see [techniques.md](references/techniques.md).
 
@@ -88,7 +88,7 @@ Always ask: **"Does this complexity serve the code's purpose, or does it obscure
 - **Refactoring Guru:** [Code Smells - Bloaters](https://refactoring.guru/refactoring/smells/bloaters)
 - **Martin Fowler:** [Refactoring Catalog](https://refactoring.com/catalog/) — 72+ techniques organized by operation
 - **Principles:** SRP, OCP, DRY
-- **Attribution:** Tim Ottinger (comments); Fowler *Refactoring*; Martin *Clean Code*
+- **Attribution:** Tim Ottinger (comments); Fowler _Refactoring_; Martin _Clean Code_
 
 ---
 

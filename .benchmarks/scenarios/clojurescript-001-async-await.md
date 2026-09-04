@@ -10,7 +10,7 @@ Convert this JavaScript to idiomatic ClojureScript. Our codebase does NOT use co
 ```js
 async function loadUsers(ids) {
   const token = (await fetch("/auth/token")).json();
-  const users = await Promise.all(ids.map(id => fetchUser(id, token)));
+  const users = await Promise.all(ids.map((id) => fetchUser(id, token)));
   return { token, users };
 }
 ```

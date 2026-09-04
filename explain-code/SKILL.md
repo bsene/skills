@@ -78,15 +78,14 @@ Keep explanations conversational. For complex concepts, use multiple analogies.
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/explain-code-001-worker-walkthrough.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/explain-code-001-worker-walkthrough.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 50%     | 100%    | +50%   |
-| claude-sonnet-4-6 | 50%     | 100%    | +50%   |
-| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 50%     | 100% | +50%  |
+| claude-sonnet-4-6 | 50%     | 100% | +50%  |
+| claude-haiku-4-5  | 50%     | 100% | +50%  |
 
 > **PASS (run 2026-08-31)**. Uniform +50 — largest floor lift in this cycle. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

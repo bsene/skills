@@ -8,15 +8,25 @@ The TypeScript standard library, compiler, and all major style guides ([Airbnb](
 ## Banned patterns
 
 ```typescript
-interface IUser { id: string; name: string; }  // ← banned
-interface IRepository<T> { findById(id: string): T; }  // ← banned
+interface IUser {
+  id: string;
+  name: string;
+} // ← banned
+interface IRepository<T> {
+  findById(id: string): T;
+} // ← banned
 ```
 
 ## Use instead
 
 ```typescript
-interface User { id: string; name: string; }
-interface Repository<T> { findById(id: string): T; }
+interface User {
+  id: string;
+  name: string;
+}
+interface Repository<T> {
+  findById(id: string): T;
+}
 ```
 
 ## Rationale

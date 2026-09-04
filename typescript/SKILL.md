@@ -47,12 +47,12 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Rule
 
 ## Error Handling
 
-| Strategy | Caller forced to handle? | Composability |
-| --- | --- | --- |
-| Return `T \| null` | Yes (null check) | Low |
-| Throw exception | No — easy to miss | High |
-| **Return exception** `T \| ErrorA \| ErrorB` | **Yes — union exhaustion** | Medium |
-| Option/Either type | Via `.flatMap` chain | High (needs library) |
+| Strategy                                     | Caller forced to handle?   | Composability        |
+| -------------------------------------------- | -------------------------- | -------------------- |
+| Return `T \| null`                           | Yes (null check)           | Low                  |
+| Throw exception                              | No — easy to miss          | High                 |
+| **Return exception** `T \| ErrorA \| ErrorB` | **Yes — union exhaustion** | Medium               |
+| Option/Either type                           | Via `.flatMap` chain       | High (needs library) |
 
 **Return exceptions (preferred for expected failures):**
 
@@ -104,7 +104,11 @@ else res.status(200).json(result);
 - Domain vs. DTO mapping example — DTO shape never leaks into the domain:
 
 ```typescript
-export type UserDTO = { user_id: string; display_name: string; created_at: string };
+export type UserDTO = {
+  user_id: string;
+  display_name: string;
+  created_at: string;
+};
 
 export type User = { id: string; name: string; createdAt: Date };
 
@@ -125,25 +129,25 @@ export function toDomain(dto: UserDTO): User {
 
 ### JavaScript foundation
 
-| Rule | File |
-|---|---|
-| Use JavaScript general conventions (naming, const/let, destructuring, template literals) | `rules/js-general-conventions.md` |
-| Prefer explicit context (params) over implicit `this` | `rules/prefer-explicit-context-over-this.md` |
-| Do not use barrel files (`index.js`/`index.ts` re-exports) | `rules/no-barrel-files.md` |
-| Avoid intermediate arrays on hot paths (`filter().map()` chains) | `rules/avoid-intermediate-arrays.md` |
-| `undefined` for absence, `null` for API/external contracts | `rules/null-undefined.md` |
+| Rule                                                                                     | File                                         |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------- |
+| Use JavaScript general conventions (naming, const/let, destructuring, template literals) | `rules/js-general-conventions.md`            |
+| Prefer explicit context (params) over implicit `this`                                    | `rules/prefer-explicit-context-over-this.md` |
+| Do not use barrel files (`index.js`/`index.ts` re-exports)                               | `rules/no-barrel-files.md`                   |
+| Avoid intermediate arrays on hot paths (`filter().map()` chains)                         | `rules/avoid-intermediate-arrays.md`         |
+| `undefined` for absence, `null` for API/external contracts                               | `rules/null-undefined.md`                    |
 
 ### TypeScript-specific
 
-| Rule | File |
-|---|---|
-| Avoid type assertions (`as T`, `!`, `as unknown as T`) | `rules/avoid-type-assertions.md` |
-| Favor existing types over `as const` | `rules/favor-existing-types-over-as-const.md` |
-| Do not prefix interfaces with `I` | `rules/no-interface-prefix.md` |
-| Mark properties and arrays `readonly` to signal immutability | `rules/readonly.md` |
-| Annotate function return types explicitly; enable `noImplicitAny` | `rules/explicit-return-types.md` |
-| Use modules instead of namespaces; prefer named exports | `rules/module-organization.md` |
-| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts` | `rules/js-interop-declarations.md` |
+| Rule                                                               | File                                          |
+| ------------------------------------------------------------------ | --------------------------------------------- |
+| Avoid type assertions (`as T`, `!`, `as unknown as T`)             | `rules/avoid-type-assertions.md`              |
+| Favor existing types over `as const`                               | `rules/favor-existing-types-over-as-const.md` |
+| Do not prefix interfaces with `I`                                  | `rules/no-interface-prefix.md`                |
+| Mark properties and arrays `readonly` to signal immutability       | `rules/readonly.md`                           |
+| Annotate function return types explicitly; enable `noImplicitAny`  | `rules/explicit-return-types.md`              |
+| Use modules instead of namespaces; prefer named exports            | `rules/module-organization.md`                |
+| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts` | `rules/js-interop-declarations.md`            |
 
 ---
 

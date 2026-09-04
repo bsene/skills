@@ -118,25 +118,24 @@ runs the same source interpreted.
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Modules, imports, tail recursion, call/cc, macros, records | [Core Language](references/core-language.md) |
-| Scripting, shebang, CLI tools, everyday compiler flag examples, egg structure | [Scripting & CLI](references/scripting-cli.md) |
-| FFI: foreign-lambda, callbacks, C interop, embedding | [FFI Guide](references/ffi.md) |
-| Egg authoring, testing, and publishing workflow | [Egg System](references/eggs.md) |
+| Read When                                                                                              | File                                                  |
+| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| Modules, imports, tail recursion, call/cc, macros, records                                             | [Core Language](references/core-language.md)          |
+| Scripting, shebang, CLI tools, everyday compiler flag examples, egg structure                          | [Scripting & CLI](references/scripting-cli.md)        |
+| FFI: foreign-lambda, callbacks, C interop, embedding                                                   | [FFI Guide](references/ffi.md)                        |
+| Egg authoring, testing, and publishing workflow                                                        | [Egg System](references/eggs.md)                      |
 | Full `csi`/`csc` flag reference, runtime options, `(declare ...)` reference, deployment/static linking | [CLI & Compiler Cheatsheet](references/cheatsheet.md) |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/chicken-scheme-001-chicken5-migration.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/chicken-scheme-001-chicken5-migration.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 83%     | 100%    | +17%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 83%     | −17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 100% | +17%  |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 83%  | −17%  |
 
 > **SOFT PASS (run 2026-08-31)**. Salience re-run (process-context pitfall bullet + import added to the integrated example, wf_9a5588bc): opus's args-idiom miss cleared (+17). Haiku shows a one-criterion `csc -static`/`-deploy` dip on an untouched criterion — single-run noise suspect; targeted c4 re-run on the follow-up list. No edit left this cycle (cap reached). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -29,25 +29,25 @@ API designed for the developer-client. KISS, standard vocabulary, predictable sh
 
 ## URI Rules
 
-| Rule | Do | Don't |
-|---|---|---|
-| Nouns, plural everywhere | `GET /v1/users/007` | `getUser(007)`, `/v1/user/007` |
-| Versioning in path | `/v1/orders` | header-only or no version |
-| Nesting depth | max 2: `/users/42/orders` | `/users/42/orders/7/items/3` |
-| Case consistency | pick `snake_case` or `spinal-case`, stay consistent | mixed per endpoint |
-| Action endpoints | rare, scoped: `POST /carts/7/commit` | `POST /createCart`, `GET /getUser` |
+| Rule                     | Do                                                  | Don't                              |
+| ------------------------ | --------------------------------------------------- | ---------------------------------- |
+| Nouns, plural everywhere | `GET /v1/users/007`                                 | `getUser(007)`, `/v1/user/007`     |
+| Versioning in path       | `/v1/orders`                                        | header-only or no version          |
+| Nesting depth            | max 2: `/users/42/orders`                           | `/users/42/orders/7/items/3`       |
+| Case consistency         | pick `snake_case` or `spinal-case`, stay consistent | mixed per endpoint                 |
+| Action endpoints         | rare, scoped: `POST /carts/7/commit`                | `POST /createCart`, `GET /getUser` |
 
 Domain segregation: `api.example.com`, `oauth2.example.com`, `developers.example.com`, plus `.sandbox.` mirror.
 
 ## HTTP Verbs ↔ CRUD
 
-| Verb | On collection | On instance | Idempotent | Notes |
-|---|---|---|---|---|
-| `GET` | list | read | yes | safe |
-| `POST` | create → `201` + `Location:` | — | no | also for non-resource actions |
-| `PUT` | — | full replace | yes | unspecified fields **cleared** |
-| `PATCH` | — | partial update | no | preferred for partial |
-| `DELETE` | — | delete → `204` | yes | |
+| Verb     | On collection                | On instance    | Idempotent | Notes                          |
+| -------- | ---------------------------- | -------------- | ---------- | ------------------------------ |
+| `GET`    | list                         | read           | yes        | safe                           |
+| `POST`   | create → `201` + `Location:` | —              | no         | also for non-resource actions  |
+| `PUT`    | —                            | full replace   | yes        | unspecified fields **cleared** |
+| `PATCH`  | —                            | partial update | no         | preferred for partial          |
+| `DELETE` | —                            | delete → `204` | yes        |                                |
 
 ```
 POST /v1/clients/007/orders
@@ -72,12 +72,14 @@ Two stylistic choices — pick one project-wide:
 **Bare** (HTTP-native, Octo): return the resource directly. Status code + headers carry meta. `200 OK` body = `{"id": 7, ...}`. Errors use a separate envelope (below).
 
 **Wrapped** (Stripe/GitHub-flavored): every response — success or error — wears the same shell:
+
 ```json
 // success
 { "success": true, "data": {...}, "pagination": {...} }
 // error
 { "success": false, "error_code": "NOT_FOUND", "message": "...", "details": null }
 ```
+
 Tradeoff: wrapped is friendlier to one generic client handler; bare is leaner and reuses HTTP semantics. **Don't mix.** Consistency across the whole API is the point.
 
 ## Error Envelope
@@ -85,6 +87,7 @@ Tradeoff: wrapped is friendlier to one generic client handler; bare is leaner an
 Pick one shape, apply across the **whole** API.
 
 **OAuth2-style** (Octo recommendation, reuses OAuth2 spec):
+
 ```json
 {
   "error": "invalid_request",
@@ -94,6 +97,7 @@ Pick one shape, apply across the **whole** API.
 ```
 
 **RFC 7807 Problem Details** (modern alternative, `Content-Type: application/problem+json`):
+
 ```json
 {
   "type": "https://example.com/probs/out-of-credit",
@@ -107,6 +111,7 @@ Pick one shape, apply across the **whole** API.
 ## Pagination
 
 **HTTP Range semantics** (Octo, reuses HTTP):
+
 ```
 GET /v1/restaurants?range=0-24
 < 206 Partial Content
@@ -116,15 +121,18 @@ GET /v1/restaurants?range=0-24
         <https://api.example.com/v1/restaurants?range=0-24>; rel="first",
         <https://api.example.com/v1/restaurants?range=25-47>; rel="last"
 ```
+
 - `400 Bad Request` if range exceeds `Accept-Range` max.
 - Navigation links use **RFC 5988** `Link:` header.
 
 **Cursor pagination** (Stripe-style, prefer for large/mutable/streaming sets):
+
 ```
 GET /v1/events?limit=25&after=evt_abc123
 < 200 OK
 < {"data":[...], "has_more": true, "next_cursor": "evt_xyz789"}
 ```
+
 - **Opaque cursor**: base64-encode the position key (e.g. `{id, created_at}`). Clients pass it back blindly — you can change the encoding later without breaking them.
 - **`limit + 1` trick**: fetch `limit + 1` rows; if you got the extra, set `has_more: true` and slice it off. Avoids a separate `COUNT(*)` on the full table.
 - Tradeoff: avoids skip-cost and shifting-offset duplicates; loses random-page access ("go to page 7").
@@ -148,10 +156,12 @@ GET /v1/search?q=running+paid                          # global search
 ## Expand / Include (related resources)
 
 Let clients pull nested data in one call instead of N round-trips:
+
 ```
 GET /v1/orders/123                          # order only
 GET /v1/orders/123?expand=customer,items    # order + nested customer + items
 ```
+
 - **Whitelist allowed expansions** (set intersection). Blocks random JOIN chains and accidental data exposure.
 - Eager-load on the server (`JOIN` / `selectinload`); never N+1 inside a loop.
 - Pattern from Stripe, Shopify. Clients control payload size — mobile gets the lean version, dashboard the full version, same endpoint.
@@ -159,6 +169,7 @@ GET /v1/orders/123?expand=customer,items    # order + nested customer + items
 ## Partial Responses
 
 Google syntax — let clients shrink payloads:
+
 ```
 GET /v1/clients/007?fields=firstname,name,address(street)
 ```
@@ -168,6 +179,7 @@ GET /v1/clients/007?fields=firstname,name,address(street)
 Make resources discoverable. Pick one approach project-wide.
 
 **RFC 5988 `Link:` header** (preferred — no body coupling):
+
 ```
 GET /v1/clients/007
 < 200 OK
@@ -177,6 +189,7 @@ GET /v1/clients/007
 ```
 
 **Embedded JSON** (PayPal-style):
+
 ```json
 "_links": [
   {"href": "...", "rel": "self", "method": "GET"},
@@ -203,6 +216,7 @@ Idempotency-Key: 8b2f7e6c-...
 → first call:  201 Created  + Location: ...
 → replay:      201 Created  + X-Idempotent-Replayed: true  (same body)
 ```
+
 - TTL ~24h is the Stripe default.
 - Apply only to state-changing methods: `POST`, `PUT`, `PATCH`. `GET`/`DELETE` are already idempotent.
 - Cache 2xx **and** 4xx (not 5xx — let the client retry transient server errors).
@@ -210,6 +224,7 @@ Idempotency-Key: 8b2f7e6c-...
 ## Rate Limiting
 
 Return limit state in headers on every response; reject with `429` + `Retry-After` when exceeded.
+
 ```
 < X-RateLimit-Limit:     1000
 < X-RateLimit-Remaining: 42
@@ -228,6 +243,7 @@ Accept: application/json
 < 200 OK
 < Content-Type: application/json
 ```
+
 - Honor `Accept:` order; respond `406 Not Acceptable` if no supported format matches.
 - JSON is the default. XML only if a client explicitly requires it (no longer mandatory).
 
@@ -235,15 +251,15 @@ Accept: application/json
 
 Run before any endpoint ships. Tier = severity if violated.
 
-| Tier | Check |
-|---|---|
-| **Blocker** | Missing/broken auth; plain HTTP for auth or API; wrong verb (`PUT` for partial — clears unspecified fields); 2xx returned on error; no input validation; no `Idempotency-Key` on state-changing side-effect endpoints (payments, orders, sends) |
-| **Blocker** | Status codes correct: `201` create (+`Location:`), `204` delete, `409` conflict, `422` validation, `400` illegal-but-valid op |
+| Tier        | Check                                                                                                                                                                                                                                                                                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Blocker** | Missing/broken auth; plain HTTP for auth or API; wrong verb (`PUT` for partial — clears unspecified fields); 2xx returned on error; no input validation; no `Idempotency-Key` on state-changing side-effect endpoints (payments, orders, sends)                                                                     |
+| **Blocker** | Status codes correct: `201` create (+`Location:`), `204` delete, `409` conflict, `422` validation, `400` illegal-but-valid op                                                                                                                                                                                       |
 | **Concern** | Inconsistent case; ad-hoc/HTML error shape that varies per endpoint; missing pagination headers; list endpoints not paginated from day one (adding later = breaking); no version in path; nesting > 2 levels; missing rate-limit headers + `429`/`Retry-After`; free-form sort/filter without server-side whitelist |
-| **Concern** | Response shape not consistent project-wide (bare or wrapped — never mixed); deprecation policy undocumented (≤2 versions parallel, ≥6 month sunset) |
-| **Concern** | Errors lack machine-readable `error_code` + human message; validation errors lack field-level detail |
-| **Nit** | Singular noun for instance (`/user/7` beside `/users` — pick plural); missing `Location:` on `201`; no `X-RateLimit-*` exposed; missing `curl` example / OpenAPI 3.x spec in docs |
-| **Smell** | Frequent verbs in URLs (`/getUsers`, `/createOrder`) ⇒ you have **RPC**, not REST — revisit; `?page=2&size=20` without standardized headers is OK but document; JSONP is deprecated — use CORS |
+| **Concern** | Response shape not consistent project-wide (bare or wrapped — never mixed); deprecation policy undocumented (≤2 versions parallel, ≥6 month sunset)                                                                                                                                                                 |
+| **Concern** | Errors lack machine-readable `error_code` + human message; validation errors lack field-level detail                                                                                                                                                                                                                |
+| **Nit**     | Singular noun for instance (`/user/7` beside `/users` — pick plural); missing `Location:` on `201`; no `X-RateLimit-*` exposed; missing `curl` example / OpenAPI 3.x spec in docs                                                                                                                                   |
+| **Smell**   | Frequent verbs in URLs (`/getUsers`, `/createOrder`) ⇒ you have **RPC**, not REST — revisit; `?page=2&size=20` without standardized headers is OK but document; JSONP is deprecated — use CORS                                                                                                                      |
 
 ## References
 

@@ -10,22 +10,23 @@ A structured method for turning a single defect into a permanent quality improve
 **Defect** = any unexpected behavior for the user; the gap between the behavior that occurred and the behavior that was expected.
 
 Two principles carry over directly from the manufacturing original and matter more than any specific template:
+
 - **Classify by where a defect escaped, not by severity.** Severity triage optimizes for "what do we fix first"; stage classification optimizes for "what part of our process is leaking" — which is what actually drives systemic improvement.
 - **Analyze both occurrence and outflow.** Why did the defect happen (prevention), and separately, why wasn't it caught sooner (detection). Conflating the two loses the detection-gap signal, which is usually a process/tooling fix rather than a code fix.
-- **Check hypotheses against facts, not against how plausible they feel.** The main risk in a whys chain isn't lack of expertise — it's the *feeling* of having understood ("avoir compris") standing in for actually understanding ("comprendre"). Competence in the domain makes this worse, not better: an experienced reader accepts a plausible-sounding cause too quickly precisely because it fits prior experience. Each link in the chain should be checked against something verifiable (the diff, the logs, the ticket history) before moving to the next "why".
+- **Check hypotheses against facts, not against how plausible they feel.** The main risk in a whys chain isn't lack of expertise — it's the _feeling_ of having understood ("avoir compris") standing in for actually understanding ("comprendre"). Competence in the domain makes this worse, not better: an experienced reader accepts a plausible-sounding cause too quickly precisely because it fits prior experience. Each link in the chain should be checked against something verifiable (the diff, the logs, the ticket history) before moving to the next "why".
 
 ## Detection stages
 
 Ask the user which stage caught the defect if it isn't already clear — never guess.
 
-| Stage | Where it was caught |
-|---|---|
-| A | Local environment (dev's own machine) |
-| B | Team level (CI or code review) |
-| C | Validation environment (Product Owner spotted the gap) |
-| D | Qualif/staging environment (QA spotted it) |
-| E | Production (a team member spotted it) |
-| F | Client (client reported it) |
+| Stage | Where it was caught                                    |
+| ----- | ------------------------------------------------------ |
+| A     | Local environment (dev's own machine)                  |
+| B     | Team level (CI or code review)                         |
+| C     | Validation environment (Product Owner spotted the gap) |
+| D     | Qualif/staging environment (QA spotted it)             |
+| E     | Production (a team member spotted it)                  |
+| F     | Client (client reported it)                            |
 
 Later stages (E, F) are more costly and signal a bigger process gap than earlier ones (A, B).
 
@@ -40,7 +41,7 @@ Work through these steps in order. Don't skip ahead to root cause before the def
    - **When the chain reaches a decision a specific person made** (a design choice, an omitted check, a misread requirement) and that reasoning can't be confirmed — the author is unavailable, or no conversation history/decision log was kept — treat that link as an unconfirmed hypothesis, not a conclusion. Say so explicitly in the output rather than folding it into the chain as fact, and if the author is reachable, ask them to confirm or correct it before finalizing.
    - **Exception — migration-origin defects:** when the defect comes from porting or refactoring existing behavior, the root cause often lives in the input being migrated (the original source) rather than in an undocumented human decision. Here the chain can usually be traced with high confidence by diffing against the source, even with no author or conversation history available.
    - The chain isn't limited to code: when relevant, also check how the underlying story or epic was written (ambiguous acceptance criteria, an unhandled edge case never specified) as a candidate root cause, not just the code that implemented it.
-5. **Inspect why it wasn't caught earlier (outflow).** Compare the actual detection stage to the earliest stage where it plausibly could have been caught. Run this as its *own* short whys-style drilldown, separate from step 4 — the missed-detection root cause is often a process/tooling gap (missing test, no lint rule, no reviewer checklist item), not the same cause as the defect itself.
+5. **Inspect why it wasn't caught earlier (outflow).** Compare the actual detection stage to the earliest stage where it plausibly could have been caught. Run this as its _own_ short whys-style drilldown, separate from step 4 — the missed-detection root cause is often a process/tooling gap (missing test, no lint rule, no reviewer checklist item), not the same cause as the defect itself.
 6. **Distill a learning-sharing item.** Before proposing fixes, write a short, shareable summary of the misconception or gap uncovered in steps 4–5 (a PR/Jira comment, a Slack message, a one-slide recap) that lets a teammate who wasn't involved understand it in under a minute. A root cause that only lives in one person's head doesn't prevent the next occurrence — this is what actually spreads the learning.
 7. **Propose countermeasures.** Short-term, containment-level fixes: patch the immediate occurrence, stop the bleeding (hotfix, rollback, manual workaround). These don't need to be elegant or prevent recurrence — they need to be fast.
 8. **Design eradication measures.** Go deeper than the countermeasure: what permanent change (process, tooling, automated check, documentation, training) makes this entire class of defect structurally unable to recur — including recurring undetected until a late stage? Prefer **micro-guardrails**: small, automated, reversible checks (a one-line lint rule, a single added test, a doc snippet linked from the PR template) over large refactors. A tiny guardrail that ships beats a sweeping fix that never lands or introduces its own defects. Don't label something eradication if it only addresses this one instance.
@@ -50,18 +51,19 @@ Work through these steps in order. Don't skip ahead to root cause before the def
 
 When there are several candidate eradication measures and they need to be triaged — e.g. in a recurring team slot rather than fixed on the spot — score each candidate and favor the ones that are automated, low-risk, and scoped to this defect's area rather than one that touches unrelated services:
 
-| Criterion | What to check |
-|---|---|
-| Impact | Would it have prevented this defect, and similar ones, from recurring? |
-| Complexity / risk | Could it introduce new bugs or destabilize unrelated code? |
-| Effort | How much work to implement per developer? |
-| Time to verify | Can it be verified automatically (fast) or does it need manual checking (slow)? |
+| Criterion         | What to check                                                                   |
+| ----------------- | ------------------------------------------------------------------------------- |
+| Impact            | Would it have prevented this defect, and similar ones, from recurring?          |
+| Complexity / risk | Could it introduce new bugs or destabilize unrelated code?                      |
+| Effort            | How much work to implement per developer?                                       |
+| Time to verify    | Can it be verified automatically (fast) or does it need manual checking (slow)? |
 
 Pick a small number of top-scoring, low-risk items per cycle rather than attempting all candidates at once — batching too much at once causes the fire-fighting/large-refactor instability this method is meant to avoid.
 
 ## Team cadence (optional, reference practice)
 
 For teams running this continuously rather than as a one-off, this adaptation uses:
+
 - **One bug-fix analysis per day**, owned by the tech lead: review the diff, log the root cause, check the codebase for similar latent defects.
 - **A short daily sync** (10–15 min, "Bug Fix Analysis Coffee") where the team proposes countermeasures together — new lint rule, an edge-case fixture, a small fix-driven refactor. Frame this as a help chain, not a command chain: the tone is "let's look at where the process didn't go as expected and figure out a countermeasure together," not "stop doing X, do Y instead." The point is coaching people toward catching their own gaps, not assigning blame.
 - React within 24 hours of the defect surfacing, so the analysis happens while context is still fresh.
@@ -74,7 +76,7 @@ To specifically drive down Stage-A defects (caught while coding), use a constrai
 
 ## Gotchas
 
-- An AI agent can reliably trace *where* a defect entered the code, but not *why* a person chose to write it that way. Without the author available to confirm or a preserved decision log/conversation history to check against, that part of the chain is a hypothesis, however confidently it reads — never present it as a settled root cause. This is a hard limit, not a prompting problem to work around.
+- An AI agent can reliably trace _where_ a defect entered the code, but not _why_ a person chose to write it that way. Without the author available to confirm or a preserved decision log/conversation history to check against, that part of the chain is a hypothesis, however confidently it reads — never present it as a settled root cause. This is a hard limit, not a prompting problem to work around.
 - If step 4 or step 5 surfaces a gap where "why" can't be reconstructed because no one wrote down the reasoning at the time, that's itself a finding: a missing decision log is a valid eradication candidate (require a short written rationale for that class of decision going forward), separate from whatever code fix addresses the immediate defect.
 - Countermeasure and eradication are not interchangeable: a countermeasure fixes this occurrence; eradication prevents the class of defect from happening again. Keep them in separate sections and don't let a countermeasure masquerade as eradication.
 - The 5 Whys chain must start from the defect description written in step 1, not from a vaguer symptom the user mentioned in passing.
@@ -83,7 +85,7 @@ To specifically drive down Stage-A defects (caught while coding), use a constrai
 - Eradication doesn't mean "big refactor." Prefer the smallest automated check that closes the gap; oversized fixes are more likely to get deprioritized or introduce their own defects.
 - Classify by stage, not severity — resist the urge to reintroduce a Low/Medium/High axis; it optimizes for the wrong question here.
 - Write the final report in the same language the user used to describe the defect.
-- Watch for two failure modes that both masquerade as rigor: **"magical thinking"** — assuming there must be one single root cause that explains everything, so the chain stops the moment *a* plausible answer appears — and **"diffuse causation"** — treating everything as connected to everything, which can be used to justify almost any proposed action. Both skip the actual verification step; a real whys chain stays narrow and keeps checking each link against evidence.
+- Watch for two failure modes that both masquerade as rigor: **"magical thinking"** — assuming there must be one single root cause that explains everything, so the chain stops the moment _a_ plausible answer appears — and **"diffuse causation"** — treating everything as connected to everything, which can be used to justify almost any proposed action. Both skip the actual verification step; a real whys chain stays narrow and keeps checking each link against evidence.
 
 ## Output template
 
@@ -97,15 +99,14 @@ If the user wants this saved as a file rather than shown inline, write it as a M
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/dantotsu-001-escape-stage.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/dantotsu-001-escape-stage.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 83%     | 100% | +17%  |
 
 > **PASS (run 2026-08-31)**. Small uniform gains; baselines partially apply the stage-classification-first rule unaided. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

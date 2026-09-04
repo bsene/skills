@@ -2,7 +2,7 @@
 
 ## 1. Less is More
 
-Every instruction competes for a limited attention budget on top of tool definitions, history, and file contents already in context. A 2026 study of LLM-generated context files across 138 real-world repositories found such files consistently *reduced* task success and *increased* inference cost; hand-written files helped only when minimal and precise. The mechanism: agents follow bloated instructions faithfully, which broadens exploration and inflates reasoning cost without improving outcomes.
+Every instruction competes for a limited attention budget on top of tool definitions, history, and file contents already in context. A 2026 study of LLM-generated context files across 138 real-world repositories found such files consistently _reduced_ task success and _increased_ inference cost; hand-written files helped only when minimal and precise. The mechanism: agents follow bloated instructions faithfully, which broadens exploration and inflates reasoning cost without improving outcomes.
 
 **Rules:**
 
@@ -46,4 +46,4 @@ If a repo has an auto-generated file, rewrite from scratch using WHY/WHAT/HOW �
 
 Harnesses treat context files as supplementary — Claude Code explicitly wraps it in a "may or may not be relevant" reminder. Instructions judged irrelevant get skipped.
 
-The subtler risk: agents follow what they *do* deem relevant faithfully, broadening exploration and raising cost even when strict following wasn't needed. Either way the remedy is the same — fewer, universally relevant instructions, not more hoping some stick.
+The subtler risk: agents follow what they _do_ deem relevant faithfully, broadening exploration and raising cost even when strict following wasn't needed. Either way the remedy is the same — fewer, universally relevant instructions, not more hoping some stick.

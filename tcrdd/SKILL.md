@@ -37,7 +37,7 @@ make that safe to actually leave unattended, rather than just permission to skip
   works. Never advance the loop, commit, or tell the orchestrator/user "tests pass" on the
   basis of your own prediction of what the code should do. If the tool call didn't happen,
   the phase didn't happen.
-- **Stuck-loop limit.** If `git reset --hard` fires on the *same* candidate step more than twice in a
+- **Stuck-loop limit.** If `git reset --hard` fires on the _same_ candidate step more than twice in a
   row, stop retrying at that size — split it smaller (per the transformation ladder) before
   trying again. If a second round of splitting also stalls, **halt and report a blocker**
   instead of continuing to loop or reaching for a higher-numbered transformation just to
@@ -71,16 +71,16 @@ lighter cadence) in these cases — everything else still gets the full loop:
 - **Trivial code** — getters/setters, bare member variables, one-line or obviously trivial
   functions. These get exercised indirectly by the tests of whatever calls them; writing a
   RED/GREEN cycle for each one is ceremony without signal.
-- **GUI / layout code** — anything that has to be *fiddled* into place by trial and error
+- **GUI / layout code** — anything that has to be _fiddled_ into place by trial and error
   (font sizes, RGB values, XY positions, spacing). Don't force a failing test first here.
   Instead:
-  - Extract any real logic out of the GUI layer into a plain module and TCRDD *that* module.
+  - Extract any real logic out of the GUI layer into a plain module and TCRDD _that_ module.
     The GUI itself should be thin glue — wiring, not behavior.
   - For the fiddly glue itself, either fiddle first and write tests after the fact, or fiddle,
     then delete and re-write test-first once you know the shape. Both are legitimate; pick
     per judgement call, not per rule.
 - **Trusted third-party code** — frameworks, databases, web servers, SDKs you have no reason
-  to distrust. Mock the boundary and TCRDD *your* code against the mock; don't write tests
+  to distrust. Mock the boundary and TCRDD _your_ code against the mock; don't write tests
   that re-verify the third party's behavior. Exception: if you suspect it's actually broken,
   or a real call is cheap/fast/predictable enough that mocking is overkill — then it's fine
   to test through it.
@@ -88,7 +88,7 @@ lighter cadence) in these cases — everything else still gets the full loop:
   discarded (e.g. generating a one-off asset), especially in a REPL-driven / exploratory
   context. Skip the loop entirely.
 
-None of this licenses skipping TCRDD because a task merely *feels* inconvenient or slow. The
+None of this licenses skipping TCRDD because a task merely _feels_ inconvenient or slow. The
 default is still: make every effort to TDD any code with lasting production value. These are
 narrow, recognizable exceptions — not a general escape hatch.
 
@@ -122,7 +122,7 @@ then, depending on what the phase expects:
   to the failure log (see below)
 
 `git add -A` before the test run matters: it stages new files (like the test file just
-written in RED) as well as edits, so `git reset --hard HEAD` on failure discards *everything*
+written in RED) as well as edits, so `git reset --hard HEAD` on failure discards _everything_
 from that step — new files included — not just modifications to files that already existed.
 Skipping the `add -A` step is the most common way this loop silently leaks untracked files
 across a "reverted" step.
@@ -130,7 +130,7 @@ across a "reverted" step.
 ### Failure log
 
 `git reset --hard` is silent — the discarded attempt leaves no trace in git history. Keep one
-by hand: on every revert, append an entry to `tcr-failure-log.md` at the repo root, *after*
+by hand: on every revert, append an entry to `tcr-failure-log.md` at the repo root, _after_
 the reset (so the append lands on the clean tree, not the discarded one), then commit just
 the log:
 
@@ -249,43 +249,42 @@ The skill is the loop. If you produce a finished feature in one turn, you did no
 
 ## Error handling
 
-| Situation                            | Action                                                                                |
-| ------------------------------------ | ------------------------------------------------------------------------------------- |
-| `reset --hard` fires on your change  | The step was too large — split it into smaller increments and try again               |
+| Situation                                        | Action                                                                                                                                                              |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `reset --hard` fires on your change              | The step was too large — split it into smaller increments and try again                                                                                             |
 | Same-size step reverts >2x in a row (autonomous) | Stop retrying at that size. Split smaller once; if that also stalls, halt and report a `blocked-stuck` status instead of looping or forcing a bigger transformation |
-| Tests are flaky (pass/fail randomly) | Fix or isolate the flaky test before continuing the cycle                             |
-| Working tree was dirty before entering the loop | Don't let a phase's commit sweep up unrelated pre-existing changes — `git stash` them first, or ask the user how to handle them |
+| Tests are flaky (pass/fail randomly)             | Fix or isolate the flaky test before continuing the cycle                                                                                                           |
+| Working tree was dirty before entering the loop  | Don't let a phase's commit sweep up unrelated pre-existing changes — `git stash` them first, or ask the user how to handle them                                     |
 
 ---
 
 ## Read On Demand
 
-| Read when                             | Link                                                                                                  |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Want the original TCR rationale       | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                  |
-| Want deeper TDD cycle theory          | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html) |
-| Want the full derivation of the transformation ladder above | [The Transformation Priority Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html) |
-| Want to see why adding a case is last and why tail-recursion/language runtime changes the ladder's order | [Fib. The T-P Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FibTPP.html) |
-| Want a second worked example of the transformation ladder applied to a flash-card-style feature | [Flash - TPP — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FlashTpp.html) |
-| Unsure whether a specific piece of code is a legitimate TCRDD exception | [The Pragmatics of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/03/06/ThePragmaticsOfTDD.html) |
+| Read when                                                                                                | Link                                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Want the original TCR rationale                                                                          | [TCR — Kent Beck](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)                                                      |
+| Want deeper TDD cycle theory                                                                             | [The Cycles of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2014/12/17/TheCyclesOfTDD.html)                                     |
+| Want the full derivation of the transformation ladder above                                              | [The Transformation Priority Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html) |
+| Want to see why adding a case is last and why tail-recursion/language runtime changes the ladder's order | [Fib. The T-P Premise — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FibTPP.html)                                          |
+| Want a second worked example of the transformation ladder applied to a flash-card-style feature          | [Flash - TPP — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/05/27/FlashTpp.html)                                                 |
+| Unsure whether a specific piece of code is a legitimate TCRDD exception                                  | [The Pragmatics of TDD — Uncle Bob](https://blog.cleancoder.com/uncle-bob/2013/03/06/ThePragmaticsOfTDD.html)                             |
 
 ## Upstream
 
-| Before starting TCRDD                        | Skill         | Why                                                                |
-| -------------------------------------------- | ------------- | ------------------------------------------------------------------ |
-| Unsure whether the feature is worth building | `kano`        | Classify the feature before investing in red/green/refactor cycles |
+| Before starting TCRDD                        | Skill  | Why                                                                |
+| -------------------------------------------- | ------ | ------------------------------------------------------------------ |
+| Unsure whether the feature is worth building | `kano` | Classify the feature before investing in red/green/refactor cycles |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/tcrdd-001-red-green.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/tcrdd-001-red-green.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 50%     | 100%    | +50%   |
-| claude-sonnet-4-6 | 83%     | 67%     | −16%   |
-| claude-haiku-4-5  | 50%     | 67%     | +17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 50%     | 100% | +50%  |
+| claude-sonnet-4-6 | 83%     | 67%  | −16%  |
+| claude-haiku-4-5  | 50%     | 67%  | +17%  |
 
 > **NEG (run 2026-08-31)**. Opus +50 / haiku +17, but sonnet −16: GREEN-phase minimal-implementation discipline is crowded out by the agentic-guardrail machinery. Post-native-git rewrite holds (no universal regression; the 2026-06-14 FAIL is cleared). GREEN workflow line on the follow-up list. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

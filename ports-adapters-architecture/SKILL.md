@@ -50,12 +50,12 @@ adapters/
 
 ## Key Concepts
 
-| Term | Meaning |
-|---|---|
-| **Port** | Interface defined by the hexagon (domain). External systems implement it. |
-| **Adapter** | Concrete implementation of a port. Translates between domain logic and external tools. |
-| **Driving / Primary** | Ports where external actors (HTTP client, CLI user, scheduler) call **into** the domain. |
-| **Driven / Secondary** | Ports where the domain calls **out** to external systems (database, cache, email). |
+| Term                   | Meaning                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------- |
+| **Port**               | Interface defined by the hexagon (domain). External systems implement it.                |
+| **Adapter**            | Concrete implementation of a port. Translates between domain logic and external tools.   |
+| **Driving / Primary**  | Ports where external actors (HTTP client, CLI user, scheduler) call **into** the domain. |
+| **Driven / Secondary** | Ports where the domain calls **out** to external systems (database, cache, email).       |
 
 **Naming convention:** For driving ports, use `for_<action>` (e.g., `for_creating_users`).
 
@@ -81,8 +81,8 @@ When the user wants to apply or review Ports & Adapters:
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
+| Read When                                               | File                                                         |
+| ------------------------------------------------------- | ------------------------------------------------------------ |
 | Before/after TypeScript example showing the refactoring | [Before / After Example](references/before-after-example.md) |
 
 ## Read On Demand (External)
@@ -92,15 +92,14 @@ When the user wants to apply or review Ports & Adapters:
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/ports-adapters-001-hexagonal-refactor.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/ports-adapters-001-hexagonal-refactor.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **NEUTRAL (run 2026-08-31)**. All models 100% with and without — hexagonal refactor at ceiling. The port-naming BLOCKER did not bite here but still needs the Phase-7 scoping fix. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

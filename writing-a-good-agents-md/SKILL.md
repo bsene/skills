@@ -29,16 +29,16 @@ Everything else lives elsewhere: linter config, sub-documents, one-off instructi
 
 ## Audit Checklist
 
-| Check | Question |
-|---|---|
-| **Universality** | Does every instruction apply to every task? |
-| **Length** | Under ~150 lines? Ideally 50–100? |
-| **Linter work** | Code style rules a formatter could enforce instead? |
-| **Stale snippets** | Pasted code that could go stale? Use `file:line` refs |
-| **Instruction count** | Approaching 20–30+ discrete rules? |
-| **Auto-generated** | Raw `/init` output? Rewrite from scratch, don't prune |
-| **Progressive disclosure** | Domain docs referenced, not inlined? |
-| **Hotfix accumulation** | One-off workarounds instead of structure? |
+| Check                        | Question                                                             |
+| ---------------------------- | -------------------------------------------------------------------- |
+| **Universality**             | Does every instruction apply to every task?                          |
+| **Length**                   | Under ~150 lines? Ideally 50–100?                                    |
+| **Linter work**              | Code style rules a formatter could enforce instead?                  |
+| **Stale snippets**           | Pasted code that could go stale? Use `file:line` refs                |
+| **Instruction count**        | Approaching 20–30+ discrete rules?                                   |
+| **Auto-generated**           | Raw `/init` output? Rewrite from scratch, don't prune                |
+| **Progressive disclosure**   | Domain docs referenced, not inlined?                                 |
+| **Hotfix accumulation**      | One-off workarounds instead of structure?                            |
 | **Duplication across tools** | Same content pasted into CLAUDE.md/.cursorrules instead of imported? |
 
 ## Template: Minimal AGENTS.md
@@ -91,20 +91,20 @@ No frontmatter, no required fields — plain Markdown by design, which is what m
 
 `AGENTS.md` is the shared source of truth; harness files are thin adapters, never copies:
 
-| Harness | Adapter |
-|---|---|
-| Claude Code | `CLAUDE.md` whose first line imports it: `@AGENTS.md` |
-| Cursor | Short `.mdc` rule referencing it; glob scoping only for Cursor-specific rules |
-| Gemini CLI | `GEMINI.md` — same relationship as CLAUDE.md |
-| Codex, Windsurf, Zed, OpenCode | Read `AGENTS.md` natively; no adapter |
+| Harness                        | Adapter                                                                       |
+| ------------------------------ | ----------------------------------------------------------------------------- |
+| Claude Code                    | `CLAUDE.md` whose first line imports it: `@AGENTS.md`                         |
+| Cursor                         | Short `.mdc` rule referencing it; glob scoping only for Cursor-specific rules |
+| Gemini CLI                     | `GEMINI.md` — same relationship as CLAUDE.md                                  |
+| Codex, Windsurf, Zed, OpenCode | Read `AGENTS.md` natively; no adapter                                         |
 
 Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-paste: three copies guarantee drift.
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Principle details, research evidence, reasoning | [Six Principles Detailed](references/six-principles-detailed.md) |
+| Read When                                                           | File                                                                       |
+| ------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Principle details, research evidence, reasoning                     | [Six Principles Detailed](references/six-principles-detailed.md)           |
 | Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md) |
 
 ## Benchmark

@@ -170,14 +170,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 <!-- Range -->
 {{range .Users}}
-  <p>{{.Name}} — {{.Email}}</p>
+<p>{{.Name}} — {{.Email}}</p>
 {{end}}
 
 <!-- Conditional -->
 {{if .IsAdmin}}
-  <span>Admin</span>
+<span>Admin</span>
 {{else}}
-  <span>User</span>
+<span>User</span>
 {{end}}
 
 <!-- Pipe -->

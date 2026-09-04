@@ -8,11 +8,11 @@ description: >
 
 One skill, three lenses on the same code — load the reference file matching what the person actually needs rather than all three at once.
 
-| Reference | Load when the question is about... |
-|---|---|
-| `references/idioms.md` | How a given line/method should be written — duck typing vs. type checks, `Enumerable` vs. manual loops, metaprogramming judgment calls, DRY/orthogonality as a review lens. Style-level. |
-| `references/design-patterns.md` (+ `references/design-patterns-catalog.md` for full code) | Structural decisions — which GoF pattern (if any) fits a design problem, translating a class hierarchy into something more composable, whether a "pattern" is even warranted. |
-| `references/testing.md` | Test structure — RSpec/Minitest conventions, which layer of the test pyramid a behavior belongs in, mocking vs. real objects, FactoryBot vs. fixtures; also mutation testing (`mutant`) and property-based testing (`propcheck`/`rantly`) for the specific high-risk cases where example-based specs alone leave a gap. |
+| Reference                                                                                 | Load when the question is about...                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `references/idioms.md`                                                                    | How a given line/method should be written — duck typing vs. type checks, `Enumerable` vs. manual loops, metaprogramming judgment calls, DRY/orthogonality as a review lens. Style-level.                                                                                                                                |
+| `references/design-patterns.md` (+ `references/design-patterns-catalog.md` for full code) | Structural decisions — which GoF pattern (if any) fits a design problem, translating a class hierarchy into something more composable, whether a "pattern" is even warranted.                                                                                                                                           |
+| `references/testing.md`                                                                   | Test structure — RSpec/Minitest conventions, which layer of the test pyramid a behavior belongs in, mocking vs. real objects, FactoryBot vs. fixtures; also mutation testing (`mutant`) and property-based testing (`propcheck`/`rantly`) for the specific high-risk cases where example-based specs alone leave a gap. |
 
 A single review often touches more than one lens (e.g., "review this service object" can raise a style smell, a missing Strategy, and a test gap all at once) — load whichever reference files the specific findings need; don't preload all three by default.
 

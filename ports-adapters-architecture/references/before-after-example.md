@@ -23,11 +23,15 @@ interface UserRepository {
 
 class UserService {
   constructor(private readonly users: UserRepository) {}
-  async getUser(id: string) { return this.users.findById(id); }
+  async getUser(id: string) {
+    return this.users.findById(id);
+  }
 }
 
 // adapter lives outside the hexagon
 class PostgresUserRepository implements UserRepository {
-  async findById(id: string) { /* postgres query */ }
+  async findById(id: string) {
+    /* postgres query */
+  }
 }
 ```

@@ -111,11 +111,11 @@ A branching strategy that combines Pull Request feedback with Continuous Integra
 
 ### The three modes
 
-| Mode | What happens | Works great when |
-| ---- | ------------ | ----------------- |
-| **Ship** | Commit straight to mainline. No PR, no review wait. | Established pattern, unremarkable bug fix, doc update, applying feedback already discussed |
-| **Show** | Open a PR, but merge it immediately once automated checks pass — don't wait for approval. The PR exists as a space for feedback *after* the change is already live. | Interesting approach/refactor worth sharing; confident in the change but want visibility |
-| **Ask** | Open a PR and wait for feedback before merging. | Genuinely unsure of the approach, want discussion first, experiments, "will this work?" |
+| Mode     | What happens                                                                                                                                                        | Works great when                                                                           |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Ship** | Commit straight to mainline. No PR, no review wait.                                                                                                                 | Established pattern, unremarkable bug fix, doc update, applying feedback already discussed |
+| **Show** | Open a PR, but merge it immediately once automated checks pass — don't wait for approval. The PR exists as a space for feedback _after_ the change is already live. | Interesting approach/refactor worth sharing; confident in the change but want visibility   |
+| **Ask**  | Open a PR and wait for feedback before merging.                                                                                                                     | Genuinely unsure of the approach, want discussion first, experiments, "will this work?"    |
 
 ```
 main ──●───●──────●────●─────●────
@@ -138,12 +138,12 @@ There's no fixed ratio — it shifts with trust and familiarity. High-trust, exp
 
 ### Pros / Cons
 
-| Pros                                              | Cons                                                    |
-| -------------------------------------------------- | -------------------------------------------------------- |
-| Best of CI speed and PR feedback culture           | Requires real team trust and a shared quality bar        |
-| No PR-approval queue bottleneck                     | Needs feature-flag discipline to keep mainline releasable |
+| Pros                                                         | Cons                                                            |
+| ------------------------------------------------------------ | --------------------------------------------------------------- |
+| Best of CI speed and PR feedback culture                     | Requires real team trust and a shared quality bar               |
+| No PR-approval queue bottleneck                              | Needs feature-flag discipline to keep mainline releasable       |
 | Scales naturally with trust (seniors ship, juniors ask more) | Not a fit for heavily regulated / mandatory-review environments |
-| Avoids the "rubber-stamp approval" anti-pattern    | Async review happens after merge, not before             |
+| Avoids the "rubber-stamp approval" anti-pattern              | Async review happens after merge, not before                    |
 
 Source: https://martinfowler.com/articles/ship-show-ask.html
 
@@ -151,12 +151,12 @@ Source: https://martinfowler.com/articles/ship-show-ask.html
 
 ## Choosing a workflow
 
-| Factor            | GitFlow         | GitHub Flow  | Trunk-Based     | Ship/Show/Ask                      |
-| ----------------- | --------------- | ------------ | --------------- | ----------------------------------- |
-| Release cadence   | Scheduled       | Continuous   | Continuous      | Continuous                          |
-| Team size         | Any             | Small/medium | Medium/large    | Small/medium, high-trust            |
-| CI/CD maturity    | Low needed      | Medium       | High required   | High required                       |
-| Branch complexity | High            | Low          | Minimal         | Low (short branches, no approval gate) |
+| Factor            | GitFlow         | GitHub Flow  | Trunk-Based     | Ship/Show/Ask                                                |
+| ----------------- | --------------- | ------------ | --------------- | ------------------------------------------------------------ |
+| Release cadence   | Scheduled       | Continuous   | Continuous      | Continuous                                                   |
+| Team size         | Any             | Small/medium | Medium/large    | Small/medium, high-trust                                     |
+| CI/CD maturity    | Low needed      | Medium       | High required   | High required                                                |
+| Branch complexity | High            | Low          | Minimal         | Low (short branches, no approval gate)                       |
 | Best for          | Libraries, apps | Web services | Large tech orgs | High-trust teams wanting PR feedback without blocking merges |
 
 **Quick rule of thumb:**

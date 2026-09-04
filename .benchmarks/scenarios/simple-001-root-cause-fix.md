@@ -23,7 +23,7 @@ function checkout(order) {
 
 // receipt_preview.js
 function receiptPreview(order) {
-  return "Total: " + applyDiscount(order);  // no rounding — shows 89.99999999
+  return "Total: " + applyDiscount(order); // no rounding — shows 89.99999999
 }
 
 // invoice_export.js

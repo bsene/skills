@@ -1,6 +1,6 @@
 # Object Calisthenics
 
-9 rules from Jeff Bay (*The ThoughtWorks Anthology*) that force better encapsulation, cohesion, and naming by constraining how you write classes/methods. Not a style guide to enforce 100% of the time — a lens to apply during review/refactor to surface bad decomposition. Examples here use TypeScript/Node.js/NestJS.
+9 rules from Jeff Bay (_The ThoughtWorks Anthology_) that force better encapsulation, cohesion, and naming by constraining how you write classes/methods. Not a style guide to enforce 100% of the time — a lens to apply during review/refactor to surface bad decomposition. Examples here use TypeScript/Node.js/NestJS.
 
 Use this to **review existing code** (flag violations, propose the refactor) or to **write new code** with the constraints on from the start. Don't lecture about the theory — show the violation and the fix.
 
@@ -9,6 +9,7 @@ Use this to **review existing code** (flag violations, propose the refactor) or 
 Run code through these in order. Each one exposes a specific smell.
 
 ### 1. One level of indentation per method
+
 - **Check**: count nested blocks (`for`/`if`/`while` inside another) in each method body.
 - **Violation**: 2+ levels of nesting.
 - **Fix**: Extract Method — pull the inner block into a private method named for what it does.
@@ -18,8 +19,11 @@ Run code through these in order. Each one exposes a specific smell.
 // ❌ 2 levels
 function insertionSort(arr: number[]): number[] {
   for (let i = 0; i < arr.length; i++) {
-    for (let j = i - 1; j >= 0; j--) {           // 2nd level
-      if (arr[j] > arr[i]) { /* ... */ }          // 3rd level
+    for (let j = i - 1; j >= 0; j--) {
+      // 2nd level
+      if (arr[j] > arr[i]) {
+        /* ... */
+      } // 3rd level
     }
   }
   return arr;
@@ -36,6 +40,7 @@ function insert(arr: number[], i: number): void {
 ```
 
 ### 2. Don't use `else`
+
 - **Check**: any `else`/`else if` branch.
 - **Fixes, in order of preference**:
   1. **Early return / guard clause** — validate/short-circuit first, no `else` needed.
@@ -62,14 +67,19 @@ const discount = (customer: Customer, subtotal: number) =>
 ```
 
 ### 3. Wrap all primitives and strings (kill Primitive Obsession)
-- **Check**: any primitive (`number`/`string`) parameter or field that has *validation rules* or *behavior*, not just a raw pass-through value.
+
+- **Check**: any primitive (`number`/`string`) parameter or field that has _validation rules_ or _behavior_, not just a raw pass-through value.
 - **Fix**: wrap in a Value Object (class or branded type) that validates on construction and is immutable.
 - **Gotcha**: don't wrap everything — an `id: string` with no rules doesn't need a class. Wrap when there's a constraint (range, format, invariant) or domain behavior (e.g. `Money.add()`) — the DDD Value Object case.
 
 ```ts
 // ❌ validation scattered, primitives leak everywhere
 class SmsSubscription {
-  constructor(public quantity: number, public month: number, public year: number) {
+  constructor(
+    public quantity: number,
+    public month: number,
+    public year: number,
+  ) {
     if (quantity < 1 || quantity > 250) throw new Error("bad quantity");
     if (month < 1 || month > 12) throw new Error("bad month");
     if (year < 1970) throw new Error("bad year");
@@ -86,28 +96,40 @@ class Quantity {
 }
 // Month, Year follow the same shape
 class SmsSubscription {
-  constructor(readonly quantity: Quantity, readonly month: Month, readonly year: Year) {}
+  constructor(
+    readonly quantity: Quantity,
+    readonly month: Month,
+    readonly year: Year,
+  ) {}
 }
 ```
 
 ### 4. First-class collections
-- **Check**: any class holding a `Array`/`Set`/`Map` field *plus other* member variables, or raw collections passed around and manipulated by client code (`.filter()`, `.map()` scattered outside the owning class).
+
+- **Check**: any class holding a `Array`/`Set`/`Map` field _plus other_ member variables, or raw collections passed around and manipulated by client code (`.filter()`, `.map()` scattered outside the owning class).
 - **Fix**: wrap the collection in its own class; collection-specific behavior (filtering, totals, uniqueness rules) lives there, not in the caller.
 
 ```ts
 // ❌ raw array manipulated by callers everywhere
-class Order { lineItems: LineItem[] = []; }
+class Order {
+  lineItems: LineItem[] = [];
+}
 const total = order.lineItems.reduce((s, li) => s + li.price, 0); // logic leaks out
 
 // ✅
 class LineItems {
   private readonly items: LineItem[] = [];
-  add(item: LineItem): void { this.items.push(item); }
-  total(): Money { return this.items.reduce((s, li) => s.add(li.price), Money.zero()); }
+  add(item: LineItem): void {
+    this.items.push(item);
+  }
+  total(): Money {
+    return this.items.reduce((s, li) => s.add(li.price), Money.zero());
+  }
 }
 ```
 
 ### 5. One dot per line (Law of Demeter)
+
 - **Check**: chained property/method access reaching through 2+ objects, e.g. `a.getFoo().getBar().doSomething()`.
 - **Fix**: "Tell, don't ask" — ask the neighboring object to do the work, don't reach through it. See `tell-dont-ask.md` for the full version of this idea applied beyond just dot-chains.
 - **Not a violation**: fluent builders (`builder.withX().withY().build()`) — those return the builder itself, not internal state, so they don't leak encapsulation.
@@ -121,19 +143,23 @@ order.customerCity(); // Order asks Customer, Customer asks Address
 ```
 
 ### 6. Don't abbreviate
+
 - **Check**: shortened names (`calc`, `mgr`, `idx`, `tmp`, `usr`) or names that repeat context already implied by the class (`Order.shipOrder()` instead of `Order.ship()`).
 - **Fix**: if the full name feels too long to write repeatedly, that's a signal of a missing class or a misplaced responsibility — not a reason to abbreviate.
 
 ### 7. Keep entities small
+
 - **Check**: class > ~50-150 lines, or a module/directory with too many files doing unrelated things.
 - **Fix**: split by responsibility. This is a smell trigger, not a hard gate — judge by whether the class is doing one cohesive thing, not just the line count.
 
 ### 8. No class with more than 2 instance variables
+
 - **Check**: count non-static fields per class.
 - **Fix**: split into a class that owns one variable's state, and a class that coordinates two collaborators. This is the hardest rule to satisfy literally — treat it as a strong prompt to decouple, not a hard CI gate.
-- **Gotcha**: NestJS services with several injected dependencies (repository, logger, event bus, config) are a *known, accepted* exception — this rule targets state/data cohesion, not DI collaborators. Don't flag constructor-injected services for this.
+- **Gotcha**: NestJS services with several injected dependencies (repository, logger, event bus, config) are a _known, accepted_ exception — this rule targets state/data cohesion, not DI collaborators. Don't flag constructor-injected services for this.
 
 ### 9. No getters/setters (Tell, Don't Ask)
+
 - **Check**: methods named `getX()`/`setX()` that just return/mutate a field with no behavior, and callers that pull data out to act on it externally instead of asking the object to act.
 - **Fix**: replace with behavior methods (`account.deposit(amount)` instead of `account.setBalance(account.getBalance() + amount)`). Full treatment: `tell-dont-ask.md`.
 - **Watch for**: returning a mutable internal collection reference from a getter — callers can mutate it from outside, breaking encapsulation even without a setter. Return a copy, a readonly view, or better, don't expose it at all.
@@ -152,6 +178,6 @@ Calisthenics rules #1–2 overlap with the class-shape decision tree (`refactori
 
 ## References
 
-- Jeff Bay, *The ThoughtWorks Anthology* — original source of the 9 rules
+- Jeff Bay, _The ThoughtWorks Anthology_ — original source of the 9 rules
 - <https://williamdurand.fr/2013/06/03/object-calisthenics/>
 - <https://developerhandbook.stakater.com/architecture/object-calisthenics.html>

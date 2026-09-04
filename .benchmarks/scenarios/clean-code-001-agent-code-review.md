@@ -12,14 +12,21 @@ This function was written by our AI coding agent, and the same agent will keep m
 function procOrdData(o, u) {
   // check status
   let r = [];
-  if (o.st == "new" && u.tier == "vip") { r.push("fast-lane"); }
-  else if (o.st == "new") { r.push("normal-lane"); }
-  else if (o.st == "pending" && o.days > 3) { r.push("chase"); }
-  else if (o.st == "shipped") { r.push("closed"); }
-  else { r.push("review"); }
+  if (o.st == "new" && u.tier == "vip") {
+    r.push("fast-lane");
+  } else if (o.st == "new") {
+    r.push("normal-lane");
+  } else if (o.st == "pending" && o.days > 3) {
+    r.push("chase");
+  } else if (o.st == "shipped") {
+    r.push("closed");
+  } else {
+    r.push("review");
+  }
   // loop over the items
   for (const i of o.items) {
-    if (i.qty > 10 && u.tier == "vip") { r.push("bulk-vip");
+    if (i.qty > 10 && u.tier == "vip") {
+      r.push("bulk-vip");
     }
   }
   return r;

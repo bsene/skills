@@ -21,7 +21,10 @@ export class UserService {
 
   async createUser(email: string, name: string): Promise<User> {
     if (!email.includes("@")) throw new Error("invalid email");
-    const res = await pool.query("INSERT INTO users (email, name) VALUES ($1, $2) RETURNING *", [email, name]);
+    const res = await pool.query(
+      "INSERT INTO users (email, name) VALUES ($1, $2) RETURNING *",
+      [email, name],
+    );
     await sendMail(email, "Welcome!");
     return res.rows[0];
   }

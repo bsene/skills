@@ -10,8 +10,8 @@ If code is hard to test, the test is telling you something real about the design
 // Anti-pattern: hard to test because of hidden dependency
 class OrderProcessor {
   process(order: Order): void {
-    const db = new Database();          // hard dependency — requires mocking Database
-    const emailer = new Emailer();      // same
+    const db = new Database(); // hard dependency — requires mocking Database
+    const emailer = new Emailer(); // same
     db.save(order);
     emailer.send(order.customer, "Confirmed");
   }
@@ -53,8 +53,12 @@ expect(mockRepo.save).toHaveBeenCalledWith(order); // fails if method renames
 // Preferred: fake asserts WHAT (behavior), survives refactors
 class InMemoryOrderRepository implements OrderRepository {
   private store: Order[] = [];
-  save(order: Order): void { this.store.push(order); }
-  find(id: string): Order | undefined { return this.store.find(o => o.id === id); }
+  save(order: Order): void {
+    this.store.push(order);
+  }
+  find(id: string): Order | undefined {
+    return this.store.find((o) => o.id === id);
+  }
 }
 
 processor.process(order);
@@ -68,9 +72,9 @@ The more a function depends only on its arguments and produces only a return val
 ```typescript
 // Anti-pattern: mixed logic and I/O, hard to test in isolation
 async function calculateAndSaveDiscount(userId: string): Promise<void> {
-  const user = await db.getUser(userId);              // I/O
-  const discount = user.isPremium ? 0.2 : 0.05;      // logic
-  await db.saveDiscount(userId, discount);            // I/O
+  const user = await db.getUser(userId); // I/O
+  const discount = user.isPremium ? 0.2 : 0.05; // logic
+  await db.saveDiscount(userId, discount); // I/O
 }
 
 // Preferred: pure core isolated from I/O
@@ -103,4 +107,3 @@ it("should notify the customer by email after confirmation", ...);
 ```
 
 ---
-

@@ -12,21 +12,21 @@ Primary reference: [official Zod docs](https://zod.dev). Requires TypeScript v5.
 
 ## Quick Reference
 
-| Task | Pattern |
-|---|---|
-| Validate external input (API body, env vars, queue) | `schema.parse(data)` at the boundary |
-| Get the inferred type from a schema | `z.infer<typeof Schema>` |
-| Compose schemas | `.extend()`, `.merge()`, `.pick()`, `.omit()` |
-| Transform data during parsing | `.transform(fn)` |
-| Coerce strings to primitives | `z.coerce.number()`, `z.coerce.boolean()` |
-| Custom error messages | `z.string({ error: "must be a string" })` |
-| Validate string formats | `z.email()`, `z.uuid()`, `z.url()` (top-level in v4) |
-| Exclusive union (exactly one matches) | `z.xor(schemaA, schemaB)` |
-| Optional key without accepting `undefined` | `.exactOptional()` |
-| Known keys + passthrough unknown keys | `z.looseRecord()` |
-| Nominal/branded types | `.brand<"UserId">()` |
-| Format errors | `z.treeifyError(error)` |
-| Lightweight bundle (edge/serverless) | `@zod/mini` |
+| Task                                                | Pattern                                              |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| Validate external input (API body, env vars, queue) | `schema.parse(data)` at the boundary                 |
+| Get the inferred type from a schema                 | `z.infer<typeof Schema>`                             |
+| Compose schemas                                     | `.extend()`, `.merge()`, `.pick()`, `.omit()`        |
+| Transform data during parsing                       | `.transform(fn)`                                     |
+| Coerce strings to primitives                        | `z.coerce.number()`, `z.coerce.boolean()`            |
+| Custom error messages                               | `z.string({ error: "must be a string" })`            |
+| Validate string formats                             | `z.email()`, `z.uuid()`, `z.url()` (top-level in v4) |
+| Exclusive union (exactly one matches)               | `z.xor(schemaA, schemaB)`                            |
+| Optional key without accepting `undefined`          | `.exactOptional()`                                   |
+| Known keys + passthrough unknown keys               | `z.looseRecord()`                                    |
+| Nominal/branded types                               | `.brand<"UserId">()`                                 |
+| Format errors                                       | `z.treeifyError(error)`                              |
+| Lightweight bundle (edge/serverless)                | `@zod/mini`                                          |
 
 ## Core Principles
 
@@ -112,7 +112,7 @@ The three patterns worth a reminder at the boundary:
 **Env vars: validate at startup, fail fast.**
 
 ```typescript
-const env = EnvSchema.parse(process.env);  // crash early if config is missing
+const env = EnvSchema.parse(process.env); // crash early if config is missing
 ```
 
 **Async refinement → `parseAsync`, never `.parse()`.**
@@ -125,15 +125,14 @@ For API behavior (transforms, coercion, error trees, `@zod/mini`), the [official
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/zod-001-v4-migration.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/zod-001-v4-migration.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 50%     | 83%     | +33%   |
-| claude-sonnet-4-6 | 50%     | 83%     | +33%   |
-| claude-haiku-4-5  | 67%     | 100%    | +33%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 50%     | 83%  | +33%  |
+| claude-sonnet-4-6 | 50%     | 83%  | +33%  |
+| claude-haiku-4-5  | 67%     | 100% | +33%  |
 
 > **PASS (run 2026-08-31)**. Uniform +33 on every model — the v4 migration checklist applies cleanly. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -36,6 +36,7 @@ go mod verify                          # check deps haven't been tampered with
 For the full `cmd/` / `internal/` / `pkg/` decision table and layout examples, see [Project Layout](../references/project-layout.md) in the parent `golang` skill — it's the canonical source for directory structure.
 
 Quick rules specific to modules:
+
 - `internal/` is compiler-enforced: it can't be imported from outside the module boundary it sits under
 - One `package main` per binary in `cmd/`
 - Don't create `pkg/` unless you have real external consumers
@@ -51,11 +52,11 @@ func init() {
 }
 ```
 
-| Use init() for | Don't use init() for |
-|---|---|
-| Registering drivers (`database/sql`, `image`) | Complex logic or I/O |
-| Setting up package-level constants from env | Anything that can fail silently |
-| One-line computed defaults | Business logic |
+| Use init() for                                | Don't use init() for            |
+| --------------------------------------------- | ------------------------------- |
+| Registering drivers (`database/sql`, `image`) | Complex logic or I/O            |
+| Setting up package-level constants from env   | Anything that can fail silently |
+| One-line computed defaults                    | Business logic                  |
 
 **Prefer explicit initialization in `main()`.** `init()` is invisible, hard to test, and order-dependent.
 
@@ -63,11 +64,11 @@ func init() {
 
 ## Semantic Import Versioning
 
-| Version | Import path | go.mod module path |
-|---|---|---|
-| v0.x.x or v1.x.x | `github.com/user/lib` | `module github.com/user/lib` |
-| v2.x.x | `github.com/user/lib/v2` | `module github.com/user/lib/v2` |
-| v3.x.x | `github.com/user/lib/v3` | `module github.com/user/lib/v3` |
+| Version          | Import path              | go.mod module path              |
+| ---------------- | ------------------------ | ------------------------------- |
+| v0.x.x or v1.x.x | `github.com/user/lib`    | `module github.com/user/lib`    |
+| v2.x.x           | `github.com/user/lib/v2` | `module github.com/user/lib/v2` |
+| v3.x.x           | `github.com/user/lib/v3` | `module github.com/user/lib/v3` |
 
 Major version changes = new import path. This allows v1 and v2 to coexist in the same build.
 
@@ -94,34 +95,33 @@ Remove `replace` directives before releasing — they are for local development 
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Circular imports | Compile error, design smell | Extract shared types into a separate package |
-| Deep package nesting | `internal/service/order/v2/handler/` → hard to navigate | Flatten — Go packages are flat by convention |
-| `init()` with side effects | Hidden, untestable execution | See [Init Functions](#init-functions) — prefer explicit setup in `main()` |
-| Vendoring without reason | Repo bloat, merge conflicts | Only vendor when reproducibility can't be achieved otherwise |
-| `go get` in scripts | Modifies go.mod | Use `go install pkg@version` for tools |
+| Anti-pattern               | Problem                                                 | Fix                                                                       |
+| -------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Circular imports           | Compile error, design smell                             | Extract shared types into a separate package                              |
+| Deep package nesting       | `internal/service/order/v2/handler/` → hard to navigate | Flatten — Go packages are flat by convention                              |
+| `init()` with side effects | Hidden, untestable execution                            | See [Init Functions](#init-functions) — prefer explicit setup in `main()` |
+| Vendoring without reason   | Repo bloat, merge conflicts                             | Only vendor when reproducibility can't be achieved otherwise              |
+| `go get` in scripts        | Modifies go.mod                                         | Use `go install pkg@version` for tools                                    |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
+| Read When                                                        | File                                                 |
+| ---------------------------------------------------------------- | ---------------------------------------------------- |
 | go.mod syntax, go.sum, MVS, workspaces, proxies, private modules | [Modules Deep Dive](references/modules-deep-dive.md) |
-| cmd/, internal/, pkg/ directory decisions and layout examples | [Project Layout](../references/project-layout.md) |
+| cmd/, internal/, pkg/ directory decisions and layout examples    | [Project Layout](../references/project-layout.md)    |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/golang-packages-and-modules-001-module-mechanics.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-packages-and-modules-001-module-mechanics.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 83%     | −17%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 83%  | −17%  |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
-> **NEG (run 2026-08-31)**. Opus −17 (100→83): MVS version selection missed — the skill's versioning table has no MVS line (it punts to the reference). No edit this cycle (cap reached); 'MVS picks the highest *required* version, never auto-upgrades' is on the follow-up list. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+> **NEG (run 2026-08-31)**. Opus −17 (100→83): MVS version selection missed — the skill's versioning table has no MVS line (it punts to the reference). No edit this cycle (cap reached); 'MVS picks the highest _required_ version, never auto-upgrades' is on the follow-up list. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

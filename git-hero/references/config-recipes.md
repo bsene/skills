@@ -37,12 +37,12 @@ Recommended `.gitconfig` settings grouped by purpose, with explanations.
     ignoreCase = true
 ```
 
-| Setting | Effect |
-| ------- | ------ |
-| `pull.rebase = true` | `git pull` rebases instead of creating merge commits — keeps history linear |
-| `pull.rebase = merges` | Same, but keeps any merge commits you made locally instead of flattening them (`git rebase --rebase-merges` under the hood) |
-| `conflictstyle = diff3` | Shows base version in conflict markers (3-way), making resolution easier |
-| `rerere.enabled = true` | Records conflict resolutions and auto-applies them on repeat encounters |
+| Setting                  | Effect                                                                                                                                 |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `pull.rebase = true`     | `git pull` rebases instead of creating merge commits — keeps history linear                                                            |
+| `pull.rebase = merges`   | Same, but keeps any merge commits you made locally instead of flattening them (`git rebase --rebase-merges` under the hood)            |
+| `conflictstyle = diff3`  | Shows base version in conflict markers (3-way), making resolution easier                                                               |
+| `rerere.enabled = true`  | Records conflict resolutions and auto-applies them on repeat encounters                                                                |
 | `core.ignoreCase = true` | Makes Git treat filenames as case-insensitive for status/diff — avoids false "renames" on case-insensitive filesystems (macOS/Windows) |
 
 ## Branch & Init
@@ -83,15 +83,15 @@ Converts CRLF to LF on commit, leaves LF untouched on checkout. Prevents Windows
     undo = reset --soft HEAD~1
 ```
 
-| Alias | Purpose |
-| ----- | ------- |
-| `fap` | Fetch all remotes and prune deleted remote branches |
-| `lola` | Compact graph view of all branches |
-| `unstage` | Unstage files using modern `restore` syntax |
-| `last` | Show the last commit |
-| `amend` | Amend last commit keeping the same message |
-| `wip` | Quick save-all as work-in-progress commit |
-| `undo` | Soft-undo last commit (keeps changes staged) |
+| Alias     | Purpose                                             |
+| --------- | --------------------------------------------------- |
+| `fap`     | Fetch all remotes and prune deleted remote branches |
+| `lola`    | Compact graph view of all branches                  |
+| `unstage` | Unstage files using modern `restore` syntax         |
+| `last`    | Show the last commit                                |
+| `amend`   | Amend last commit keeping the same message          |
+| `wip`     | Quick save-all as work-in-progress commit           |
+| `undo`    | Soft-undo last commit (keeps changes staged)        |
 
 ## Diff & Log
 
@@ -104,11 +104,11 @@ Converts CRLF to LF on commit, leaves LF untouched on checkout. Prevents Windows
     abbrevCommit = true
 ```
 
-| Setting | Effect |
-| ------- | ------ |
-| `algorithm = histogram` | Better diff output for moved code blocks |
-| `colorMoved = default` | Highlights moved lines in a different color — distinguishes moves from additions |
-| `abbrevCommit = true` | Shows short SHAs by default in `git log` |
+| Setting                 | Effect                                                                           |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| `algorithm = histogram` | Better diff output for moved code blocks                                         |
+| `colorMoved = default`  | Highlights moved lines in a different color — distinguishes moves from additions |
+| `abbrevCommit = true`   | Shows short SHAs by default in `git log`                                         |
 
 ## Push Safety
 
@@ -118,9 +118,9 @@ Converts CRLF to LF on commit, leaves LF untouched on checkout. Prevents Windows
     autoSetupRemote = true
 ```
 
-| Setting | Effect |
-| ------- | ------ |
-| `default = current` | `git push` pushes current branch to same-named remote branch |
+| Setting                  | Effect                                                            |
+| ------------------------ | ----------------------------------------------------------------- |
+| `default = current`      | `git push` pushes current branch to same-named remote branch      |
 | `autoSetupRemote = true` | First push auto-creates the upstream tracking — no more `-u` flag |
 
 ### Force Push
@@ -147,13 +147,13 @@ git reset --hard <sha>        # restore to that point
 
 Prefer the modern commands over legacy `checkout`:
 
-| Legacy | Modern | Purpose |
-| ------ | ------ | ------- |
-| `git checkout <branch>` | `git switch <branch>` | Switch branches |
-| `git checkout -b <branch>` | `git switch -c <branch>` | Create and switch |
-| `git checkout -- <file>` | `git restore <file>` | Discard changes |
-| `git checkout --patch` | `git restore --patch` | Selective discard |
-| `git reset HEAD <file>` | `git restore --staged <file>` | Unstage |
+| Legacy                     | Modern                        | Purpose           |
+| -------------------------- | ----------------------------- | ----------------- |
+| `git checkout <branch>`    | `git switch <branch>`         | Switch branches   |
+| `git checkout -b <branch>` | `git switch -c <branch>`      | Create and switch |
+| `git checkout -- <file>`   | `git restore <file>`          | Discard changes   |
+| `git checkout --patch`     | `git restore --patch`         | Selective discard |
+| `git reset HEAD <file>`    | `git restore --staged <file>` | Unstage           |
 
 ## Fetch & Prune
 

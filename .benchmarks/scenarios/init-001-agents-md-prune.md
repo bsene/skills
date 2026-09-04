@@ -15,18 +15,21 @@ Current AGENTS.md:
 # FastCart
 
 ## Tech Stack
+
 - Next.js 14 (App Router), React, TypeScript
 - PostgreSQL with Prisma ORM
 - Tailwind CSS
 - Deployed on Vercel
 
 ## Directory Structure
+
 - `src/app/` — pages and routes
 - `src/components/` — React components
 - `src/lib/` — utilities and shared logic
 - `prisma/` — database schema and migrations
 
 ## Coding Standards
+
 - Always use TypeScript, never plain JavaScript
 - Follow ESLint rules
 - Use functional components with hooks
@@ -34,16 +37,19 @@ Current AGENTS.md:
 - Keep functions small
 
 ## Commands
+
 - Dev server: `pnpm dev`
 - Tests: `pnpm test`
 - Lint: `pnpm lint`
 
 ## Warnings
+
 - Use `pnpm`, never `npm install` — a legacy `package-lock.json` sits in the repo root, and running npm against it corrupts the lockfile
 - Run tests as `pnpm test -- --no-cache`; without `--no-cache` a stale CI fixture cache makes unrelated tests fail
 - Never edit files under `src/generated/` — edits are silently overwritten on the next build
 
 ## Git
+
 - Write clear commit messages
 - Don't commit secrets or .env files
 ```

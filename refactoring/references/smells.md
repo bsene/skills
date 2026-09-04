@@ -46,18 +46,39 @@ def process_payment(order, payment_info, invoice_manager, email_service):
 ```typescript
 // ❌ UserService mixing CRUD + password + email + audit + cache
 class UserService {
-  private db; private emailService; private auditLog; private cache; private cryptoService;
-  createUser() {} updateUser() {} findUserById() {}
-  hashPassword() {} verifyPassword() {}
-  sendWelcomeEmail() {} logAudit() {}
+  private db;
+  private emailService;
+  private auditLog;
+  private cache;
+  private cryptoService;
+  createUser() {}
+  updateUser() {}
+  findUserById() {}
+  hashPassword() {}
+  verifyPassword() {}
+  sendWelcomeEmail() {}
+  logAudit() {}
   // ... 6 more across mixed concerns
 }
 
 // ✅ Split by concern
-class PasswordManager { hash() {} verify() {} generateResetToken() {} }
-class UserRepository { create() {} update() {} findById() {} }
+class PasswordManager {
+  hash() {}
+  verify() {}
+  generateResetToken() {}
+}
+class UserRepository {
+  create() {}
+  update() {}
+  findById() {}
+}
 class UserService {
-  constructor(private userRepo, private passwordManager, private emailService, private auditLog) {}
+  constructor(
+    private userRepo,
+    private passwordManager,
+    private emailService,
+    private auditLog,
+  ) {}
   registerUser(name, email, password) {
     const hash = this.passwordManager.hash(password);
     const user = this.userRepo.create({ name, email, passwordHash: hash });
@@ -80,22 +101,41 @@ class UserService {
 
 ```typescript
 // ❌ Validation scattered, status is a stringly-typed pseudo-enum
-function processOrder(customerId: string, items: string[], amount: number, status: string) {
+function processOrder(
+  customerId: string,
+  items: string[],
+  amount: number,
+  status: string,
+) {
   if (customerId.length === 0) throw new Error("Invalid customer");
-  if (!["pending", "processing", "completed"].includes(status)) throw new Error("Invalid status");
-  if (status === "pending") { /* ... */ }
+  if (!["pending", "processing", "completed"].includes(status))
+    throw new Error("Invalid status");
+  if (status === "pending") {
+    /* ... */
+  }
 }
 
 // ✅ Domain types — validation once, status closed
-enum OrderStatus { PENDING = "pending", PROCESSING = "processing", COMPLETED = "completed" }
+enum OrderStatus {
+  PENDING = "pending",
+  PROCESSING = "processing",
+  COMPLETED = "completed",
+}
 type Email = string & { readonly __brand: "Email" };
 function createEmail(value: string): Email {
   if (!value.includes("@")) throw new Error("Invalid email");
   return value as Email;
 }
-type Order = { readonly customerId: CustomerId; readonly items: readonly string[]; readonly amount: number; readonly status: OrderStatus };
+type Order = {
+  readonly customerId: CustomerId;
+  readonly items: readonly string[];
+  readonly amount: number;
+  readonly status: OrderStatus;
+};
 function processOrder(order: Order) {
-  switch (order.status) { case OrderStatus.PENDING: /* ... */ }
+  switch (order.status) {
+    case OrderStatus.PENDING: /* ... */
+  }
 }
 ```
 
@@ -174,20 +214,20 @@ class PaymentProcessor:
 
 ## Smell #6: Comments
 
-A **Comments smell** is a comment that explains *what* code does instead of *why* — usually a sign the code's structure (not its annotation) needs to change.
+A **Comments smell** is a comment that explains _what_ code does instead of _why_ — usually a sign the code's structure (not its annotation) needs to change.
 
 ### Detection → Treatment
 
-| Comment looks like | Treatment |
-|--------------------|-----------|
-| Explains a complex expression | **Extract Variable** |
-| Describes what a block does | **Extract Method** |
-| Method purpose unclear from name | **Rename Method** |
-| Documents a required precondition | **Introduce Assertion** |
-| Documents expected behavior / edge cases | **Write Tests** |
-| Commented-out code | Ask user, then delete |
-| Restates the code | Delete |
-| Outdated / misleading | Delete |
+| Comment looks like                       | Treatment               |
+| ---------------------------------------- | ----------------------- |
+| Explains a complex expression            | **Extract Variable**    |
+| Describes what a block does              | **Extract Method**      |
+| Method purpose unclear from name         | **Rename Method**       |
+| Documents a required precondition        | **Introduce Assertion** |
+| Documents expected behavior / edge cases | **Write Tests**         |
+| Commented-out code                       | Ask user, then delete   |
+| Restates the code                        | Delete                  |
+| Outdated / misleading                    | Delete                  |
 
 ### Examples
 
@@ -195,7 +235,8 @@ A **Comments smell** is a comment that explains *what* code does instead of *why
 // ❌ Complex condition with no name
 if (user.age >= 18 && user.country === "FR" && !user.isBanned) allowAccess();
 // ✅ Extract Variable
-const canAccessAdultContentInFrance = user.age >= 18 && user.country === "FR" && !user.isBanned;
+const canAccessAdultContentInFrance =
+  user.age >= 18 && user.country === "FR" && !user.isBanned;
 if (canAccessAdultContentInFrance) allowAccess();
 ```
 
@@ -217,9 +258,13 @@ function processOrder(order: Order) {
 
 ```typescript
 // ❌ Cryptic name
-function process(x: number): number { return (x * 9) / 5 + 32; }
+function process(x: number): number {
+  return (x * 9) / 5 + 32;
+}
 // ✅ Rename
-function celsiusToFahrenheit(c: number): number { return (c * 9) / 5 + 32; }
+function celsiusToFahrenheit(c: number): number {
+  return (c * 9) / 5 + 32;
+}
 ```
 
 ```typescript
@@ -252,7 +297,7 @@ function handleRequest(req: Request) {
 
 ### Inverse Tidying: Add Comment
 
-Record non-obvious *why*: hidden constraints, ordering requirements, domain quirks, fix context that won't be inferred from the code.
+Record non-obvious _why_: hidden constraints, ordering requirements, domain quirks, fix context that won't be inferred from the code.
 
 ```typescript
 // Stripe webhooks can arrive out of order and be redelivered for up to 3 days.
@@ -266,7 +311,7 @@ async function handleStripeEvent(event: Stripe.Event) {
 
 ### Legitimate Comments — Do Not Remove
 
-- *Why* a decision was made (business, regulatory, workaround)
+- _Why_ a decision was made (business, regulatory, workaround)
 - Genuinely complex algorithm where simpler alternatives were exhausted
 - Public API docs (JSDoc for libraries)
 - External context (tickets, specs, legal)
@@ -279,7 +324,7 @@ async function handleStripeEvent(event: Stripe.Event) {
 
 ## Smell #7: Uncommunicative Name
 
-A name that fails to answer *why does it exist, what does it do, how is it used?* If the name requires a comment, it does not reveal intent. — *Clean Code*, Martin, ch. 2
+A name that fails to answer _why does it exist, what does it do, how is it used?_ If the name requires a comment, it does not reveal intent. — _Clean Code_, Martin, ch. 2
 
 **Detect:** single-letter vars outside tight loops (`d`, `tmp`, `r`) · name needs a comment for units/purpose (`int d; // days`) · generic placeholders (`data`, `info`, `list1`, `getThem`) · magic indices (`x[0]`) · missing unit/measure (`timeout` not `timeoutMs`) · misleading or outdated.
 
@@ -318,9 +363,9 @@ int fileAgeInDays;           // ✅ domain-specific framing
 
 ## Severity Guidelines
 
-| Severity | Long Method | Large Class | Param List | Data Clumps | Uncommunicative Name |
-|----------|------------|-------------|------------|-------------|----------------------|
-| **Critical** | >30 lines | >20 methods | >6 params | 3+ places | Public API / cross-module name misleading |
-| **High** | 15–30 lines | 15–20 methods | 5–6 params | 2 places | Generic name on widely-called function/class |
-| **Medium** | 10–15 lines | 10–15 methods | 4–5 params | limited scope | Single-letter vars outside tight loops; missing units |
-| **Low** | 8–10 lines (clear) | 8–10 methods (cohesive) | 3–4 params (named) | local only | Local temp with weak but unambiguous name |
+| Severity     | Long Method        | Large Class             | Param List         | Data Clumps   | Uncommunicative Name                                  |
+| ------------ | ------------------ | ----------------------- | ------------------ | ------------- | ----------------------------------------------------- |
+| **Critical** | >30 lines          | >20 methods             | >6 params          | 3+ places     | Public API / cross-module name misleading             |
+| **High**     | 15–30 lines        | 15–20 methods           | 5–6 params         | 2 places      | Generic name on widely-called function/class          |
+| **Medium**   | 10–15 lines        | 10–15 methods           | 4–5 params         | limited scope | Single-letter vars outside tight loops; missing units |
+| **Low**      | 8–10 lines (clear) | 8–10 methods (cohesive) | 3–4 params (named) | local only    | Local temp with weak but unambiguous name             |

@@ -6,10 +6,15 @@ Use `#` symbols (1–6) to define heading levels. GitHub auto-generates a linked
 
 ```markdown
 # H1
+
 ## H2
+
 ### H3
+
 #### H4
+
 ##### H5
+
 ###### H6
 ```
 
@@ -17,14 +22,14 @@ Use `#` symbols (1–6) to define heading levels. GitHub auto-generates a linked
 
 ## Styling Text
 
-| Style | Syntax | Example |
-|---|---|---|
-| Bold | `**text**` | `**bold**` |
-| Italic | `_text_` | `_italic_` |
-| Strikethrough | `~~text~~` | `~~struck~~` |
-| Bold + italic | `***text***` | `***important***` |
-| Subscript | `<sub></sub>` | `H<sub>2</sub>O` |
-| Superscript | `<sup></sup>` | `x<sup>2</sup>` |
+| Style         | Syntax        | Example           |
+| ------------- | ------------- | ----------------- |
+| Bold          | `**text**`    | `**bold**`        |
+| Italic        | `_text_`      | `_italic_`        |
+| Strikethrough | `~~text~~`    | `~~struck~~`      |
+| Bold + italic | `***text***`  | `***important***` |
+| Subscript     | `<sub></sub>` | `H<sub>2</sub>O`  |
+| Superscript   | `<sup></sup>` | `x<sup>2</sup>`   |
 
 ---
 
@@ -41,11 +46,13 @@ Use `>` to create a blockquote:
 ## Code
 
 **Inline code** — wrap in single backticks:
+
 ```markdown
 Use `git status` to check your working tree.
 ```
 
 **Code blocks** — wrap in triple backticks, optionally with a language identifier for syntax highlighting:
+
 ````markdown
 ```python
 def hello():
@@ -62,15 +69,16 @@ def hello():
 Leave a blank line between text blocks to start a new paragraph.
 
 For a line break within a paragraph in `.md` files, use one of:
+
 ```markdown
 Line one  
-Line two          ← two trailing spaces
+Line two ← two trailing spaces
 
 Line one\
-Line two          ← backslash
+Line two ← backslash
 
 Line one<br/>
-Line two          ← HTML tag
+Line two ← HTML tag
 ```
 
 In issues, PRs, and discussions, a plain newline renders as a line break automatically.

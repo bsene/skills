@@ -13,13 +13,13 @@ JavaScript has two "nothing" values — choose deliberately.
 
 ## Rule
 
-| Situation | Use |
-|---|---|
-| Property/variable not provided or not yet set | `undefined` |
-| Explicit "no value" in an API or external contract | `null` |
-| Node.js callback first argument on success | `null` (Node convention) |
-| JSON field intentionally empty | `null` (JSON has no `undefined`) |
-| Optional function parameter | `undefined` (omit or pass `undefined`) |
+| Situation                                          | Use                                    |
+| -------------------------------------------------- | -------------------------------------- |
+| Property/variable not provided or not yet set      | `undefined`                            |
+| Explicit "no value" in an API or external contract | `null`                                 |
+| Node.js callback first argument on success         | `null` (Node convention)               |
+| JSON field intentionally empty                     | `null` (JSON has no `undefined`)       |
+| Optional function parameter                        | `undefined` (omit or pass `undefined`) |
 
 ## Checking for both null and undefined
 
@@ -62,7 +62,7 @@ interface User {
 
 // Good — single sentinel
 interface User {
-  middleName?: string;  // undefined when absent
+  middleName?: string; // undefined when absent
 }
 ```
 

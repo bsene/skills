@@ -2,22 +2,22 @@
 
 ## Standard Directories
 
-| Directory | Purpose | Enforced by compiler? |
-|---|---|---|
-| `cmd/` | Entry points — each subdirectory is a `package main` with a `main()` | No (convention) |
-| `internal/` | Private packages — cannot be imported outside parent module | **Yes** |
-| `pkg/` | Public library code intended for external consumption | No (convention, debated) |
-| Root | Package code for small projects or single-package libraries | — |
+| Directory   | Purpose                                                              | Enforced by compiler?    |
+| ----------- | -------------------------------------------------------------------- | ------------------------ |
+| `cmd/`      | Entry points — each subdirectory is a `package main` with a `main()` | No (convention)          |
+| `internal/` | Private packages — cannot be imported outside parent module          | **Yes**                  |
+| `pkg/`      | Public library code intended for external consumption                | No (convention, debated) |
+| Root        | Package code for small projects or single-package libraries          | —                        |
 
 ## Decision Guide
 
-| Project type | Layout |
-|---|---|
-| Single binary, small project | Root package + `main.go` |
-| Single binary, growing project | `main.go` at root, packages in subdirectories |
-| Multiple binaries sharing code | `cmd/app1/`, `cmd/app2/`, shared code in `internal/` |
-| Library (others import it) | Root package or organized sub-packages |
-| Large service with adapters | `cmd/`, `internal/domain/`, `internal/adapters/`, `internal/ports/` |
+| Project type                   | Layout                                                              |
+| ------------------------------ | ------------------------------------------------------------------- |
+| Single binary, small project   | Root package + `main.go`                                            |
+| Single binary, growing project | `main.go` at root, packages in subdirectories                       |
+| Multiple binaries sharing code | `cmd/app1/`, `cmd/app2/`, shared code in `internal/`                |
+| Library (others import it)     | Root package or organized sub-packages                              |
+| Large service with adapters    | `cmd/`, `internal/domain/`, `internal/adapters/`, `internal/ports/` |
 
 ## Example: Multi-Binary Service
 

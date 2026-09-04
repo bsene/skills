@@ -13,13 +13,13 @@ These idioms apply to all JavaScript. TypeScript builds on them — type feature
 
 ## Naming
 
-| Kind | Convention | Example |
-|---|---|---|
-| Variables, functions, methods | `camelCase` | `getUserById`, `isActive` |
-| Types, interfaces, classes, enums | `PascalCase` | `UserProfile`, `HttpStatus` |
-| Constants (true module-level) | `UPPER_SNAKE` or `camelCase` | `MAX_RETRIES` or `defaultTimeout` |
-| Files | `kebab-case` | `user-service.ts` |
-| Boolean variables/props | `is/has/can` prefix | `isLoading`, `hasPermission` |
+| Kind                              | Convention                   | Example                           |
+| --------------------------------- | ---------------------------- | --------------------------------- |
+| Variables, functions, methods     | `camelCase`                  | `getUserById`, `isActive`         |
+| Types, interfaces, classes, enums | `PascalCase`                 | `UserProfile`, `HttpStatus`       |
+| Constants (true module-level)     | `UPPER_SNAKE` or `camelCase` | `MAX_RETRIES` or `defaultTimeout` |
+| Files                             | `kebab-case`                 | `user-service.ts`                 |
+| Boolean variables/props           | `is/has/can` prefix          | `isLoading`, `hasPermission`      |
 
 ## Idioms
 
@@ -42,10 +42,10 @@ users.filter(u => u.active).map(u => u.id);
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| `var x` | Hoisted, function-scoped, unexpected | `const` or `let` |
-| `"foo" + bar + "baz"` | Verbose, error-prone | Template literal |
-| `==` / `!=` (loose equality) | Coercion surprises | `===` / `!==` |
-| Namespace-style imports (`import * as X`) when named imports work | Verbose | Named imports |
-| Excessive type annotations on obvious inferences | Noise | Let TS infer |
+| Anti-pattern                                                      | Problem                              | Fix              |
+| ----------------------------------------------------------------- | ------------------------------------ | ---------------- |
+| `var x`                                                           | Hoisted, function-scoped, unexpected | `const` or `let` |
+| `"foo" + bar + "baz"`                                             | Verbose, error-prone                 | Template literal |
+| `==` / `!=` (loose equality)                                      | Coercion surprises                   | `===` / `!==`    |
+| Namespace-style imports (`import * as X`) when named imports work | Verbose                              | Named imports    |
+| Excessive type annotations on obvious inferences                  | Noise                                | Let TS infer     |

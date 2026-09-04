@@ -21,14 +21,14 @@ Go has a built-in test framework — no external library needed. Files end in `_
 
 ## Test File Conventions
 
-| Convention | Rule |
-|---|---|
-| File name | `*_test.go` — same package, same directory |
-| Test function | `func TestXxx(t *testing.T)` — uppercase after `Test` |
-| Benchmark | `func BenchmarkXxx(b *testing.B)` |
-| Fuzz test | `func FuzzXxx(f *testing.F)` |
-| Example | `func ExampleXxx()` — with `// Output:` comment |
-| Test package | Same package (white-box) or `package foo_test` (black-box) |
+| Convention    | Rule                                                       |
+| ------------- | ---------------------------------------------------------- |
+| File name     | `*_test.go` — same package, same directory                 |
+| Test function | `func TestXxx(t *testing.T)` — uppercase after `Test`      |
+| Benchmark     | `func BenchmarkXxx(b *testing.B)`                          |
+| Fuzz test     | `func FuzzXxx(f *testing.F)`                               |
+| Example       | `func ExampleXxx()` — with `// Output:` comment            |
+| Test package  | Same package (white-box) or `package foo_test` (black-box) |
 
 ---
 
@@ -75,19 +75,19 @@ func TestParseSize(t *testing.T) {
 
 ## Testing Decision Table
 
-| Need | Tool / Approach |
-|---|---|
-| Multiple cases for one function | Table-driven tests with `t.Run` |
-| Shared setup / teardown | `TestMain(m *testing.M)` or `t.Cleanup(func())` |
-| Mark helpers (clean stack traces) | `t.Helper()` as first line of helper function |
-| Run tests in parallel | `t.Parallel()` at start of test/subtest |
-| Measure performance | `go test -bench=. -benchmem` |
-| Find edge-case inputs | `go test -fuzz=FuzzXxx` |
-| Profile CPU/memory | `go test -cpuprofile cpu.prof` → `go tool pprof` |
-| Assert with richer API | `testify/assert` or `testify/require` |
-| Test HTTP handlers | `httptest.NewRecorder()` + `httptest.NewServer()` |
-| Snapshot testing | Golden files in `testdata/` |
-| Build tags for integration tests | `//go:build integration` |
+| Need                              | Tool / Approach                                   |
+| --------------------------------- | ------------------------------------------------- |
+| Multiple cases for one function   | Table-driven tests with `t.Run`                   |
+| Shared setup / teardown           | `TestMain(m *testing.M)` or `t.Cleanup(func())`   |
+| Mark helpers (clean stack traces) | `t.Helper()` as first line of helper function     |
+| Run tests in parallel             | `t.Parallel()` at start of test/subtest           |
+| Measure performance               | `go test -bench=. -benchmem`                      |
+| Find edge-case inputs             | `go test -fuzz=FuzzXxx`                           |
+| Profile CPU/memory                | `go test -cpuprofile cpu.prof` → `go tool pprof`  |
+| Assert with richer API            | `testify/assert` or `testify/require`             |
+| Test HTTP handlers                | `httptest.NewRecorder()` + `httptest.NewServer()` |
+| Snapshot testing                  | Golden files in `testdata/`                       |
+| Build tags for integration tests  | `//go:build integration`                          |
 
 ---
 
@@ -109,32 +109,31 @@ for _, tt := range tests {
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Testing implementation, not behavior | Tests break on refactor | Assert on outputs, not internal state |
-| Excessive mocking | Mocks pass while real code fails | Use interfaces + fakes; integration-test boundaries |
-| No `t.Helper()` in helpers | Error points to wrong line | Add `t.Helper()` as first line |
-| Benchmark without `b.ResetTimer()` | Setup time skews results | Call `b.ResetTimer()` after setup |
+| Anti-pattern                         | Problem                          | Fix                                                 |
+| ------------------------------------ | -------------------------------- | --------------------------------------------------- |
+| Testing implementation, not behavior | Tests break on refactor          | Assert on outputs, not internal state               |
+| Excessive mocking                    | Mocks pass while real code fails | Use interfaces + fakes; integration-test boundaries |
+| No `t.Helper()` in helpers           | Error points to wrong line       | Add `t.Helper()` as first line                      |
+| Benchmark without `b.ResetTimer()`   | Setup time skews results         | Call `b.ResetTimer()` after setup                   |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
+| Read When                                                                                                 | File                                               |
+| --------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
 | Full examples: table-driven, TestMain, parallel, golden files, httptest, testify, benchmarks, fuzz, pprof | [Testing Patterns](references/testing-patterns.md) |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/golang-testing-001-table-driven.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/golang-testing-001-table-driven.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **NEUTRAL (run 2026-08-31)**. All models 100% with and without — table-driven tests are default behavior at this task size. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -28,6 +28,7 @@ Goal: Replace FileDatabase with DatabaseInterface
 ## Legacy code with no tests
 
 Use the **Mikado + Test Data Builder** combination:
+
 1. Make "add a test around this bug/feature" a node in the graph.
 2. Each prerequisite for that test (instantiating a tangled class) becomes a
    **Test Data Builder** node — a reusable builder other developers can leverage.
@@ -39,6 +40,7 @@ Use the **Mikado + Test Data Builder** combination:
 ## Circular dependencies
 
 A classic Mikado target. Typical leaf sequence:
+
 1. Identify the cycle (compiler/linter output).
 2. Leaves: move classes, add interfaces, update imports.
 3. Work inward until the cycle is broken.

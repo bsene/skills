@@ -52,7 +52,7 @@ function findRole(userId: string): Role | null {
 // tsconfig.json
 {
   "compilerOptions": {
-    "strict": true  // includes noImplicitAny
+    "strict": true // includes noImplicitAny
   }
 }
 ```
@@ -63,11 +63,13 @@ function findRole(userId: string): Role | null {
 
 - Short, obvious one-liner utilities where the return type is self-evident from the expression:
   ```typescript
-  const double = (n: number) => n * 2;  // return type number is obvious
+  const double = (n: number) => n * 2; // return type number is obvious
   ```
 - Arrow functions assigned to a typed variable (type flows from the annotation):
   ```typescript
-  const handler: RequestHandler = (req, res) => { res.send("ok"); };
+  const handler: RequestHandler = (req, res) => {
+    res.send("ok");
+  };
   ```
 
 `@ts-expect-error` over `@ts-ignore`: see `avoid-type-assertions.md`.
