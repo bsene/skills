@@ -7,7 +7,7 @@ description: Recognize and apply the monoid abstraction (binary associative oper
 
 Un monoïde est une structure minimaliste : un ensemble de valeurs + une opération binaire **associative** (`combine`) + un **élément neutre** (`empty`). Rien de plus. Reconnaître cette structure dans du code métier permet de remplacer une logique de fusion ad hoc — source fréquente de bugs sur les cas limites — par une API générique et testée une fois pour toutes.
 
-Cette skill couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change. L'idiomatique TypeScript (interface `Monoid<T>`, folds, monoïdes métier) vit désormais dans le skill typescript → `../typescript/composition/references/monoids.md` ; routez les questions TS vers cette référence.
+Cette skill couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change. L'idiomatique TypeScript (interface `Monoid<T>`, folds, monoïdes métier) vit désormais dans le skill typescript → `../typescript/composition/SKILL.md` (section Monoids) ; routez les questions TS vers cette référence.
 
 Source de référence : [Les monoïdes : une abstraction omniprésente (evryg)](https://kb.evryg.com/fr/ingenierie-logicielle-avancee/fondations/les-monoides-une-abstraction-omnipresente)
 
