@@ -82,10 +82,46 @@ if (!result.success) {
 }
 ```
 
-## Read On Demand
+## Boundary Example
 
-- Quick boundary-validation example: `example.md`.
-- Full annotated example: `references/zod.md`. For API behavior (transforms, coercion, error trees, `@zod/mini`), the [official Zod docs](https://zod.dev) are the source of truth — don't restate them here.
+```typescript
+import { z } from "zod";
+
+// Schema is the single source of truth
+const UserSchema = z.object({
+  id: z.uuid(),
+  email: z.email(),
+  name: z.string(),
+  role: z.enum(["admin", "user"]),
+});
+
+// Type derived from schema — never maintained separately
+type User = z.infer<typeof UserSchema>;
+
+// Validate at the boundary, trust internally
+const result = UserSchema.safeParse(req.body);
+if (!result.success) {
+  const tree = z.treeifyError(result.error);
+  return res.status(400).json({ errors: tree });
+}
+// result.data is fully typed as User from here on
+```
+
+The three patterns worth a reminder at the boundary:
+
+**Env vars: validate at startup, fail fast.**
+
+```typescript
+const env = EnvSchema.parse(process.env);  // crash early if config is missing
+```
+
+**Async refinement → `parseAsync`, never `.parse()`.**
+
+```typescript
+const email = await UniqueEmailSchema.parseAsync(input.email);
+```
+
+For API behavior (transforms, coercion, error trees, `@zod/mini`), the [official Zod docs](https://zod.dev) are the source of truth — don't restate them here.
 
 ---
 
