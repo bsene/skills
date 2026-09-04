@@ -1,0 +1,69 @@
+{
+  "id": "git-hero-001-atomic-commits",
+  "date": "2026-09-04",
+  "workflow_run": "wf_4489f7d5-b6d",
+  "skill_path": "git-hero/SKILL.md",
+  "opus": {
+    "without": 100,
+    "with": 100,
+    "delta": 0,
+    "passes_without": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "passes_with": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "sonnet": {
+    "without": 100,
+    "with": 100,
+    "delta": 0,
+    "passes_without": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "passes_with": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "haiku": {
+    "without": 100,
+    "with": 100,
+    "delta": 0,
+    "passes_without": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "passes_with": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  }
+}
