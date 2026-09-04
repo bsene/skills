@@ -17,7 +17,7 @@
       "source": "bsene/skills",
       "sourceType": "github",
       "skillPath": "git-hero/SKILL.md",
-      "computedHash": "587bab6ca433a2aaa33d8ef35a84e3802abda6ce2d4fac367cea58286d075d44"
+      "computedHash": "84cb0c1a32693626dfb18364cc41aa79a857d2c272c77002a3f11247d85629e9"
     },
     "handoff": {
       "source": "mattpocock/skills",
@@ -65,7 +65,7 @@
       "source": "bsene/skills",
       "sourceType": "github",
       "skillPath": "simple/SKILL.md",
-      "computedHash": "8d939a00ac59250801e9942cbcc88afcfdf805cde20db214fcd82e04ebc6327e"
+      "computedHash": "6ee1ffb737632d9f2bb1d30c85331c66bbe457262df7b34c8d20588cb3796880"
     },
     "skill-optimizer": {
       "source": "mcollina/skills",
