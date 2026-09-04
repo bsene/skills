@@ -12,13 +12,21 @@ Restructure it. Audience and goal are as stated above. Deliver the new documenta
 Current page:
 
 > # FastCart API Guide
+>
 > ## Getting Started
+>
 > Welcome! You'll learn how to connect your first store. First, what is an API key? An API key is a bearer credential... (300 words of conceptual background on auth). Create a file `config.js` and paste this... you should see a "connected" message.
+>
 > ## How to handle retries
+>
 > To handle retries, set `retry_policy` in your webhook config. Note that retries happen because distributed systems can fail... (200-word digression on eventual consistency). Then set `max_attempts`.
+>
 > ## Configuration Parameters
+>
 > `api_key` (string, required). Your credential. `retry_policy` (object, default null). `max_attempts` (integer, default 3). `timeout_ms` (integer, default 5000). `signature_header` (string, default "X-FastCart-Signature")... (full table)
+>
 > ## Why we sign webhooks
+>
 > We use HMAC signatures because... (400-word essay on replay attacks and signature schemes, with alternatives compared)
 
 # Criteria

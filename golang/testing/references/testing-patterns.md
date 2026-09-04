@@ -155,11 +155,13 @@ func BenchmarkSort(b *testing.B) {
 ```
 
 Run:
+
 ```bash
 go test -bench=BenchmarkSort -benchmem -count=5
 ```
 
 Output:
+
 ```
 BenchmarkSort-8    50000    25400 ns/op    8192 B/op    1 allocs/op
 ```
@@ -216,6 +218,7 @@ func FuzzParseJSON(f *testing.F) {
 ```
 
 Run:
+
 ```bash
 go test -fuzz=FuzzParseJSON -fuzztime=30s
 ```
@@ -271,10 +274,10 @@ go test -tags=integration ./...         # includes them
 
 ## Test Organization
 
-| Pattern | When |
-|---|---|
-| Same package `package foo` | White-box: test unexported functions |
-| External package `package foo_test` | Black-box: test only the public API |
-| `testdata/` directory | Fixture files (Go toolchain ignores this dir) |
-| `internal/testutil/` | Shared test helpers across packages |
-| `_test.go` next to source | Always — never a separate `tests/` directory |
+| Pattern                             | When                                          |
+| ----------------------------------- | --------------------------------------------- |
+| Same package `package foo`          | White-box: test unexported functions          |
+| External package `package foo_test` | Black-box: test only the public API           |
+| `testdata/` directory               | Fixture files (Go toolchain ignores this dir) |
+| `internal/testutil/`                | Shared test helpers across packages           |
+| `_test.go` next to source           | Always — never a separate `tests/` directory  |

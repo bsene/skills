@@ -87,6 +87,7 @@ handler := chain(mux, logging, recovery, cors, auth)
 ### Common Middleware
 
 **Recovery:**
+
 ```go
 func recovery(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -102,6 +103,7 @@ func recovery(next http.Handler) http.Handler {
 ```
 
 **CORS:**
+
 ```go
 func cors(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -119,6 +121,7 @@ func cors(next http.Handler) http.Handler {
 ```
 
 **Request ID:**
+
 ```go
 func requestID(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -169,6 +172,7 @@ if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
 ```
 
 **Rules:**
+
 - Always use `context` variant: `http.NewRequestWithContext`
 - Always close `resp.Body` (even on error status codes)
 - Always set a `Timeout` on the client

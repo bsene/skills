@@ -15,12 +15,12 @@ The convenience is real but short-lived; the costs compound as the codebase grow
 
 ## Banned patterns
 
-| Pattern | Problem |
-|---|---|
-| `export * from './foo'` in `index.ts` | Bundler loads `foo` even when caller uses none of its exports; tree-shaking fails without `sideEffects: false` |
-| `export { A, B, C } from './foo'` in `index.ts` | Hides true origin of `A`; Ctrl+Click resolves to barrel, not source |
-| `import { X } from '.'` (self-referencing barrel) | Circular dependency — module imports itself through its own index |
-| Multiple `export *` barrels re-exporting the same name | Silent resolution conflict; which module owns `a`? |
+| Pattern                                                | Problem                                                                                                        |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `export * from './foo'` in `index.ts`                  | Bundler loads `foo` even when caller uses none of its exports; tree-shaking fails without `sideEffects: false` |
+| `export { A, B, C } from './foo'` in `index.ts`        | Hides true origin of `A`; Ctrl+Click resolves to barrel, not source                                            |
+| `import { X } from '.'` (self-referencing barrel)      | Circular dependency — module imports itself through its own index                                              |
+| Multiple `export *` barrels re-exporting the same name | Silent resolution conflict; which module owns `a`?                                                             |
 
 ## Use instead
 
@@ -53,10 +53,10 @@ Readable imports are the IDE's job (auto-import, path aliases), not a file you m
 
 ## Real-world impact
 
-| Case | Before | After | Reduction |
-|---|---|---|---|
-| Next.js pages (module count) | 11,000 modules | 3,500 modules | -68% |
-| Tooling tasks (various) | baseline | — | 60-80% faster |
+| Case                         | Before         | After         | Reduction     |
+| ---------------------------- | -------------- | ------------- | ------------- |
+| Next.js pages (module count) | 11,000 modules | 3,500 modules | -68%          |
+| Tooling tasks (various)      | baseline       | —             | 60-80% faster |
 
 The problem is systemic enough that Next.js shipped `optimizePackageImports` and Rolldown (Vite bundler) added a dedicated Lazy Barrel Optimization. Both mitigations require a pure barrel marked side-effect-free — proving the default case is already broken.
 

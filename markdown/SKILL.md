@@ -10,6 +10,7 @@ description: >
 ---
 
 # GitHub Flavored Markdown (GFM)
+
 > Based on the official [GitHub Basic Writing and Formatting Syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) reference.
 
 GFM is a superset of standard Markdown with GitHub-specific extensions for issues, PRs, discussions, comments, and `.md` files.
@@ -18,39 +19,39 @@ GFM is a superset of standard Markdown with GitHub-specific extensions for issue
 
 ## Syntax At A Glance
 
-| Feature | Syntax |
-|---|---|
-| Heading | `# H1` … `###### H6` |
-| Bold | `**text**` |
-| Italic | `_text_` |
-| Strikethrough | `~~text~~` |
-| Link | `[text](url)` |
-| Image | `![alt](url)` |
-| Code inline | `` `code` `` |
-| Code block | ` ``` lang ` … ` ``` ` |
-| Blockquote | `> text` |
-| Unordered list | `- item` |
-| Ordered list | `1. item` |
-| Task list | `- [ ] task` / `- [x] done` |
-| Alert | `> [!NOTE]` / `[!TIP]` / `[!WARNING]` / `[!IMPORTANT]` / `[!CAUTION]` |
-| Footnote | `text[^1]` … `[^1]: note` |
-| Mention | `@user` / `@org/team` |
-| Issue ref | `#42` |
-| Emoji | `:tada:` |
-| Escape | `\*literal\*` |
-| Comment | `<!-- hidden -->` |
+| Feature        | Syntax                                                                |
+| -------------- | --------------------------------------------------------------------- |
+| Heading        | `# H1` … `###### H6`                                                  |
+| Bold           | `**text**`                                                            |
+| Italic         | `_text_`                                                              |
+| Strikethrough  | `~~text~~`                                                            |
+| Link           | `[text](url)`                                                         |
+| Image          | `![alt](url)`                                                         |
+| Code inline    | `` `code` ``                                                          |
+| Code block     | ` ``` lang ` … ` ``` `                                                |
+| Blockquote     | `> text`                                                              |
+| Unordered list | `- item`                                                              |
+| Ordered list   | `1. item`                                                             |
+| Task list      | `- [ ] task` / `- [x] done`                                           |
+| Alert          | `> [!NOTE]` / `[!TIP]` / `[!WARNING]` / `[!IMPORTANT]` / `[!CAUTION]` |
+| Footnote       | `text[^1]` … `[^1]: note`                                             |
+| Mention        | `@user` / `@org/team`                                                 |
+| Issue ref      | `#42`                                                                 |
+| Emoji          | `:tada:`                                                              |
+| Escape         | `\*literal\*`                                                         |
+| Comment        | `<!-- hidden -->`                                                     |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| One-line syntax lookup for any GFM feature | [Quick Reference](references/quick-ref.md) |
-| Headings, text styling, code blocks, line breaks, escaping | [Text & Headings](references/text-and-headings.md) |
-| Links (inline, section, relative, custom anchors), images | [Links & Images](references/links-and-images.md) |
-| Ordered/unordered lists, nesting, task lists | [Lists & Tasks](references/lists-and-tasks.md) |
-| Alerts, footnotes, mentions, emojis | [Alerts, Footnotes & Mentions](references/alerts-footnotes-mentions.md) |
+| Read When                                                  | File                                                                    |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------- |
+| One-line syntax lookup for any GFM feature                 | [Quick Reference](references/quick-ref.md)                              |
+| Headings, text styling, code blocks, line breaks, escaping | [Text & Headings](references/text-and-headings.md)                      |
+| Links (inline, section, relative, custom anchors), images  | [Links & Images](references/links-and-images.md)                        |
+| Ordered/unordered lists, nesting, task lists               | [Lists & Tasks](references/lists-and-tasks.md)                          |
+| Alerts, footnotes, mentions, emojis                        | [Alerts, Footnotes & Mentions](references/alerts-footnotes-mentions.md) |
 
 ---
 
@@ -66,15 +67,14 @@ GFM is a superset of standard Markdown with GitHub-specific extensions for issue
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/markdown-001-wiki-limits.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/markdown-001-wiki-limits.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 80%     | 100%    | +20%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 80%     | 100% | +20%  |
 
 > **SOFT PASS (run 2026-08-31)**. Haiku +20 (80→100); opus/sonnet at ceiling. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

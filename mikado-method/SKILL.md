@@ -35,13 +35,13 @@ method surfaces those dependencies visually so you can remove them one by one, s
 
 ## Core Definitions
 
-| Term | Meaning |
-|---|---|
-| **Goal** | The root node. Must define two things: a **starting point** (what's true now) and **success criteria** (what "done" looks like). A goal missing either is not actionable — decompose it until you find a prerequisite that has both. Circle it twice. |
-| **Prerequisite** | A dependency that must be resolved before its parent node can be done. |
-| **Leaf node** | A node with no further prerequisites. Safe to implement immediately. |
-| **Mikado Map** | The full tree of goal + prerequisites. Your "save game" for the refactoring. |
-| **Revert** | Undoing all changes to return to a stable state. The map survives; the broken code does not. |
+| Term             | Meaning                                                                                                                                                                                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Goal**         | The root node. Must define two things: a **starting point** (what's true now) and **success criteria** (what "done" looks like). A goal missing either is not actionable — decompose it until you find a prerequisite that has both. Circle it twice. |
+| **Prerequisite** | A dependency that must be resolved before its parent node can be done.                                                                                                                                                                                |
+| **Leaf node**    | A node with no further prerequisites. Safe to implement immediately.                                                                                                                                                                                  |
+| **Mikado Map**   | The full tree of goal + prerequisites. Your "save game" for the refactoring.                                                                                                                                                                          |
+| **Revert**       | Undoing all changes to return to a stable state. The map survives; the broken code does not.                                                                                                                                                          |
 
 ---
 
@@ -73,15 +73,15 @@ RULES
 
 ## Common Mistakes to Correct
 
-| Mistake | Correction |
-|---|---|
-| Fixing errors in place instead of reverting | "Revert now. Add these errors as prerequisite nodes instead." |
-| Building on top of broken code | "This violates the core rule. Revert to green before continuing." |
-| One giant commit with multiple changes | "Split into one commit per leaf node." |
-| Skipping the graph for "small" refactors | "Start with even a 3-node graph. It prevents scope creep." |
-| Using mocks to avoid test data setup pain | "Use Test Data Builders as Mikado leaf nodes instead." |
-| Long-lived refactoring branches | "Work on main. Only commit leaves that don't break anything." |
-| Committing a leaf just because it's green | "Passing isn't enough — does it actually serve the goal? If not, discard it and move to the next prerequisite." |
+| Mistake                                     | Correction                                                                                                      |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Fixing errors in place instead of reverting | "Revert now. Add these errors as prerequisite nodes instead."                                                   |
+| Building on top of broken code              | "This violates the core rule. Revert to green before continuing."                                               |
+| One giant commit with multiple changes      | "Split into one commit per leaf node."                                                                          |
+| Skipping the graph for "small" refactors    | "Start with even a 3-node graph. It prevents scope creep."                                                      |
+| Using mocks to avoid test data setup pain   | "Use Test Data Builders as Mikado leaf nodes instead."                                                          |
+| Long-lived refactoring branches             | "Work on main. Only commit leaves that don't break anything."                                                   |
+| Committing a leaf just because it's green   | "Passing isn't enough — does it actually serve the goal? If not, discard it and move to the next prerequisite." |
 
 ---
 
@@ -90,6 +90,7 @@ RULES
 When helping a user apply the Mikado Method, always produce:
 
 ### 1. The Mikado Map (Mermaid diagram)
+
 ```mermaid
 graph TD
     G(["🎯 GOAL: <goal name>"]) --> P1["Prerequisite A"]
@@ -98,21 +99,24 @@ graph TD
     P1 --> L2["🟢 Leaf: step 2"]
     P2 --> L3["🟢 Leaf: step 3"]
 ```
+
 Use 🟢 for current leaves, ⬜ for unreachable prerequisites, ✅ for completed nodes.
 
 ### 2. Ordered implementation plan
+
 A numbered list of leaf-first steps, each with the atomic refactoring gesture, a one-line verification test, and the suggested commit message.
 
 ### 3. Revert reminder
+
 After any naive attempt: **"Revert now — `git checkout .` — your map is saved, the broken code is not needed."**
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Starting a graph, populating prerequisites, evaluating leaves, shared prerequisites | [Graph Building](references/graph-building.md) |
+| Read When                                                                                               | File                                                             |
+| ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Starting a graph, populating prerequisites, evaluating leaves, shared prerequisites                     | [Graph Building](references/graph-building.md)                   |
 | Execution order, committing strategy, legacy code, large refactors, hygiene rules, non-actionable goals | [Execution & Situations](references/execution-and-situations.md) |
 
 ---

@@ -11,17 +11,17 @@
 
 ## Anti-Patterns and Fixes
 
-| Anti-Pattern | Fix |
-|---|---|
-| "Always use tabs not spaces" | `.editorconfig` or linter |
-| "When adding a new API endpoint, do X, Y, Z" | `agent_docs/adding_endpoints.md` |
-| 200+ line AGENTS.md | Prune; specifics to sub-docs |
-| Pasted code examples | `file:line` references |
-| Raw `/init` output shipped as-is | Rewrite from scratch using WHY/WHAT/HOW |
-| Instructions about one module | Directory-scoped file in that module |
-| Same content in AGENTS.md + CLAUDE.md + .cursorrules | One source of truth; others are thin adapters |
-| Full repo directory tree for orientation | Shallow map at most; agents navigate structured repos fine |
-| Secrets/internal vulnerability details checked in | Never — context files are shareable documentation |
+| Anti-Pattern                                         | Fix                                                        |
+| ---------------------------------------------------- | ---------------------------------------------------------- |
+| "Always use tabs not spaces"                         | `.editorconfig` or linter                                  |
+| "When adding a new API endpoint, do X, Y, Z"         | `agent_docs/adding_endpoints.md`                           |
+| 200+ line AGENTS.md                                  | Prune; specifics to sub-docs                               |
+| Pasted code examples                                 | `file:line` references                                     |
+| Raw `/init` output shipped as-is                     | Rewrite from scratch using WHY/WHAT/HOW                    |
+| Instructions about one module                        | Directory-scoped file in that module                       |
+| Same content in AGENTS.md + CLAUDE.md + .cursorrules | One source of truth; others are thin adapters              |
+| Full repo directory tree for orientation             | Shallow map at most; agents navigate structured repos fine |
+| Secrets/internal vulnerability details checked in    | Never — context files are shareable documentation          |
 
 ## Directory-Scoped Files
 

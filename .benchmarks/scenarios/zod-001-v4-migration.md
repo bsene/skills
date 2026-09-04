@@ -22,7 +22,9 @@ const BaseUser = z
     email: z.string().email({ message: "must be an email" }),
     role: z.enum(["admin", "user"]),
   })
-  .refine((u) => u.email.endsWith("@acme.com"), { message: "must be an acme email" });
+  .refine((u) => u.email.endsWith("@acme.com"), {
+    message: "must be an acme email",
+  });
 
 const CreateUserSchema = BaseUser.omit({ id: true });
 type CreateUserInput = z.infer<typeof CreateUserSchema>;

@@ -29,22 +29,22 @@ Before approving any goroutine-spawning code, confirm all of these:
 3. **Bounded fan-out** — never one goroutine per item unbounded. Use a **worker pool** with fixed concurrency under load.
 4. **Channel coupling** — an **unbuffered** channel blocks the sender until a receiver is ready; buffer it or use a pool when you don't want that coupling.
 5. **Errors** — propagate goroutine errors and cancel siblings with **`errgroup.Group`**; don't silently drop them.
-6. **Loop-variable capture** — pre-Go 1.22, a goroutine closing over a `range` variable captures the *shared* var. See [Closures](../references/functions-methods-pointers.md#closures) for the pin fix and Go 1.22+ per-iteration scoping.
+6. **Loop-variable capture** — pre-Go 1.22, a goroutine closing over a `range` variable captures the _shared_ var. See [Closures](../references/functions-methods-pointers.md#closures) for the pin fix and Go 1.22+ per-iteration scoping.
 7. **No shared mutable state** without a `sync.Mutex`/atomic — and prove it with **`go test -race ./...`**.
 
 ---
 
 ## Channel vs Mutex Decision Table
 
-| Need | Tool | Why |
-|---|---|---|
-| Transfer ownership of data | Channel | Data flows, no shared state |
-| Protect shared state (cache, counter) | `sync.Mutex` | Simpler than channel for guarding |
-| Wait for N goroutines to finish | `sync.WaitGroup` | Counting semaphore |
-| One-time initialization | `sync.Once` | Thread-safe lazy init |
-| Cancellation / deadline propagation | `context.Context` | Hierarchical cancellation |
-| Collect errors from goroutines | `errgroup.Group` | WaitGroup + first error capture |
-| Rate limiting | `time.Ticker` + channel | Ticker feeds a channel at fixed intervals |
+| Need                                  | Tool                    | Why                                       |
+| ------------------------------------- | ----------------------- | ----------------------------------------- |
+| Transfer ownership of data            | Channel                 | Data flows, no shared state               |
+| Protect shared state (cache, counter) | `sync.Mutex`            | Simpler than channel for guarding         |
+| Wait for N goroutines to finish       | `sync.WaitGroup`        | Counting semaphore                        |
+| One-time initialization               | `sync.Once`             | Thread-safe lazy init                     |
+| Cancellation / deadline propagation   | `context.Context`       | Hierarchical cancellation                 |
+| Collect errors from goroutines        | `errgroup.Group`        | WaitGroup + first error capture           |
+| Rate limiting                         | `time.Ticker` + channel | Ticker feeds a channel at fixed intervals |
 
 ---
 
@@ -78,9 +78,9 @@ Annotate direction in function signatures for compile-time safety: `chan<- T` is
 
 ## Buffered vs Unbuffered
 
-| Type | Behavior | Use when |
-|---|---|---|
-| Unbuffered `make(chan T)` | Send blocks until receiver is ready | Synchronization — both sides must be present |
+| Type                       | Behavior                             | Use when                                         |
+| -------------------------- | ------------------------------------ | ------------------------------------------------ |
+| Unbuffered `make(chan T)`  | Send blocks until receiver is ready  | Synchronization — both sides must be present     |
 | Buffered `make(chan T, n)` | Send blocks only when buffer is full | Decoupling producer/consumer speeds, known bound |
 
 **Default to unbuffered.** Add a buffer only when you can justify the size.
@@ -119,22 +119,22 @@ default:
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Goroutine leak (no exit path) | Memory/CPU grows forever | Use `ctx.Done()`, done channel, or close input channel |
-| Unbounded goroutine creation | OOM under load | Use worker pool with bounded concurrency |
-| Channel as mutex | Overcomplicates simple state protection | Use `sync.Mutex` for shared state |
-| Ignoring context cancellation | Goroutine runs long after caller gave up | Check `ctx.Done()` in loops and before expensive ops |
-| Missing `-race` in tests | Data races go undetected | Always run `go test -race ./...` in CI |
+| Anti-pattern                  | Problem                                  | Fix                                                    |
+| ----------------------------- | ---------------------------------------- | ------------------------------------------------------ |
+| Goroutine leak (no exit path) | Memory/CPU grows forever                 | Use `ctx.Done()`, done channel, or close input channel |
+| Unbounded goroutine creation  | OOM under load                           | Use worker pool with bounded concurrency               |
+| Channel as mutex              | Overcomplicates simple state protection  | Use `sync.Mutex` for shared state                      |
+| Ignoring context cancellation | Goroutine runs long after caller gave up | Check `ctx.Done()` in loops and before expensive ops   |
+| Missing `-race` in tests      | Data races go undetected                 | Always run `go test -race ./...` in CI                 |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
+| Read When                                                                    | File                                                       |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | Goroutine lifecycle, channel patterns, fan-in/fan-out, pipeline, worker pool | [Goroutines & Channels](references/goroutines-channels.md) |
-| sync.Mutex, WaitGroup, Once, sync.Map, context, errgroup, -race flag | [Sync & Context](references/sync-context.md) |
+| sync.Mutex, WaitGroup, Once, sync.Map, context, errgroup, -race flag         | [Sync & Context](references/sync-context.md)               |
 
 ---
 

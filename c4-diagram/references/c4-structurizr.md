@@ -139,6 +139,7 @@ views {
 ### Deployment (infrastructure)
 
 Deployment grammar:
+
 - `containerInstance <identifier> [deploymentGroups] [tags]` — instance of a defined container
 - `softwareSystemInstance <identifier> [deploymentGroups] [tags]` — instance of a non-decomposed system (no containers)
 
@@ -336,6 +337,7 @@ workspace "Accounts Service" "Component view" {
 ## CLI
 
 Binary names by install method:
+
 - Local install (zip from GitHub releases) and Docker: `structurizr.sh` (Unix/macOS), `structurizr.bat` (Windows)
 - Homebrew (`brew install structurizr-cli`) / Scoop: `structurizr-cli`
 
@@ -373,13 +375,13 @@ The `structurizr/cli` image is archived (Feb 2026) but functional. The active re
 
 ## Mermaid vs Structurizr — When to Use
 
-| Need | Use |
-|---|---|
-| Quick inline preview in chat | Mermaid |
-| Export PNG/SVG for docs/wiki | Structurizr |
-| Multiple views from one model | Structurizr |
-| Organisation-wide system landscape | Structurizr (no Mermaid C4 equivalent) |
-| Dynamic / numbered interaction flow | Either (`C4Dynamic` or Structurizr `dynamic`) |
-| Deployment / infrastructure view | Structurizr (Mermaid `C4Deployment` is limited) |
+| Need                                | Use                                                |
+| ----------------------------------- | -------------------------------------------------- |
+| Quick inline preview in chat        | Mermaid                                            |
+| Export PNG/SVG for docs/wiki        | Structurizr                                        |
+| Multiple views from one model       | Structurizr                                        |
+| Organisation-wide system landscape  | Structurizr (no Mermaid C4 equivalent)             |
+| Dynamic / numbered interaction flow | Either (`C4Dynamic` or Structurizr `dynamic`)      |
+| Deployment / infrastructure view    | Structurizr (Mermaid `C4Deployment` is limited)    |
 | Class/method level detail (Level 4) | Mermaid `classDiagram` — no Structurizr equivalent |
-| No tooling available | Mermaid |
+| No tooling available                | Mermaid                                            |

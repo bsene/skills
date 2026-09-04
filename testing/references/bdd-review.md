@@ -59,6 +59,7 @@ A single `should_` sentence describes one thing only. Multiple unrelated asserti
 #### Principle 4 — Given / When / Then Structure
 
 The test body should have three clearly separated phases:
+
 - **Given** — initial context / setup
 - **When** — the single action under test
 - **Then** — the outcome(s) being verified
@@ -89,15 +90,14 @@ Flag this as a **design smell** (not just a naming issue). Suggest introducing a
 
 ### Quick Reference: Common Violations
 
-| What you see | BDD violation | Suggested fix |
-|---|---|---|
-| `def test_calculation():` | No behaviour described | `def should_return_zero_for_empty_input():` |
-| `def test_error_case():` | Vague — what error? | `def should_raise_when_input_is_negative():` |
-| `def test_save_and_notify():` | Two behaviours in one | Split into `should_persist_entity` + `should_notify_on_save` |
-| No `# Given/When/Then` in complex test | Structure unclear | Add phase comments |
-| 10 asserts in one test | Multiple behaviours | Split into focused tests |
-| Test name describes implementation | Tests _how_, not _what_ | Rename to describe the observable outcome |
-| New test appended at file end to keep the diff small | Order chaos — breaks the suite's story | Group with related tests, even if the diff grows |
+| What you see                                         | BDD violation                          | Suggested fix                                                |
+| ---------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------ |
+| `def test_calculation():`                            | No behaviour described                 | `def should_return_zero_for_empty_input():`                  |
+| `def test_error_case():`                             | Vague — what error?                    | `def should_raise_when_input_is_negative():`                 |
+| `def test_save_and_notify():`                        | Two behaviours in one                  | Split into `should_persist_entity` + `should_notify_on_save` |
+| No `# Given/When/Then` in complex test               | Structure unclear                      | Add phase comments                                           |
+| 10 asserts in one test                               | Multiple behaviours                    | Split into focused tests                                     |
+| Test name describes implementation                   | Tests _how_, not _what_                | Rename to describe the observable outcome                    |
+| New test appended at file end to keep the diff small | Order chaos — breaks the suite's story | Group with related tests, even if the diff grows             |
 
 ---
-

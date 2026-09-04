@@ -1,18 +1,18 @@
 # Ruby & Rails Testing
 
-Scope: how to structure the test itself — RSpec/Minitest conventions, what layer of the test pyramid a given behavior belongs in, and how to keep a Rails test suite fast and honest. This is about test *structure*, not the TDD discipline of test-first commit workflow (that's a separate concern — if the person already has a TCR-style skill for that, defer to it and stay focused on what goes inside the test file).
+Scope: how to structure the test itself — RSpec/Minitest conventions, what layer of the test pyramid a given behavior belongs in, and how to keep a Rails test suite fast and honest. This is about test _structure_, not the TDD discipline of test-first commit workflow (that's a separate concern — if the person already has a TCR-style skill for that, defer to it and stay focused on what goes inside the test file).
 
 ## Picking the right layer first
 
 Before writing a test, place it correctly — most flaky/slow suites come from testing the wrong layer, not from bad assertions.
 
-| What's being verified | Right layer | Wrong layer to avoid |
-|---|---|---|
-| A model's validation, scope, or business logic method | Model spec, no Rails request cycle | System spec (too slow for this) |
-| A plain Ruby object's behavior (service, form object, PORO) | Plain RSpec example group, `require "spec_helper"` only — no `rails_helper` | Model spec (drags in ActiveRecord/DB for no reason) |
-| An API endpoint's response shape/status codes | Request spec | Controller spec (deprecated pattern in modern Rails testing guidance) |
-| A full user flow through the browser (JS included) | System spec (Capybara) | Feature-testing everything (slow — reserve for the handful of critical flows) |
-| A background job's side effects | Job spec — assert enqueued (`have_enqueued_job`) in the caller's spec, test the job body directly in the job's own spec | Testing job execution indirectly through a request spec |
+| What's being verified                                       | Right layer                                                                                                             | Wrong layer to avoid                                                          |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| A model's validation, scope, or business logic method       | Model spec, no Rails request cycle                                                                                      | System spec (too slow for this)                                               |
+| A plain Ruby object's behavior (service, form object, PORO) | Plain RSpec example group, `require "spec_helper"` only — no `rails_helper`                                             | Model spec (drags in ActiveRecord/DB for no reason)                           |
+| An API endpoint's response shape/status codes               | Request spec                                                                                                            | Controller spec (deprecated pattern in modern Rails testing guidance)         |
+| A full user flow through the browser (JS included)          | System spec (Capybara)                                                                                                  | Feature-testing everything (slow — reserve for the handful of critical flows) |
+| A background job's side effects                             | Job spec — assert enqueued (`have_enqueued_job`) in the caller's spec, test the job body directly in the job's own spec | Testing job execution indirectly through a request spec                       |
 
 Rule of thumb worth stating directly when reviewing a suite: **push tests as far down the pyramid as they'll go.** A model-level test that exercises the same logic as a slow system test should replace it, not supplement it.
 
@@ -47,7 +47,7 @@ end
 
 - **Verifying double (`instance_double(User)`) over a plain `double`** whenever the real class is loaded and available — a plain double will happily let you stub a method that doesn't exist on the real object, and the test passes while production code is already broken.
 - **Stub what you don't own, use the real object for what you do.** Mocking a third-party API client is correct (you don't control its behavior, and hitting the real network in tests is slow/flaky). Mocking your own PORO collaborator is usually a sign the two objects should just be tested together, or that the collaborator's public interface is worth trusting rather than re-verifying at every call site.
-- **`expect(...).to receive(...)` asserts an interaction happened; `allow(...).to receive(...)` just stubs a return value without asserting it was called.** Using `expect` when only a stub was needed makes the test brittle to unrelated implementation changes — default to `allow` unless the *fact that the call happened* is the actual thing under test.
+- **`expect(...).to receive(...)` asserts an interaction happened; `allow(...).to receive(...)` just stubs a return value without asserting it was called.** Using `expect` when only a stub was needed makes the test brittle to unrelated implementation changes — default to `allow` unless the _fact that the call happened_ is the actual thing under test.
 - **Don't mock the object under test.** If a spec is stubbing methods on `subject` itself, the test is checking that Ruby method dispatch works, not that the class behaves correctly.
 
 ## Test data: factories vs. fixtures
@@ -85,7 +85,7 @@ Coverage percentage only proves a line executed during a test run, not that a te
 
 ### Property-based testing — checks an invariant across generated inputs, not a handful of examples
 
-Example-based RSpec (`it "returns the sum"` with fixed inputs) documents specific business scenarios by name — keep it for that. Property-based testing is a different tool: state an invariant that should hold for *any* valid input ("serialize then deserialize returns the original object," "sorting is idempotent," "the total never goes negative") and let the library generate hundreds of inputs, including edge cases (empty arrays, negative numbers, unicode) a person wouldn't think to write by hand.
+Example-based RSpec (`it "returns the sum"` with fixed inputs) documents specific business scenarios by name — keep it for that. Property-based testing is a different tool: state an invariant that should hold for _any_ valid input ("serialize then deserialize returns the original object," "sorting is idempotent," "the total never goes negative") and let the library generate hundreds of inputs, including edge cases (empty arrays, negative numbers, unicode) a person wouldn't think to write by hand.
 
 - **Tools**: `propcheck` (StreamData-inspired, actively maintained, integrates with Minitest and RSpec) or `rantly` (older, RSpec-focused). Check current gem docs before recommending — this corner of the Ruby ecosystem moves slowly and version-specific integration details matter.
 - **Where it pulls its weight**: parsers, serializers/encoders, anything with a mathematical or structural invariant (sort, dedupe, round-trip encode/decode), algorithmic code (custom diffing, custom hashing). Weak fit for typical Rails business logic with a small, enumerable set of states — a handful of example-based `context` blocks covers those cases more readably than a generator.
@@ -98,6 +98,7 @@ Both sit outside the "picking the right layer" table above by design — they're
 ## TDD loop, briefly
 
 Red → green → refactor, applied at the layer identified above:
+
 1. Write the smallest failing example that states the next piece of behavior in business language (the `it` description should be readable as a sentence to someone who doesn't know the implementation).
 2. Write the minimum production code to pass it — resist implementing behavior the current example doesn't demand yet.
 3. Refactor with the safety net of the passing suite; re-run before moving to the next example.

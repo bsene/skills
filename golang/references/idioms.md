@@ -4,18 +4,18 @@
 
 Rob Pike's Go proverbs are the soul of the language. Each maps to a concrete coding rule.
 
-| Proverb | What it means in code |
-|---|---|
-| "Don't communicate by sharing memory; share memory by communicating" | Use channels to transfer data ownership, not shared variables with mutexes |
-| "Concurrency is not parallelism" | Goroutines structure code; parallelism is a runtime property of hardware |
-| "Channels orchestrate; mutexes serialize" | Channels for coordination flow, mutexes for protecting shared state |
-| "The bigger the interface, the weaker the abstraction" | Prefer 1-3 method interfaces (`io.Reader`, not `io.ReadWriteCloserSeeker`) |
-| "Make the zero value useful" | Design structs so `var x MyType` works without initialization (`sync.Mutex`, `bytes.Buffer`) |
-| "interface{} says nothing" | Avoid `any` / `interface{}` — it erases type safety; use generics or specific interfaces |
-| "A little copying is better than a little dependency" | Copy 10 lines rather than importing a package for one function |
-| "Errors are values" | Errors are not exceptions — they are data you can inspect, wrap, compare, and return |
-| "Don't just check errors, handle them gracefully" | Add context with `fmt.Errorf("doing X: %w", err)`, don't just `return err` |
-| "Clear is better than clever" | A 3-line `if/else` is better than a 1-line trick nobody understands |
+| Proverb                                                              | What it means in code                                                                        |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| "Don't communicate by sharing memory; share memory by communicating" | Use channels to transfer data ownership, not shared variables with mutexes                   |
+| "Concurrency is not parallelism"                                     | Goroutines structure code; parallelism is a runtime property of hardware                     |
+| "Channels orchestrate; mutexes serialize"                            | Channels for coordination flow, mutexes for protecting shared state                          |
+| "The bigger the interface, the weaker the abstraction"               | Prefer 1-3 method interfaces (`io.Reader`, not `io.ReadWriteCloserSeeker`)                   |
+| "Make the zero value useful"                                         | Design structs so `var x MyType` works without initialization (`sync.Mutex`, `bytes.Buffer`) |
+| "interface{} says nothing"                                           | Avoid `any` / `interface{}` — it erases type safety; use generics or specific interfaces     |
+| "A little copying is better than a little dependency"                | Copy 10 lines rather than importing a package for one function                               |
+| "Errors are values"                                                  | Errors are not exceptions — they are data you can inspect, wrap, compare, and return         |
+| "Don't just check errors, handle them gracefully"                    | Add context with `fmt.Errorf("doing X: %w", err)`, don't just `return err`                   |
+| "Clear is better than clever"                                        | A 3-line `if/else` is better than a 1-line trick nobody understands                          |
 
 ---
 

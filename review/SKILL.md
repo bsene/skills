@@ -23,11 +23,11 @@ description: >
 
 ## Severity Tiers
 
-| Tier | Criterion | Required Action |
-|------|-----------|-----------------|
-| **Blocker** | Bug, security hole, data loss, broken invariant | Fix before merge |
-| **Concern** | Design flaw, missing test, perf issue | Discuss + likely fix |
-| **Nit** | Style, naming, minor duplication | Optional |
+| Tier        | Criterion                                       | Required Action      |
+| ----------- | ----------------------------------------------- | -------------------- |
+| **Blocker** | Bug, security hole, data loss, broken invariant | Fix before merge     |
+| **Concern** | Design flaw, missing test, perf issue           | Discuss + likely fix |
+| **Nit**     | Style, naming, minor duplication                | Optional             |
 
 ## Output Format
 
@@ -113,15 +113,14 @@ on top of the workflow above:
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/review-001-severity-tiers.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/review-001-severity-tiers.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 83%     | +16%   |
-| claude-sonnet-4-6 | 83%     | 67%     | −16%   |
-| claude-haiku-4-5  | 83%     | 83%     | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 83%  | +16%  |
+| claude-sonnet-4-6 | 83%     | 67%  | −16%  |
+| claude-haiku-4-5  | 83%     | 83%  | +0%   |
 
 > **NEG (run 2026-08-31)**. Sonnet −16 on the severity-tier boundary; opus +16. Classification ambiguous between criteria and tier table — diagnostic c5-only re-run queued before any edit (cap reached). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

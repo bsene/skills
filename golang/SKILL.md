@@ -36,45 +36,45 @@ Write simple, explicit, readable Go. The language rewards clarity over clevernes
 
 ### Variable Declaration
 
-| Form | Use when |
-|---|---|
-| `x := value` | Inside functions, type is obvious from RHS |
-| `var x T` | Zero value is meaningful, or type needs to be explicit |
-| `var x = value` | Package-level variable (`:=` not allowed) |
-| `const x = value` | Value known at compile time, never changes |
+| Form              | Use when                                               |
+| ----------------- | ------------------------------------------------------ |
+| `x := value`      | Inside functions, type is obvious from RHS             |
+| `var x T`         | Zero value is meaningful, or type needs to be explicit |
+| `var x = value`   | Package-level variable (`:=` not allowed)              |
+| `const x = value` | Value known at compile time, never changes             |
 
 ### Control Flow
 
-| Construct | Go specifics |
-|---|---|
-| `if err != nil` | Always check errors immediately after the call |
-| `for` | Only loop keyword — covers `while`, `do-while`, `foreach`, infinite |
-| `switch` | No fallthrough by default; `fallthrough` keyword exists but is rare |
-| `defer` | Runs at function exit (LIFO order); args evaluated at defer site |
-| `range` | Iterate slices, maps, channels, strings; `for i, v := range slice` |
+| Construct       | Go specifics                                                        |
+| --------------- | ------------------------------------------------------------------- |
+| `if err != nil` | Always check errors immediately after the call                      |
+| `for`           | Only loop keyword — covers `while`, `do-while`, `foreach`, infinite |
+| `switch`        | No fallthrough by default; `fallthrough` keyword exists but is rare |
+| `defer`         | Runs at function exit (LIFO order); args evaluated at defer site    |
+| `range`         | Iterate slices, maps, channels, strings; `for i, v := range slice`  |
 
 ### Zero Values
 
 Every type has a usable zero value — no null surprises.
 
-| Type | Zero value |
-|---|---|
-| `bool` | `false` |
-| Numeric (`int`, `float64`…) | `0` |
-| `string` | `""` |
-| Pointer, slice, map, channel, function, interface | `nil` |
-| Struct | All fields zeroed |
+| Type                                              | Zero value        |
+| ------------------------------------------------- | ----------------- |
+| `bool`                                            | `false`           |
+| Numeric (`int`, `float64`…)                       | `0`               |
+| `string`                                          | `""`              |
+| Pointer, slice, map, channel, function, interface | `nil`             |
+| Struct                                            | All fields zeroed |
 
 ### Naming
 
-| Rule | Example |
-|---|---|
-| Exported = uppercase first letter | `ProcessOrder` (public), `processOrder` (private) |
-| Acronyms stay all-caps | `HTTPServer`, `userID`, `xmlParser` |
-| Receivers: 1-2 letter abbreviation of type | `func (s *Server) Start()` |
-| Interfaces: verb + `-er` when single method | `Reader`, `Writer`, `Stringer`, `Closer` |
-| No `Get` prefix for getters | `user.Name()` not `user.GetName()` |
-| Package names: short, lowercase, no underscores | `strconv`, `httputil`, `bufio` |
+| Rule                                            | Example                                           |
+| ----------------------------------------------- | ------------------------------------------------- |
+| Exported = uppercase first letter               | `ProcessOrder` (public), `processOrder` (private) |
+| Acronyms stay all-caps                          | `HTTPServer`, `userID`, `xmlParser`               |
+| Receivers: 1-2 letter abbreviation of type      | `func (s *Server) Start()`                        |
+| Interfaces: verb + `-er` when single method     | `Reader`, `Writer`, `Stringer`, `Closer`          |
+| No `Get` prefix for getters                     | `user.Name()` not `user.GetName()`                |
+| Package names: short, lowercase, no underscores | `strconv`, `httputil`, `bufio`                    |
 
 ### Formatting
 
@@ -84,46 +84,44 @@ Every type has a usable zero value — no null surprises.
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Ignoring errors with `_` | Silent failures, impossible debugging | Handle every error or document why it's safe to ignore |
-| `init()` with side effects | Hidden execution order, hard to test | Use explicit initialization in `main()` |
-| Naked returns in long functions | Unreadable — reader must scroll to find return vars | Name return values only when it helps godoc; use explicit returns |
-| Interface pollution | Declaring interfaces before a second implementation exists | Define interfaces at the consumer site, only when needed |
-| Premature concurrency | Goroutines before measuring that sequential code is too slow | Profile first, add concurrency only when bottleneck is proven |
+| Anti-pattern                    | Problem                                                      | Fix                                                               |
+| ------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
+| Ignoring errors with `_`        | Silent failures, impossible debugging                        | Handle every error or document why it's safe to ignore            |
+| `init()` with side effects      | Hidden execution order, hard to test                         | Use explicit initialization in `main()`                           |
+| Naked returns in long functions | Unreadable — reader must scroll to find return vars          | Name return values only when it helps godoc; use explicit returns |
+| Interface pollution             | Declaring interfaces before a second implementation exists   | Define interfaces at the consumer site, only when needed          |
+| Premature concurrency           | Goroutines before measuring that sequential code is too slow | Profile first, add concurrency only when bottleneck is proven     |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
-| Go proverbs, naming rules, formatting, zero value idioms | [Go Idioms](references/idioms.md) |
-| Project layout decisions (cmd/, internal/, pkg/) | [Project Layout](references/project-layout.md) · [go.dev/doc/code](https://go.dev/doc/code) |
-| Value vs pointer receivers, closures, defer semantics | [Functions, Methods & Pointers](references/functions-methods-pointers.md) |
+| Read When                                                | File                                                                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Go proverbs, naming rules, formatting, zero value idioms | [Go Idioms](references/idioms.md)                                                           |
+| Project layout decisions (cmd/, internal/, pkg/)         | [Project Layout](references/project-layout.md) · [go.dev/doc/code](https://go.dev/doc/code) |
+| Value vs pointer receivers, closures, defer semantics    | [Functions, Methods & Pointers](references/functions-methods-pointers.md)                   |
 
 ---
 
 ## Specialist Skills
 
-| Situation | Skill | Why |
-|---|---|---|
-| General testing philosophy (not Go-specific) | `testing` | Language-agnostic testing strategy and philosophy |
-| OOP design principles | `object-oriented-programming` | SOLID, design patterns (language-agnostic) |
-| Hexagonal architecture in Go | `ports-adapters-architecture` | Ports and adapters pattern |
-
+| Situation                                    | Skill                         | Why                                               |
+| -------------------------------------------- | ----------------------------- | ------------------------------------------------- |
+| General testing philosophy (not Go-specific) | `testing`                     | Language-agnostic testing strategy and philosophy |
+| OOP design principles                        | `object-oriented-programming` | SOLID, design patterns (language-agnostic)        |
+| Hexagonal architecture in Go                 | `ports-adapters-architecture` | Ports and adapters pattern                        |
 
 ---
-
 
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/golang-router-001-idiomatic.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/golang-router-001-idiomatic.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 83%     | 100%    | +17%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 67%     | 83%     | +16%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 100% | +17%  |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 67%     | 83%  | +16%  |
 
 > **PASS (run 2026-08-31)**. Over-broad-'simplicity' regression cleared after the intro edit ('idioms ARE the clarity', wf_9a5588bc): opus's lost `defer f.Close()` criterion is back with-skill on all models. Supersedes the 2026-06-26 NEUTRAL run. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

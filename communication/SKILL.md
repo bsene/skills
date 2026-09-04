@@ -15,7 +15,6 @@ description: >
   use `kano` for feature decisions, language skills for code prose.
 ---
 
-
 # Communication: analyze & sharpen how you speak and write
 
 Coach a real artifact the user provides — message, email, transcript, or talk draft — against proven
@@ -26,12 +25,12 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 
 ## Read On Demand
 
-| Read when                                                           | File                                                  |
-| ------------------------------------------------------------------- | ----------------------------------------------------- |
-| Applying any technique in depth, or the user asks how/why it works  | [Frameworks](references/frameworks.md)                |
-| User cites the 7-38-55 / Mehrabian "body language" rule             | [Frameworks → Mehrabian myth](references/frameworks.md#7-the-7-38-55-mehrabian-myth) |
-| Coaching for an exec / C-level audience                             | [Frameworks → Pyramid Principle](references/frameworks.md#4-pyramid-principle) |
-| User asks for "DHH style" / maximum directness over diplomacy       | [DHH style](references/dhh-style.md)                  |
+| Read when                                                          | File                                                                                 |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| Applying any technique in depth, or the user asks how/why it works | [Frameworks](references/frameworks.md)                                               |
+| User cites the 7-38-55 / Mehrabian "body language" rule            | [Frameworks → Mehrabian myth](references/frameworks.md#7-the-7-38-55-mehrabian-myth) |
+| Coaching for an exec / C-level audience                            | [Frameworks → Pyramid Principle](references/frameworks.md#4-pyramid-principle)       |
+| User asks for "DHH style" / maximum directness over diplomacy      | [DHH style](references/dhh-style.md)                                                 |
 
 ---
 
@@ -52,7 +51,7 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 - **Ethos/Logos/Pathos** — is credibility established? is the logic clear and low-load? is there an
   emotional anchor (story, image, stakes)? Default delivery order: ethos → logos → pathos.
 - **Structure** — for senior/structured audiences, is the conclusion **first** (Pyramid)? or buried?
-- **Focus** — does it talk about *them and their problem*, or about the speaker/the idea/the solution?
+- **Focus** — does it talk about _them and their problem_, or about the speaker/the idea/the solution?
 - **Safety** — does adopting the idea feel risky/irreversible? is the risk normalized and reduced?
 - **Attention** — is there a hook, or is it monotone/predictable?
 
@@ -60,16 +59,16 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 
 ## The 7+1 Quick Reference
 
-| Technique                  | Use it when                                          | One-line move                                                        |
-| -------------------------- | --------------------------------------------------- | ------------------------------------------------------------------- |
-| **Ethos / Logos / Pathos** | Any persuasion; the base layer                      | Earn the right to be heard, prove it's true, make it felt.          |
-| **Reframing**              | Hit with a trap / destabilizing question            | Receive → bridge → pose a better frame. Or answer with a question.  |
-| **Focus on the other**     | You catch yourself talking about you/your solution  | Verbalize *their* problem first — sometimes better than they can.   |
-| **Pyramid Principle**      | Talking to execs / structured, time-poor people     | Conclusion first, then 3 proofs, detail only if asked.              |
-| **Pattern interrupt**      | Attention is gone (long meeting, video call)        | Break the pattern: unexpected line, silence, blunt question, image. |
-| **Make it safe**           | A correct idea is being resisted                    | Normalize hesitation → reversible pilot → protect the person.       |
-| **Cognitive load**         | Always                                              | Short sentences, known concepts, clear transitions.                 |
-| *(Conclusion)*             | Closing the coaching                                | Pick **one** technique and apply it to the next real exchange.      |
+| Technique                  | Use it when                                        | One-line move                                                       |
+| -------------------------- | -------------------------------------------------- | ------------------------------------------------------------------- |
+| **Ethos / Logos / Pathos** | Any persuasion; the base layer                     | Earn the right to be heard, prove it's true, make it felt.          |
+| **Reframing**              | Hit with a trap / destabilizing question           | Receive → bridge → pose a better frame. Or answer with a question.  |
+| **Focus on the other**     | You catch yourself talking about you/your solution | Verbalize _their_ problem first — sometimes better than they can.   |
+| **Pyramid Principle**      | Talking to execs / structured, time-poor people    | Conclusion first, then 3 proofs, detail only if asked.              |
+| **Pattern interrupt**      | Attention is gone (long meeting, video call)       | Break the pattern: unexpected line, silence, blunt question, image. |
+| **Make it safe**           | A correct idea is being resisted                   | Normalize hesitation → reversible pilot → protect the person.       |
+| **Cognitive load**         | Always                                             | Short sentences, known concepts, clear transitions.                 |
+| _(Conclusion)_             | Closing the coaching                               | Pick **one** technique and apply it to the next real exchange.      |
 
 Full treatment with worked examples: [references/frameworks.md](references/frameworks.md).
 
@@ -92,31 +91,31 @@ Full treatment with worked examples: [references/frameworks.md](references/frame
 
 ## Anti-patterns
 
-| Anti-pattern                          | Why it fails                                              | Fix                                            |
-| ------------------------------------- | -------------------------------------------------------- | ---------------------------------------------- |
-| Logic-only "expert discourse"        | True and deep, but neither agreeable nor memorable       | Add ethos up front + a pathos anchor.          |
-| Talking about yourself / your idea   | Listener silently waits their turn, asks "why me?"       | Open on their problem.                         |
-| Conclusion buried at the end         | Decision-makers disengage before you arrive              | Pyramid: conclusion first.                     |
-| Monotone, predictable delivery       | Attention drifts to multitasking                         | One pattern interrupt, then resume substance.  |
-| Pushing an idea that feels risky     | Resistance is perceived political/personal risk          | De-risk: pilot, reversible, person protected.  |
+| Anti-pattern                               | Why it fails                                             | Fix                                                 |
+| ------------------------------------------ | -------------------------------------------------------- | --------------------------------------------------- |
+| Logic-only "expert discourse"              | True and deep, but neither agreeable nor memorable       | Add ethos up front + a pathos anchor.               |
+| Talking about yourself / your idea         | Listener silently waits their turn, asks "why me?"       | Open on their problem.                              |
+| Conclusion buried at the end               | Decision-makers disengage before you arrive              | Pyramid: conclusion first.                          |
+| Monotone, predictable delivery             | Attention drifts to multitasking                         | One pattern interrupt, then resume substance.       |
+| Pushing an idea that feels risky           | Resistance is perceived political/personal risk          | De-risk: pilot, reversible, person protected.       |
 | Leaning on 7-38-55 ("words barely matter") | Misapplied lab result; in most cases words are essential | Treat verbal/paraverbal/nonverbal as all mattering. |
 
 ---
 
 ## Integrated Example
 
-**Before** (Slack to leadership): *"Hi — so I've been thinking a lot and I really feel like I personally
+**Before** (Slack to leadership): _"Hi — so I've been thinking a lot and I really feel like I personally
 need more budget. I've done a ton of work this quarter and I'd love to be able to do more, there are
-loads of things I want to try and I think it could be good. Can we talk?"*
+loads of things I want to try and I think it could be good. Can we talk?"_
 
 **Diagnosis:** conclusion buried (no ask), self-focused ("I/me" throughout), zero ethos, zero logos
 (no reason), no pathos/stakes, feels open-ended and risky.
 
-**After:** *"We should double the team's budget this quarter. (1) We're behind on the roadmap and need
+**After:** _"We should double the team's budget this quarter. (1) We're behind on the roadmap and need
 to catch up; (2) we're resource-constrained on the highest-impact work; (3) the upside is real. To
 de-risk: start with a one-month pilot — fully reversible if the numbers don't move. That's how we get
 on the podium by quarter-end and actually celebrate hitting the targets together. Details on each point
-whenever useful."*
+whenever useful."_
 
 Conclusion first (Pyramid) → 3 proofs (logos) → reversible pilot (safety) → shared win (pathos).
 
@@ -124,11 +123,11 @@ Conclusion first (Pyramid) → 3 proofs (logos) → reversible pilot (safety) �
 
 ## External References
 
-- **Aristotle**, *Rhetoric* — ethos, logos, pathos.
-- **Barbara Minto**, *The Pyramid Principle* (McKinsey) — conclusion-first communication.
+- **Aristotle**, _Rhetoric_ — ethos, logos, pathos.
+- **Barbara Minto**, _The Pyramid Principle_ (McKinsey) — conclusion-first communication.
 - **Mehrabian 7-38-55** — widely misquoted; valid only for single-word emotional/contradiction cues.
 - **Stanford** — narratives are recalled markedly better than isolated figures.
-- **Source video:** Quentin Despas / Katana, *"Comment réfléchir vite et parler intelligemment"*.
+- **Source video:** Quentin Despas / Katana, _"Comment réfléchir vite et parler intelligemment"_.
 
 ---
 
@@ -146,10 +145,10 @@ Scenario: `.benchmarks/scenarios/communication-001-message-coaching.md`
 
 Scenario: `.benchmarks/scenarios/communication-002-reframe-tough-question.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/communication-002-reframe-tough-question.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%  | +0%   |
-| claude-sonnet-4-6 | 100%    | 100%  | +0%   |
-| claude-haiku-4-5  | 100%    | 100%  | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **NEUTRAL (run 2026-08-31)**. All models 100% with and without — reframing a tough question is already default behavior on this task; communication-001 above carries the skill's evidence. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -25,6 +25,7 @@ func (c *Cache) Set(key string, item Item) {
 ```
 
 **Rules:**
+
 - Always `defer Unlock()` immediately after `Lock()` — prevents forgetting unlock on early return
 - Use `RWMutex` when reads vastly outnumber writes
 - Never copy a mutex (pass by pointer, embed by value only in structs used by pointer)
@@ -50,6 +51,7 @@ wg.Wait()  // blocks until all Done() calls match Add() count
 ```
 
 **Rules:**
+
 - Call `Add` before starting the goroutine, not inside it
 - Match every `Add(1)` with exactly one `Done()`
 - `Add` with a negative value panics if counter goes below zero
@@ -81,6 +83,7 @@ Thread-safe lazy initialization. The function runs on the first call; subsequent
 ## sync.Map
 
 Concurrent-safe map optimized for two patterns:
+
 1. Key written once, read many times (append-only)
 2. Multiple goroutines read/write disjoint key sets
 
@@ -157,13 +160,13 @@ func longOperation(ctx context.Context) error {
 
 ### Context Rules
 
-| Rule | Rationale |
-|---|---|
-| First parameter, named `ctx` | Convention — every Go developer expects it |
-| Don't store in a struct | Context is request-scoped, not object-scoped |
-| Don't pass `nil` — use `context.TODO()` | Nil causes panics in some callers |
-| Values for request-scoped data only | Not a general key-value store |
-| Cancel functions must be called | Prevents goroutine and resource leaks |
+| Rule                                    | Rationale                                    |
+| --------------------------------------- | -------------------------------------------- |
+| First parameter, named `ctx`            | Convention — every Go developer expects it   |
+| Don't store in a struct                 | Context is request-scoped, not object-scoped |
+| Don't pass `nil` — use `context.TODO()` | Nil causes panics in some callers            |
+| Values for request-scoped data only     | Not a general key-value store                |
+| Cancel functions must be called         | Prevents goroutine and resource leaks        |
 
 ---
 

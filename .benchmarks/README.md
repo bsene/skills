@@ -37,9 +37,11 @@ skill: <skill-name>
 ---
 
 # Prompt
+
 <the user-facing prompt to run>
 
 # Criteria
+
 - [ ] <machine-gradable bullet 1>
 - [ ] <machine-gradable bullet 2>
 - [ ] <machine-gradable bullet 3>

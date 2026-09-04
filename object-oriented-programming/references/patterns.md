@@ -462,13 +462,13 @@ const q = StepQueryBuilder.create()
 
 ### Trade-offs
 
-| Gain | Give up |
-|---|---|
-| Readable, self-documenting construction | Extra class boilerplate vs. a plain object literal |
-| Validation centralised in one place | Mutable builder state before `build()` is called |
-| Fluent API is easy to chain and diff in code review | Method-chain order can be surprising if steps have side effects |
-| Product is immutable once built | `build()` must be called explicitly — easy to forget |
-| Step Builder gives compile-time required-field safety | Step Builder adds significant interface boilerplate |
+| Gain                                                  | Give up                                                         |
+| ----------------------------------------------------- | --------------------------------------------------------------- |
+| Readable, self-documenting construction               | Extra class boilerplate vs. a plain object literal              |
+| Validation centralised in one place                   | Mutable builder state before `build()` is called                |
+| Fluent API is easy to chain and diff in code review   | Method-chain order can be surprising if steps have side effects |
+| Product is immutable once built                       | `build()` must be called explicitly — easy to forget            |
+| Step Builder gives compile-time required-field safety | Step Builder adds significant interface boilerplate             |
 
 ---
 

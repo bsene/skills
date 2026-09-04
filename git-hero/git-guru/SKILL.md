@@ -103,15 +103,14 @@ Delete the markers + keep what you want, then `git add`.
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/git-guru-001-merge-vs-rebase.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/git-guru-001-merge-vs-rebase.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 83%     | 83%     | +0%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 83%     | 83%     | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 83%  | +0%   |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 83%     | 83%  | +0%   |
 
 > **SOFT PASS (run 2026-08-31)**. Sonnet +17; opus/haiku at ceiling. Merge-vs-rebase criteria are mostly default behavior. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

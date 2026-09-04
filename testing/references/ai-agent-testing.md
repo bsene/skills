@@ -12,12 +12,12 @@ Use this reference when the user is directing an AI coding agent (not writing co
 
 Strict red-green-refactor exists to compensate for human short-term memory limits. AI agents have the opposite profile — large short-term memory, but absent-mindedness, hallucination, and a tendency to cheat toward "passing" rather than "correct." The cadence should change accordingly.
 
-| | Human TDD | Agent-era testing |
-|---|---|---|
-| **Cadence** | Micro-step red-green-refactor | Test-first, then implement in larger batches |
-| **Why** | Compensates for limited working memory | Large context window tolerates bigger steps |
-| **Confidence signal** | Watching each test go green | Coverage, cyclomatic complexity / CRAP score, mutation kill-rate |
-| **Failure mode guarded against** | Losing track of the next small step | Hallucinated correctness, self-serving tests |
+|                                  | Human TDD                              | Agent-era testing                                                |
+| -------------------------------- | -------------------------------------- | ---------------------------------------------------------------- |
+| **Cadence**                      | Micro-step red-green-refactor          | Test-first, then implement in larger batches                     |
+| **Why**                          | Compensates for limited working memory | Large context window tolerates bigger steps                      |
+| **Confidence signal**            | Watching each test go green            | Coverage, cyclomatic complexity / CRAP score, mutation kill-rate |
+| **Failure mode guarded against** | Losing track of the next small step    | Hallucinated correctness, self-serving tests                     |
 
 Do not force the three laws of TDD onto an agent in micro-steps — it's fighting the tool's strengths for no benefit. Do still write tests first; just let the agent write more of them before switching to implementation.
 
@@ -81,7 +81,7 @@ These hold regardless of who's typing:
 - Testability is a design signal, not a checkbox.
 - Mocks are still a smell; fakes are still preferred.
 - Pure functions are still the testability ideal — push I/O to the edges.
-- Tests are still specification, not verification after the fact — arguably *more* true now, since tests outlive the prompt that produced the code.
+- Tests are still specification, not verification after the fact — arguably _more_ true now, since tests outlive the prompt that produced the code.
 
 ---
 

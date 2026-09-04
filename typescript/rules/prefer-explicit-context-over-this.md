@@ -27,7 +27,9 @@ Calling subscribers by index binds `this` to the `subscribers` array, so any sub
 function pubsub() {
   const subscribers = [];
   return {
-    subscribe(fn) { subscribers.push(fn); },
+    subscribe(fn) {
+      subscribers.push(fn);
+    },
     publish(publication) {
       for (let i = 0; i < subscribers.length; i += 1) {
         subscribers[i](publication); // `this` === subscribers
@@ -46,14 +48,16 @@ bus.subscribe(function () {
 function pubsub() {
   const subscribers = [];
   return {
-    subscribe(fn) { subscribers.push(fn); },
+    subscribe(fn) {
+      subscribers.push(fn);
+    },
     publish(publication) {
-      subscribers.forEach(subscriber => subscriber(publication));
+      subscribers.forEach((subscriber) => subscriber(publication));
     },
   };
 }
 
-bus.subscribe(publication => {
+bus.subscribe((publication) => {
   console.log("Received:", publication); // can only use its argument
 });
 ```
@@ -90,10 +94,10 @@ calculateArea({ width: 5, height: 10 }); // 50, always
 
 ## Summary
 
-| Using `this` | this-free |
-|---|---|
+| Using `this`                                        | this-free                                                   |
+| --------------------------------------------------- | ----------------------------------------------------------- |
 | Invisible contract: "`this` is whatever created me" | Stated contract: "I need these args, I use only these args" |
-| Breaks on detach/reassign/callback | Works regardless of call site |
+| Breaks on detach/reassign/callback                  | Works regardless of call site                               |
 
 Often slightly more verbose, but radically more predictable — it removes a whole class of runtime bugs.
 

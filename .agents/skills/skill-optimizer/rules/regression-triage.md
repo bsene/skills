@@ -15,6 +15,7 @@ Prioritize regressions on high-frequency tasks and strict-format outputs.
 ## Classify
 
 Common causes:
+
 - ambiguous instruction collisions
 - optional language around mandatory behavior
 - over-broad rule that suppresses needed detail
@@ -31,9 +32,11 @@ Common causes:
 ## Example fix pattern
 
 Before:
+
 - "Include references when relevant"
 
 After:
+
 - "If task requests a `Refs:` footer, include `Refs: <url>` exactly and do not omit it."
 
 ## Exit criteria

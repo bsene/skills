@@ -12,23 +12,23 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Sect
 
 ## Quick Concept Index
 
-| Problem / Topic                              | Concept                        |
-| -------------------------------------------- | ------------------------------ |
-| Safely handle API responses / JSON.parse     | `unknown` vs `any`             |
-| Reuse an object without tying it to a class name | Structural typing          |
-| Explain why static types do not validate runtime data | Type erasure          |
-| Narrow a union based on runtime checks       | Type narrowing & refinement    |
-| Route on message type with different shapes  | Discriminated unions           |
-| Model entity lifecycle without invalid states | Make Illegal States Unrepresentable |
-| Fail at compile time when a case is missed   | Exhaustiveness / `assertNever` |
-| Create `Partial`, `Readonly`, or custom maps | Mapped types                   |
-| Unwrap `Promise<T>`, filter union members    | Conditional types + `infer`    |
+| Problem / Topic                                                 | Concept                                |
+| --------------------------------------------------------------- | -------------------------------------- |
+| Safely handle API responses / JSON.parse                        | `unknown` vs `any`                     |
+| Reuse an object without tying it to a class name                | Structural typing                      |
+| Explain why static types do not validate runtime data           | Type erasure                           |
+| Narrow a union based on runtime checks                          | Type narrowing & refinement            |
+| Route on message type with different shapes                     | Discriminated unions                   |
+| Model entity lifecycle without invalid states                   | Make Illegal States Unrepresentable    |
+| Fail at compile time when a case is missed                      | Exhaustiveness / `assertNever`         |
+| Create `Partial`, `Readonly`, or custom maps                    | Mapped types                           |
+| Unwrap `Promise<T>`, filter union members                       | Conditional types + `infer`            |
 | Why a callback with a wider parameter type is rejected (TS2345) | Variance (covariance / contravariance) |
-| Carry narrowing across function boundaries   | User-defined type guards       |
-| Prevent mixing `UserId` and `SessionToken`   | Type branding (nominal types)  |
-| Pair a type and utility under one import     | Companion object pattern       |
-| Preserve literal types in config objects     | `as const` / type widening     |
-| Last-resort override of TypeScript's checks  | Escape hatches (`as T`, `!`)   |
+| Carry narrowing across function boundaries                      | User-defined type guards               |
+| Prevent mixing `UserId` and `SessionToken`                      | Type branding (nominal types)          |
+| Pair a type and utility under one import                        | Companion object pattern               |
+| Preserve literal types in config objects                        | `as const` / type widening             |
+| Last-resort override of TypeScript's checks                     | Escape hatches (`as T`, `!`)           |
 
 ## Concepts
 
@@ -42,7 +42,7 @@ interface Empty {}
 type Anything = {};
 ```
 
-See *Type branding* below for the full example.
+See _Type branding_ below for the full example.
 
 **Type erasure** — Static `T` values do not survive into emitted JavaScript as runtime checks. Validate data that crosses a runtime boundary with Zod — see `../zod/SKILL.md`.
 
@@ -74,18 +74,34 @@ Fix — one type per state, shared base via intersection:
 ```typescript
 type AbstractTask = { id: string; title: string; createdAt: Date };
 
-type PendingTask    = AbstractTask & { status: "PENDING" };
+type PendingTask = AbstractTask & { status: "PENDING" };
 type InProgressTask = AbstractTask & { status: "IN_PROGRESS"; startedAt: Date };
-type CompletedTask  = AbstractTask & { status: "COMPLETED"; startedAt: Date; finishedAt: Date };
-type FailedTask     = AbstractTask & { status: "FAILED"; startedAt: Date; finishedAt: Date; error: string };
-type CancelledTask  = AbstractTask & { status: "CANCELLED"; cancelledBy: string; cancelledAt: Date };
+type CompletedTask = AbstractTask & {
+  status: "COMPLETED";
+  startedAt: Date;
+  finishedAt: Date;
+};
+type FailedTask = AbstractTask & {
+  status: "FAILED";
+  startedAt: Date;
+  finishedAt: Date;
+  error: string;
+};
+type CancelledTask = AbstractTask & {
+  status: "CANCELLED";
+  cancelledBy: string;
+  cancelledAt: Date;
+};
 
-type Task = PendingTask | InProgressTask | CompletedTask | FailedTask | CancelledTask;
+type Task =
+  PendingTask | InProgressTask | CompletedTask | FailedTask | CancelledTask;
 
 function handleTask(task: Task): void {
   switch (task.status) {
     case "COMPLETED":
-      console.log(`Done in ${task.finishedAt.getTime() - task.startedAt.getTime()}ms`);
+      console.log(
+        `Done in ${task.finishedAt.getTime() - task.startedAt.getTime()}ms`,
+      );
       break;
     case "FAILED":
       console.error(task.error);
@@ -101,8 +117,7 @@ function handleTask(task: Task): void {
 
 ```typescript
 type Shape =
-  | { kind: "circle"; radius: number }
-  | { kind: "square"; side: number };
+  { kind: "circle"; radius: number } | { kind: "square"; side: number };
 
 function assertNever(x: never): never {
   throw new Error(`Unhandled case: ${JSON.stringify(x)}`);
@@ -128,16 +143,18 @@ See [Exhaustiveness checking](https://www.typescriptlang.org/docs/handbook/2/nar
 
 **User-defined type guards** — Return `value is T` to carry narrowing across function boundaries, where TypeScript can't infer the refinement. See [User-Defined Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates).
 
-**Variance** — Functions are covariant in their return type and contravariant in their parameters, so a handler with a narrower parameter type is not assignable where a wider one is expected (the classic TS2345). Under [strictFunctionTypes](https://www.typescriptlang.org/tsconfig/#strictFunctionTypes) this is checked only for function-*property* syntax — method syntax stays bivariant — so declare callback-typed options as properties. The docs demonstrate both by example but never name or generalize the rule.
+**Variance** — Functions are covariant in their return type and contravariant in their parameters, so a handler with a narrower parameter type is not assignable where a wider one is expected (the classic TS2345). Under [strictFunctionTypes](https://www.typescriptlang.org/tsconfig/#strictFunctionTypes) this is checked only for function-_property_ syntax — method syntax stays bivariant — so declare callback-typed options as properties. The docs demonstrate both by example but never name or generalize the rule.
 
 **Type branding** — Prevents mixing structurally identical types (`UserId` vs `SessionToken`) at zero runtime cost. Use `unique symbol` for full nominal safety.
 
 ```typescript
 declare const _brand: unique symbol;
-type UserId      = string & { readonly [_brand]: "UserId" };
+type UserId = string & { readonly [_brand]: "UserId" };
 type SessionToken = string & { readonly [_brand]: "SessionToken" };
 
-function createUserId(id: string): UserId { return id as UserId; }
+function createUserId(id: string): UserId {
+  return id as UserId;
+}
 // createUserId(rawToken)   → compile error — token ≠ userId
 ```
 
@@ -151,11 +168,11 @@ function createUserId(id: string): UserId { return id as UserId; }
 
 ## Interface vs Type Alias
 
-| Use `interface` when | Use `type` when |
-|---|---|
-| Defining an object shape others will `extend` or `implement` | Unions and intersections |
-| You need declaration merging (augmenting third-party types) | Mapped/conditional/utility types |
-| Modeling a class contract | Simple semantic alias (`type UserId = string`) |
+| Use `interface` when                                         | Use `type` when                                |
+| ------------------------------------------------------------ | ---------------------------------------------- |
+| Defining an object shape others will `extend` or `implement` | Unions and intersections                       |
+| You need declaration merging (augmenting third-party types)  | Mapped/conditional/utility types               |
+| Modeling a class contract                                    | Simple semantic alias (`type UserId = string`) |
 
 ```typescript
 // interface — extendable contract
@@ -183,8 +200,12 @@ Do NOT prefix interfaces with `I`. See `../rules/no-interface-prefix.md`.
 declare function parse<T>(name: string): T;
 
 // Good — T appears in both parameter and return (meaningful constraint)
-function identity<T>(x: T): T { return x; }
-function reverse<T>(items: T[]): T[] { return [...items].reverse(); }
+function identity<T>(x: T): T {
+  return x;
+}
+function reverse<T>(items: T[]): T[] {
+  return [...items].reverse();
+}
 ```
 
 Use descriptive names for multi-parameter generics:
@@ -202,18 +223,22 @@ class Dictionary<TKey, TValue> {
 
 ```typescript
 enum Status {
-  Inactive = 1,  // start at 1 — avoids falsy 0 bugs
-  Active   = 2,
-  Pending  = 3,
+  Inactive = 1, // start at 1 — avoids falsy 0 bugs
+  Active = 2,
+  Pending = 3,
 }
 
-enum DocumentType {            // string enums — better logs and API interop
-  Passport       = 'passport',
-  Visa           = 'passport_visa',
-  DriversLicense = 'drivers_license',
+enum DocumentType {
+  // string enums — better logs and API interop
+  Passport = "passport",
+  Visa = "passport_visa",
+  DriversLicense = "drivers_license",
 }
 
-const enum Direction { Up = 'UP', Down = 'DOWN' }  // zero runtime cost (inlined)
+const enum Direction {
+  Up = "UP",
+  Down = "DOWN",
+} // zero runtime cost (inlined)
 ```
 
 ---
@@ -225,7 +250,7 @@ Avoid initializing an empty object and adding properties later — TypeScript in
 ```typescript
 // Bad
 let config = {};
-config.host = "localhost";  // Error: property 'host' does not exist on type '{}'
+config.host = "localhost"; // Error: property 'host' does not exist on type '{}'
 
 // Good — initialize all properties together
 const config = { host: "localhost", port: 3000 };
@@ -236,25 +261,24 @@ let config: Config = { host: "localhost", port: 3000 };
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/typescript-001-illegal-states.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/typescript-001-illegal-states.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 67%     | 83%     | +16%   |
-| claude-haiku-4-5  | 67%     | 83%     | +16%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 67%     | 83%  | +16%  |
+| claude-haiku-4-5  | 67%     | 83%  | +16%  |
 
 > **PASS (run 2026-08-31)**. Gains on all models — the 2026-06-14 SOFT PASS ceiling effect is partly overcome. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
 
 Scenario: `.benchmarks/scenarios/typescript-002-state-transitions.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/typescript-002-state-transitions.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 83%     | 83%     | +0%   |
-| claude-sonnet-4-6 | 83%     | 83%     | +0%   |
-| claude-haiku-4-5  | 67%     | 83%     | +16%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 83%  | +0%   |
+| claude-sonnet-4-6 | 83%     | 83%  | +0%   |
+| claude-haiku-4-5  | 67%     | 83%  | +16%  |
 
 > **SOFT PASS (run 2026-08-31)**. Haiku +16 (67→83); opus at ceiling. Sonnet's 2026-06-25 N=3 −5% did not reproduce (0 here). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

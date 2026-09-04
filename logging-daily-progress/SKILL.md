@@ -69,7 +69,7 @@ Read the last ~50 lines of the log to see what's already there. If an entry for 
 
 ### 5. Draft Impact and Learnings (this is the hard part)
 
-Commits alone are not impact. The user did things that commits only hint at — shipped a fix, unblocked a teammate, learned a pattern. Derive Impact and Learnings by reading commit subjects *and* looking at the diff when the subject is cryptic.
+Commits alone are not impact. The user did things that commits only hint at — shipped a fix, unblocked a teammate, learned a pattern. Derive Impact and Learnings by reading commit subjects _and_ looking at the diff when the subject is cryptic.
 
 Guidelines for good bullets:
 
@@ -108,15 +108,14 @@ The skill supports three cadences. Pick based on how the user phrases the reques
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/logging-daily-progress-001-week-recap.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/logging-daily-progress-001-week-recap.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 0%      | 100%    | +100%   |
-| claude-sonnet-4-6 | 17%     | 83%     | +66%   |
-| claude-haiku-4-5  | 33%     | 100%    | +67%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 0%      | 100% | +100% |
+| claude-sonnet-4-6 | 17%     | 83%  | +66%  |
+| claude-haiku-4-5  | 33%     | 100% | +67%  |
 
 > **PASS (run 2026-08-31)**. Standout of the cycle: without-skill baselines collapse on the week recap (17–33%); with-skill all models reach 83–100%. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

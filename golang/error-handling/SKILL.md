@@ -20,13 +20,13 @@ Errors are values, not exceptions. They flow through return values, are inspecte
 
 ## Error Strategy Decision Table
 
-| Situation | Strategy | Example |
-|---|---|---|
-| Expected failure (file not found, bad input) | Return `error` | `return fmt.Errorf("open %s: %w", path, err)` |
-| Caller needs to distinguish error kinds | Sentinel or custom type | `var ErrNotFound = errors.New("not found")` |
-| Adding context (see Wrapping vs Formatting) | Wrap `%w` / format `%v` | `fmt.Errorf("loading config: %w", err)` |
-| Truly unrecoverable (programmer bug) | `panic` | Nil map write, index out of bounds |
-| Library boundary cleanup | `recover` in deferred func | HTTP middleware, plugin host |
+| Situation                                    | Strategy                   | Example                                       |
+| -------------------------------------------- | -------------------------- | --------------------------------------------- |
+| Expected failure (file not found, bad input) | Return `error`             | `return fmt.Errorf("open %s: %w", path, err)` |
+| Caller needs to distinguish error kinds      | Sentinel or custom type    | `var ErrNotFound = errors.New("not found")`   |
+| Adding context (see Wrapping vs Formatting)  | Wrap `%w` / format `%v`    | `fmt.Errorf("loading config: %w", err)`       |
+| Truly unrecoverable (programmer bug)         | `panic`                    | Nil map write, index out of bounds            |
+| Library boundary cleanup                     | `recover` in deferred func | HTTP middleware, plugin host                  |
 
 ---
 
@@ -44,10 +44,10 @@ Any type implementing `Error() string` is an error. This simplicity is the entir
 
 ## Wrapping vs Formatting
 
-| Verb | Preserves chain? | `errors.Is`/`As` work? | Use when |
-|---|---|---|---|
-| `%w` | Yes | Yes | Caller may need to match the cause |
-| `%v` | No | No | Adding context, hiding implementation details |
+| Verb | Preserves chain? | `errors.Is`/`As` work? | Use when                                      |
+| ---- | ---------------- | ---------------------- | --------------------------------------------- |
+| `%w` | Yes              | Yes                    | Caller may need to match the cause            |
+| `%v` | No               | No                     | Adding context, hiding implementation details |
 
 **Rule:** Wrap (`%w`) by default. Format (`%v`) only when you explicitly want to hide the cause from callers (e.g., at package boundaries).
 
@@ -84,20 +84,20 @@ if errors.As(err, &ve) {
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| `_ = doSomething()` | Silent failure | Handle every error, or add `//nolint` with justification |
-| `panic` for expected failures | Crashes the program | Return `error` — panic is for programmer bugs only |
-| `return err` without context | Error message is cryptic at the top of the chain | `return fmt.Errorf("doing X: %w", err)` |
-| Stuttering: `"failed to open file: open /x: no such file"` | Redundant prefixes | Add context about *your* operation, not the callee's |
-| Comparing error strings | Fragile, breaks on reword | Use `errors.Is` for sentinel errors, `errors.As` for types |
+| Anti-pattern                                               | Problem                                          | Fix                                                        |
+| ---------------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------------------- |
+| `_ = doSomething()`                                        | Silent failure                                   | Handle every error, or add `//nolint` with justification   |
+| `panic` for expected failures                              | Crashes the program                              | Return `error` — panic is for programmer bugs only         |
+| `return err` without context                               | Error message is cryptic at the top of the chain | `return fmt.Errorf("doing X: %w", err)`                    |
+| Stuttering: `"failed to open file: open /x: no such file"` | Redundant prefixes                               | Add context about _your_ operation, not the callee's       |
+| Comparing error strings                                    | Fragile, breaks on reword                        | Use `errors.Is` for sentinel errors, `errors.As` for types |
 
 ---
 
 ## Read On Demand
 
-| Read When | File |
-|---|---|
+| Read When                                                                                 | File                                           |
+| ----------------------------------------------------------------------------------------- | ---------------------------------------------- |
 | Full patterns: sentinel errors, custom types, wrapping chains, panic/recover, multi-error | [Error Patterns](references/error-patterns.md) |
 
 ---

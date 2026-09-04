@@ -6,7 +6,7 @@ Hurl runs HTTP requests defined in plain `.hurl` files. One file = one scenario.
 
 ## File Anatomy
 
-```hurl
+````hurl
 # Comment
 METHOD url
 [Headers]
@@ -15,12 +15,13 @@ header-name: value
 [Body]
 ```json
 { "key": "value" }
-```
+````
 
 HTTP expected-status
 [Asserts]
 jsonpath "$.field" == "value"
-```
+
+````
 
 ---
 
@@ -33,11 +34,11 @@ GET {{base_url}}/health
 HTTP 200
 [Asserts]
 jsonpath "$.status" == "ok"
-```
+````
 
 ### `auth.hurl`
 
-```hurl
+````hurl
 # Login — capture token for downstream requests
 POST {{base_url}}/auth/login
 Content-Type: application/json
@@ -46,7 +47,8 @@ Content-Type: application/json
   "email": "{{test_email}}",
   "password": "{{test_password}}"
 }
-```
+````
+
 HTTP 200
 [Captures]
 token: jsonpath "$.token"
@@ -54,12 +56,14 @@ token: jsonpath "$.token"
 jsonpath "$.token" isString
 
 # Authenticated request using captured token
+
 GET {{base_url}}/me
 Authorization: Bearer {{token}}
 HTTP 200
 [Asserts]
 jsonpath "$.email" == "{{test_email}}"
-```
+
+````
 
 ### `crud.hurl`
 
@@ -70,7 +74,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 ```json
 { "name": "Smoke Resource" }
-```
+````
+
 HTTP 201
 [Captures]
 resource_id: jsonpath "$.id"
@@ -78,6 +83,7 @@ resource_id: jsonpath "$.id"
 jsonpath "$.name" == "Smoke Resource"
 
 # Read
+
 GET {{base_url}}/resources/{{resource_id}}
 Authorization: Bearer {{token}}
 HTTP 200
@@ -85,12 +91,14 @@ HTTP 200
 jsonpath "$.id" == {{resource_id}}
 
 # List
+
 GET {{base_url}}/resources
 Authorization: Bearer {{token}}
 HTTP 200
 [Asserts]
 jsonpath "$" isCollection
-```
+
+````
 
 ### `errors.hurl`
 
@@ -104,7 +112,7 @@ jsonpath "$.error" isString
 # Bad auth → 401
 GET {{base_url}}/me
 HTTP 401
-```
+````
 
 ---
 
@@ -119,6 +127,7 @@ hurl --variables-file smoke-tests/vars.env smoke-tests/*.hurl
 ```
 
 `vars.env`:
+
 ```
 base_url=http://localhost:3000
 test_email=smoke@example.com
@@ -193,17 +202,20 @@ hurl --test --very-verbose smoke-tests/auth.hurl
 
 ### Good: Single assertion, broad path
 
-```hurl
+````hurl
 POST {{base_url}}/payments
 Content-Type: application/json
 ```json
 { "amount": 100 }
-```
+````
+
 HTTP 200
 [Asserts]
 jsonpath "$.success" == true
+
 # Don't assert audit logs, internal state, or DB rows
-```
+
+````
 
 ### Bad: Multiple unrelated assertions, brittle IDs
 
@@ -215,7 +227,7 @@ jsonpath "$.success" == true
 jsonpath "$.invoiceId" == 42          # hardcoded ID breaks on clean DB
 jsonpath "$.auditLog[0].action" == "charge"  # testing internals
 jsonpath "$.notification.sentAt" isString    # unrelated concern
-```
+````
 
 ---
 

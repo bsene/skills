@@ -39,32 +39,32 @@ Anti-pattern catalog with before/after code for each numbered item above: `refer
 
 ## SOLID — quick reference
 
-| Principle | Rule | Signal it's violated | Fix |
-|---|---|---|---|
-| **SRP** | One reason to change | Class handles auth, hashing, and persistence | Split into `Validator` / `Hasher` / `Repository` |
-| **OCP** | Extend via subclass; don't modify proven code | Adding a new format requires editing the existing formatter | Add a subclass without touching the base |
-| **LSP** | Subtypes substitutable without surprising callers | `instanceof` checks in calling code; subclass throws "not supported" | Split into separate interfaces instead of one class hierarchy that only partially fits |
-| **ISP** | Many focused interfaces over one fat one | Read-only client forced to implement write methods | Slice the fat interface by capability |
-| **DIP** | Depend on abstractions, not concretions | A service directly instantiates a concrete client (`new SendgridClient()`) | Inject an interface/abstract transport instead |
+| Principle | Rule                                              | Signal it's violated                                                       | Fix                                                                                    |
+| --------- | ------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **SRP**   | One reason to change                              | Class handles auth, hashing, and persistence                               | Split into `Validator` / `Hasher` / `Repository`                                       |
+| **OCP**   | Extend via subclass; don't modify proven code     | Adding a new format requires editing the existing formatter                | Add a subclass without touching the base                                               |
+| **LSP**   | Subtypes substitutable without surprising callers | `instanceof` checks in calling code; subclass throws "not supported"       | Split into separate interfaces instead of one class hierarchy that only partially fits |
+| **ISP**   | Many focused interfaces over one fat one          | Read-only client forced to implement write methods                         | Slice the fat interface by capability                                                  |
+| **DIP**   | Depend on abstractions, not concretions           | A service directly instantiates a concrete client (`new SendgridClient()`) | Inject an interface/abstract transport instead                                         |
 
 Full annotated TypeScript examples for all five: `references/solid.md`
 
 ## Design patterns — quick selector
 
-| Problem | Pattern |
-|---|---|
-| One shared instance (DB, config, logger) | **Singleton** |
-| Swap algorithms at runtime | **Strategy** |
-| Create families of related objects | **Abstract Factory** |
-| Create objects without naming the concrete class | **Factory** |
-| Construct complex objects step-by-step | **Builder** |
-| Pair a type and utility object under one name | **Companion Object** |
-| Notify subscribers on state change | **Observer** |
-| Add cross-cutting behavior non-invasively | **Decorator** |
-| Intercept/validate/log property access | **Proxy** |
-| Share behavior across unrelated classes | **Mixin** |
-| Reuse instances to reduce memory | **Flyweight** |
-| Decouple via a central hub | **Mediator** |
+| Problem                                          | Pattern              |
+| ------------------------------------------------ | -------------------- |
+| One shared instance (DB, config, logger)         | **Singleton**        |
+| Swap algorithms at runtime                       | **Strategy**         |
+| Create families of related objects               | **Abstract Factory** |
+| Create objects without naming the concrete class | **Factory**          |
+| Construct complex objects step-by-step           | **Builder**          |
+| Pair a type and utility object under one name    | **Companion Object** |
+| Notify subscribers on state change               | **Observer**         |
+| Add cross-cutting behavior non-invasively        | **Decorator**        |
+| Intercept/validate/log property access           | **Proxy**            |
+| Share behavior across unrelated classes          | **Mixin**            |
+| Reuse instances to reduce memory                 | **Flyweight**        |
+| Decouple via a central hub                       | **Mediator**         |
 
 When answering a pattern question, cover: what it is (1 sentence), when to use / not use, a minimal runnable
 TypeScript example, trade-offs, and any TS-specific caveat (e.g. standard vs `experimentalDecorators`).
@@ -92,11 +92,11 @@ Full rule-by-rule checklist with TS/NestJS examples and gotchas: `references/obj
 
 ## Testing implications
 
-| Pattern | Setup | Testing |
-|---|---|---|
-| Pure functions | Pass args | Isolated, no mocks |
-| Stateful classes | Factories, mocks | Tangled |
-| Inheritance chains | Heavy fixtures | Nightmare |
+| Pattern            | Setup            | Testing            |
+| ------------------ | ---------------- | ------------------ |
+| Pure functions     | Pass args        | Isolated, no mocks |
+| Stateful classes   | Factories, mocks | Tangled            |
+| Inheritance chains | Heavy fixtures   | Nightmare          |
 
 ## Reference files
 
@@ -109,15 +109,14 @@ Full rule-by-rule checklist with TS/NestJS examples and gotchas: `references/obj
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/solid-001-god-class.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/solid-001-god-class.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 100%    | +0%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 100% | +0%   |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **SOFT PASS (run 2026-08-31)**. Sonnet +17; opus/haiku at ceiling on god-class decomposition. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

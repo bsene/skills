@@ -10,6 +10,7 @@ metadata:
 Use this skill when creating or updating `AGENTS.md` for a repository.
 
 Use it especially when:
+
 - the current `AGENTS.md` is long, generic, or stale
 - agents repeatedly make the same avoidable mistakes
 - repository workflows changed and agent guidance needs pruning
@@ -30,11 +31,13 @@ Before adding any line, ask:
 ### What earns a line
 
 Include only guidance that is:
+
 1. **Non-discoverable** from repository files alone
 2. **Operationally significant** (changes commands, outcomes, or safety)
 3. **Actionable** (specific enough to execute)
 
 Typical examples:
+
 - Non-standard tooling choices (e.g. use `uv` instead of `pip`)
 - Command caveats (e.g. tests must run with `--no-cache` due to fixture behavior)
 - Hidden constraints/landmines (deprecated directories still imported in production)
@@ -43,6 +46,7 @@ Typical examples:
 ### What to remove or avoid
 
 Do **not** include:
+
 - Tech stack summaries
 - Directory structure overviews
 - Architecture descriptions agents can infer from code
@@ -53,6 +57,7 @@ Do **not** include:
 ### Recommended structure
 
 Prefer short, high-signal sections such as:
+
 - `Scope & routing` (which areas need separate/module-local AGENTS files)
 - `Non-discoverable commands`
 - `Landmines / do-not-touch areas`
@@ -77,6 +82,7 @@ If `AGENTS.md` exists, improve it incrementally instead of replacing it blindly.
 `AGENTS.md` is temporary guidance, not permanent configuration.
 
 When recurring issues appear:
+
 1. Prefer fixing the root cause in code/tooling (lint rule, test, script, structure)
 2. Keep only the minimum instruction needed until the root cause is solved
 3. Prune stale instructions aggressively
@@ -84,6 +90,7 @@ When recurring issues appear:
 ### Quality gate before finalizing
 
 For each line in `AGENTS.md`, verify:
+
 - Is it non-discoverable?
 - Is it still accurate today?
 - Does it materially reduce mistakes/cost/time?
@@ -92,15 +99,14 @@ Delete any line that fails one of these checks.
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/init-001-agents-md-prune.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/init-001-agents-md-prune.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 100%    | 83%     | −17%   |
-| claude-sonnet-4-6 | 67%     | 83%     | +16%   |
-| claude-haiku-4-5  | 83%     | 100%    | +17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 100%    | 83%  | −17%  |
+| claude-sonnet-4-6 | 67%     | 83%  | +16%  |
+| claude-haiku-4-5  | 83%     | 100% | +17%  |
 
 > **NEG (run 2026-08-31)**. Opus −17 (100→83): the durable-tooling-fix advice lives in Maintenance mindset but is buried under the removal list (ambiguous collision). Sonnet +16 / haiku +17 show floor value. One salience edit deferred to the follow-up list (cap reached). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

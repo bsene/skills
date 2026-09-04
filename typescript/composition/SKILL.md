@@ -17,31 +17,30 @@ Source: Eric Elliott's [Composing Software](https://medium.com/javascript-scene/
 3. **Apply the pattern** — read the matching reference file for the concrete technique.
 4. **Verify** — can the new unit be tested without mocks? Can it be reused without importing its collaborators?
 
-
-**Central thesis**: all software design is composition — breaking problems down into small pieces and composing solutions back up. The choice of *how* to compose shapes everything about maintainability, testability, and flexibility.
+**Central thesis**: all software design is composition — breaking problems down into small pieces and composing solutions back up. The choice of _how_ to compose shapes everything about maintainability, testability, and flexibility.
 
 ---
 
 ## Core Vocabulary
 
-| Term | Definition |
-|---|---|
-| **Pure function** | Same input → same output, no side effects |
-| **Composition** | Combining small functions into a larger one by feeding each output as the next input |
-| **Currying** | Transform `(a, b) => c` into `a => b => c` |
-| **Partial application** | Fix some arguments, return a function for the rest |
-| **Point-free** | Define functions without mentioning their arguments |
+| Term                    | Definition                                                                           |
+| ----------------------- | ------------------------------------------------------------------------------------ |
+| **Pure function**       | Same input → same output, no side effects                                            |
+| **Composition**         | Combining small functions into a larger one by feeding each output as the next input |
+| **Currying**            | Transform `(a, b) => c` into `a => b => c`                                           |
+| **Partial application** | Fix some arguments, return a function for the rest                                   |
+| **Point-free**          | Define functions without mentioning their arguments                                  |
 
 ---
 
 ## Read On Demand
 
-| Read When | Section |
-|---|---|
-| Writing pure functions, composing with pipe/compose, debugging pipelines | [Pure Functions & Composition](#pure-functions--composition) |
-| Currying, partial application, data-last convention, point-free style | [Currying & Point-Free](#currying--point-free-style) |
-| Factory functions, functional mixins, object composition patterns | [Object Composition & Factories](#object-composition--factories) |
-| Aggregating/merging/reducing data — merge, combine, shopping carts, permissions, counters | [Monoids](#monoids) |
+| Read When                                                                                 | Section                                                          |
+| ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Writing pure functions, composing with pipe/compose, debugging pipelines                  | [Pure Functions & Composition](#pure-functions--composition)     |
+| Currying, partial application, data-last convention, point-free style                     | [Currying & Point-Free](#currying--point-free-style)             |
+| Factory functions, functional mixins, object composition patterns                         | [Object Composition & Factories](#object-composition--factories) |
+| Aggregating/merging/reducing data — merge, combine, shopping carts, permissions, counters | [Monoids](#monoids)                                              |
 
 ---
 
@@ -60,14 +59,14 @@ When designing a new abstraction, ask:
 
 ## Anti-patterns
 
-| Anti-pattern | Problem | Fix |
-|---|---|---|
-| Class inheritance | Tight coupling, fragile base class, gorilla/banana | Functional mixins or factory composition |
-| Mutation of shared state | Hidden bugs, concurrency issues | Return new objects; use spread |
-| Side effects mixed with logic | Hard to test, unpredictable | Isolate effects to system edges |
-| Multi-argument functions in pipelines | Can't compose without wrapper | Curry + data-last convention |
-| Writing tests after the fact with mocks | Mocks reveal coupling; tests don't shape design | Write pure functions; integration-test I/O |
-| Chaining array methods for large data | Intermediate allocations at each step | Single-pass `reduce`, but never with a spread accumulator — see `../rules/avoid-intermediate-arrays.md` |
+| Anti-pattern                            | Problem                                            | Fix                                                                                                     |
+| --------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Class inheritance                       | Tight coupling, fragile base class, gorilla/banana | Functional mixins or factory composition                                                                |
+| Mutation of shared state                | Hidden bugs, concurrency issues                    | Return new objects; use spread                                                                          |
+| Side effects mixed with logic           | Hard to test, unpredictable                        | Isolate effects to system edges                                                                         |
+| Multi-argument functions in pipelines   | Can't compose without wrapper                      | Curry + data-last convention                                                                            |
+| Writing tests after the fact with mocks | Mocks reveal coupling; tests don't shape design    | Write pure functions; integration-test I/O                                                              |
+| Chaining array methods for large data   | Intermediate allocations at each step              | Single-pass `reduce`, but never with a spread accumulator — see `../rules/avoid-intermediate-arrays.md` |
 
 ---
 
@@ -90,6 +89,7 @@ Classes (only when a framework forces it)
 ## Pure Functions & Composition
 
 A pure function:
+
 1. Given the same input, always returns the same output
 2. Produces no side effects
 
@@ -107,7 +107,10 @@ const save = user => db.save(user);             // side effect
 
 ```js
 // Bad — mutation
-const addTag = (post, tag) => { post.tags.push(tag); return post; };
+const addTag = (post, tag) => {
+  post.tags.push(tag);
+  return post;
+};
 
 // Good — new object
 const addTag = (post, tag) => ({ ...post, tags: [...post.tags, tag] });
@@ -122,7 +125,10 @@ Composition chains functions so that data flows through each in sequence: `f ∘
 ### `compose` (right-to-left)
 
 ```js
-const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+const compose =
+  (...fns) =>
+  (x) =>
+    fns.reduceRight((v, f) => f(v), x);
 
 const transform = compose(trim, toLowerCase, stripHTML);
 // equivalent to: x => trim(toLowerCase(stripHTML(x)))
@@ -131,7 +137,10 @@ const transform = compose(trim, toLowerCase, stripHTML);
 ### `pipe` (left-to-right — preferred for readability)
 
 ```js
-const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
+const pipe =
+  (...fns) =>
+  (x) =>
+    fns.reduce((v, f) => f(v), x);
 
 const transform = pipe(stripHTML, toLowerCase, trim);
 // reads in execution order, top to bottom
@@ -140,16 +149,16 @@ const transform = pipe(stripHTML, toLowerCase, trim);
 ### Debugging pipelines with `trace`
 
 ```js
-const trace = label => value => {
+const trace = (label) => (value) => {
   console.log(`${label}:`, value);
   return value;
 };
 
 const transform = pipe(
   stripHTML,
-  trace('after stripHTML'),
+  trace("after stripHTML"),
   toLowerCase,
-  trace('after toLowerCase'),
+  trace("after toLowerCase"),
   trim,
 );
 ```
@@ -157,7 +166,10 @@ const transform = pipe(
 ### Composing async operations
 
 ```js
-const asyncPipe = (...fns) => x => fns.reduce((p, f) => p.then(f), Promise.resolve(x));
+const asyncPipe =
+  (...fns) =>
+  (x) =>
+    fns.reduce((p, f) => p.then(f), Promise.resolve(x));
 
 const processOrder = asyncPipe(validateOrder, chargeCard, sendConfirmation);
 ```
@@ -173,29 +185,32 @@ const processOrder = asyncPipe(validateOrder, chargeCard, sendConfirmation);
 **Currying** transforms a multi-argument function into a chain of unary functions:
 
 ```js
-const add = a => b => a + b;
-add(2)(3);       // 5
+const add = (a) => (b) => a + b;
+add(2)(3); // 5
 
-const multiply = a => b => a * b;
-const double   = multiply(2);   // partial application — `a` is fixed
-const triple   = multiply(3);
+const multiply = (a) => (b) => a * b;
+const double = multiply(2); // partial application — `a` is fixed
+const triple = multiply(3);
 ```
 
 The two are distinct:
 
-| | Currying | Partial application |
-|---|---|---|
-| Shape | `f(a)(b)(c)` — chain of unary calls | `g(a, b)` then call rest later |
+|         | Currying                                  | Partial application                                      |
+| ------- | ----------------------------------------- | -------------------------------------------------------- |
+| Shape   | `f(a)(b)(c)` — chain of unary calls       | `g(a, b)` then call rest later                           |
 | Trigger | Runs only once all args arrive, in stages | Fixes a subset of args **now**, returns a specialized fn |
-| Goal | Compose unary functions | Pre-configure a function for reuse |
+| Goal    | Compose unary functions                   | Pre-configure a function for reuse                       |
 
 A curried function supports partial application for free (each call fixes the next arg). For a non-curried, multi-arg function, fix leading args with a generic helper:
 
 ```js
-const partial = (fn, ...fixed) => (...rest) => fn(...fixed, ...rest);
+const partial =
+  (fn, ...fixed) =>
+  (...rest) =>
+    fn(...fixed, ...rest);
 
-const logError = partial(logger, "ERROR");   // logger(level, message)
-logError("disk full");                       // logger("ERROR", "disk full")
+const logError = partial(logger, "ERROR"); // logger(level, message)
+logError("disk full"); // logger("ERROR", "disk full")
 ```
 
 This generalizes specialization — it removes the boilerplate of hand-written wrappers like `const logError = msg => logger("ERROR", msg)`. Name it `partial`, not `curry`: it fixes a subset of args in one step rather than building a staged unary chain.
@@ -204,24 +219,24 @@ This generalizes specialization — it removes the boilerplate of hand-written w
 
 ```js
 // Data-last: map(fn) returns a function waiting for the array
-const map    = fn => arr => arr.map(fn);
-const filter = fn => arr => arr.filter(fn);
+const map = (fn) => (arr) => arr.map(fn);
+const filter = (fn) => (arr) => arr.filter(fn);
 
-const doubleAll   = map(x => x * 2);
-const onlyEvens   = filter(x => x % 2 === 0);
+const doubleAll = map((x) => x * 2);
+const onlyEvens = filter((x) => x % 2 === 0);
 
 const process = pipe(onlyEvens, doubleAll);
-process([1, 2, 3, 4]);  // [4, 8]
+process([1, 2, 3, 4]); // [4, 8]
 ```
 
 **Point-free style** — define specialized functions by partially applying, without naming the data argument:
 
 ```js
 // Not point-free
-const incAll = arr => arr.map(x => x + 1);
+const incAll = (arr) => arr.map((x) => x + 1);
 
 // Point-free
-const inc    = add(1);
+const inc = add(1);
 const incAll = map(inc);
 ```
 
@@ -247,10 +262,14 @@ const collection = (acc, item) => [...acc, item];
 Forming objects by merging properties. Last-in wins on collision.
 
 ```js
-const withTimestamps = o => ({ createdAt: Date.now(), updatedAt: Date.now(), ...o });
-const withId         = o => ({ id: crypto.randomUUID(), ...o });
+const withTimestamps = (o) => ({
+  createdAt: Date.now(),
+  updatedAt: Date.now(),
+  ...o,
+});
+const withId = (o) => ({ id: crypto.randomUUID(), ...o });
 
-const createRecord = data => pipe(withId, withTimestamps)(data);
+const createRecord = (data) => pipe(withId, withTimestamps)(data);
 ```
 
 ### Delegation
@@ -258,21 +277,34 @@ const createRecord = data => pipe(withId, withTimestamps)(data);
 Objects forwarding requests through the prototype chain.
 
 ```js
-const animal = { breathe() { return 'breathing'; } };
-const dog    = Object.assign(Object.create(animal), { bark() { return 'woof'; } });
+const animal = {
+  breathe() {
+    return "breathing";
+  },
+};
+const dog = Object.assign(Object.create(animal), {
+  bark() {
+    return "woof";
+  },
+});
 ```
 
 A factory function is any non-class function that returns a new object. Prefer factories over classes in public APIs.
 
 ```js
 // Class — leaks `new` into the API; refactoring is a breaking change
-class User { constructor(name) { this.name = name; } }
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
 
 // Factory — no `new`, same usage, easier to evolve
-const createUser = ({ name, role = 'viewer' } = {}) => ({ name, role });
+const createUser = ({ name, role = "viewer" } = {}) => ({ name, role });
 ```
 
 **Why factories win:**
+
 - No `new` keyword leaking into call sites
 - Can return any object type, including from object pools
 - `instanceof` is unreliable across execution contexts; factories avoid the need for it
@@ -283,25 +315,35 @@ const createUser = ({ name, role = 'viewer' } = {}) => ({ name, role });
 Composable factory functions that add capabilities through a pipeline:
 
 ```js
-const withFlying = o => {
+const withFlying = (o) => {
   let isFlying = false;
   return {
     ...o,
-    fly()  { isFlying = true;  return this; },
-    land() { isFlying = false; return this; },
-    get flying() { return isFlying; },
+    fly() {
+      isFlying = true;
+      return this;
+    },
+    land() {
+      isFlying = false;
+      return this;
+    },
+    get flying() {
+      return isFlying;
+    },
   };
 };
 
-const withQuacking = sound => o => ({
+const withQuacking = (sound) => (o) => ({
   ...o,
-  quack() { return sound; },
+  quack() {
+    return sound;
+  },
 });
 
-const createDuck = sound => pipe(withFlying, withQuacking(sound))({});
+const createDuck = (sound) => pipe(withFlying, withQuacking(sound))({});
 
-const duck = createDuck('quack');
-duck.fly().quack();  // 'quack'
+const duck = createDuck("quack");
+duck.fly().quack(); // 'quack'
 ```
 
 **Use mixins for**: has-a / can-do relationships (not is-a). Great for cross-cutting concerns like logging, event emission, validation.
@@ -345,7 +387,7 @@ const stringConcat: Monoid<string> = { empty: "", combine: (a, b) => a + b };
 
 const arrayConcat = <T>(): Monoid<T[]> => ({
   empty: [],
-  combine: (a, b) => [...a, ...b],  // ponytail: fixed two-array combine, not a per-element reducer accumulator
+  combine: (a, b) => [...a, ...b], // ponytail: fixed two-array combine, not a per-element reducer accumulator
 });
 
 const boolAnd: Monoid<boolean> = { empty: true, combine: (a, b) => a && b };
@@ -365,7 +407,7 @@ Associativity guarantees grouping order doesn't matter — hence Map-Reduce: spl
 function parallelFold<T>(monoid: Monoid<T>, items: T[], chunks = 4): T {
   const size = Math.ceil(items.length / chunks);
   const partials = Array.from({ length: chunks }, (_, i) =>
-    fold(monoid, items.slice(i * size, (i + 1) * size))
+    fold(monoid, items.slice(i * size, (i + 1) * size)),
   );
   return fold(monoid, partials);
 }
@@ -464,15 +506,14 @@ function mapMonoid<K, V>(mv: Monoid<V>): Monoid<Map<K, V>> {
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/composing-software-001-compose-vs-inherit.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/composing-software-001-compose-vs-inherit.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 33%     | 67%     | +34%   |
-| claude-sonnet-4-6 | 50%     | 83%     | +33%   |
-| claude-haiku-4-5  | 50%     | 100%    | +50%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 33%     | 67%  | +34%  |
+| claude-sonnet-4-6 | 50%     | 83%  | +33%  |
+| claude-haiku-4-5  | 50%     | 100% | +50%  |
 
 > **PASS (run 2026-08-31)**. Lift on every model; baselines still reach for `extends` where factory/composition fits better. Consistent with the 2026-06-25 run (strongest signal). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

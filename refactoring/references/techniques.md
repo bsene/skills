@@ -13,11 +13,14 @@ Tools to improve code design, clarity, and maintainability. Smells live in [smel
 function processOrder(order: Order) {
   if (order.payment.amount <= 0) throw new Error("Amount must be positive");
   if (!order.payment.cardToken) throw new Error("Card required");
-  if (order.payment.amount > order.payment.cardLimit) throw new Error("Exceeds card limit");
+  if (order.payment.amount > order.payment.cardLimit)
+    throw new Error("Exceeds card limit");
 }
 
 // ✅
-function processOrder(order: Order) { validatePayment(order.payment); }
+function processOrder(order: Order) {
+  validatePayment(order.payment);
+}
 function validatePayment(payment: Payment) {
   if (payment.amount <= 0) throw new Error("Amount must be positive");
   if (!payment.cardToken) throw new Error("Card required");
@@ -36,16 +39,29 @@ function validatePayment(payment: Payment) {
 ```typescript
 // ❌ Order owns two address sextuples
 class Order {
-  id; customerId; items;
-  shippingStreet; shippingCity; shippingZip;
-  billingStreet; billingCity; billingZip;
+  id;
+  customerId;
+  items;
+  shippingStreet;
+  shippingCity;
+  shippingZip;
+  billingStreet;
+  billingCity;
+  billingZip;
 }
 
 // ✅ Address is reusable
-class Address { street; city; zip; }
+class Address {
+  street;
+  city;
+  zip;
+}
 class Order {
-  id; customerId; items;
-  shippingAddress: Address; billingAddress: Address;
+  id;
+  customerId;
+  items;
+  shippingAddress: Address;
+  billingAddress: Address;
 }
 ```
 
@@ -61,20 +77,32 @@ class Order {
 // ❌
 function calculateDiscount(customer: Customer): number {
   if (customer.type === "gold") return customer.totalSpent * 0.15;
-  if (customer.type === "silver") return customer.totalSpent * 0.10;
+  if (customer.type === "silver") return customer.totalSpent * 0.1;
   if (customer.type === "bronze") return customer.totalSpent * 0.05;
   return 0;
 }
 
 // ✅
-interface Customer { calculateDiscount(): number; sendNotification(msg: string): void; }
+interface Customer {
+  calculateDiscount(): number;
+  sendNotification(msg: string): void;
+}
 class GoldCustomer implements Customer {
-  calculateDiscount() { return this.totalSpent * 0.15; }
-  sendNotification(msg) { sendEmail(this.email, msg); sendSMS(this.phone, msg); }
+  calculateDiscount() {
+    return this.totalSpent * 0.15;
+  }
+  sendNotification(msg) {
+    sendEmail(this.email, msg);
+    sendSMS(this.phone, msg);
+  }
 }
 class SilverCustomer implements Customer {
-  calculateDiscount() { return this.totalSpent * 0.10; }
-  sendNotification(msg) { sendEmail(this.email, msg); }
+  calculateDiscount() {
+    return this.totalSpent * 0.1;
+  }
+  sendNotification(msg) {
+    sendEmail(this.email, msg);
+  }
 }
 
 const discount = customer.calculateDiscount();
@@ -144,17 +172,20 @@ function calculateShipping(order: Order) {
 class Order {
   calculateCustomerDiscount() {
     return this.customer.isPremium
-      ? this.items.reduce((s,i) => s + i.price, 0) * 0.15 : 0;
+      ? this.items.reduce((s, i) => s + i.price, 0) * 0.15
+      : 0;
   }
 }
 
 // ✅ Move to Customer
 class Customer {
-  calculateDiscount(orderTotal: number) { return this.isPremium ? orderTotal * 0.15 : 0; }
+  calculateDiscount(orderTotal: number) {
+    return this.isPremium ? orderTotal * 0.15 : 0;
+  }
 }
 class Order {
   getTotal() {
-    const subtotal = this.items.reduce((s,i) => s + i.price, 0);
+    const subtotal = this.items.reduce((s, i) => s + i.price, 0);
     return subtotal - this.customer.calculateDiscount(subtotal);
   }
 }
@@ -166,7 +197,7 @@ class Order {
 
 ## Technique #7: Rename (Variable, Method, Class)
 
-**Principle:** A good name answers three questions — *why does this exist, what does it do, how is it used?* If the name requires a comment, the name does not reveal intent. — *Clean Code*, Martin, ch. 2
+**Principle:** A good name answers three questions — _why does this exist, what does it do, how is it used?_ If the name requires a comment, the name does not reveal intent. — _Clean Code_, Martin, ch. 2
 
 See [Smell #7 Uncommunicative Name](smells.md) for detection signals + the mine sweeper example.
 
@@ -185,7 +216,9 @@ function proc(d: any[]): any[] {
 // ✅
 const TAX_RATE = 1.15;
 function calculateTaxAdjustedAmounts(orders: Order[]): number[] {
-  return orders.filter(o => o.status === "active").map(o => o.amount * TAX_RATE);
+  return orders
+    .filter((o) => o.status === "active")
+    .map((o) => o.amount * TAX_RATE);
 }
 ```
 
@@ -212,10 +245,16 @@ Compact entries for Fowler-catalog refactorings beyond the seven above.
 
 ```typescript
 // ❌
-function getRating(d) { return moreThanFiveLateDeliveries(d) ? 2 : 1; }
-function moreThanFiveLateDeliveries(d) { return d.numberOfLateDeliveries > 5; }
+function getRating(d) {
+  return moreThanFiveLateDeliveries(d) ? 2 : 1;
+}
+function moreThanFiveLateDeliveries(d) {
+  return d.numberOfLateDeliveries > 5;
+}
 // ✅
-function getRating(d) { return d.numberOfLateDeliveries > 5 ? 2 : 1; }
+function getRating(d) {
+  return d.numberOfLateDeliveries > 5 ? 2 : 1;
+}
 ```
 
 ---
@@ -285,7 +324,9 @@ if (monthsDisabled > 12) return 0;
 if (isPartTime) return 0;
 // ✅
 if (isNotEligibleForDisability()) return 0;
-function isNotEligibleForDisability() { return seniority < 2 || monthsDisabled > 12 || isPartTime; }
+function isNotEligibleForDisability() {
+  return seniority < 2 || monthsDisabled > 12 || isPartTime;
+}
 ```
 
 ---
@@ -309,12 +350,20 @@ function isNotEligibleForDisability() { return seniority < 2 || monthsDisabled >
 
 ### Separate Query from Modifier
 
-**When:** function both returns a value *and* has a side effect (CQS violation).
+**When:** function both returns a value _and_ has a side effect (CQS violation).
 
 ```typescript
 // ❌
-function getTotalOutstandingAndSendBill(): number { const t = compute(); sendBill(t); return t; }
+function getTotalOutstandingAndSendBill(): number {
+  const t = compute();
+  sendBill(t);
+  return t;
+}
 // ✅
-function totalOutstanding(): number { return compute(); }
-function sendBill(): void { sendBillFor(totalOutstanding()); }
+function totalOutstanding(): number {
+  return compute();
+}
+function sendBill(): void {
+  sendBillFor(totalOutstanding());
+}
 ```

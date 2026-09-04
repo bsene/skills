@@ -7,7 +7,7 @@ description: Write, review, debug, and explain ReScript code and rewatch project
 
 ReScript is a statically-typed language that compiles to clean, readable, dependency-free ES modules — the emitted JS is meant to be reviewed and shipped, not treated as an artifact. Coming from JS/TS, the biggest mental shift is not syntax — it's that **the type system is sound and always on**: there is no `any`, no `unknown`-laundering, no `strictNullChecks` knob to forget in one project, and no structural escape hatch. The guarantees TypeScript makes opt-in are unconditional here.
 
-Default to explaining *why* something is idiomatic, not just *that* it is — the user is learning the language, not just translating syntax.
+Default to explaining _why_ something is idiomatic, not just _that_ it is — the user is learning the language, not just translating syntax.
 
 The runtime story matters less than the type story: a record compiles to a JS array and a variant to a tagged block. The full value-representation walkthrough, and everything about talking to JavaScript: [references/interop-and-runtime.md](references/interop-and-runtime.md).
 
@@ -53,7 +53,7 @@ src/
 src/App.res.js      ; emitted ESM (in-source) — readable, reviewable output
 ```
 
-- **`rescript build`** compiles. **`rescript watch`** is the dev loop — rewatch (the Rust builder, default since v12) rebuilds in subsecond time, so "save → compiler opinion" *is* the workflow, not a background type-checker. **`rescript format`** formats. The old OCaml builder survives as `rescript legacy`.
+- **`rescript build`** compiles. **`rescript watch`** is the dev loop — rewatch (the Rust builder, default since v12) rebuilds in subsecond time, so "save → compiler opinion" _is_ the workflow, not a background type-checker. **`rescript format`** formats. The old OCaml builder survives as `rescript legacy`.
 - If the user hands you an old codebase with `bsconfig.json` or ReScript 11-era config, use `npx rescript-tools migrate-all` before any manual edits — see the migration checklist: [references/testing-and-tooling.md](references/testing-and-tooling.md).
 
 ## Core language cheat sheet
@@ -73,12 +73,12 @@ src/App.res.js      ; emitted ESM (in-source) — readable, reviewable output
 - **Records are not JS objects.** They are closed, typed, and compile to arrays. `{x: 1, y: 2}` requires a declared `type point = {x: int, y: int}` in scope, and passing a JS object literal where a record is expected is a compile error, not a surprise. Functional update: `let moved = {...p, x: 0}`. Fields are immutable unless declared `mutable`. For genuinely dynamic keys use `Dict` (dict literals: `dict{"a": 1, "b": 2}`) — deep dive in [references/interop-and-runtime.md](references/interop-and-runtime.md).
 - **`option` replaces null/undefined, and `null` genuinely does not exist in the language.** A `None` must be pattern-matched to be read — "forgot to check for null" is not a category of bug. JS APIs still return `null`: convert at the boundary with `Option.fromNullable` (`Js.Nullable` for pre-`@rescript/core` code).
 - **`[1, 2, 3]` is a linked list and `[|1, 2, 3|]` is a JS-backed array.** Different literals, different mutability, different `map`. The single most common literal-syntax mistake coming from JS — fingers write `[...]` and reach for `Array` functions, then wonder about the type error. Choose `array` when you need JS interop or index access; `list` for persistent/immutable data.
-- **Operators are unified (v12).** `+ - * / % **` work for `int`, `float`, and `bigint`, and `+` concatenates strings — `1 + 2` and `"a" + "b"` both typecheck. `1.5 + 2` doesn't: the int/float distinction moved from the operator (`+.`, `+`) to the type, so `5 / 2` is still *integer* division giving `2`.
+- **Operators are unified (v12).** `+ - * / % **` work for `int`, `float`, and `bigint`, and `+` concatenates strings — `1 + 2` and `"a" + "b"` both typecheck. `1.5 + 2` doesn't: the int/float distinction moved from the operator (`+.`, `+`) to the type, so `5 / 2` is still _integer_ division giving `2`.
 - **`->` is the fast pipe and does property access.** `x->prop` reads the field, `xs->List.map(f)` pipes into a call — `->` is the idiomatic default in modern code; `|>` exists but you'll rarely see it. `list->Array.fromList->toJson` reads left-to-right like a method chain without the object.
 - **Mutation is `ref` + `.val`** — there is no OCaml-style `:=`/`!`: `let x = ref(0)` then `x.val = x.val + 1`. Reach for immutable rebinding before reaching for `ref`.
-- **`==` is structural equality and `===` is reference identity — the exact reverse of JS reflexes.** `=`/`!=` also exist as structural aliases. A deep compare is the *cheap-looking* one to your fingers but the expensive one at runtime.
+- **`==` is structural equality and `===` is reference identity — the exact reverse of JS reflexes.** `=`/`!=` also exist as structural aliases. A deep compare is the _cheap-looking_ one to your fingers but the expensive one at runtime.
 - **Backticks interpolate**: `` `Hello ${name}, you have ${count} unread` ``. No more `+`-chained string building.
-- **Labeled and optional arguments**: `let send = (~to_, ~timeout=?, body) => ...` — called as `send(~to_="bob", body="hi")`. Optional args arrive as `option` and must be unwrapped. Note an omitted argument in an ordinary call is a *compile error* (uncurried-only since v12), not partial application.
+- **Labeled and optional arguments**: `let send = (~to_, ~timeout=?, body) => ...` — called as `send(~to_="bob", body="hi")`. Optional args arrive as `option` and must be unwrapped. Note an omitted argument in an ordinary call is a _compile error_ (uncurried-only since v12), not partial application.
 - **`let () = ...` is the main entry idiom.** Everything is an expression; a bare `let x = doSomething()` on a unit-returning call is a type error telling you to discard the value deliberately. Top-level side effects go under `let () =`.
 - **Modules need no import statements.** Every `.res` file is a module named by its capitalized filename (`src/appState.res` → `AppState`), resolved by path; `open` is a scoped, positional construct (`open List` then `map(f)`) — not a top-of-file import list, and shadowing rules still apply inside it.
 
@@ -111,7 +111,7 @@ Props are labeled arguments, optional props arrive as `option` (`~onOk=?`), and 
 ## Debugging & compiler errors
 
 - Treat `rescript build`/`watch` output as ground truth, not a nuisance to silence — a type error usually points at a real logic gap (a missed switch arm, a wrong assumption about a JS value's shape), not a syntax nit.
-- The reported error location is often the *second use site* of a bad value, not the mistake itself — read the inferred type in the message first, then find where the value got the wrong shape.
+- The reported error location is often the _second use site_ of a bad value, not the mistake itself — read the inferred type in the message first, then find where the value got the wrong shape.
 - A binding misbehaving at runtime? Read the emitted `.res.js` next to it. It's written to be read; what a binding actually compiles to is usually obvious there in a few lines.
 - Beginner traps, fixed: the `[...]` vs `[|...|]` literal mix-up; forgetting an optional arg produces `option` (use it, don't pass it along); forgetting that `->` on a method needs `@send` on the binding.
 
@@ -124,15 +124,14 @@ Props are labeled arguments, optional props arrive as `option` (`~onOk=?`), and 
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/rescript-001-v12-migration.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/rescript-001-v12-migration.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 17%     | 67%     | +50%   |
-| claude-sonnet-4-6 | 33%     | 50%     | +17%   |
-| claude-haiku-4-5  | 50%     | 67%     | +17%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 17%     | 67%  | +50%  |
+| claude-sonnet-4-6 | 33%     | 50%  | +17%  |
+| claude-haiku-4-5  | 50%     | 67%  | +17%  |
 
 > **PASS (run 2026-08-31)**. Opus +50; gains on all models. The flagship example's `*.` syntax BLOCKER is a separate content fix (Phase 7), not a gate item. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.

@@ -170,15 +170,14 @@ function sendOverdueReminders() {
 
 ---
 
-
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/testing-001-agent-test-strategy.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/testing-001-agent-test-strategy.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 100%    | 100%    | +0%   |
-| claude-haiku-4-5  | 67%     | 100%    | +33%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 100%    | 100% | +0%   |
+| claude-haiku-4-5  | 67%     | 100% | +33%  |
 
 > **PASS (run 2026-08-31)**. Opus and haiku +33; sonnet at ceiling. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
