@@ -9,6 +9,8 @@ description: >
   TRIGGER when: user wants to improve communication, "make this message clearer", "review my email/Slack",
   "analyze this transcript", prep for a meeting/pitch/presentation, "how do I say this", be more convincing /
   persuasive / assertive, handle a tough question, talk to executives, structure my idea, "is this too long-winded".
+  Also trigger for style presets: "rewrite this like DHH" / "in the style of David Heinemeier Hansson" /
+  "make it blunt/direct" (see references/dhh-style.md).
   DO NOT USE for raw text generation with no analysis, marketing/copywriting, translation, or code/docs —
   use `kano` for feature decisions, language skills for code prose.
 ---
@@ -29,6 +31,7 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 | Applying any technique in depth, or the user asks how/why it works  | [Frameworks](references/frameworks.md)                |
 | User cites the 7-38-55 / Mehrabian "body language" rule             | [Frameworks → Mehrabian myth](references/frameworks.md#7-the-7-38-55-mehrabian-myth) |
 | Coaching for an exec / C-level audience                             | [Frameworks → Pyramid Principle](references/frameworks.md#4-pyramid-principle) |
+| User asks for "DHH style" / maximum directness over diplomacy       | [DHH style](references/dhh-style.md)                  |
 
 ---
 
@@ -40,6 +43,8 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 2. DIAGNOSE → score the artifact against the rubric below. Note what works AND what's missing.
 3. REPORT   → findings, severity-tagged (Blocker / Warning / Suggestion). Be specific, quote lines.
 4. REWRITE  → produce a concrete rewrite applying the relevant techniques. Not abstract advice.
+              If the user asked for DHH style / max directness, load references/dhh-style.md
+              and apply its 6 moves on top of the rewrite.
 ```
 
 ### Diagnostic rubric
@@ -80,6 +85,8 @@ Full treatment with worked examples: [references/frameworks.md](references/frame
 - **Stories over bare numbers.** A figure embedded in a story/comparison is remembered far better than
   the figure alone.
 - **Don't trust the 7-38-55 rule.** It describes a narrow lab case, not normal speech (see references).
+- **Blunt ≠ personal (DHH mode).** Directness targets the idea, never the person. And never soften
+  a requested DHH rewrite back into consensus-speak (see references/dhh-style.md).
 
 ---
 
