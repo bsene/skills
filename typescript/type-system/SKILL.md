@@ -97,7 +97,30 @@ function handleTask(task: Task): void {
 }
 ```
 
-**Exhaustiveness checking** — `assertNever(value: never)` produces a compile error when a new union member is added but not handled. Full runnable example: `example.md`. See [Exhaustiveness checking](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking).
+**Exhaustiveness checking** — `assertNever(value: never)` produces a compile error when a new union member is added but not handled:
+
+```typescript
+type Shape =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; side: number };
+
+function assertNever(x: never): never {
+  throw new Error(`Unhandled case: ${JSON.stringify(x)}`);
+}
+
+function area(shape: Shape): number {
+  switch (shape.kind) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "square":
+      return shape.side ** 2;
+    default:
+      return assertNever(shape); // compile error if a new Shape variant is added and unhandled
+  }
+}
+```
+
+See [Exhaustiveness checking](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking).
 
 **Mapped types** — Transform every key of an existing type: `{ [K in keyof T]?: T[K] }`. Built-ins: `Partial`, `Required`, `Readonly`, `Pick`, `Record`. See [Mapped Types](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html).
 
@@ -210,9 +233,6 @@ const config = { host: "localhost", port: 3000 };
 // Or annotate first
 let config: Config = { host: "localhost", port: 3000 };
 ```
-
-→ Full examples with runnable code: `example.md`
-→ Exhaustiveness-checking example: `example.md`
 
 ---
 
