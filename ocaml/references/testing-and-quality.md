@@ -6,7 +6,7 @@ The mental model: **unit tests** prove specific examples work, **property-based 
 
 ## Unit tests — Alcotest
 
-See the Alcotest shape in SKILL.md (`Alcotest.run` + `Alcotest.test_case ... `Quick`). Unit tests assert fixed input → expected output on hand-picked cases. They are fast and live in the per-edit verification loop (`dune runtest`). Their weakness is coverage: you only test the cases you thought to write, so a branch you didn't consider is silently untested. That gap is exactly what property-based and mutation testing target.
+Alcotest ([mirage/alcotest](https://github.com/mirage/alcotest)) is the standard unit/integration test framework for dune projects; the shape is covered inline in SKILL.md (`Alcotest.run` + `Alcotest.test_case ... `Quick`). Unit tests assert fixed input → expected output on hand-picked cases. They are fast and live in the per-edit verification loop (`dune runtest`). Their weakness is coverage: you only test the cases you thought to write, so a branch you didn't consider is silently untested. That gap is exactly what property-based and mutation testing target.
 
 ## Property-based testing — qcheck
 
