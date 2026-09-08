@@ -30,8 +30,7 @@ There is no application build step. Useful checks include:
 
 ## OCaml Tooling
 
-- Implement OCaml tooling and helper executables in **OCaml**, not Python or another language. The committed example is the ocamllsp client at `.pi/ocamllsp_client/` (a dune project, stdlib + `unix` + `yojson`, built with `opam exec --switch=camelot -- dune build`).
-- Follow suit for new tooling: OCaml implementation, dune project, keep it under `.pi/`.
+- Implement OCaml tooling and helper executables in **OCaml**, not Python or another language. Use a dune project and keep it under `.pi/`.
 
 ## Testing Guidelines
 
