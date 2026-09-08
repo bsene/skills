@@ -101,6 +101,7 @@ Every type has a usable zero value — no null surprises.
 | Go proverbs, naming rules, formatting, zero value idioms | [Go Idioms](references/idioms.md)                                                           |
 | Project layout decisions (cmd/, internal/, pkg/)         | [Project Layout](references/project-layout.md) · [go.dev/doc/code](https://go.dev/doc/code) |
 | Value vs pointer receivers, closures, defer semantics    | [Functions, Methods & Pointers](references/functions-methods-pointers.md)                   |
+| Verification gate, table-driven tests, don't pre-DRY     | [Verification Gate & Discipline](references/verification-gate-and-discipline.md)            |
 
 ---
 
