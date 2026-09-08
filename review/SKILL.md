@@ -21,6 +21,22 @@ description: >
 3. Ask ≤5 grill-me questions — one per key design decision; design intent only, not style
 4. On approval: apply Blocker fixes → run tests → run lint → commit (conventional message)
 
+## Scope Discipline
+
+Review **only what changed on this branch** — never pre-existing, unmodified code. The diff
+is the contract;
+default to `git diff main...HEAD`, not memory or full-file reads. Real repos make this a
+hard rule:
+
+> Focus exclusively on changes introduced in the current branch compared to `main`. Do not
+> review pre-existing code that was not modified.
+
+## Security-Before-Push
+
+For anything about to be pushed, run a **security-focused review of the branch's own changes**
+before shipping (optional `trivy fs` on vulnerable deps). Watch specifically for: logged
+secrets/tokens/PINs/PII, and `__proto__`/prototype-walking reads on untrusted config.
+
 ## Severity Tiers
 
 | Tier        | Criterion                                       | Required Action      |
