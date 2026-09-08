@@ -102,10 +102,11 @@ Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-
 
 ## Read On Demand
 
-| Read When                                                           | File                                                                       |
-| ------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| Principle details, research evidence, reasoning                     | [Six Principles Detailed](references/six-principles-detailed.md)           |
-| Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md) |
+| Read When                                                           | File                                                                         |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Principle details, research evidence, reasoning                     | [Six Principles Detailed](references/six-principles-detailed.md)             |
+| Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md)   |
+| What real production AGENTS files look like (add-on sections)       | [Real-World Structure Patterns](references/real-world-structure-patterns.md) |
 
 ## Benchmark
 
