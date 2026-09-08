@@ -81,14 +81,27 @@ When the user wants to apply or review Ports & Adapters:
 
 ## Read On Demand
 
-| Read When                                               | File                                                         |
-| ------------------------------------------------------- | ------------------------------------------------------------ |
-| Before/after TypeScript example showing the refactoring | [Before / After Example](references/before-after-example.md) |
+| Read When                                                              | File                                                                                 |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Before/after TypeScript example showing the refactoring                | [Before / After Example](references/before-after-example.md)                         |
+| Ownership tables + tool-enforced boundaries from real NestJS hex repos | [Ownership & Boundary Enforcement](references/ownership-and-boundary-enforcement.md) |
 
 ## Read On Demand (External)
 
 - **Alistair Cockburn** — [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)
 - **Martin Fowler** — [Ports and Adapters Pattern](https://martinfowler.com/bliki/HexagonalArchitecture.html)
+
+### Functional Programming Variants (Haskell, OCaml, Erlang, Elixir, Clojure, ...)
+
+Ports & Adapters maps onto FP languages as **Functional Core, Imperative Shell**: a pure,
+side-effect-free core (the hexagon) surrounded by a thin shell that performs I/O and calls the
+core with plain data in, plain data out. No classes/interfaces needed for ports — plain
+functions (or typeclass/protocol dispatch) fill that role.
+
+- **Janet A. Carr** — [Ports and Adapters Architecture for the Functional Programmer](https://blog.janetacarr.com/ports-and-adapters-architecture-for-the-functional-programmer/)
+- **Gary Bernhardt** — [Functional Core, Imperative Shell](https://www.destroyallsoftware.com/screencasts/catalog/functional-core-imperative-shell) (screencast)
+- **functional-architecture.org** — [Functional Core, Imperative Shell](https://functional-architecture.org/functional_core_imperative_shell/)
+- **Community notes doc** — [Functional Core / Imperative Shell — shared notes](https://docs.google.com/document/d/1uSSL90h0vM6tLvdlnk04nZZLKfPI3By1tFdKXz_IUl8/edit?pli=1&tab=t.0)
 
 ---
 
