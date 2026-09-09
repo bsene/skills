@@ -158,6 +158,7 @@ function sendOverdueReminders() {
 | Testing async code, timers, events, or faking modules                            | [Async, Time & Module Faking](references/async-and-time.md)          |
 | Applying Fowler-style portfolio, doubles, production feedback, and LLM practices | [Martin Fowler's Testing Canon](references/martin-fowler-testing.md) |
 | Identifying and writing smoke tests for CI gates                                 | Dedicated `smoke-tests` skill                                        |
+| Driving behavior from Given/When/Then scenarios; crap + mutation quality gates    | [Acceptance-Testing Workflow](references/acceptance-testing.md)      |
 
 ---
 
