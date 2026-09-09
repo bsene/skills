@@ -12,23 +12,23 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Sect
 
 ## Quick Concept Index
 
-| Problem / Topic                                                 | Concept                                |
-| --------------------------------------------------------------- | -------------------------------------- |
-| Safely handle API responses / JSON.parse                        | `unknown` vs `any`                     |
-| Reuse an object without tying it to a class name                | Structural typing                      |
-| Explain why static types do not validate runtime data           | Type erasure                           |
-| Narrow a union based on runtime checks                          | Type narrowing & refinement            |
-| Route on message type with different shapes                     | Discriminated unions                   |
-| Model entity lifecycle without invalid states                   | Make Illegal States Unrepresentable    |
-| Fail at compile time when a case is missed                      | Exhaustiveness / `assertNever`         |
-| Create `Partial`, `Readonly`, or custom maps                    | Mapped types                           |
-| Unwrap `Promise<T>`, filter union members                       | Conditional types + `infer`            |
-| Why a callback with a wider parameter type is rejected (TS2345) | Variance (covariance / contravariance) |
-| Carry narrowing across function boundaries                      | User-defined type guards               |
-| Prevent mixing `UserId` and `SessionToken`                      | Type branding (nominal types)          |
-| Pair a type and utility under one import                        | Companion object pattern               |
-| Preserve literal types in config objects                        | `as const` / type widening             |
-| Last-resort override of TypeScript's checks                     | Escape hatches (`as T`, `!`)           |
+| Problem / Topic                                                    | Concept                                |
+| ------------------------------------------------------------------ | -------------------------------------- |
+| Safely handle API responses / JSON.parse                           | `unknown` vs `any`                     |
+| Reuse an object without tying it to a class name                   | Structural typing                      |
+| Explain why static types do not validate runtime data              | Type erasure                           |
+| Narrow a union based on runtime checks                             | Type narrowing & refinement            |
+| Route on message type with different shapes                        | Discriminated unions                   |
+| Model entity lifecycle without invalid states                      | Make Illegal States Unrepresentable    |
+| Fail at compile time when a case is missed                         | Exhaustiveness / `assertNever`         |
+| Create `Partial`, `Readonly`, or custom maps                       | Mapped types                           |
+| Unwrap `Promise<T>`, filter union members                          | Conditional types + `infer`            |
+| Why a callback with a narrower parameter type is rejected (TS2345) | Variance (covariance / contravariance) |
+| Carry narrowing across function boundaries                         | User-defined type guards               |
+| Prevent mixing `UserId` and `SessionToken`                         | Type branding (nominal types)          |
+| Pair a type and utility under one import                           | Companion object pattern               |
+| Preserve literal types in config objects                           | `as const` / type widening             |
+| Last-resort override of TypeScript's checks                        | Escape hatches (`as T`, `!`)           |
 
 ## Concepts
 
