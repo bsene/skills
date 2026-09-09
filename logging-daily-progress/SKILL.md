@@ -17,7 +17,7 @@ description: >
 
 ## What a good entry looks like
 
-Every day is a third-level heading followed by three sections. Nothing else.
+Every day is a second-level heading followed by three sections. Nothing else.
 
 ```
 ## YYYY-MM-DD
