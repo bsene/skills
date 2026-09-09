@@ -22,6 +22,8 @@ description: >
 
 Red/green/refactor driven by native git: each phase stages, runs the tests, and auto-commits on the expected result or auto-reverts (`git reset --hard`) otherwise. No external tool required.
 
+**Precondition: start from a clean tree — no uncommitted changes and no untracked files.** The revert primitive (`git add -A` + `git reset --hard`) deletes untracked files with no reflog recovery, so any untracked file present when the cycle starts is lost. `git stash -u` (or a dedicated worktree) anything you want to keep before the first `add -A`.
+
 ## Mode
 
 - **Interactive** (a human is in the loop): use the approval gates below — plan approval, then diff approval before each stage-and-test cycle.
