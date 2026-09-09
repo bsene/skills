@@ -6,7 +6,7 @@ description: >
   Go test helpers, t.Helper, t.Run, Go benchmarks, Go profiling, pprof, Go fuzz testing,
   Go test coverage, testify, Go mock, Go test patterns, Go test organization, TestMain,
   t.Cleanup, t.Parallel, Go golden files, Go httptest.
-  DO NOT USE when: user needs general testing philosophy (not Go-specific) — use `testing` skill instead.
+  DO NOT USE when: user needs general testing philosophy (not Go-specific) — use the top-level `testing` skill instead.
 metadata:
   user-invocable: "false"
 ---
