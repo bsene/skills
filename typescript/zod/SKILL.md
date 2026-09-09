@@ -23,7 +23,7 @@ Primary reference: [official Zod docs](https://zod.dev). Requires TypeScript v5.
 | Validate string formats                             | `z.email()`, `z.uuid()`, `z.url()` (top-level in v4) |
 | Exclusive union (exactly one matches)               | `z.xor(schemaA, schemaB)`                            |
 | Optional key without accepting `undefined`          | `.exactOptional()`                                   |
-| Known keys + passthrough unknown keys               | `z.looseRecord()`                                    |
+| Known keys + passthrough unknown keys               | `z.looseObject({...})`                               |
 | Nominal/branded types                               | `.brand<"UserId">()`                                 |
 | Format errors                                       | `z.treeifyError(error)`                              |
 | Lightweight bundle (edge/serverless)                | `@zod/mini`                                          |
