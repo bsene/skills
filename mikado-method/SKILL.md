@@ -108,7 +108,7 @@ A numbered list of leaf-first steps, each with the atomic refactoring gesture, a
 
 ### 3. Revert reminder
 
-After any naive attempt: **"Revert now — `git checkout .` — your map is saved, the broken code is not needed."**
+After any naive attempt: **"Revert now — `git restore <touched files>` — your map is saved, the broken code is not needed."** (Scope the revert to the files you touched; `git checkout .` would discard _all_ uncommitted work, not just the naive attempt.)
 
 ---
 
