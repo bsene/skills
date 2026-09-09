@@ -57,7 +57,7 @@ adapters/
 | **Driving / Primary**  | Ports where external actors (HTTP client, CLI user, scheduler) call **into** the domain. |
 | **Driven / Secondary** | Ports where the domain calls **out** to external systems (database, cache, email).       |
 
-**Naming convention:** For driving ports, use `for_<action>` (e.g., `for_creating_users`).
+**Naming convention:** Two valid styles — Cockburn's `for_<action>` (e.g., `for_creating_users`) for driving ports, or idiomatic noun interfaces (`UserRepository`, `UserService`) as used in the examples below. Pick one and stay consistent; don't mix.
 
 ---
 
@@ -75,7 +75,7 @@ adapters/
 When the user wants to apply or review Ports & Adapters:
 
 1. **Identify the boundary** — where does business logic end and infrastructure begin? The hexagon edge is the answer.
-2. **Define the ports** — write interfaces (not implementations) for every outbound dependency. Name them `for_<action>`.
+2. **Define the ports** — write interfaces (not implementations) for every outbound dependency. Name them with one consistent convention — either `for_<action>` (Cockburn) or idiomatic noun interfaces (`UserRepository`) as in the examples.
 3. **Move logic inward** — ensure domain code imports only other domain code, never framework/DB packages.
 4. **Write adapters** — one concrete class per external system, implementing the matching port interface.
 
