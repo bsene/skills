@@ -21,8 +21,8 @@ fi
 day="$1"
 author="${2:-$(git config user.email)}"
 
-# sanity check the date
-if ! date -d "$day" >/dev/null 2>&1; then
+# sanity check the date (portable regex — GNU-only `date -d` fails on macOS/BSD)
+if ! printf '%s' "$day" | grep -Eq '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'; then
   echo "error: '$day' is not a valid date (expected YYYY-MM-DD)" >&2
   exit 2
 fi
