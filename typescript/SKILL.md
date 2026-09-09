@@ -1,29 +1,15 @@
 ---
 name: typescript
 description: >
-  JavaScript & TypeScript best-practices and rule enforcement — JS idioms (naming, `this`-handling,
-  module structure, nullability, iteration performance) and TS-specific type safety, runtime
-  validation, and error handling. Routes to type-system and Zod sub-skills and
-  `object-oriented-programming` for design patterns and SOLID.
+  JS/TS best-practices and rule enforcement — JS idioms, TS type safety, runtime validation,
+  error handling. Routes to type-system, Zod, and `object-oriented-programming` (SOLID).
 
-  TRIGGER when: language (TypeScript, TS, .ts, .tsx, JavaScript, JS, .js, .mjs, .cjs, Node.js,
-  browser JS, ESM, CommonJS),
-  type-system (discriminated unions, generics, utility types, make illegal states unrepresentable, type narrowing,
-  variance, contravariance),
-  safety (strict mode, any vs unknown, ts-expect-error, ts-ignore, type assertions,
-  noUncheckedIndexedAccess, noImplicitReturns),
-  runtime (Zod, schema validation, runtime type checks, parse/safeParse),
-  errors (error handling without throwing, union return errors, Result type),
-  ts-conventions (readonly modifier, return type annotations, module organization, namespace, export default,
-  interface prefix, `.d.ts`, ambient declaration, declaration file, `as const`),
-  js-idioms (const/let, destructuring, optional chaining, nullish coalescing, arrow functions,
-  this binding, detached method, barrel file, index.js, array chains, filter().map(), intermediate
-  arrays, hot path, GC pressure, null vs undefined, sentinel value, camelCase, PascalCase),
-  contracts (domain vs DTO, monorepo types, API contract types),
-  composition (pipe, compose, currying, partial application, point-free, pure functions, functional mixin, factory function, object composition, monoid, merge, aggregate, reduce, fold, shopping cart merge, permissions merge, combine these objects),
-  testing (unit tests, mock vs stub, brittle tests, mocking best practices, test pyramid),
-  ask (idiomatic JS/TS, JS/TS conventions, JS/TS best practices, JS/TS code review,
-  "compose these functions", "pipe this data", "make this more functional").
+  TRIGGER when: TS/JS code; type-system (discriminated unions, generics, utility types, illegal
+  states, narrowing, variance); safety (strict mode, any vs unknown); runtime (Zod, schema
+  validation, parse/safeParse); errors (Result type, union returns); ts-conventions (readonly,
+  return annotations, modules, `as const`); js-idioms (const/let, destructuring, optional
+  chaining, arrow functions, this binding, array chains); composition (pipe, compose, currying,
+  monoid); testing (unit tests, mock vs stub); or "is this idiomatic JS/TS".
 metadata:
   user-invocable: "false"
 ---
