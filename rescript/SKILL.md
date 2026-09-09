@@ -65,8 +65,8 @@ src/App.res.js      ; emitted ESM (in-source) — readable, reviewable output
     | Rectangle(float, float)
 
   let area = shape => switch shape {
-    | Circle(r) => 3.14159 *. r *. r
-    | Rectangle(w, h) => w *. h
+    | Circle(r) => 3.14159 * r * r
+    | Rectangle(w, h) => w * h
   }
   ```
   Switching on a tuple matches nested shapes at once: `switch (a, b) { | (Some(x), Some(y)) => ... | _ => ... }` — the machine-checked version of TS's discriminated-union nesting.
@@ -134,4 +134,4 @@ Scenario: `.benchmarks/scenarios/rescript-001-v12-migration.md` · Run: 2026-08-
 | claude-sonnet-4-6 | 33%     | 50%  | +17%  |
 | claude-haiku-4-5  | 50%     | 67%  | +17%  |
 
-> **PASS (run 2026-08-31)**. Opus +50; gains on all models. The flagship example's `*.` syntax BLOCKER is a separate content fix (Phase 7), not a gate item. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+> **PASS (run 2026-08-31)**. Opus +50; gains on all models. The flagship example's `*.` syntax BLOCKER was fixed 2026-09-09 (now `*`). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
