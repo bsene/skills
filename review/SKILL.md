@@ -37,6 +37,16 @@ For anything about to be pushed, run a **security-focused review of the branch's
 before shipping (optional `trivy fs` on vulnerable deps). Watch specifically for: logged
 secrets/tokens/PINs/PII, and `__proto__`/prototype-walking reads on untrusted config.
 
+## Agent-Authored Diffs
+
+If the branch was authored largely by an agent — or you suspect it was — layer
+[agentic-code-review](references/agentic-code-review.md). Watch first for the three
+characteristic agent failure modes, all Blockers: **test tampering** (assertions edited
+to match broken behavior — read test diffs before the code), **CI weakening** (removed
+or skipped tests, lowered gates), and **prompt injection** (untrusted input reaching
+LLM calls in new AI features). Tier review depth by blast radius, not by author; the
+human who clicks merge owns the change.
+
 ## Severity Tiers
 
 | Tier        | Criterion                                       | Required Action      |
@@ -63,19 +73,23 @@ secrets/tokens/PINs/PII, and `__proto__`/prototype-walking reads on untrusted co
 
 ## Deep-Rigor Mode
 
-When the user asks for a strict / thorough / "thermo-nuclear" review (e.g. "/review --strict",
-"deep review", "rigorous review", "code quality audit"), layer the
-[thermo-nuclear-code-quality-review](references/thermo-nuclear-code-quality-review.md) rubric
-on top of the workflow above: promote its structural findings into the `Blockers`/`Concerns`
-tiers before approval, and hold commits to that rubric's higher approval bar.
+When the user asks for a strict / thorough review (e.g. "/review --strict", "deep review",
+"rigorous review", "code quality audit"), layer the
+[code-review-and-quality](references/code-review-and-quality.md) rubric on top of the
+workflow above: walk the five axes (correctness, readability, architecture, security,
+performance), promote its presumptive blockers into `Blockers`, and hold commits to its
+higher approval bar. For agent-authored branches, also layer
+[agentic-code-review](references/agentic-code-review.md).
 
 ## Related
 
 - [mattpocock/code-review](https://skills.sh/mattpocock/skills/code-review) — two-axis review
   (Standards + Spec vs the originating issue) run as parallel sub-agents. Source:
   <https://github.com/mattpocock/skills/tree/main/skills/engineering/code-review>
-- [thermo-nuclear-code-quality-review](https://github.com/cursor/plugins/blob/main/cursor-team-kit/skills/thermo-nuclear-code-quality-review/SKILL.md) —
-  upstream of the vendored deep-rigor rubric used in Deep-Rigor Mode above.
+- [code-review-and-quality](https://github.com/addyosmani/agent-skills/tree/main/skills/code-review-and-quality) —
+  upstream of the vendored deep-rigor rubric used in Deep-Rigor Mode above; see also
+  [agentic code review](https://addyosmani.com/blog/agentic-code-review/) for the agent-diff
+  failure modes.
 
 ## Benchmark
 
