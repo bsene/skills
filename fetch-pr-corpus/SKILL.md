@@ -1,7 +1,7 @@
-# fetch-pr-corpus
-
+---
 name: fetch-pr-corpus
 description: "Fetches a review-feedback corpus for a GitHub repo: all merged PRs, inline review comments, review bodies and PR conversation comments, filtered to human authors on merged PRs. Emits corpus.jsonl for mining coding-style rules. Trigger terms: fetch PR corpus, mine PR comments, style guide mining, review corpus."
+---
 
 ## What it does
 
@@ -26,8 +26,8 @@ dune exec bin/fetch.exe
 dune exec bin/filter.exe
 ```
 
-Set the output directory by editing `bin/fetch.ml` (`dir`) — default is
-`~/.cache/clj-kondo-style-guide`.
+Set the output directory with `CORPUS_DIR=/path/to/dir` (same var for both steps)
+— default is `~/.cache/clj-kondo-style-guide`.
 
 ## After running
 
