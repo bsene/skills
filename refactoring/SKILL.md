@@ -37,6 +37,7 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 - **Never auto-remove TODO comments.** TODOs require manual human decision — surface them, don't delete them.
 - **Rule of Three before extracting.** Wait for the _third_ duplication before Extract Method / Extract Class. Two points don't reliably reveal the right abstraction.
 - **No tests, no refactor.** Don't refactor blind — add a safety net first.
+- **Extraction needs no new tests.** Helpers extracted during refactoring stay covered by the existing public-API behavior tests; writing unit tests against them re-couples the suite to structure (see testing/references/mocks-and-fragility.md, "TDD, Where Did It All Go Wrong").
 - **Pair comment tidyings.** When deleting redundant comments, also scan for missing _why_ comments worth adding.
 
 ---
