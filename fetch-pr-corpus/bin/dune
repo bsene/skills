@@ -1,0 +1,7 @@
+(executable
+ (name fetch)
+ (libraries yojson unix))
+
+(executable
+ (name filter)
+ (libraries yojson unix))
