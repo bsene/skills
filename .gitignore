@@ -21,8 +21,8 @@ out/
 coverage/
 .nyc_output
 
-# Go
-bin/
+# Go (root build output only; skills keep their own bin/ sources tracked)
+/bin/
 *.exe
 *.test
 *.out
