@@ -45,6 +45,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Communicate like DHH            | [communication → DHH style](/skills/communication/references/dhh-style.md)                                                                                             | Direct, opinionated, de-jargoned rewrites (DHH voice preset)                              |
 | Daily progress log              | [logging-daily-progress](/skills/logging-daily-progress/SKILL.md)                                                                                                      | Rolling commit-based impact / learnings report                                            |
 | Write AGENTS.md well            | [writing-a-good-agents-md](/skills/writing-a-good-agents-md/SKILL.md)                                                                                                  | Author/audit agent context files (AGENTS.md, CLAUDE.md…)                                  |
+| Ground on real library source   | [vendor-reference](/skills/vendor-reference/SKILL.md)                                                                                                                   | Vendor library gitignored, read source, never commit                                      |
 
 ## Add a skill
 
