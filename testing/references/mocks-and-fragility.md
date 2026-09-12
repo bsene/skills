@@ -144,3 +144,28 @@ that ease is the trap. The framework should not define whether you mock:
 
 The overspecification check doubles as a smell detector: if you can't name the test because it
 verifies too much, the test is doing more than one thing.
+
+---
+
+## TDD, Where Did It All Go Wrong (Ian Cooper)
+
+Distilled from [Ian Cooper's talk](https://www.youtube.com/watch?v=EZ05e7EMOLM). Most of it
+restates what the rest of this file covers from Khorikov/Osherove — unit = unit of _behavior_,
+test the contract, mock only at edges. The one rule it adds is about the Refactor step:
+
+**Do not write new unit tests for helpers extracted during refactoring.** The red test targets
+an external behavior; the green step may ship messy code; the refactor step then reorganizes
+the internals — extracted methods, new classes — and the _same_ public-behavior tests already
+cover them. A new test against the extracted helper re-couples the suite to structure and
+undoes the refactoring freedom the cycle exists to create.
+
+- If a private helper carries behavior worth testing in isolation, it's telling you the
+  extraction drew the boundary wrong — promote it to a public unit of a module and test the
+  module's API, not the helper.
+- Sanity check: if a refactor changes _how_ without changing _what_ the module returns or
+  emits, no existing test should break. When tests do break on a behavior-preserving change,
+  the tests are the bug — rewrite them against the contract (see
+  [TestDesiderata](testdesiderata.md) on structural insensitivity).
+
+Related: the [refactoring](../../refactoring/SKILL.md) skill's "No tests, no refactor" guardrail
+complements this — the safety net is the public-API suite you already have.
