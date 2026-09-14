@@ -42,6 +42,8 @@ Agents are in-context learners: consistent codebase patterns get followed natura
 
 If a repo has an auto-generated file, rewrite from scratch using WHY/WHAT/HOW — don't prune in place.
 
+Claude Code's newer interactive init flow (`CLAUDE_CODE_NEW_INIT=1`, plus `/init-verifiers` companion skills) continues the trend: generate what producers and judges need, keep orientation out (see [Sub-Agent Context Loading](subagent-context-loading.md)).
+
 ## 6. Why Agents Ignore Instructions
 
 Harnesses treat context files as supplementary — Claude Code explicitly wraps it in a "may or may not be relevant" reminder. Instructions judged irrelevant get skipped.

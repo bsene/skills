@@ -35,6 +35,8 @@ Include only guidance that is:
 1. **Non-discoverable** from repository files alone
 2. **Operationally significant** (changes commands, outcomes, or safety)
 3. **Actionable** (specific enough to execute)
+4. **Loaded by the agent that acts on it** — Explore/Plan sub-agents never load
+   `AGENTS.md`/`CLAUDE.md`; orientation content goes to `README`/ADR instead
 
 Typical examples:
 
@@ -48,7 +50,7 @@ Typical examples:
 Do **not** include:
 
 - Tech stack summaries
-- Directory structure overviews
+- Directory structure overviews (explorer orientation → `README`/ADR, which search agents do read)
 - Architecture descriptions agents can infer from code
 - Generic best-practice advice
 - Rules already enforced by tooling (linters, typecheck, tests, CI)
@@ -96,17 +98,3 @@ For each line in `AGENTS.md`, verify:
 - Does it materially reduce mistakes/cost/time?
 
 Delete any line that fails one of these checks.
-
----
-
-## Benchmark
-
-Scenario: `.benchmarks/scenarios/init-001-agents-md-prune.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/init-001-agents-md-prune.json`
-
-| Model             | Without | With | Delta |
-| ----------------- | ------- | ---- | ----- |
-| claude-opus-4-8   | 100%    | 83%  | −17%  |
-| claude-sonnet-4-6 | 67%     | 83%  | +16%  |
-| claude-haiku-4-5  | 83%     | 100% | +17%  |
-
-> **NEG (run 2026-08-31)**. Opus −17 (100→83): the durable-tooling-fix advice lives in Maintenance mindset but is buried under the removal list (ambiguous collision). Sonnet +16 / haiku +17 show floor value. One salience edit deferred to the follow-up list (cap reached). Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
