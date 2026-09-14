@@ -75,3 +75,15 @@ rules, plus a repo-wide `AGENTS.md`. Progressive disclosure applies to files too
 
 Replace hardcoded paths with `path/to/` placeholders when the file is meant to be copied as a
 template.
+
+## 9. Judgment Contract: Done, Tests, Review Refusals
+
+Content only a producer or judge agent needs — none of it inferable from code:
+
+- Definition of done ("a change ships with tests green, types clean, verified in the running app")
+- What a good test looks like here ("behavioral assertions, no snapshot tests for logic")
+- Patterns refused in review ("no class-per-function wrappers; stdlib over a new dependency")
+
+Pairs with §5 boundaries (invariants): boundaries say what must never move, this says what
+"good" means when it does move. See [Sub-Agent Context Loading](subagent-context-loading.md)
+for why this content earns its place when orientation does not.

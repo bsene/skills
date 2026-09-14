@@ -22,24 +22,25 @@ Help users write, audit, and improve `AGENTS.md` — and the harness-specific fi
 `AGENTS.md` is an **onboarding document**, not a configuration dump. It answers three questions:
 
 - **WHY** — purpose of the project and its components
-- **WHAT** — stack, structure, map of the codebase
+- **WHAT** — stack and structure the _implementer_ needs to act, not an explorer's tour (see [Sub-Agent Context Loading](references/subagent-context-loading.md))
 - **HOW** — build, test, verify commands the agent runs
 
-Everything else lives elsewhere: linter config, sub-documents, one-off instructions.
+Everything else lives elsewhere: linter config, sub-documents, one-off instructions, and orientation material (README/ADR), which search agents find on their own.
 
 ## Audit Checklist
 
-| Check                        | Question                                                             |
-| ---------------------------- | -------------------------------------------------------------------- |
-| **Universality**             | Does every instruction apply to every task?                          |
-| **Length**                   | Under ~150 lines? Ideally 50–100?                                    |
-| **Linter work**              | Code style rules a formatter could enforce instead?                  |
-| **Stale snippets**           | Pasted code that could go stale? Use `file:line` refs                |
-| **Instruction count**        | Approaching 20–30+ discrete rules?                                   |
-| **Auto-generated**           | Raw `/init` output? Rewrite from scratch, don't prune                |
-| **Progressive disclosure**   | Domain docs referenced, not inlined?                                 |
-| **Hotfix accumulation**      | One-off workarounds instead of structure?                            |
-| **Duplication across tools** | Same content pasted into CLAUDE.md/.cursorrules instead of imported? |
+| Check                        | Question                                                                       |
+| ---------------------------- | ------------------------------------------------------------------------------ |
+| **Universality**             | Does every instruction apply to every task?                                    |
+| **Audience**                 | Every line for a producer or judge agent, never an explorer?                   |
+| **Length**                   | Under ~150 lines? Ideally 50–100?                                              |
+| **Linter work**              | Code style rules a formatter could enforce instead?                            |
+| **Stale snippets**           | Pasted code that could go stale? Use `file:line` refs                          |
+| **Instruction count**        | Approaching 20–30+ discrete rules?                                             |
+| **Auto-generated**           | Raw `/init` output (classic or interactive)? Rewrite from scratch, don't prune |
+| **Progressive disclosure**   | Domain docs referenced, not inlined?                                           |
+| **Hotfix accumulation**      | One-off workarounds instead of structure?                                      |
+| **Duplication across tools** | Same content pasted into CLAUDE.md/.cursorrules instead of imported?           |
 
 ## Template: Minimal AGENTS.md
 
@@ -105,6 +106,7 @@ Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-
 | Read When                                                           | File                                                                         |
 | ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | Principle details, research evidence, reasoning                     | [Six Principles Detailed](references/six-principles-detailed.md)             |
+| Who actually loads the file (Explore/Plan never do), audience split | [Sub-Agent Context Loading](references/subagent-context-loading.md)          |
 | Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md)   |
 | What real production AGENTS files look like (add-on sections)       | [Real-World Structure Patterns](references/real-world-structure-patterns.md) |
 
