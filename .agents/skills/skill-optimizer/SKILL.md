@@ -8,7 +8,6 @@ metadata:
 ## When to use
 
 Use this skill when you need to:
-
 - Improve whether a skill is actually applied by models
 - Diagnose why some criteria fail across all models
 - Prevent a skill from making outputs worse

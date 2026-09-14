@@ -10,13 +10,11 @@ metadata:
 ## Minimum matrix
 
 For each scenario, evaluate:
-
 - Model A/B/C
 - Without skill
 - With skill
 
 Capture:
-
 - overall score
 - per-scenario score
 - per-criterion pass/fail
@@ -34,8 +32,8 @@ Use this format:
 
 ```md
 | Model | Without | With | Delta |
-| ----- | ------- | ---- | ----- |
-| ...   | ...     | ...  | ...   |
+|------|---------|------|-------|
+| ...  | ...     | ...  | ...   |
 
 Universal failures (0% with skill): ...
 Regressions (negative deltas): ...

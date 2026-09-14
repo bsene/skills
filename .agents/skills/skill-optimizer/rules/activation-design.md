@@ -10,7 +10,6 @@ metadata:
 ## Make triggers explicit
 
 List concrete user/task signals near the top of the skill:
-
 - domain nouns (e.g. CSV, OAuth callback, Fastify plugin)
 - failure cues (timeouts, backpressure, flaky tests)
 - output shape cues (commit footer, schema, endpoint)
@@ -19,7 +18,6 @@ List concrete user/task signals near the top of the skill:
 
 If behavior is frequently missed, move it into a numbered top-level checklist.
 Use imperative wording:
-
 - "Use `pipeline(...)`"
 - "Include `Refs:` when requested"
 - "Do not omit ..."
@@ -28,7 +26,6 @@ Use imperative wording:
 
 Add examples that combine multiple rules likely needed together in real tasks.
 A good integrated example:
-
 - starts from realistic input
 - includes critical decision points
 - shows final output format
@@ -36,12 +33,10 @@ A good integrated example:
 ## Avoid ambiguous wording
 
 Replace fuzzy phrasing:
-
 - "consider using"
 - "you may want"
 
 With strict phrasing when correctness matters:
-
 - "use"
 - "must include"
 - "do not omit"
