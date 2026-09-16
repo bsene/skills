@@ -10,7 +10,7 @@ Alcotest ([mirage/alcotest](https://github.com/mirage/alcotest)) is the standard
 
 ## Property-based testing — qcheck
 
-qcheck ([c-cube/qcheck](https://github.com/c-cube/qcheck)) generates random inputs from an **arbitrary** (a generator + printer + shrinker bundled together), runs a _property_ (a predicate that should hold for every input), and on failure **shrinks** the counterexample down to the minimal failing case. Reach for it when:
+qcheck ([c-cube/qcheck](https://github.com/c-cube/qcheck)) generates random inputs from an **arbitrary** (a generator + printer + shrinker bundled together), runs a _property_ (a predicate that should hold for every input), and on failure **shrinks** the counterexample to a smaller case that still fails. The result is a diagnostic you can understand, not merely a large random input you can reproduce. Reach for it when:
 
 - You can state an **invariant** (`List.rev (List.rev l) = l`, `sort l` has the same elements as `l`).
 - You want a **round-trip** check (encode then decode returns the original).
@@ -25,7 +25,7 @@ let test_rev_rev =
     (fun l -> List.rev (List.rev l) = l)
 ```
 
-`QCheck.(list int)` builds the arbitrary; `count` is how many random cases to run; the property is `('a -> bool)`. Wire the resulting `QCheck.Test.t` into your Alcotest suite via `Alcotest.with_tests`/the qcheck-alcotest shim, or run directly with `QCheck_base_runner.run_tests [test]`.
+`QCheck.(list int)` builds the arbitrary; `count` is how many random cases to run; the property is `('a -> bool)`. Built-in arbitraries already shrink. For a custom structured value, provide a printer and shrinker in classic `QCheck`; otherwise a failure remains reproducible but may be hard to diagnose. Wire the resulting `QCheck.Test.t` into your Alcotest suite via `Alcotest.with_tests`/the qcheck-alcotest shim, or run directly with `QCheck_base_runner.run_tests [test]`.
 
 The newer `QCheck2` API takes a `QCheck2.Gen.t` generator directly and shrinks automatically (no hand-written shrinker) — useful for recursive/structured data like trees. It is less battle-tested than classic `QCheck`; prefer classic unless shrinking is painful to write by hand.
 
