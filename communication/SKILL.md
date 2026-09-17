@@ -2,12 +2,12 @@
 name: communication
 description: >
   Analyze a real communication artifact (Slack/Teams message, email, meeting transcript, pitch or
-  presentation draft) and coach it sharper using seven rhetoric + structure techniques: ethos/logos/pathos,
+  presentation draft, CV, or resume) and coach it sharper using seven rhetoric + structure techniques: ethos/logos/pathos,
   reframing tough questions, centering the other person, the Pyramid Principle, pattern interrupt, making
   ideas feel safe, and the cognitive-load through-line. Diagnose what works, what's missing, then rewrite.
 
   TRIGGER when: user wants to improve communication, "make this message clearer", "review my email/Slack",
-  "analyze this transcript", prep for a meeting/pitch/presentation, "how do I say this", be more convincing /
+  "analyze this transcript", "review my CV/resume", prep for a meeting/pitch/presentation, "how do I say this", be more convincing /
   persuasive / assertive, handle a tough question, talk to executives, structure my idea, "is this too long-winded".
   Also trigger for style presets: "rewrite this like DHH" / "in the style of David Heinemeier Hansson" /
   "make it blunt/direct" (see references/dhh-style.md).
@@ -17,7 +17,7 @@ description: >
 
 # Communication: analyze & sharpen how you speak and write
 
-Coach a real artifact the user provides — message, email, transcript, or talk draft — against proven
+Coach a real artifact the user provides — message, email, transcript, talk draft, CV, or resume — against proven
 rhetoric and structure techniques, then propose a concrete rewrite. The through-line everywhere:
 **minimize the listener's cognitive load.** The best-communicated idea wins, not the best idea.
 
@@ -46,6 +46,20 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
               and apply its 6 moves on top of the rewrite.
 ```
 
+### Resume / CV field
+
+Use this path for a CV or resume. Make it easy for a recruiter and ATS to answer: **is this person a
+credible fit for this role?** Ask for the target role and job description only when they are not inferable.
+
+1. **Position** — replace a generic title with the role sought; open with a short executive summary that
+   states relevant scope, domain, and strongest proof.
+2. **Prove impact** — rewrite duties as outcomes: strong verb + what changed + measurable result. Keep
+   numbers honest; never invent metrics.
+3. **Select signals** — retain only skills, keywords, certifications, and experience relevant to the role;
+   remove weak or repetitive entries.
+4. **Make it scannable** — use clear headings, standard role names, concise bullets, and an ATS-readable
+   layout. A polished design cannot compensate for unclear positioning.
+
 ### Diagnostic rubric
 
 - **Ethos/Logos/Pathos** — is credibility established? is the logic clear and low-load? is there an
@@ -54,6 +68,8 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 - **Focus** — does it talk about _them and their problem_, or about the speaker/the idea/the solution?
 - **Safety** — does adopting the idea feel risky/irreversible? is the risk normalized and reduced?
 - **Attention** — is there a hook, or is it monotone/predictable?
+- **Resume positioning** — for CVs/resumes: does the title and executive summary make the target role and
+  fit immediately clear? Do bullets prove impact instead of merely listing responsibilities?
 
 ---
 
@@ -99,6 +115,8 @@ Full treatment with worked examples: [references/frameworks.md](references/frame
 | Monotone, predictable delivery             | Attention drifts to multitasking                         | One pattern interrupt, then resume substance.       |
 | Pushing an idea that feels risky           | Resistance is perceived political/personal risk          | De-risk: pilot, reversible, person protected.       |
 | Leaning on 7-38-55 ("words barely matter") | Misapplied lab result; in most cases words are essential | Treat verbal/paraverbal/nonverbal as all mattering. |
+| CV lists duties instead of results         | Recruiter cannot see the candidate's value or scope      | Use outcome bullets with truthful evidence.         |
+| Generic CV title and skills                | Candidate looks interchangeable and misses ATS signals   | Target the role; keep relevant keywords and skills. |
 
 ---
 
