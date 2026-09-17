@@ -52,6 +52,6 @@ skill: <skill-name>
 
 ## Status
 
-- Scenarios: 5 stubs (no runs yet) — `kano`, `refactoring`, `rest-api-design`, `tcrdd`, `typescript-type-system`
-- Priority instrumentation targets: `tcrdd`, `rest-api-design`, `typescript-type-system` (the other stubs run ahead of priority)
-- Out of scope today: full 36-skill coverage, CI gating
+- Scenario specifications cover every top-level skill. Historical results may exist locally under `runs/`, but raw logs are gitignored; newly added scenarios still need baseline/skill-on runs.
+- The checked-in runner recipes target selected scenarios and run in Pi's `pi-subagents` workflow extension, not directly in Node.js. For example: `pi --approve --subagents-workflow-file=.benchmarks/php-benchmark-trio.js`.
+- CI gating remains out of scope until the Pi workflow runner is made data-driven and suitable for unattended use.
