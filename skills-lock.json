@@ -61,12 +61,6 @@
       "skillPath": "skills/octocat/SKILL.md",
       "computedHash": "b5e546eedcde6ff050435f9e7e3b6ffa66cc37f3ab0443d0030d96f05fcdd7b1"
     },
-    "simple": {
-      "source": "bsene/skills",
-      "sourceType": "github",
-      "skillPath": "simple/SKILL.md",
-      "computedHash": "012bfbbd5bc6606e22b76ad6188e2cd54b83a31bb4bbb0c694a7b3dbe65fcd3a"
-    },
     "skill-optimizer": {
       "source": "mcollina/skills",
       "sourceType": "github",
