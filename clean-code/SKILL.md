@@ -1,6 +1,6 @@
 ---
 name: clean-code
-description: Use when writing new code, naming modules/files/functions/classes/variables, reviewing or refactoring code for readability, assessing/reducing complexity, or deciding whether an abstraction belongs. Trigger on requests like "name this function", "is this a good variable name", "review this for clean code", "reduce complexity", "should I add a comment here", "should I abstract this", or any PR/code review pass. Covers human-scale design, naming, complexity budgets, and comment discipline. Not a full style guide — pairs with language-specific skills (typescript, go, clojurescript) for syntax/idiom concerns.
+description: Use when writing new code, naming modules/files/functions/classes/variables, reviewing or refactoring code for readability, assessing/reducing complexity, deciding whether an abstraction belongs, or reviewing with CUPID. Trigger on requests like "name this function", "is this a good variable name", "review this for clean code", "reduce complexity", "should I add a comment here", "should I abstract this", "review with CUPID", or any PR/code review pass. Covers human-scale design, naming, complexity budgets, comments, and CUPID's composable, Unixy, predictable, idiomatic, domain-based lens. Pairs with language-specific skills (typescript, go, clojurescript) for syntax/idiom concerns.
 ---
 
 # Clean Code
@@ -60,6 +60,27 @@ No big deal. Don't treat comments as sacred or as a metric to hit — code that 
 - Stale comments (describing behavior the code no longer has) are worse than no comment — flag them for removal on sight.
 - TODOs are fine when they carry real information (why deferred, ideally by whom/when); a bare `// TODO` isn't worth keeping.
 
+## 5. CUPID review
+
+Use CUPID when the user asks for that framework or a broad design-quality review. First establish the language, purpose, local conventions, and scope. For each property, cite concrete code and use this shape:
+
+```
+### C — Composable
+**Rating:** 🟢 Strong / 🟡 Moderate / 🔴 Weak
+**Observations:** specific code evidence
+**Suggestions:** a direction-of-travel improvement
+```
+
+| Property        | Look for                                                         |
+| --------------- | ---------------------------------------------------------------- |
+| Composable      | Narrow, intention-revealing API; minimal dependencies            |
+| Unix philosophy | One externally coherent purpose; unsurprising side effects       |
+| Predictable     | Visible behavior, bounded failures, deterministic state          |
+| Idiomatic       | Language and local conventions; no reinvention                   |
+| Domain-based    | Domain vocabulary and boundaries rather than framework structure |
+
+End with what is already working and the one to three highest-leverage improvements. CUPID is a direction, not compliance: acknowledge trade-offs and avoid “violates” or “must.” Read [the full CUPID reference](references/cupid-properties.md) when a property needs deeper analysis.
+
 ## Gotchas
 
 - Don't apply the agent complexity budget (6) to code a human will primarily maintain by hand — check who owns the file going forward, not who wrote the current diff.
@@ -67,6 +88,7 @@ No big deal. Don't treat comments as sacred or as a metric to hit — code that 
 - Don't chase noise-word removal into ambiguity — `Product` vs `ProductInfo` is a good trim; `Product` vs `ProductOwner` is not, they're different concepts.
 - One-word-per-concept is a codebase-wide check, not a per-file one — grep for the existing verb before introducing a synonym.
 - Don't force away complexity that comes from the domain; make it explicit and verifiable instead.
+- A CUPID score is a review lens, not a reason to extract or split code without a concrete design benefit.
 
 ---
 
@@ -91,3 +113,5 @@ Scenario: `.benchmarks/scenarios/simple-001-root-cause-fix.md` · Run: 2026-08-3
 | claude-haiku-4-5  | 83%     | 100% | +17%  |
 
 > **SOFT PASS (run 2026-08-31)**. Small uniform gains; no regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+Scenario: `.benchmarks/scenarios/clean-code-002-cupid-review.md` — pending a baseline/skill-on rerun after this merge.
