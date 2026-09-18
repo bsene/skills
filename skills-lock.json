@@ -73,6 +73,12 @@
       "skillPath": "skills/snipgrapher/SKILL.md",
       "computedHash": "2bc2074c37caa2a4936109e254abaf5a1f3abaa88937714176170a606dd2e681"
     },
+    "typescript": {
+      "source": "bsene/skills",
+      "sourceType": "github",
+      "skillPath": "typescript/SKILL.md",
+      "computedHash": "b30e8419974366e50c37f61fa403fe8fc2da9412e9ae3b91f74d1ae7f56b7bbb"
+    },
     "typescript-magician": {
       "source": "mcollina/skills",
       "sourceType": "github",
