@@ -6,13 +6,12 @@ description: >
   reframing tough questions, centering the other person, the Pyramid Principle, pattern interrupt, making
   ideas feel safe, and the cognitive-load through-line. Diagnose what works, what's missing, then rewrite.
 
-  TRIGGER when: user wants to improve communication, "make this message clearer", "review my email/Slack",
-  "analyze this transcript", "review my CV/resume", prep for a meeting/pitch/presentation, "how do I say this", be more convincing /
-  persuasive / assertive, handle a tough question, talk to executives, structure my idea, "is this too long-winded".
-  Also trigger for style presets: "rewrite this like DHH" / "in the style of David Heinemeier Hansson" /
-  "make it blunt/direct" (see references/dhh-style.md).
-  DO NOT USE for raw text generation with no analysis, marketing/copywriting, translation, or code/docs —
-  use `kano` for feature decisions, language skills for code prose.
+  TRIGGER when: user wants to improve communication, "review my email/Slack/CV", "analyze this transcript",
+  prep for a meeting/pitch/presentation, "how do I say this", be more persuasive/assertive, handle a tough
+  question, talk to execs, "is this too long-winded". Also trigger for author style presets under
+  references/authors/: DHH (blunt/direct), Uncle Bob (defend a quality/testing standard), Jessitron
+  (reflective systems-thinking essay), Martin Fowler (measured mixed-feelings stance).
+  DO NOT USE for raw text generation with no analysis, marketing/copywriting, translation, or code/docs.
 ---
 
 # Communication: analyze & sharpen how you speak and write
@@ -30,7 +29,15 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 | Applying any technique in depth, or the user asks how/why it works | [Frameworks](references/frameworks.md)                                               |
 | User cites the 7-38-55 / Mehrabian "body language" rule            | [Frameworks → Mehrabian myth](references/frameworks.md#7-the-7-38-55-mehrabian-myth) |
 | Coaching for an exec / C-level audience                            | [Frameworks → Pyramid Principle](references/frameworks.md#4-pyramid-principle)       |
-| User asks for "DHH style" / maximum directness over diplomacy      | [DHH style](references/dhh-style.md)                                                 |
+
+### Style presets, by author (`references/authors/`)
+
+| Author                             | Read when                                                                         | File                                           |
+| ------------------------------------ | ------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| **David Heinemeier Hansson (DHH)** | Maximum directness over diplomacy; "rewrite this like DHH"                          | [references/authors/dhh.md](references/authors/dhh.md) |
+| **Robert C. Martin ("Uncle Bob")** | Defending a quality/testing standard against schedule pressure; code-review tone     | [references/authors/uncle-bob.md](references/authors/uncle-bob.md) |
+| **Jessica Kerr ("Jessitron")**     | A reflective, systems-thinking essay/keynote on engineering practice or AI's effect on it | [references/authors/jessitron.md](references/authors/jessitron.md) |
+| **Martin Fowler**                  | A measured, honestly mixed personal stance on a divisive topic                       | [references/authors/martin-fowler.md](references/authors/martin-fowler.md) |
 
 ---
 
@@ -42,8 +49,9 @@ rhetoric and structure techniques, then propose a concrete rewrite. The through-
 2. DIAGNOSE → score the artifact against the rubric below. Note what works AND what's missing.
 3. REPORT   → findings, severity-tagged (Blocker / Warning / Suggestion). Be specific, quote lines.
 4. REWRITE  → produce a concrete rewrite applying the relevant techniques. Not abstract advice.
-              If the user asked for DHH style / max directness, load references/dhh-style.md
-              and apply its 6 moves on top of the rewrite.
+              If the user asked for an author style preset (DHH / Uncle Bob / Jessitron / Martin
+              Fowler), load the matching file under references/authors/ and apply its moves on
+              top of the rewrite.
 ```
 
 ### Resume / CV field
@@ -92,6 +100,12 @@ Full treatment with worked examples: [references/frameworks.md](references/frame
 
 ## Always-On Guardrails
 
+- **Cold, analytical tone by default.** DIAGNOSE and REPORT in plain factual terms — no optimistic
+  framing, no cheerleading, no softening a weak artifact to make it feel better.
+- **Name risks and gaps explicitly.** The REPORT step must state what's missing or fragile, not just
+  what works — a diagnosis that only lists strengths is incomplete.
+- **Rewrites are drafts, not final copy.** The user reviews and refines every REWRITE himself — deliver
+  a clear, workable draft rather than over-polished prose he'd have to strip back down.
 - **Never fabricate ethos.** Credibility claims must be true — don't invent credentials, numbers, or
   experience to make an argument land. That's a lie, not a technique.
 - **Center the other person.** The most common fix is moving the spotlight off the speaker.
@@ -101,7 +115,9 @@ Full treatment with worked examples: [references/frameworks.md](references/frame
   the figure alone.
 - **Don't trust the 7-38-55 rule.** It describes a narrow lab case, not normal speech (see references).
 - **Blunt ≠ personal (DHH mode).** Directness targets the idea, never the person. And never soften
-  a requested DHH rewrite back into consensus-speak (see references/dhh-style.md).
+  a requested DHH rewrite back into consensus-speak (see references/authors/dhh.md).
+- **Critique the work, not the person (Uncle Bob mode).** Ruthless on the artifact, courteous to
+  whoever shared it (see references/authors/uncle-bob.md).
 
 ---
 
