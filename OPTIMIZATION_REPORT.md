@@ -139,13 +139,6 @@ Findings below are the canonical list (85: 16 Blocker / 46 Warning / 23 Suggesti
 - **warning** · activation-design — Trigger fires on ANY code-modification request, no display signal (show-me-the-code/SKILL.md:6-10) — verified → require display signal or DO NOT USE for apply-directly.
 - **suggestion** · activation-design — Example hunk shows 1/2 context lines vs mandated 3+3 (show-me-the-code/SKILL.md:32-37) → fix example.
 
-**simple**
-
-- **warning** · activation-design — No DO NOT USE; collides with review/clean-code/show-me-the-code (simple/SKILL.md:3) → add anti-triggers.
-- **warning** · context-budget — Grug quote duplicated verbatim (simple/SKILL.md:14,50) — verified → keep one.
-- **warning** · regression-triage — "the kind of domain this user works in" hardcodes user-specific assumption (simple/SKILL.md:30) → reword domain-generic.
-- **suggestion** · activation-design — Description typo `is this too complex" questions` — missing opening quote (simple/SKILL.md:3) — verified → fix.
-
 ### Docs, meta & agent tooling
 
 - **BLOCKER** · release-gates — footers in 14 skills cite deleted `skill-optimizer/release-gates.md` (full list in `audit-findings-canonical.md` §collapsed). Fix: re-point. ✅ **RESOLVED 2026-08-31** — all 14 rewritten or path-fixed to `.agents/skills/skill-optimizer/rules/release-gates.md`.
