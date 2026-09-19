@@ -11,8 +11,8 @@ Use this shipping gate to keep the user—not the agent—responsible for the in
 
 Before `git commit`, `git push`, or opening a pull request:
 
-1. Get a plain-language explanation of the change, its expected behavior, and why it is safe. If the user already gave one, summarize it and ask them to confirm it.
-2. State the files or behavior being shipped and the validation that supports it. Do not ship when the intent or validation is unknown.
+1. Show the complete changed-file unified diff with three lines of context. Always show changes as a diff; do not replace it with a summary or stat.
+2. Immediately ask the user to confirm ownership of the change, its expected behavior, why it is safe, the files or behavior being shipped, and the validation supporting it. Do not summarize the change after showing the diff before asking this question.
 3. Get explicit approval to ship. Do not treat "looks good" about a code review as approval to commit, push, or open a PR.
 
 Do not revert working changes just because an explanation is missing; ask for it instead. Reverting is a separate, destructive action that needs the user's approval.
