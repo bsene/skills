@@ -9,6 +9,8 @@ Use this shipping gate to keep the user—not the agent—responsible for the in
 
 ## Non-negotiable shipping gate
 
+Changes limited to skill-installation files—`.agents/skills/`, `.claude/skills/`, `.pi/skills/`, `skills-lock.json`, and equivalent skill metadata—are pre-approved and do not require this prompt. The rule does not apply to application code or unrelated files.
+
 Before `git commit`, `git push`, or opening a pull request:
 
 1. Show the complete changed-file unified diff with three lines of context. Always show changes as a diff; do not replace it with a summary or stat.
