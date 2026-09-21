@@ -18,6 +18,14 @@ metadata:
 
 Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Rule files below link to the specific docs section they encode; when a rule and the official docs disagree, the docs win and the rule should be updated.
 
+## This Project: Deno
+
+- Use Deno's configured import map and include `.ts` in local import specifiers.
+- Write BDD tests with `@std/testing/bdd` and import `expect` explicitly from `@std/expect`.
+- Do not add test preloads, setup files, ambient globals, or runner configuration to supply missing test identifiers. Report immutable-test boundary defects instead.
+- Run `task verify` after every edit and before committing; it is the project's lint, full-test, 100%-coverage, and mutation-test gate.
+- For behavior changes, follow the project's TCRDD workflow; keep implementations small and dependency-free unless the task requires otherwise.
+
 ## Route to Sub-skills
 
 `type-system/` and `zod/` are reference bundles read on demand from this router — they are not independently discovered skills, so their own frontmatter is intentionally minimal (no duplicate trigger list needed).
