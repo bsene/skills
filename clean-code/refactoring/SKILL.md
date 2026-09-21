@@ -38,7 +38,7 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 - **Tidy just in time.** Tidy immediately before or after a known behavior change: before, the exact work is clear; after, the design friction is fresh. Avoid fixed technical-debt quotas, which invite speculative cleanup at the wrong time and place. If leadership reserves capacity, treat it as permission and slack, not a quota; fix the incentive that prevents timely tidying. Timebox standalone tidying only for deliberate practice, recovery from a conscious shortcut, or mapping an unfamiliar, unhealthy codebase.
 - **Rule of Three before extracting.** Wait for the _third_ duplication before Extract Method / Extract Class. Two points don't reliably reveal the right abstraction.
 - **No tests, no refactor.** Don't refactor blind — add a safety net first.
-- **Extraction needs no new tests.** Helpers extracted during refactoring stay covered by the existing public-API behavior tests; writing unit tests against them re-couples the suite to structure (see testing/references/mocks-and-fragility.md, "TDD, Where Did It All Go Wrong").
+- **Extraction needs no new tests.** Helpers extracted during refactoring stay covered by the existing public-API behavior tests; writing unit tests against them re-couples the suite to structure (see [testing's mock-fragility guidance](../../testing/references/mocks-and-fragility.md)).
 - **Pair comment tidyings.** When deleting redundant comments, also scan for missing _why_ comments worth adding.
 
 ---

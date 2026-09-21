@@ -11,7 +11,7 @@ description: >
   work on main without a long-lived feature branch. Also trigger on "graph-based refactor", "prerequisite tree",
   or "Mikado graph".
 
-  DO NOT USE when: the change is small/in-place (single method, single class, simple rename) — use `refactoring`
+  DO NOT USE when: the change is small/in-place (single method, single class, simple rename) — use `clean-code/refactoring`
   instead for code smells and Extract Method-style work. If the feature hasn't been scoped yet, consider `kano`
   first to validate it's worth doing.
 ---

@@ -167,5 +167,5 @@ undoes the refactoring freedom the cycle exists to create.
   the tests are the bug — rewrite them against the contract (see
   [TestDesiderata](testdesiderata.md) on structural insensitivity).
 
-Related: the [refactoring](../../refactoring/SKILL.md) skill's "No tests, no refactor" guardrail
+Related: the [clean-code refactoring sub-skill](../../clean-code/refactoring/SKILL.md)'s "No tests, no refactor" guardrail
 complements this — the safety net is the public-API suite you already have.
