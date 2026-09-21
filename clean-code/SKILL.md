@@ -1,11 +1,18 @@
 ---
 name: clean-code
-description: Use when writing new code, naming modules/files/functions/classes/variables, reviewing or refactoring code for readability, assessing/reducing complexity, deciding whether an abstraction belongs, or reviewing with CUPID. Trigger on requests like "name this function", "is this a good variable name", "review this for clean code", "reduce complexity", "should I add a comment here", "should I abstract this", "review with CUPID", or any PR/code review pass. Covers human-scale design, naming, complexity budgets, comments, and CUPID's composable, Unixy, predictable, idiomatic, domain-based lens. Pairs with language-specific skills (typescript, go, clojurescript) for syntax/idiom concerns.
+description: Use when writing new code, naming modules/files/functions/classes/variables, reviewing or refactoring code for readability, assessing/reducing complexity, deciding whether an abstraction belongs, or reviewing with CUPID. For behavior-preserving refactors within a function, class, or file, route to the `refactoring/` sub-skill. Trigger on requests like "name this function", "is this a good variable name", "review this for clean code", "reduce complexity", "should I add a comment here", "should I abstract this", "review with CUPID", "code smell", "extract method", or "refactor this class". Covers human-scale design, naming, complexity budgets, comments, CUPID, and in-place refactoring. Pairs with language-specific skills (typescript, go, clojurescript) for syntax/idiom concerns.
 ---
 
 # Clean Code
 
 Code is for people to read, modify, and delete. Run four checks: design, naming, complexity, comments. Each has a concrete bar, not a vibe.
+
+## Route to sub-skill
+
+For a behavior-preserving refactor within a function, class, or file, read
+[`refactoring/SKILL.md`](refactoring/SKILL.md). It supplies the smell catalog, technique selector,
+and guardrails. Do not use it for behavior changes (`tcrdd`) or cross-file dependency untangling
+(`mikado-method`).
 
 ## 1. Design for a human-sized mental model
 
@@ -40,13 +47,8 @@ Budget, per function:
 
 Count: start at 1, +1 per `if`, `else if`, `case`, `for`, `while`, `catch`, `&&`/`||` in a condition, ternary. If a function crosses the budget, refactor before considering it done — don't leave it and move on.
 
-Refactor moves, roughly in order of preference:
-
-1. **Guard clauses / early return** — flatten nested conditionals instead of `if/else` pyramids.
-2. **Extract method** — pull a branch or loop body into a named function; the extraction itself often clarifies intent (see Naming above).
-3. **Replace conditional with lookup/map** — `switch`/`if` chains selecting a value or behavior become an object/map lookup.
-4. **Replace conditional with polymorphism** — only when the branches represent genuinely different types/behaviors, not for a one-off.
-5. **Split the function** — if it's doing more than one thing, it should be more than one function; complexity is often a symptom of mixed responsibilities, not just nesting depth.
+For a behavior-preserving change, use the [refactoring sub-skill](refactoring/SKILL.md) to select a
+technique rather than extracting merely to hit the budget.
 
 Don't refactor purely to hit the number — a clean 5 beats a contorted 4. The budget is a trigger to look closer, not a hard gate to game.
 
