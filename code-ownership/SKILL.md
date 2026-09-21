@@ -1,11 +1,22 @@
 ---
 name: code-ownership
-description: Keep humans accountable for code they ship. Use immediately before a git commit, push, or pull request, and when a bug fix, new feature, business rule, domain model, architecture, or large refactor is about to be shipped.
+description: Keep humans accountable for code they ship and ensure shared understanding after meaningful work. Use before a git commit, push, or pull request, and after code changes, commands, or reports when recommending a next step.
 ---
 
 # Code Ownership
 
-Use this shipping gate to keep the user—not the agent—responsible for the intent and costly choices behind shipped code.
+Keep the user—not the agent—responsible for shipped changes, and make recommendations from verified facts.
+
+## After meaningful work
+
+Before recommending a next step:
+
+1. Report only verified facts: changed files, commands run, and observed results. State what was not verified.
+2. Ask whether the user understands the change or result and what remains unclear.
+3. Resolve facts yourself; ask the user only for decisions they own.
+4. Run the smallest relevant test or inspection before making a recommendation. If that is impossible, present the option as unverified.
+
+Skip this for a simple factual answer or when no work was performed.
 
 ## Non-negotiable shipping gate
 
