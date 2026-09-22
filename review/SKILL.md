@@ -57,6 +57,9 @@ who clicks merge owns the change.
 
 ## Severity Tiers
 
+Classify the observed behavior, not a label: an incorrect calculation is a Blocker; a name or
+rename is a Nit unless the supplied diff or context proves it breaks compatibility or behavior.
+
 | Tier        | Criterion                                       | Required Action      |
 | ----------- | ----------------------------------------------- | -------------------- |
 | **Blocker** | Incorrect behavior, security hole, data loss, broken invariant, or unjustified weakened gate | Fix before merge |
