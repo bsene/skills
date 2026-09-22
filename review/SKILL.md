@@ -1,35 +1,44 @@
 ---
 name: review
 description: >
-  Reviews current branch changes: reads the actual diff, produces structured feedback
-  (Blockers / Concerns / Nits), asks targeted questions, then applies fixes on approval.
+  Reviews current branch and uncommitted changes: reads the actual diff, checks changed tests
+  and CI first, reports risk and evidence with structured feedback (Blockers / Concerns / Nits),
+  then applies approved fixes and asks before committing.
 
   TRIGGER when: user says "/review", "review this PR", "review my changes", "code review",
   "review the diff", "PR review", "review branch", "what do you think of my code",
   "look at my changes", "give me feedback on this".
 
   DO NOT USE when: user wants to understand what changed without requesting feedback;
-  user asks for explanation only; no commits exist on current branch beyond main.
+  user asks for explanation only; there is no supplied or local diff to review.
 ---
 
 # /review
 
 ## Workflow
 
-1. Run `git diff main...HEAD` — get ACTUAL diff, never reconstruct
-2. Produce structured review (severity tiers below)
-3. Ask ≤5 grill-me questions — one per key design decision; design intent only, not style
-4. On approval: apply Blocker fixes → run tests → run lint → commit (conventional message)
+1. Get the actual scope, never reconstruct it: review a supplied diff; otherwise inspect
+   `git diff main...HEAD`, `git diff --cached`, `git diff`, and `git status --short`. This includes
+   tracked uncommitted work by default. If untracked files exist, ask the user whether to include
+   them; state which parts were available.
+2. Read changed tests and CI/config before implementation. A behavior-changing test rewrite
+   without a sound reason, or an unjustified weaker gate, is a Blocker.
+3. Produce structured review with risk, blast radius, and available test/validation evidence.
+   When changed code has obvious callers, dependents, or public surface, recommend checking them
+   and their relevant tests; do not turn every review into call-graph archaeology.
+4. Ask ≤5 grill-me questions — one per key design decision; design intent only, not style.
+5. On approval of specific fixes: apply them → run relevant tests and lint → stop and grill the
+   user about remaining design or validation questions → ask explicit approval before committing.
 
 ## Scope Discipline
 
-Review **only what changed on this branch** — never pre-existing, unmodified code. The diff
-is the contract;
-default to `git diff main...HEAD`, not memory or full-file reads. Real repos make this a
-hard rule:
+Review **only what changed** — never report pre-existing, unmodified code as a finding. The diff
+is the contract, but it is not the only context: read a changed file or an obvious caller,
+dependent, or relevant test when needed to establish the changed code's impact. Real repos make
+this a hard rule:
 
-> Focus exclusively on changes introduced in the current branch compared to `main`. Do not
-> review pre-existing code that was not modified.
+> Focus findings exclusively on changed code. Use surrounding code only to understand impact;
+> do not turn a review into a backlog of pre-existing issues.
 
 ## Security-Before-Push
 
@@ -39,25 +48,33 @@ secrets/tokens/PINs/PII, and `__proto__`/prototype-walking reads on untrusted co
 
 ## Agent-Authored Diffs
 
-If the branch was authored largely by an agent — or you suspect it was — layer
-[agentic-code-review](references/agentic-code-review.md). Watch first for the three
-characteristic agent failure modes, all Blockers: **test tampering** (assertions edited
-to match broken behavior — read test diffs before the code), **CI weakening** (removed
-or skipped tests, lowered gates), and **prompt injection** (untrusted input reaching
-LLM calls in new AI features). Tier review depth by blast radius, not by author; the
-human who clicks merge owns the change.
+Run the test-tampering and CI-weakening checks in every review. If the branch was authored
+largely by an agent — or you suspect it was — also layer
+[agentic-code-review](references/agentic-code-review.md). For every new or changed AI/LLM
+feature, inspect untrusted prompt input: it is a Blocker when it can influence privileged data
+or actions, otherwise a Concern. Tier review depth by blast radius, not by author; the human
+who clicks merge owns the change.
 
 ## Severity Tiers
 
 | Tier        | Criterion                                       | Required Action      |
 | ----------- | ----------------------------------------------- | -------------------- |
-| **Blocker** | Bug, security hole, data loss, broken invariant | Fix before merge     |
-| **Concern** | Design flaw, missing test, perf issue           | Discuss + likely fix |
+| **Blocker** | Incorrect behavior, security hole, data loss, broken invariant, or unjustified weakened gate | Fix before merge |
+| **Concern** | Design flaw, missing evidence/test, or perf issue without demonstrated user harm              | Discuss + likely fix |
 | **Nit**     | Style, naming, minor duplication                | Optional             |
+
+If a performance finding may affect availability but its impact is unclear, ask the user whether
+to treat it as a Blocker before assigning a tier.
 
 ## Output Format
 
 ```
+## Review Context
+- **Scope:** branch diff + staged + unstaged changes
+- **Risk:** Medium
+- **Blast radius:** `createInvoice()` feeds the payment record
+- **Validation evidence:** no test output supplied
+
 ## Blockers
 - `src/auth.ts:42` — expiry check uses `<` not `<=`; off-by-one passes expired tokens
 
