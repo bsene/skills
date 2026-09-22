@@ -7,9 +7,11 @@ was authored (or is suspected to be authored) by an AI agent.
 # Agent-Authored Diff Review
 
 Layer this rubric on top of the /review workflow when the branch was written
-largely by an agent. The diff is not a record of the agent's reasoning — it
-only survived one model's optimization pressure, and agents fail in
-characteristic ways a general review pass does not look for.
+largely by an agent. Its test and CI checks also apply to every diff; use its
+prompt-injection check whenever the diff changes an AI/LLM feature. The diff
+is not a record of the agent's reasoning — it only survived one model's
+optimization pressure, and agents fail in characteristic ways a general review
+pass does not look for.
 
 ## Agent-Diff Checks
 
@@ -41,11 +43,13 @@ Deterministic gates cannot be talked out of their verdict by a confident
 paragraph. Any weakening of a CI gate without a written justification is a
 Blocker.
 
-### Prompt injection in agent-built features (Blocker/Concern)
+### Prompt injection in AI/LLM features (Blocker/Concern)
 
 User-controlled text flowing into an LLM call is a latent vulnerability that is
-invisible in the diff. Check any new AI/LLM feature the branch introduces:
-what reaches the prompt, and can a user shape it?
+invisible in the diff. Check any new or changed AI/LLM feature: what untrusted
+text reaches the prompt, which tools or data the model can access, and whether
+prompt-shaped instructions can influence privileged actions. That is a Blocker
+when privileged data or actions are exposed; otherwise it is a Concern.
 
 ### Correlated blind spots (Concern)
 
