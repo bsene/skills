@@ -54,7 +54,7 @@ Verdict census: **17 PASS · 9 SOFT PASS · 5 NEUTRAL · 5 NEG** (36 scenarios, 
 |   3 | c4-diagram/                   | `c4-diagram-001-container-view`                      | 67%→100% (+33%) | 100%→100% (+0%)   | 100%→100% (+0%)  | **PASS**      |
 |   4 | chicken-scheme/               | `chicken-scheme-001-chicken5-migration`†             | 83%→100% (+17%) | 100%→100% (+0%)   | 100%→83% (−17%)  | **SOFT PASS** |
 |   5 | clean-code/                   | `clean-code-001-agent-code-review`                   | 67%→100% (+33%) | 83%→100% (+17%)   | 67%→67% (+0%)    | **PASS**      |
-|   6 | clojurescript/                | `clojurescript-001-async-await`†                     | 67%→100% (+33%) | 83%→100% (+17%)   | 100%→100% (+0%)  | **PASS**      |
+|   6 | clojure/                      | `clojure-001-async-await`†                           | 67%→100% (+33%) | 83%→100% (+17%)   | 100%→100% (+0%)  | **PASS**      |
 |   7 | communication/                | `communication-002-reframe-tough-question`           | 100%→100% (+0%) | 100%→100% (+0%)   | 100%→100% (+0%)  | **NEUTRAL**   |
 |   8 | dantotsu/                     | `dantotsu-001-escape-stage`                          | 67%→100% (+33%) | 83%→100% (+17%)   | 83%→100% (+17%)  | **PASS**      |
 |   9 | explain-code/                 | `explain-code-001-worker-walkthrough`                | 50%→100% (+50%) | 50%→100% (+50%)   | 50%→100% (+50%)  | **PASS**      |
@@ -86,7 +86,7 @@ Verdict census: **17 PASS · 9 SOFT PASS · 5 NEUTRAL · 5 NEG** (36 scenarios, 
 |  35 | typescript/zod/               | `zod-001-v4-migration`                               | 50%→83% (+33%)  | 50%→83% (+33%)    | 67%→100% (+33%)  | **PASS**      |
 |  36 | writing-a-good-agents-md/     | `writing-a-good-agents-md-001-consolidate`           | 50%→100% (+50%) | 67%→100% (+33%)   | 83%→100% (+17%)  | **PASS**      |
 
-**PASS (17).** zod (+33/+33/+33 — v4 migration checklist applies cleanly), show-me-the-code (+67/+50/+66), smoke-tests (+50/+67/+50), explain-code (+50/+50/+50 — largest floor lift), logging-daily-progress (+100/+66/+67 — standout: without-skill baselines collapse 17–33% on the week recap), composing-software (+34/+33/+50), gitlab-dag (+33/+33/+50), clean-code (+33/+17/0), c4-diagram (+33/0/0), writing-a-good-agents-md (+50/+33/+17), rescript (+50/+17/+17), typescript-001 (+33/+16/+16), dantotsu (+33/+17/+17), testing (+33/0/+33), documentation (0/0/+33), clojurescript† (+33/+17/0), golang-router† (+17/0/+16).
+**PASS (17).** zod (+33/+33/+33 — v4 migration checklist applies cleanly), show-me-the-code (+67/+50/+66), smoke-tests (+50/+67/+50), explain-code (+50/+50/+50 — largest floor lift), logging-daily-progress (+100/+66/+67 — standout: without-skill baselines collapse 17–33% on the week recap), composing-software (+34/+33/+50), gitlab-dag (+33/+33/+50), clean-code (+33/+17/0), c4-diagram (+33/0/0), writing-a-good-agents-md (+50/+33/+17), rescript (+50/+17/+17), typescript-001 (+33/+16/+16), dantotsu (+33/+17/+17), testing (+33/0/+33), documentation (0/0/+33), clojure† (+33/+17/0), golang-router† (+17/0/+16).
 
 **SOFT PASS (9).** chicken-scheme† (+17/0/−17 — haiku one-criterion `csc -static`/`-deploy` dip on an untouched criterion; noise suspect, follow-up), monoids (0/+17/0 — flat deltas are the expected finding: the French-language body (`# Monoïdes`) does not activate for English-prompted runs; sonnet +17 was the only lift), git-guru (0/+17/0), gitmoji-002 (+17/+17/0), golang-types-and-interfaces (+17/+17/0), markdown (0/0/+20), simple (+17/+17/+17), solid (0/+17/0), typescript-002 (0/0/+16 — the 06-25 sonnet −5% did not reproduce).
 
@@ -172,9 +172,9 @@ Findings below are the canonical list (85: 16 Blocker / 46 Warning / 23 Suggesti
 - **suggestion** · regression-triage — `,d name` described as binding-lookup; it evaluates and describes a result (chicken-scheme/SKILL.md:68) → reword to `,d expr`.
 - **suggestion** · regression-triage — Shebang `#!/usr/bin/env csi -s` fails on env variants that don't split args (references/scripting-cli.md:4) → `#!/usr/bin/env -S csi -s`.
 
-**clojurescript**
+**clojure**
 
-- **suggestion** · context-budget — ~200-word stacked trigger clauses (clojurescript/SKILL.md:3) → merge into one list.
+- **suggestion** · context-budget — ~200-word stacked trigger clauses (clojure/SKILL.md:3) → merge into one list.
 
 **monoids**
 
