@@ -1,17 +1,17 @@
 ---
 name: clojurescript
-description: Write, review, debug, and configure ClojureScript code and projects. Use this whenever the user mentions ClojureScript, .cljs/.cljc files, shadow-cljs, figwheel, the CLJS compiler, JS interop from Clojure, Reagent/re-frame/Reagent-style UI code, or asks to convert JS/TS logic into ClojureScript. Also use it for questions about CLJS compiler options (:optimizations, :main, :npm-deps, :externs, etc.), consuming JS/npm libraries from CLJS, source maps, Google Closure Library usage, or the newer ^:async/await function support. Also trigger for CLJS recursion/stack-overflow/trampoline questions. Trigger even if the user just pastes CLJS code with an error and asks "what's wrong here" or asks to set up a new CLJS project. Do NOT use for nbb (babashka/nbb) scripts, `nbb.edn` projects, or anything meant to run via `nbb script.cljs`/`npx nbb` — those have a different (SCI-interpreted, no-Closure-Compiler) language surface; those are out of scope for this skill — consult nbb's own documentation.
+description: Write, review, debug, and configure JVM Clojure and ClojureScript code and projects. Use for .clj/.cljc/.cljs files, deps.edn, the Clojure CLI, Leiningen, REPL-driven development, Java or JavaScript interop, shadow-cljs, figwheel, the CLJS compiler, Reagent/re-frame, and CLJS compiler options. Do not use for Babashka or nbb scripts.
 compatibility: No special tools required to consult this skill. Actually building or running code needs a CLJS toolchain (shadow-cljs, Clojure CLI, or Leiningen) and a JS runtime (browser or Node.js), but the skill itself is pure reference/instruction content.
 metadata:
   version: "1.0.0"
   source: https://clojurescript.org/reference/documentation
 ---
 
-# ClojureScript
+# Clojure & ClojureScript
 
-ClojureScript (CLJS) is Clojure that compiles to JavaScript via the Google Closure Compiler. It shares Clojure's syntax, immutable data structures, and REPL-driven workflow, but runs on JS engines (browser, Node.js) and interoperates directly with JS objects, functions, and npm/Closure libraries.
+Clojure runs on the JVM. ClojureScript (CLJS) shares its syntax, immutable data structures, and REPL-driven workflow, but compiles to JavaScript via the Google Closure Compiler and interoperates with JS objects, functions, and npm/Closure libraries.
 
-This skill covers writing idiomatic CLJS, JS interop, dependency/build configuration, and the newer native async/await support. When in doubt about compiler flags or interop mechanics, check `references/` rather than guessing — CLJS has a lot of build-tooling surface area that's easy to get subtly wrong.
+This skill covers idiomatic Clojure, JVM/JS interop, dependency/build configuration, and native CLJS async/await. First identify the runtime: `.clj` is JVM Clojure, `.cljs` is ClojureScript, and `.cljc` needs a deliberate shared-runtime boundary. When in doubt about compiler flags or interop mechanics, check `references/` rather than guessing.
 
 > **Not for nbb.** [Babashka/nbb](https://github.com/babashka/nbb) runs CLJS through an SCI interpreter (no Google Closure Compiler, no `:optimizations`/`:advanced`, no externs) for fast-starting Node.js scripts — a different language surface from what this skill covers. nbb is out of scope here — consult [nbb's docs](https://github.com/babashka/nbb) and [examples](https://github.com/babashka/nbb/tree/main/examples) for `nbb.edn` projects, anything run via `nbb script.cljs`/`npx nbb`.
 
@@ -37,6 +37,39 @@ CLJS syntax is essentially Clojure's, so standard Clojure knowledge (immutable p
 - **`js/` prefix** accesses JS global objects: `js/console`, `js/document`, `js/Math`, `js/window`.
 - **No JVM interop** — anything JVM-specific (`Thread`, `java.*` classes, blocking IO) doesn't exist. Concurrency is single-threaded/event-loop based; use `core.async` channels or promises/async functions instead of threads or locks.
 - **`.cljc` files** hold code shared between Clojure and ClojureScript, guarded with reader conditionals: `#?(:clj (do-jvm-thing) :cljs (do-js-thing))`.
+
+## JVM Clojure
+
+For `.clj` code, prefer the official Clojure CLI and `deps.edn` for a new project, but preserve an existing Leiningen or build-tool workflow. Common checks are `clj` for a REPL, `clojure -M -m my.app.main` for a main namespace, and `clojure -X:deps tree` for resolved dependencies.
+
+### Explore and shape data
+
+- Start with the REPL for every non-trivial change: evaluate a small input, inspect the returned data, then put the confirmed transformation in a named function. Use `*1`, `*2`, `*3`, and `*e` to inspect recent results and failures.
+- Model domains with maps, vectors, sets, and namespaced keywords. Destructure function inputs instead of repeatedly navigating maps, and return data rather than hiding it in objects.
+- Compose collection transformations with `map`, `filter`, `keep`, `reduce`, `into`, `group-by`, and `mapcat`. Use `->` when the working value is the first argument and `->>` when it is the last; use `cond->`/`cond->>` for optional steps.
+- Do not use lazy sequences for effects. Use `run!`, `doseq`, or an eager collection operation when effects must occur. Realize a lazy sequence while its resource is open:
+
+  ```clojure
+  (with-open [reader (clojure.java.io/reader path)]
+    (doall (line-seq reader)))
+  ```
+
+- Use `loop`/`recur` for deep tail-recursive scalar work. JVM recursion is not stack safe; use `lazy-seq` when the result itself is incremental or unbounded.
+
+### Organize and verify behavior
+
+- Give each file a namespace and use `:require` aliases (`[my.app.orders :as orders]`) to make a function's origin clear. Avoid broad `:refer` imports outside narrowly justified cases.
+- Use `clojure.test` for focused behavior checks: name the behavior with `deftest`, state outcomes with `is`, and add a `testing` label when it makes failures clearer. Test pure transformations directly; test I/O through a thin adapter.
+- Validate untrusted input at its boundary with an explicit predicate or `clojure.spec.alpha`; return or report data that identifies the bad field. Do not spread validation checks throughout downstream transformations.
+- Use `ex-info` with useful `ex-data` for expected domain failures; preserve causes when wrapping exceptions.
+
+### State, polymorphism, and metaprogramming
+
+- Default to no shared mutable state. Use an `atom` with `swap!` for one independent identity; never split a read/compute/write update across `@` and `reset!`. Use `ref` and `dosync` only for coordinated, retry-safe changes to several identities.
+- Keep Java interop behind a thin adapter. Add type hints only for a demonstrated reflection or overload-resolution issue.
+- Prefer maps and functions. Introduce a protocol for a genuine polymorphic boundary, a multimethod when dispatch depends on more than one attribute, and a macro only when a function cannot provide the required evaluation control. Inspect a macro with `macroexpand-1` before relying on it.
+
+These practices are distilled from the supplied *Clojure* (Karthikeyan A.K.), *Programming Clojure*, Second Edition (Stuart Halloway and Aaron Bedra), and *The Clojure Workshop* (Joseph Fahey et al.). Verify modern tooling details against the official Clojure documentation.
 
 ## JavaScript interop
 
