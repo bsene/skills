@@ -13,6 +13,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Why?                            | Skill                                                                                                                                                                  | What it does in 7 words                                                                   |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | Should I build this?            | [kano](/skills/kano/SKILL.md)                                                                                                                                          | Classify features by user benefit, refuse waste                                           |
+| Build with hacker ethos         | [hacker-manifesto](/skills/hacker-manifesto/SKILL.md)                                                                                                                  | Solve, share, automate drudgery, earn competence                                          |
 | Readability and CUPID review    | [clean-code](/skills/clean-code/SKILL.md)                                                                                                                              | Human-scale design, naming, complexity, comments, CUPID                                   |
 | Review the diff                 | [review](/skills/review/SKILL.md)                                                                                                                                      | Review current diff, evidence, risk, and approved fixes                                  |
 | Mine review feedback            | [fetch-pr-corpus](/skills/fetch-pr-corpus/SKILL.md)                                                                                                                    | Fetch merged-PR review corpus as JSONL for style mining                                   |
@@ -58,4 +59,4 @@ See [writing-a-good-agents-md](/skills/writing-a-good-agents-md/SKILL.md) for qu
 
 ---
 
-**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Sep 9, 2026
+**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Sep 23, 2026
