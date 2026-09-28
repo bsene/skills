@@ -30,6 +30,8 @@ Ask the user which stage caught the defect if it isn't already clear — never g
 
 Later stages (E, F) are more costly and signal a bigger process gap than earlier ones (A, B).
 
+For recurring or cross-team defects, map the path the behavior or data took, record where the defect was found, and make recurrence visible by stage. Set a measurable improvement target from the current baseline. This adapts Nomura's guidance on mapping quality-information flows, classifying defects by discovery point, and visualizing quality data for software teams ([*The Toyota Way of Dantotsu Radical Quality Improvement*](https://api.pageplace.de/preview/DT0400.9781000416626_A41363121/preview-9781000416626_A41363121.pdf), preview, chapter 1).
+
 ## Workflow
 
 Work through these steps in order. Don't skip ahead to root cause before the defect and stage are pinned down — the whole analysis is only as good as that starting point.
