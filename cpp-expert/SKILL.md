@@ -1,20 +1,11 @@
 ---
 name: cpp-expert
 description: >
-  Expert C++ — value semantics,
-  initialization vs assignment, const/constexpr, pointers/arrays/references,
-  and the direct mapping of language constructs to hardware.
-
-  TRIGGER when: language (C++, .cpp/.hpp/.h/.cc files, g++, clang++, CMake, compile, link, object files),
-  core concepts (value semantics, copy vs reference, initialization vs assignment, narrowing conversion,
-  const, constexpr, compile-time evaluation, scope, lifetime, object lifetime, RAII),
-  memory (pointer, array, reference, nullptr, dereference, address-of, stack, heap, machine address),
-  control flow (if-statement with initializer, switch, case-label, range-for, while, for),
-  functions (declaration, definition, overloading, ambiguous call, const reference parameter, return type),
-  idioms (prefer {} initialization, use auto, avoid narrowing, minimize scope, package operations as functions),
-  ask (idiomatic C++, C++ best practices, C++ code review, how to write C++, explain this C++).
-  DO NOT USE when: user mentions "C" only (see c-programming skill), or C++ is incidental to a
-  different-language question.
+  Write, review, and explain C++ code: value semantics, initialization,
+  const/constexpr, pointers, arrays, references, lifetime, functions, and
+  control flow. Use for C++ source files, compiler questions, C++ idioms,
+  and C interoperability. Do not use for C-only questions or when C++ is
+  incidental to another language.
 metadata:
   user-invocable: "false"
 ---
@@ -113,6 +104,7 @@ Use `auto` unless you have a specific reason to name the type (large scope where
 | --------- | ---- |
 | Full worked examples for every construct above | [references/basics-worked-examples.md](references/basics-worked-examples.md) |
 | The complete advice list (§1.10) | [references/advice.md](references/advice.md) |
+| C foundations that matter when reading or interfacing with C++ | [references/c-foundations.md](references/c-foundations.md) |
 
 ## Specialist Skills
 

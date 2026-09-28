@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+
+msg_file=$1
+message=$(sed '/^[[:space:]]*#/d' "$msg_file" | sed '/^[[:space:]]*$/d')
+
+if printf '%s\n' "$message" | grep -qi 'co-authored-by'; then
+  echo 'commit-msg: Co-authored-by mentions are forbidden' >&2
+  exit 1
+fi
+
+if [ "$(printf '%s\n' "$message" | wc -l | tr -d ' ')" -ne 1 ]; then
+  echo 'commit-msg: use a one-line commit message' >&2
+  exit 1
+fi
+
+subject=$message
+if ! printf '%s\n' "$subject" | grep -Eq '^[[:alnum:]][[:alnum:]-]*(\([[:alnum:]./_-]+\))?!?: .+'; then
+  echo 'commit-msg: expected Conventional Commit format (type[(scope)][!]: description)' >&2
+  exit 1
+fi

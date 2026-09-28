@@ -1,6 +1,6 @@
 ---
 name: lean-sensei
-description: Apply Lean Tech to delivery bottlenecks, team dependencies, and continuous improvement. Use for Lean Tech or Lean-Sensei requests, Andon signals, requests for help or escalation with blocked work, excess work in progress, or scaling agile teams; use dantotsu for standalone defect analysis.
+description: Apply Lean Tech to delivery bottlenecks, team dependencies, technical coaching, and continuous improvement. Use for Lean Tech or Lean-Sensei requests, Andon signals, requests for help or escalation with blocked work, excess work in progress, or scaling agile teams; use dantotsu for standalone defect analysis.
 ---
 
 # Lean Tech
@@ -35,6 +35,19 @@ Start with the problem and evidence. Mark unknowns; preserve scope. Apply releva
 Recommend one experiment with an owner, measure, and review point. Distinguish proposals from verified improvements.
 
 Example: releases wait for shared QA → trial one ready item at a time with early checks; compare waiting time and escaped defects after two releases.
+
+## Coach through deliberate practice
+
+Adapted from Régis Medina's FlowCon 2022 talk, [Entraîner les Avengers — Oubliez tout ce que vous savez sur le management tech](https://www.youtube.com/watch?v=U3D39kspGaA), using the [conference transcript](https://www.flowcon.fr/fr/archives/2022/regis-medina-entrainer-les-avengers-oubliez-tout-ce-que-vous-savez-sur-le-management-tech-fr/).
+
+Use Medina's Thinking People System framing when skill gaps constrain delivery:
+
+- Develop each person's strengths and learning goals. The manager practices learning too and earns acceptance as a coach.
+- Choose a concrete artifact to practice: an API route, test, estimate, or design. Repeat on real work with a specific improvement goal and timely coach feedback.
+- Define a standard as a reference for what good looks like. Explain the mechanisms and trade-offs behind it so practitioners can adapt their decisions.
+- Help experts make their reasoning explicit; being able to do the work does not establish an ability to teach it. Record and refine personal mental models from observed results.
+- Use pulled work as learning opportunities suited to each person's development. Make that learning visible alongside delivery flow.
+- Evaluate customer benefit against total cost, including maintenance, support, and user training. Track lead time alongside quality to assess progress.
 
 ## Observe work at its source
 
