@@ -14,7 +14,6 @@
 | 🟢 **Analysis Date**    | `[DATE_YYYY/MM/DD]`            |
 | 🟢 **Project**          | `[PROJECT_NAME]`               |
 | 🟢 **Detection Stage**  | `[A/B/C/D/E/F] - [STAGE_NAME]` |
-| 🟢 **Startup**          | `[STARTUP_NAME]`               |
 | 🟢 **Status**           | `[e.g., To Challenge]`         |
 | 🟢 **Owner**            | `[OWNER_NAME]`                 |
 | **Standard**            | 🎓 Dantotsu                    |

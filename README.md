@@ -54,6 +54,9 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Write a README                  | [writing-a-readme](/skills/writing-a-readme/SKILL.md)                                                                                                                  | Draft a clear, accurate project or profile README                                         |
 | Ground on real library source   | [vendor-reference](/skills/vendor-reference/SKILL.md)                                                                                                                  | Vendor library gitignored, read source, never commit                                      |
 
+The TypeScript skill follows each project's configured runtime, imports, tests, and verification workflow.
+See [.benchmarks/README.md](.benchmarks/README.md) for instruction-uptake benchmarks and their limits.
+
 ## Add a skill
 
 1. Create `skill-name/SKILL.md` with frontmatter (`name`, `description`) and your core workflow

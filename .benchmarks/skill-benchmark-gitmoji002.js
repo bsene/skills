@@ -7,7 +7,8 @@ export const meta = {
   ],
 }
 
-const BASE = '/Users/birrame.sene/workspace/skills'
+// Run the workflow from the repository root.
+const BASE = '.'
 
 const S = {
   id: 'gitmoji-002', skill: 'git-hero-gitmoji', path: `${BASE}/git-hero/gitmoji/SKILL.md`,
@@ -38,7 +39,7 @@ const graded = await pipeline(
   cells,
   (cell) => {
     const genPrompt = cell.cond === 'with'
-      ? `You are an AI coding assistant. For guidance you MAY read ONLY this one file: ${S.path} — read nothing else, and do NOT read anything under .benchmarks/. ${NOFILE}\n\nUser request:\n${S.prompt}`
+      ? `You are an AI coding assistant. Before answering, read and apply ${S.path}. Follow its routing and read linked sub-skills or references only when relevant to this request. Do NOT read unrelated skills or anything under .benchmarks/. If the required skill cannot be read, report the loading failure instead of answering from memory. ${NOFILE}\n\nUser request:\n${S.prompt}`
       : `You are an AI coding assistant. ${NOFILE} Do NOT read any skill files.\n\nUser request:\n${S.prompt}`
     return agent(genPrompt, { model: cell.model, phase: 'Generate', label: `gen:${S.id}:${cell.model}:${cell.cond}` })
   },

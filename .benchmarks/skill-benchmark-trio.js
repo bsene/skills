@@ -7,7 +7,8 @@ export const meta = {
   ],
 }
 
-const BASE = '/Users/birrame.sene/workspace/skills'
+// Run the workflow from the repository root.
+const BASE = '.'
 
 const SCENARIOS = [
   {
@@ -23,7 +24,7 @@ const SCENARIOS = [
     ],
   },
   {
-    id: 'solid-001', skill: 'oop-principles-solid', path: `${BASE}/oop-principles/solid/SKILL.md`,
+    id: 'solid-001', skill: 'object-oriented-programming', path: `${BASE}/object-oriented-programming/SKILL.md`,
     prompt: `Review this class with SOLID and refactor it.\n\nclass OrderService:\n    def __init__(self, db_conn, smtp_host):\n        self.db = db_conn\n        self.smtp_host = smtp_host\n    def place_order(self, cart, user):\n        if not cart.items:\n            raise ValueError("empty cart")\n        total = sum(i.price * i.qty for i in cart.items)\n        import stripe\n        stripe.api_key = "sk_live_xxx"\n        charge = stripe.Charge.create(amount=int(total * 100), source=user.card_token)\n        self.db.execute(f"INSERT INTO orders (user_id, total, charge_id) VALUES ({user.id}, {total}, '{charge.id}')")\n        import smtplib\n        s = smtplib.SMTP(self.smtp_host)\n        s.sendmail("noreply@shop.com", user.email, f"Order confirmed: \${total}")\n        s.quit()\n        return charge.id`,
     criteria: [
       'Identifies the SRP violation: place_order mixes validation, payment, persistence, and notification — multiple reasons to change',
@@ -69,7 +70,7 @@ const graded = await pipeline(
   cells,
   (cell) => {
     const genPrompt = cell.cond === 'with'
-      ? `You are an AI coding assistant. For guidance you MAY read ONLY this one file: ${cell.s.path} — read nothing else, and do NOT read anything under .benchmarks/. ${NOFILE}\n\nUser request:\n${cell.s.prompt}`
+      ? `You are an AI coding assistant. Before answering, read and apply ${cell.s.path}. Follow its routing and read linked sub-skills or references only when relevant to this request. Do NOT read unrelated skills or anything under .benchmarks/. If the required skill cannot be read, report the loading failure instead of answering from memory. ${NOFILE}\n\nUser request:\n${cell.s.prompt}`
       : `You are an AI coding assistant. ${NOFILE} Do NOT read any skill files.\n\nUser request:\n${cell.s.prompt}`
     return agent(genPrompt, { model: cell.model, phase: 'Generate', label: `gen:${cell.s.id}:${cell.model}:${cell.cond}` })
   },

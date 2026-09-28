@@ -7,7 +7,8 @@ export const meta = {
   ],
 }
 
-const BASE = '/Users/birrame.sene/workspace/github/skills'
+// Run the workflow from the repository root.
+const BASE = '.'
 
 const SCENARIOS = [
   {
@@ -21,11 +22,11 @@ const SCENARIOS = [
 
 Explain briefly, in comments or prose, which return values you relied on for each check.`,
     criteria: [
-      'Uses strpos/stripos with ($haystack, $needle) argument order (haystack first) in every call',
-      'Checks match results with strict comparisons (!== false, === 0) — never loose truthiness on any function that can return 0 or false (strpos/stripos, preg_match, array_search)',
-      'Distinguishes array_search/in_array returning key 0/true on a legitimate first-element match from a miss (strict comparison, and passes true for the $strict parameter where types matter)',
+      'Correctly detects the invoice. prefix at position zero; accepts str_starts_with() or equivalent. If strpos/stripos is used, every call has ($haystack, $needle) argument order',
+      'Does not confuse a valid zero position/key with a miss: uses strict comparisons for position/key results, or equivalent boolean-returning APIs that avoid this ambiguity',
+      'Correctly accepts invoice.paid at KNOWN_ROUTES index 0 and rejects unknown routes without type coercion; accepts strict array_search/in_array or an equivalent exact-membership check',
       "Handles json_decode's null ambiguity via json_last_error()/json_last_error_msg() or JSON_THROW_ON_ERROR — not a bare $data === null check alone",
-      "Distinguishes preg_match returning false (PCRE error) from 0 (no match) via a strict check or any approach that cannot conflate the two",
+      "Correctly extracts invoice.paid from invoice.paid.v2; accepts non-regex parsing. If preg_match is used, distinguishes false (PCRE error) from 0 (no match)",
       'Names php.net (URL or explicit reference tied to the specific functions in question) as the verification source for signature/return-behavior claims — not Stack Overflow/w3schools; a generic "see php.net" line disconnected from the claims does not count',
     ],
   },
@@ -173,7 +174,7 @@ const graded = await pipeline(
   cells,
   (cell) => {
     const genPrompt = cell.cond === 'with'
-      ? `You are an AI coding assistant. For guidance you MAY read ONLY this one file: ${cell.s.path} — read nothing else, and do NOT read anything under .benchmarks/. ${NOFILE}\n\nUser request:\n${cell.s.prompt}`
+      ? `You are an AI coding assistant. Before answering, read and apply ${cell.s.path}. Follow its routing and read linked sub-skills or references only when relevant to this request. Do NOT read unrelated skills or anything under .benchmarks/. If the required skill cannot be read, report the loading failure instead of answering from memory. ${NOFILE}\n\nUser request:\n${cell.s.prompt}`
       : `You are an AI coding assistant. ${NOFILE} Do NOT read any skill files.\n\nUser request:\n${cell.s.prompt}`
     return agent(genPrompt, { model: cell.model, phase: 'Generate', label: `gen:${cell.s.id}:${cell.model}:${cell.cond}` })
   },
