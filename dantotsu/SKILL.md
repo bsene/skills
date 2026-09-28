@@ -34,7 +34,9 @@ For recurring or cross-team defects, map the path the behavior or data took, rec
 
 ## Workflow
 
-Work through these steps in order. Don't skip ahead to root cause before the defect and stage are pinned down — the whole analysis is only as good as that starting point.
+First check whether the defect is causing ongoing harm. Prioritize containment (hotfix, rollback, or workaround) within the user's authorized scope before the analysis below; do not delay it to complete classification or the whys chain. Record containment already performed separately from proposed actions.
+
+Then work through these analysis steps in order. Pin down the defect and detection stage before drawing root-cause conclusions.
 
 1. **Describe the defect.** State it as expected behavior vs. actual behavior. If the user hasn't given enough detail to do this precisely, ask — don't assume or invent specifics.
 2. **Identify the detection stage** (A–F above). Ask the user if it isn't stated.
@@ -45,9 +47,9 @@ Work through these steps in order. Don't skip ahead to root cause before the def
    - The chain isn't limited to code: when relevant, also check how the underlying story or epic was written (ambiguous acceptance criteria, an unhandled edge case never specified) as a candidate root cause, not just the code that implemented it.
 5. **Inspect why it wasn't caught earlier (outflow).** Compare the actual detection stage to the earliest stage where it plausibly could have been caught. Run this as its _own_ short whys-style drilldown, separate from step 4 — the missed-detection root cause is often a process/tooling gap (missing test, no lint rule, no reviewer checklist item), not the same cause as the defect itself.
 6. **Distill a learning-sharing item.** Before proposing fixes, write a short, shareable summary of the misconception or gap uncovered in steps 4–5 (a PR/Jira comment, a Slack message, a one-slide recap) that lets a teammate who wasn't involved understand it in under a minute. A root cause that only lives in one person's head doesn't prevent the next occurrence — this is what actually spreads the learning.
-7. **Propose countermeasures.** Short-term, containment-level fixes: patch the immediate occurrence, stop the bleeding (hotfix, rollback, manual workaround). These don't need to be elegant or prevent recurrence — they need to be fast.
+7. **Document countermeasures.** Record containment already performed and propose any remaining immediate fixes. Distinguish completed actions, observed results, and proposals; containment need not prevent recurrence.
 8. **Design eradication measures.** Go deeper than the countermeasure: what permanent change (process, tooling, automated check, documentation, training) makes this entire class of defect structurally unable to recur — including recurring undetected until a late stage? Prefer **micro-guardrails**: small, automated, reversible checks (a one-line lint rule, a single added test, a doc snippet linked from the PR template) over large refactors. A tiny guardrail that ships beats a sweeping fix that never lands or introduces its own defects. Don't label something eradication if it only addresses this one instance.
-9. **Follow the eradication measure through to verified non-recurrence.** Confirm that the guardrail actually catches the next occurrence (or enough time/cycles have passed without recurrence). If the user is tracking this over time, ask them to check back rather than treating step 8 as the finish line.
+9. **Verify prevention and monitor recurrence separately.** Demonstrate that the guardrail detects or prevents the original defect with a reproducer or regression check; record the result and the scenarios covered. Keep untested measures marked as proposed or unverified. Record recurrence monitoring with its time window and workload or opportunities for recurrence; an uneventful period is an observation, not proof of eradication. For ongoing tracking, define an owner and review point.
 
 ## Prioritizing eradication measures (optional, for recurring/team use)
 
@@ -92,6 +94,8 @@ To specifically drive down Stage-A defects (caught while coding), use a constrai
 ## Output template
 
 For a single defect analysis, use the structured template in [`_template.md`](_template.md). It defines the full document structure — metadata table, problem statement, causal chain, root-cause analysis, detection-failure causes, countermeasure, and eradication — with inline guidance comments in each section.
+
+Include only causes supported by evidence. Mark unconfirmed explanations as hypotheses and missing information as unknown; omit inapplicable subsections rather than inventing a misconception or detection failure to fill them.
 
 Fill the "Causal Chain" and "Root Cause of Occurrence" sections with the defect description, the recurrence check, the full 5-whys chain, and the "why not caught earlier" analysis (the latter goes in "Detection Failure Causes"). Keep "Countermeasure" and "Eradication" strictly separate.
 

@@ -1,6 +1,6 @@
 ---
 name: lean-sensei
-description: Apply Lean Tech to delivery bottlenecks, team dependencies, and continuous improvement. Use for Lean Tech requests, excess work in progress, or scaling agile teams; use dantotsu for standalone defect analysis.
+description: Apply Lean Tech to delivery bottlenecks, team dependencies, and continuous improvement. Use for Lean Tech or Lean-Sensei requests, Andon signals, requests for help or escalation with blocked work, excess work in progress, or scaling agile teams; use dantotsu for standalone defect analysis.
 ---
 
 # Lean Tech
@@ -36,6 +36,16 @@ Recommend one experiment with an owner, measure, and review point. Distinguish p
 
 Example: releases wait for shared QA → trial one ready item at a time with early checks; compare waiting time and escaped defects after two releases.
 
+## Observe work at its source
+
+For an unclear bottleneck, adapt Genchi Genbutsu to software work:
+
+- Trace an actual user journey or delivery handoff with the people doing the work; inspect the relevant code, logs, and queues.
+- Ask what happens during delays or workarounds. Record observations separately from hypotheses instead of relying only on summary dashboards.
+- Assign one improvement and follow up where the problem occurred. Share verified learning with affected teams and update their working standard.
+
+Adapted from [Fabriq's Genchi Genbutsu guide](https://fabriq.tech/2026/04/24/genchi-genbutsu-usine/). Consult [Fabriq's Lean Management collection](https://fabriq.tech/category/lean-management/) for further material relevant to the observed problem.
+
 ## Andon: surface blockers early
 
 Adapt Andon to make deviations from the team's expected delivery flow visible and invite timely help:
@@ -43,5 +53,6 @@ Adapt Andon to make deviations from the team's expected delivery flow visible an
 - Agree on observable signals, such as a red CI build, a production incident, or work blocked past its agreed wait time.
 - Route each signal to someone able to respond promptly. An alert without a clear response path becomes noise.
 - Have the responder help restore flow and check the working standard with the people doing the work. Feed recurring defect causes into [Dantotsu](https://github.com/bsene/skills/tree/main/dantotsu).
+- Agree which delivery step to pause when continuing could spread a defect, and what evidence is needed to resume; record signals and outcomes to spot recurring problems.
 
-Treat the signal as a request for support and process improvement, not as a measure of individual performance. This adapts [Fabriq's overview of Andon](https://fabriq.tech/2023/08/11/systeme-andon-lean-management/), which emphasizes early anomaly signaling, prompt team-leader support, clear expectations, and operator learning.
+Treat the signal as a request for support and process improvement, not as a measure of individual performance. This adapts [Fabriq's overview of Andon](https://fabriq.tech/2023/08/11/systeme-andon-lean-management/) and [the Andon overview](https://en.wikipedia.org/wiki/Andon_(manufacturing)), which describe prompt support, pausing production when needed, and learning from recorded alerts.

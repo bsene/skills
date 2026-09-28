@@ -39,20 +39,20 @@ _The sequence of events that led to the user-facing error._
 
 ## Root Cause of Occurrence
 
-_The technical or business misconception that led the developer to make the mistake._
+_The conditions that caused the defect, supported by the occurrence whys chain._
 
-### The Misconception
+### Evidence and Occurrence Whys
 
-<!-- What the developer thought was true -->
+<!-- Trace observed facts and each why to evidence; mark missing information as unknown -->
 
-### What Actually Happened
+### Hypotheses (if any)
 
-<!-- The reality that contradicts the misconception -->
-<!-- Numbered list of actual facts -->
+<!-- Label unconfirmed explanations and what would confirm or disprove them -->
+<!-- Do not infer a person's reasoning without evidence -->
 
-### Contributing Factor
+### Contributing Factors (if established)
 
-<!-- What happened during development that enabled the mistake -->
+<!-- Include only factors supported by evidence; omit inapplicable subsections -->
 
 ---
 
@@ -60,21 +60,9 @@ _The technical or business misconception that led the developer to make the mist
 
 _Why the defect wasn't caught earlier._
 
-### 1. Code Complexity (Local Validation Failure)
-
-<!-- Why the code structure prevented detection -->
-
-### 2. Process Gap
-
-<!-- What process step was missing (e.g., "5-minute refactor pause") -->
-
-### 3. Missing Tests
-
-<!-- What tests would have caught this -->
-
-### 4. Code Review
-
-<!-- Why review didn't catch it -->
+<!-- Run a separate detection whys chain, comparing actual and earliest feasible detection stages -->
+<!-- Include only evidenced gaps; code complexity, process, tests, and review are candidates, not required causes -->
+<!-- Mark hypotheses and unknowns explicitly; use not applicable where an earlier stage could not catch this defect -->
 
 ---
 
@@ -82,19 +70,19 @@ _Why the defect wasn't caught earlier._
 
 _How to fix the defect._
 
-### Changes Made
+### Actions and Status
 
-<!-- What was changed to fix the issue -->
+<!-- Separate containment already performed from remaining proposed actions -->
 
 ### Result
 
-<!-- What works correctly now -->
+<!-- Record observed outcomes; mark results of unperformed actions as unverified -->
 
 ---
 
 ## Eradication
 
-_What are similar instances in the product? How to prevent a regression and eliminate the defect once and for all?_
+_Prevent this defect pattern; state the scope covered and remaining limitations._
 
 ### Similar Instances
 
@@ -103,3 +91,9 @@ _What are similar instances in the product? How to prevent a regression and elim
 ### Prevention Strategy
 
 <!-- How to prevent this pattern from recurring -->
+
+### Verification and Monitoring
+
+<!-- Record the reproducer or regression check, result, and scenarios covered; mark untested prevention as unverified -->
+<!-- Separately record the monitoring window, workload or opportunities for recurrence, owner, and review point -->
+<!-- No observed recurrence alone does not prove eradication -->
