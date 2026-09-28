@@ -16,9 +16,7 @@
 | 🟢 **Detection Stage**  | `[A/B/C/D/E/F] - [STAGE_NAME]` |
 | 🟢 **Startup**          | `[STARTUP_NAME]`               |
 | 🟢 **Status**           | `[e.g., To Challenge]`         |
-| 🔵 **Weak point**       | `[COMPONENT/TEAM]`             |
 | 🟢 **Owner**            | `[OWNER_NAME]`                 |
-| 🟢 **napta_project_id** | `[ID]`                         |
 | **Standard**            | 🎓 Dantotsu                    |
 
 ---
@@ -105,7 +103,3 @@ _What are similar instances in the product? How to prevent a regression and elim
 ### Prevention Strategy
 
 <!-- How to prevent this pattern from recurring -->
-
-### Weak Point History
-
-<!-- Has this component failed similarly before? -->
