@@ -145,7 +145,15 @@ The Alcotest shape above is **unit testing** — fixed examples you hand-pick. R
 - Favor pattern matching over `if`/`else` chains once there are more than two cases, especially over a variant type — it's both more idiomatic and gets exhaustiveness checking for free.
 - Keep functions total where reasonable (return `option`/`result` for partiality) rather than raising exceptions for expected failure cases; reserve exceptions for genuinely exceptional/programmer-error conditions.
 
+## Representation and algorithm guidance
+
+- For arrays containing mutable values, check aliasing: `Array.make n value` shares the same initializer. Use `Array.init` when each element needs a fresh object.
+- For enforced invariants, use an abstract type; use a private record or variant when clients should inspect values but construction must stay controlled. Read [references/representation-and-invariants.md](references/representation-and-invariants.md) for examples, persistence contracts, comparator pitfalls, and signed remainders.
+- For custom collections, recursive memoization, dynamic programming, or graph algorithms, read [references/data-structures-and-algorithms.md](references/data-structures-and-algorithms.md). Explain the representation invariant, algorithm preconditions, and worst-case versus amortized costs.
+
 For katas and exercises, or when the user wants a structured path from beginner to writing real programs, _OCaml from the Very Beginning_ (John Whitington, free online: [johnwhitington.net/ocamlfromtheverybeginning](https://johnwhitington.net/ocamlfromtheverybeginning/ocamlfromtheverybeginning.html)) teaches the language no-prerequisites with worked questions per chapter — a good source of practice tasks and a canonical explanation order to mirror. A heavier, more rigorous companion is the Cornell CS 3110 textbook _OCaml Programming: Correct + Efficient + Beautiful_ (Fall 2026 edition, free online: [cs3110.github.io/textbook](https://cs3110.github.io/textbook/cover.html)) — an entire university course with 200+ embedded lecture videos and per-chapter exercises.
+
+For learning through concrete programs or implementing data structures and algorithms, use _Learn Programming with OCaml_ (Sylvain Conchon and Jean-Christophe Filliâtre). Read [references/learn-programming-with-ocaml.md](references/learn-programming-with-ocaml.md) for chapter routing, book downloads, and companion code.
 
 ---
 
