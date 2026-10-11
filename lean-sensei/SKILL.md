@@ -1,6 +1,6 @@
 ---
 name: lean-sensei
-description: Apply Lean Tech to delivery bottlenecks, team dependencies, technical coaching, and continuous improvement. Use for Lean Tech or Lean-Sensei requests, Andon signals, requests for help or escalation with blocked work, excess work in progress, or scaling agile teams; use dantotsu for standalone defect analysis.
+description: Apply Lean Tech to software delivery, team dependencies, technical coaching, and continuous improvement. Use for adopting Lean, Lean-Sensei requests, delivery bottlenecks, Andon signals, requests for help or escalation with blocked work, excess work in progress, or scaling agile teams; use dantotsu for standalone defect analysis.
 ---
 
 # Lean Tech
@@ -22,6 +22,8 @@ Use these priorities to guide scaling decisions; do not treat them as permission
 
 ## Apply the five pillars
 
+![Lean Tech pillars: Value for the customer above Right First Time and Just In time, supported by Building a leading organization and Tech Enabled Framework of Teams.](lean-tech-pillars.png)
+
 Start with the problem and evidence. Mark unknowns; preserve scope. Apply relevant pillars together:
 
 | Pillar                           | Action                                                                                                    |
@@ -35,6 +37,32 @@ Start with the problem and evidence. Mark unknowns; preserve scope. Apply releva
 Recommend one experiment with an owner, measure, and review point. Distinguish proposals from verified improvements.
 
 Example: releases wait for shared QA → trial one ready item at a time with early checks; compare waiting time and escaped defects after two releases.
+
+## Choose the Lean lens
+
+Adapted from Dan North's [Learning to Lean](https://dannorth.net/blog/learning-to-lean/), which also informs the coaching guidance below.
+
+Choose the lens for the activity:
+
+- **Manufacturing: reduce variance.** Make builds, deployments, and automated tests repeatable.
+- **Supply: reduce inventory.** Limit queued work and premature planning; prepare enough analysis to keep delivery supplied. Explore completed features while developer context is fresh.
+- **Product design: increase discovery.** Treat requirements, UX, code design, and test design as experiments with explicit learning goals. Comparing alternatives can be useful learning.
+
+Do not classify design exploration as a defect merely because it introduces variation.
+
+## Match coaching to the learner
+
+Use North's Dreyfus framing for the specific skill being learned; an expert developer can be a Lean novice. Adapt support as experience grows:
+
+| Stage             | Coaching approach                                 |
+| ----------------- | ------------------------------------------------- |
+| Novice            | Concrete steps and achievable early wins          |
+| Advanced beginner | Guidelines and safe opportunities to make mistakes |
+| Competent         | Clear goals and autonomy in execution             |
+| Proficient        | Maxims, experience stories, and metaphors          |
+| Expert            | Principles and discussion with experienced peers  |
+
+For beginners, give a usable starting action before explaining contextual trade-offs.
 
 ## Coach through deliberate practice
 
