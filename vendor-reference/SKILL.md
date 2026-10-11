@@ -6,7 +6,7 @@ description: >
   guesses.
 
   TRIGGER when: the user wants to use a library idiomatically, asks "which API /
-  pattern should I use for <library>", asks how a library handles errors,
+  pattern should I use for a library", asks how a library handles errors,
   composition, or resource management, wants Effect-style vendored-source
   grounding, or says "vendor", "vendored", "read the library source".
 
@@ -71,13 +71,13 @@ If `.vendor/<name>` already exists, reuse it; `git -C .vendor/<name> pull --dept
 
 When answering questions about the library, ground each claim in the source:
 
-| Look at | Why |
-| --- | --- |
-| Module/entry structure | What is public, what is internal |
-| `examples/`, `README`, doc comments | Intended usage patterns |
-| Tests | Executable usage documentation — often the most honest examples |
-| Error/exit types | How failures are modeled and composed |
-| Generics/abstractions | Which patterns the API is designed around |
+| Look at                             | Why                                                             |
+| ----------------------------------- | --------------------------------------------------------------- |
+| Module/entry structure              | What is public, what is internal                                |
+| `examples/`, `README`, doc comments | Intended usage patterns                                         |
+| Tests                               | Executable usage documentation — often the most honest examples |
+| Error/exit types                    | How failures are modeled and composed                           |
+| Generics/abstractions               | Which patterns the API is designed around                       |
 
 Cite vendored paths in answers: `.vendor/effect/packages/schema/src/Schema.ts`.
 
@@ -99,9 +99,9 @@ package, monorepo layout, license).
 
 The same file works across tools:
 
-| Tool | How to use |
-| --- | --- |
+| Tool        | How to use                                                                           |
+| ----------- | ------------------------------------------------------------------------------------ |
 | Claude Code | Symlink/copy to `.claude/agents/vendor-reference.md` (subagent) or `.claude/skills/` |
-| pi | Symlink to `.pi/agents/vendor-reference.md` |
-| OpenCode | Copy to the opencode agent directory |
-| Codex | No agent format — paste the workflow into `AGENTS.md` instructions |
+| pi          | Symlink to `.pi/agents/vendor-reference.md`                                          |
+| OpenCode    | Copy to the opencode agent directory                                                 |
+| Codex       | No agent format — paste the workflow into `AGENTS.md` instructions                   |

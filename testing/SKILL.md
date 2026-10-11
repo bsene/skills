@@ -1,19 +1,11 @@
 ---
 name: testing
 description: >
-  Testing strategy and philosophy — design feedback, test quality audit, BDD review, architecture decisions,
-  and test strategy for AI coding agents.
-
-  TRIGGER when: strategy (testing approach, philosophy, methodology, how should I test, what tests to write),
-  portfolio (unit, integration, component, contract, E2E, testing layers, how much to test),
-  quality (brittle/flaky/slow/hard-to-maintain tests, testing anti-patterns, can I trust this test),
-  mocking (when to use mocks, test doubles, stubs, fakes), review (review my test suite, BDD review),
-  context (testing legacy codebase, adding tests to existing code),
-  production (QA in production, synthetic monitoring, observability, exploratory testing),
-  LLM applications (testing LLM systems, prompts, retrieval, evaluation suites),
-  AI agents (testing strategy for AI-generated code, should the AI write its own tests, multi-agent testing).
-  DO NOT USE for interactive TDD cadence with red/green/refactor loops — use `tcrdd` instead.
-  DO NOT USE for smoke tests specifically — use `smoke-tests` instead.
+  Design or review testing strategy, test portfolios, and test quality. Use for
+  unit/integration/contract/E2E choices, flaky or brittle tests, mocks and test
+  doubles, BDD review, legacy-code testing, production QA, and testing LLM or
+  AI-generated systems. For red/green/refactor cadence use `tcrdd`; for critical-path
+  smoke tests use `smoke-tests`.
 ---
 
 # Testing — Strategy & Philosophy
@@ -158,7 +150,7 @@ function sendOverdueReminders() {
 | Testing async code, timers, events, or faking modules                            | [Async, Time & Module Faking](references/async-and-time.md)          |
 | Applying Fowler-style portfolio, doubles, production feedback, and LLM practices | [Martin Fowler's Testing Canon](references/martin-fowler-testing.md) |
 | Identifying and writing smoke tests for CI gates                                 | Dedicated `smoke-tests` skill                                        |
-| Driving behavior from Given/When/Then scenarios; crap + mutation quality gates    | [Acceptance-Testing Workflow](references/acceptance-testing.md)      |
+| Driving behavior from Given/When/Then scenarios; crap + mutation quality gates   | [Acceptance-Testing Workflow](references/acceptance-testing.md)      |
 
 ---
 
