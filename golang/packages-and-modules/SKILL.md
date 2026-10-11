@@ -72,6 +72,9 @@ func init() {
 
 Major version changes = new import path. This allows v1 and v2 to coexist in the same build.
 
+Minimum Version Selection picks the highest version **required** in the build graph;
+it does not upgrade to the newest available release.
+
 ---
 
 ## Replace and Exclude
@@ -124,4 +127,4 @@ Scenario: `.benchmarks/scenarios/golang-packages-and-modules-001-module-mechanic
 | claude-sonnet-4-6 | 100%    | 100% | +0%   |
 | claude-haiku-4-5  | 100%    | 100% | +0%   |
 
-> **NEG (run 2026-08-31)**. Opus −17 (100→83): MVS version selection missed — the skill's versioning table has no MVS line (it punts to the reference). No edit this cycle (cap reached); 'MVS picks the highest _required_ version, never auto-upgrades' is on the follow-up list. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+> **NEG (run 2026-08-31)**. Opus −17 (100→83): MVS version selection missed. The MVS rule was added above on 2026-10-01; this historical result still needs a re-run. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
