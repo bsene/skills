@@ -1,10 +1,11 @@
 ---
 name: the-architect
 description: >
-  Choose and apply Clean Architecture, Ports and Adapters, or Functional Core /
-  Imperative Shell to protect business policy from delivery and infrastructure
-  details. Use for architecture-boundary design, implementation, and review;
-  not for a small local refactor with no architectural boundary.
+  Design, implement, or review architecture boundaries using Clean Architecture,
+  Ports and Adapters (Hexagonal), or Functional Core / Imperative Shell. Use for
+  inward dependencies, domain-centred layering (including .NET), inbound/outbound
+  ports, adapters, and isolating business policy from frameworks and infrastructure.
+  Not for a local refactor without an architectural boundary or abstract OOP/SOLID questions.
 ---
 
 # The Architect
@@ -14,8 +15,8 @@ mechanisms. Choose the smallest boundary that protects the actual complexity.
 
 | Need                                                                 | Use                                | Read                                                                                 |
 | -------------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------ |
-| A domain-centred system with inward dependencies and explicit layers | Clean Architecture                 | [Clean Architecture](../clean-architecture/SKILL.md)                                 |
-| Explicit inbound and outbound contracts around a business core       | Ports and Adapters                 | [Ports and Adapters](../ports-adapters-architecture/SKILL.md)                        |
+| A domain-centred system with inward dependencies and explicit layers | Clean Architecture                 | [Clean Architecture](references/clean-architecture.md)                               |
+| Explicit inbound and outbound contracts around a business core       | Ports and Adapters                 | [Ports and Adapters](references/ports-adapters.md)                                   |
 | A functional codebase, or a small boundary around effects            | Functional Core / Imperative Shell | [Functional Core / Imperative Shell](references/functional-core-imperative-shell.md) |
 
 ## Apply the boundary
@@ -23,7 +24,7 @@ mechanisms. Choose the smallest boundary that protects the actual complexity.
 1. Name the use case and the business rule it protects. If the change is simple CRUD
    or short-lived, keep it feature-oriented instead of introducing a framework.
 2. Move the rule to the core. Do not let it import the web framework, database, SDK,
-   clock, filesystem, or message broker.
+   clock, filesystem, or message broker. Keep project/package dependencies pointing inward.
 3. Define an inward-facing contract only when the core needs an external capability;
    implement it at the edge. In functional code, a plain function or returned effect
    description can be the contract.
@@ -38,8 +39,8 @@ The top-level structure should reveal the product's use cases and business conce
 not primarily the web framework or ORM. Group code by feature or bounded capability
 when that makes the policy easier to locate.
 
-## Source material
+## Reference scope
 
-This umbrella skill routes to the repository's [Clean Architecture](../clean-architecture/SKILL.md)
-and [Ports and Adapters](../ports-adapters-architecture/SKILL.md) materials. Its
-Functional Core / Imperative Shell reference is extracted from the latter.
+Read only the reference for the chosen approach; read both when comparing them.
+The Clean Architecture reference retains its .NET layer guidance, and the Ports and
+Adapters reference retains its TypeScript example and NestJS boundary-enforcement patterns.

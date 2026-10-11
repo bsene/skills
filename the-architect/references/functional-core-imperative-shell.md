@@ -23,4 +23,4 @@ calls the core, and performs the resulting effects.
 No port type is required. A function parameter, a callback, protocol dispatch, or a
 returned command can represent the boundary when it is the smallest clear option.
 
-Source: extracted from [Ports and Adapters Architecture](../../ports-adapters-architecture/SKILL.md).
+Source: extracted from [Ports and Adapters Architecture](ports-adapters.md).

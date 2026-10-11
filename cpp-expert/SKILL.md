@@ -113,4 +113,4 @@ Use `auto` unless you have a specific reason to name the type (large scope where
 | C (not C++) | `c-programming` | C-specific idioms and tooling |
 | General testing philosophy | `testing` | Language-agnostic testing strategy |
 | OOP design principles | `object-oriented-programming` | SOLID, design patterns |
-| Hexagonal architecture | `ports-adapters-architecture` | Ports and adapters pattern |
+| Hexagonal architecture | `the-architect` | Ports and adapters reference |

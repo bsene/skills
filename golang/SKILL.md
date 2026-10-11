@@ -111,7 +111,7 @@ Every type has a usable zero value — no null surprises.
 | -------------------------------------------- | ----------------------------- | ------------------------------------------------- |
 | General testing philosophy (not Go-specific) | `testing`                     | Language-agnostic testing strategy and philosophy |
 | OOP design principles                        | `object-oriented-programming` | SOLID, design patterns (language-agnostic)        |
-| Hexagonal architecture in Go                 | `ports-adapters-architecture` | Ports and adapters pattern                        |
+| Hexagonal architecture in Go                 | `the-architect`               | Ports and adapters reference                      |
 
 ---
 

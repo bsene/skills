@@ -1,6 +1,6 @@
 ---
 id: ports-adapters-001-hexagonal-refactor
-skill: ports-adapters-architecture
+skill: the-architect
 ---
 
 # Prompt

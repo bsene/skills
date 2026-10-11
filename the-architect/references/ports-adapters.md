@@ -1,18 +1,3 @@
----
-name: ports-adapters-architecture
-description: >
-  Ports and Adapters (Hexagonal) architecture — isolate business logic from external concerns via explicit boundaries.
-
-  TRIGGER when: user asks about ports and adapters, hexagonal architecture, hexagon architecture, Alistair Cockburn,
-  clean architecture, onion architecture, layered architecture comparison,
-  adapters (driving/primary adapter, driven/secondary adapter, adapter pattern boundary),
-  ports (inbound port, outbound port, application port),
-  layers (domain layer, application core, infrastructure layer, use case),
-  isolation (dependency inversion in practice, testable business logic, decouple framework, boundary protection).
-  DO NOT USE when: user asks about general OOP/SOLID principles in the abstract — use `object-oriented-programming` instead.
-  Note: DIP from `object-oriented-programming`'s SOLID reference is the theoretical foundation of this pattern.
----
-
 # Ports and Adapters Architecture
 
 Also called "Hexagonal Architecture" by Alistair Cockburn.
@@ -70,21 +55,12 @@ adapters/
 
 ---
 
-## Application Workflow
-
-When the user wants to apply or review Ports & Adapters:
-
-1. **Identify the boundary** — where does business logic end and infrastructure begin? The hexagon edge is the answer.
-2. **Define the ports** — write interfaces (not implementations) for every outbound dependency. Name them with one consistent convention — either `for_<action>` (Cockburn) or idiomatic noun interfaces (`UserRepository`) as in the examples.
-3. **Move logic inward** — ensure domain code imports only other domain code, never framework/DB packages.
-4. **Write adapters** — one concrete class per external system, implementing the matching port interface.
-
 ## Read On Demand
 
-| Read When                                                              | File                                                                                 |
-| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Before/after TypeScript example showing the refactoring                | [Before / After Example](references/before-after-example.md)                         |
-| Ownership tables + tool-enforced boundaries from real NestJS hex repos | [Ownership & Boundary Enforcement](references/ownership-and-boundary-enforcement.md) |
+| Read When                                                              | File                                                                                     |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Before/after TypeScript example showing the refactoring                | [Before / After Example](ports-adapters/before-after-example.md)                         |
+| Ownership tables + tool-enforced boundaries from real NestJS hex repos | [Ownership & Boundary Enforcement](ports-adapters/ownership-and-boundary-enforcement.md) |
 
 ## Read On Demand (External)
 
@@ -106,6 +82,9 @@ functions (or typeclass/protocol dispatch) fill that role.
 ---
 
 ## Benchmark
+
+Historical results below apply to the standalone Ports and Adapters skill before
+consolidation. The scenario now loads `the-architect`; it has not been rerun for this merge.
 
 Scenario: `.benchmarks/scenarios/ports-adapters-001-hexagonal-refactor.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/ports-adapters-001-hexagonal-refactor.json`
 
