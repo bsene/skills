@@ -1,17 +1,12 @@
----
-name: monoids
-description: Recognize and apply the monoid abstraction (binary associative operation + neutral element) in Clojure/ClojureScript code. Use whenever the user is combining, aggregating, merging, or reducing data — metrics and counters, event logs, config objects, or any `reduce`/`fold`/`merge-with` over a collection — even if they don't use the word "monoid". Also use when reviewing code that special-cases empty lists/collections, when discussing Map-Reduce or parallel aggregation (including `pmap`-based reduction), or when designing a generic `combine`/`merge`/`empty` API instead of ad hoc merge logic. Trigger this for "how do I merge these two X" or "what's a clean way to aggregate Y" style questions, not just explicit monoid/algebra questions. For TypeScript idioms, route to the `typescript` skill instead.
----
-
 # Monoïdes
 
 Un monoïde est une structure minimaliste : un ensemble de valeurs + une opération binaire **associative** (`combine`) + un **élément neutre** (`empty`). Rien de plus. Reconnaître cette structure dans du code métier permet de remplacer une logique de fusion ad hoc — source fréquente de bugs sur les cas limites — par une API générique et testée une fois pour toutes.
 
-Cette skill couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change. L'idiomatique TypeScript (interface `Monoid<T>`, folds, monoïdes métier) vit désormais dans le skill typescript → `../typescript/composition/SKILL.md` (section Monoids) ; routez les questions TS vers cette référence.
+Cette référence couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change. Pour l'idiomatique TypeScript (interface `Monoid<T>`, folds, monoïdes métier), lire [Monoids](../../typescript/composition/SKILL.md#monoids).
 
 Source de référence : [Les monoïdes : une abstraction omniprésente (evryg)](https://kb.evryg.com/fr/ingenierie-logicielle-avancee/fondations/les-monoides-une-abstraction-omnipresente)
 
-## Quand appliquer cette skill
+## Quand appliquer cette référence
 
 Le signal à repérer, ce n'est pas le mot "monoïde" — c'est un des patterns suivants dans la demande ou le code :
 
@@ -142,6 +137,8 @@ Ici le neutre est souvent déjà le comportement par défaut de la fonction à a
 ---
 
 ## Benchmark
+
+These results predate the merge into `lisper`; they do not validate the merged skill's routing. The scenario now targets `lisper`; historical run IDs and scores remain unchanged.
 
 Scenario: `.benchmarks/scenarios/monoids-001-parallel-merge.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/monoids-001-parallel-merge.json`
 

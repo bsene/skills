@@ -1,6 +1,6 @@
 ---
 name: lisper
-description: Write, review, debug, and configure Lisp-family code, including Common Lisp, Scheme, Racket, JVM Clojure, ClojureScript, Emacs Lisp, Hy, Fennel, and Janet. Use for .clj/.cljc/.cljs files, deps.edn, Leiningen, shadow-cljs, JVM/JS interop, CLJS compiler configuration and async code, unspecified Lisp tasks, dialect comparisons, and ports between Lisps. For CHICKEN, load the dedicated skill; distinguish Babashka/nbb scripts from JVM Clojure and compiled CLJS.
+description: Write, review, debug, and configure Lisp-family code, including Common Lisp, Scheme, Racket, JVM Clojure, ClojureScript, Emacs Lisp, Hy, Fennel, and Janet. Use for .clj/.cljc/.cljs files, deps.edn, Leiningen, shadow-cljs, JVM/JS interop, CLJS compiler configuration and async code, Clojure/CLJS monoids and partitioned aggregation, unspecified Lisp tasks, dialect comparisons, and ports between Lisps. For CHICKEN, load the dedicated skill; distinguish Babashka/nbb scripts from JVM Clojure and compiled CLJS.
 ---
 
 # Lisper
@@ -25,6 +25,8 @@ Inspect source headers, imports, project manifests, and the documented run comma
 | Janet                        | `.janet`, project run command                                                 | [Janet documentation](https://janet-lang.org/); use Janet's own collection and runtime semantics                                                               |
 
 For another Lisp dialect, identify its implementation and consult its language manual before proposing dialect-specific code. Do not silently substitute Common Lisp or Scheme.
+
+For Clojure/ClojureScript aggregation, merging, `reduce`/`fold`, empty collections, or partitioned/parallel summaries, read [Monoids](references/monoids.md). Check associativity and a natural identity before using partitioned reduction; prefer core functions over a new abstraction. For TypeScript monoids, use [TypeScript composition](../typescript/composition/SKILL.md#monoids).
 
 ## Scheme implementation reference
 

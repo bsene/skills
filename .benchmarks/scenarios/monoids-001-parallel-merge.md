@@ -1,6 +1,6 @@
 ---
 id: monoids-001-parallel-merge
-skill: monoids
+skill: lisper
 ---
 
 # Prompt

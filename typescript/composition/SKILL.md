@@ -354,7 +354,7 @@ duck.fly().quack(); // 'quack'
 
 A monoid is a minimal structure: a set of values + an **associative** binary operation (`combine`) + a **neutral element** (`empty`). Recognizing it in business code replaces ad hoc merge logic — a frequent source of edge-case bugs — with a generic API tested once.
 
-Source: [Les monoïdes : une abstraction omniprésente (evryg)](https://kb.evryg.com/fr/ingenierie-logicielle-avancee/fondations/les-monoides-une-abstraction-omnipresente). For the Clojure/ClojureScript counterpart, see the `monoids` skill.
+Source: [Les monoïdes : une abstraction omniprésente (evryg)](https://kb.evryg.com/fr/ingenierie-logicielle-avancee/fondations/les-monoides-une-abstraction-omnipresente). For the Clojure/ClojureScript counterpart, see [Lisper's monoid reference](../../lisper/references/monoids.md).
 
 ### Base interface
 

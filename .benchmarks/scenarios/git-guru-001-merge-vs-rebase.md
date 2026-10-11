@@ -1,6 +1,6 @@
 ---
 id: git-guru-001-merge-vs-rebase
-skill: git-guru
+skill: git-hero
 ---
 
 # Prompt
