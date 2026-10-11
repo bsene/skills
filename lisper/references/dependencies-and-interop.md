@@ -46,7 +46,7 @@ namespace:
 
 - Set `:npm-deps {"react" "..."}` (or `:install-deps true`) plus `:target :bundle`,
   then hand the compiler's output to Webpack/Metro via `:bundle-cmd` — see
-  `references/compiler-options.md`.
+  [compiler options](compiler-options.md).
 - Which convention applies depends entirely on the toolchain the project already
   uses — check for a `shadow-cljs.edn` (string-form) vs a `deps.edn`/`build.edn`
   driving `cljs.main` directly (symbol-form) before writing a require, rather than
@@ -153,7 +153,7 @@ SomeGlobal.doThing = function (x) {};
 - `:infer-externs` (alpha) can auto-generate externs for interop call sites, but
   don't rely on it for anything beyond a quick sanity check — hand-written externs
   are still the reliable path for a library you'll ship.
-- `:pseudo-names` (see `references/compiler-options.md`) makes `:advanced` output
+- `:pseudo-names` (see [compiler options](compiler-options.md)) makes `:advanced` output
   readable enough to spot exactly which renamed property is breaking, when
   debugging a missing-externs failure.
 

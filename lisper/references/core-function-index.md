@@ -39,7 +39,7 @@ CLJS numbers are all IEEE-754 doubles (same as JS) — no BigDecimal/BigInt/rati
 
 ## JS interop
 
-`#js {}`/`js-obj`, `#js []`/`array`/`make-array`/`aclone`, `.-prop` get, `(set! (.-prop o) v)`, `js-delete`, `clj->js`/`js->clj`, `array?`/`fn?`/`number?`/`object?`/`string?`, `try`/`catch`/`finally`/`throw`. See this skill's `references/dependencies-and-interop.md` for the deeper mechanics (externs, `:advanced` renaming, etc.) — this cheatsheet only covers the syntax, not the compiler pitfalls.
+`#js {}`/`js-obj`, `#js []`/`array`/`make-array`/`aclone`, `.-prop` get, `(set! (.-prop o) v)`, `js-delete`, `clj->js`/`js->clj`, `array?`/`fn?`/`number?`/`object?`/`string?`, `try`/`catch`/`finally`/`throw`. See [dependencies and interop](dependencies-and-interop.md) for the deeper mechanics (externs, `:advanced` renaming, etc.) — this cheatsheet only covers the syntax, not the compiler pitfalls.
 
 ## Collections (general)
 

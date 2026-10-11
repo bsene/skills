@@ -1,16 +1,8 @@
----
-name: clojure
-description: Write, review, debug, and configure JVM Clojure and ClojureScript code and projects. Use for .clj/.cljc/.cljs files, deps.edn, the Clojure CLI, Leiningen, REPL-driven development, Java or JavaScript interop, shadow-cljs, figwheel, the CLJS compiler, Reagent/re-frame, and CLJS compiler options. Do not use for Babashka or nbb scripts.
-metadata:
-  version: "1.0.0"
-  source: https://clojurescript.org/reference/documentation
----
-
 # Clojure & ClojureScript
 
 Clojure runs on the JVM. ClojureScript (CLJS) shares its syntax, immutable data structures, and REPL-driven workflow, but compiles to JavaScript via the Google Closure Compiler and interoperates with JS objects, functions, and npm/Closure libraries.
 
-This skill covers idiomatic Clojure, JVM/JS interop, dependency/build configuration, and native CLJS async/await. First identify the runtime: `.clj` is JVM Clojure, `.cljs` is ClojureScript, and `.cljc` needs a deliberate shared-runtime boundary. When in doubt about compiler flags or interop mechanics, check `references/` rather than guessing.
+This reference covers idiomatic Clojure, JVM/JS interop, dependency/build configuration, and native CLJS async/await. First identify the runtime: `.clj` is JVM Clojure, `.cljs` is ClojureScript, and `.cljc` needs a deliberate shared-runtime boundary. The linked references below are relative to this file.
 
 > **Not for nbb.** [Babashka/nbb](https://github.com/babashka/nbb) runs CLJS through an SCI interpreter (no Google Closure Compiler, no `:optimizations`/`:advanced`, no externs) for fast-starting Node.js scripts — a different language surface from what this skill covers. nbb is out of scope here — consult [nbb's docs](https://github.com/babashka/nbb) and [examples](https://github.com/babashka/nbb/tree/main/examples) for `nbb.edn` projects, anything run via `nbb script.cljs`/`npx nbb`.
 
@@ -21,14 +13,14 @@ This skill covers idiomatic Clojure, JVM/JS interop, dependency/build configurat
 - **`:main` under `:optimizations :none` only loads what's actually `:require`d.** A side-effect-only namespace not reached by the entry namespace's transitive requires silently doesn't run — add an explicit `:require` or put it in `:preloads`.
 - **`:output-to` and `:modules` are mutually exclusive**, not layered — `:modules` needs a per-module `:output-to` inside each module map, not a top-level one.
 - **No arbitrary-precision numbers.** CLJS numbers are all JS `number` (a double) — no JVM-style BigDecimal/BigInt/ratios. Watch for precision loss on large integers.
-- **`^:async` metadata goes on the `fn`/name only, never the arg vector**, and `await` only works inside a function actually marked `:async` — a nested `fn` doesn't inherit it and needs its own `^:async` (see `references/async-functions.md`).
+- **`^:async` metadata goes on the `fn`/name only, never the arg vector**, and `await` only works inside a function actually marked `:async` — a nested `fn` doesn't inherit it and needs its own `^:async` (see [async-functions](async-functions.md)).
 - **An `:async` function always returns a `Promise`**, even when the body looks like it returns a plain value.
 - **Truthiness differs from JS.** Only `false` and `nil` are falsy — `0`, `""`, `js/NaN`, `[]`, and `(array)` are all truthy. `(if 0 "yes" "no")` → `"yes"`, unlike JS. Easy to get backwards when translating JS/TS conditionals.
 - **No automatic tail-call optimization, same as JVM Clojure.** CLJS functions run as ordinary JS function calls, and most JS engines don't reliably implement proper tail calls either — deep non-tail self-recursion will blow the JS call stack on large/unbounded input, even though it "works" for small test inputs. Reach for `recur` (self-recursion, tail position only — see below), `trampoline` (mutual recursion), or wrap the recursive case in `lazy-seq` (sequence-producing recursion) rather than plain recursive calls whenever the input size isn't small and fixed.
 
 ## Core language cheat sheet
 
-CLJS syntax is essentially Clojure's, so standard Clojure knowledge (immutable persistent data structures, `let`/`fn`/`defn`, `->`/`->>` threading, `map`/`filter`/`reduce`, multimethods, protocols, `core.async`) applies directly. For a categorized index of core-library functions when you need the exact name of something less common, see `references/core-function-index.md` (based on https://cljs.info/cheatsheet/). The CLJS-specific things to keep front of mind:
+CLJS syntax is essentially Clojure's, so standard Clojure knowledge (immutable persistent data structures, `let`/`fn`/`defn`, `->`/`->>` threading, `map`/`filter`/`reduce`, multimethods, protocols, `core.async`) applies directly. For a categorized index of core-library functions when you need the exact name of something less common, see [core-function-index](core-function-index.md) (based on https://cljs.info/cheatsheet/). The CLJS-specific things to keep front of mind:
 
 - **Numbers**: CLJS has only one numeric type backed by JS `number` (a double). No arbitrary-precision integers/ratios like JVM Clojure — watch for precision issues with large integers.
 - **Namespaces map to JS modules/Closure namespaces.** `(ns my.app.core (:require [my.app.util :as u]))` — `:require` for CLJS/Closure namespaces, `:import` for Closure classes/enums (e.g. `(:import [goog Timer])`).
@@ -68,7 +60,7 @@ For `.clj` code, prefer the official Clojure CLI and `deps.edn` for a new projec
 - Keep Java interop behind a thin adapter. Add type hints only for a demonstrated reflection or overload-resolution issue.
 - Prefer maps and functions. Introduce a protocol for a genuine polymorphic boundary, a multimethod when dispatch depends on more than one attribute, and a macro only when a function cannot provide the required evaluation control. Inspect a macro with `macroexpand-1` before relying on it.
 
-These practices are distilled from the supplied *Clojure* (Karthikeyan A.K.), *Programming Clojure*, Second Edition (Stuart Halloway and Aaron Bedra), and *The Clojure Workshop* (Joseph Fahey et al.). Verify modern tooling details against the official Clojure documentation.
+These practices are distilled from the supplied _Clojure_ (Karthikeyan A.K.), _Programming Clojure_, Second Edition (Stuart Halloway and Aaron Bedra), and _The Clojure Workshop_ (Joseph Fahey et al.). Verify modern tooling details against the official Clojure documentation.
 
 ## JavaScript interop
 
@@ -81,7 +73,7 @@ These practices are distilled from the supplied *Clojure* (Karthikeyan A.K.), *P
 - JS↔CLJS data conversion: `(clj->js m)` and `(js->clj o :keywordize-keys true)`
 - Destructuring JS objects: `(let [{:keys [a b]} (js->clj obj :keywordize-keys true)] ...)` or interop-style `^js` type hints with `.-` accessors when you don't want a full conversion.
 
-For consuming Closure Library, npm packages, foreign (non-Closure-compatible) JS, and CLJS libraries — including externs, advanced-compilation pitfalls, and CLJSJS — see `references/dependencies-and-interop.md` before guessing at a `:require`/`:import` shape or writing an externs file from scratch.
+For consuming Closure Library, npm packages, foreign (non-Closure-compatible) JS, and CLJS libraries — including externs, advanced-compilation pitfalls, and CLJSJS — see [dependencies-and-interop](dependencies-and-interop.md) before guessing at a `:require`/`:import` shape or writing an externs file from scratch.
 
 ## Recursion
 
@@ -94,26 +86,28 @@ Because CLJS has no automatic TCO (see Gotchas), which recursion tool to reach f
 
 ## Async / promises
 
-CLJS added native `^:async` functions with an `await` macro (since v1.12.145) as a lighter-weight alternative to `core.async` for promise-based code. This is a newer feature that's easy to get wrong or not know about at all — **read `references/async-functions.md` before writing or reviewing any CLJS code that deals with `Promise`s, `fetch`, or `async`/`await`-shaped logic** (see Gotchas above for the two most common mistakes).
+CLJS added native `^:async` functions with an `await` macro (since v1.12.145) as a lighter-weight alternative to `core.async` for promise-based code. This is a newer feature that's easy to get wrong or not know about at all — **read [async-functions](async-functions.md) before writing or reviewing any CLJS code that deals with `Promise`s, `fetch`, or `async`/`await`-shaped logic** (see Gotchas above for the two most common mistakes).
 
 The single most common typo — `^:async` sits on the function **name**, never the argument vector:
 
-````clojure
+```clojure
 (defn ^:async load-user [id] (await (fetch-user id)))  ; ✅ name
 (defn load-user ^:async [id] ...)                      ; ❌ arg vector — never
-``` One more rule worth holding in mind: prefer `Promise/all` (via `mapv`) over `map` when you need to await several promises produced in a loop.
+```
+
+One more rule worth holding in mind: prefer `Promise/all` (via `mapv`) over `map` when you need to await several promises produced in a loop.
 
 If the codebase already uses `core.async` (`go`, `<!`, channels) for async control flow, stay consistent with that style rather than mixing in `^:async`/`await` unless asked to migrate.
 
 ## External resources
 
-For idiomatic-Clojure background/mindset reading (design patterns translated to Clojure idioms, `core.async` worked examples, FP mindset shifts) beyond this skill's own reference material, plus community-curated library lists and real-world example codebases, see `references/external-resources.md`. Use it as supplementary color/perspective and pointers, not as the source of truth for CLJS-specific mechanics — those stay in this skill's other reference files.
+For idiomatic-Clojure background/mindset reading (design patterns translated to Clojure idioms, `core.async` worked examples, FP mindset shifts) beyond this skill's own reference material, plus community-curated library lists and real-world example codebases, see [external-resources](external-resources.md). Use it as supplementary color/perspective and pointers, not as the source of truth for CLJS-specific mechanics — those stay in this skill's other reference files.
 
 ## Build & compiler configuration
 
 CLJS projects are almost always built with **shadow-cljs** (npm/JS-ecosystem friendly, handles npm deps automatically) or the **Clojure CLI (`deps.edn`) + `cljs.main`/`cljs-build-api`** combo; some older projects use Leiningen + `figwheel-main`. Don't assume the tool — check for `shadow-cljs.edn`, `deps.edn`, or `project.clj` in the project before giving setup instructions.
 
-For the full list of compiler options (`:optimizations`, `:target`, `:main`, `:npm-deps`, `:modules`, `:source-map`, `:closure-defines`, warnings, etc.) with exact semantics and defaults, see `references/compiler-options.md`. Don't guess at option names or defaults — this is a large, easy-to-misremember surface (e.g. `:static-fns` defaults to `false` except under `:advanced`, `:npm-deps` defaults to `false`). See Gotchas above for the most common failure patterns tied to these options.
+For the full list of compiler options (`:optimizations`, `:target`, `:main`, `:npm-deps`, `:modules`, `:source-map`, `:closure-defines`, warnings, etc.) with exact semantics and defaults, see [compiler-options](compiler-options.md). Don't guess at option names or defaults — this is a large, easy-to-misremember surface (e.g. `:static-fns` defaults to `false` except under `:advanced`, `:npm-deps` defaults to `false`). See Gotchas above for the most common failure patterns tied to these options.
 
 ## Working style
 
@@ -121,7 +115,7 @@ For the full list of compiler options (`:optimizations`, `:target`, `:main`, `:n
 
 - **Immutability and pure functions first.** Reach for persistent data structures (maps, vectors, sets) and pure transformations over mutable state, `atom`s, or `set!`. Only use an `atom`/`volatile!` for genuine local mutable state (e.g. component-local UI state), not as a default variable substitute.
 - **Data over classes.** Model domain data as plain maps/records rather than JS-style classes with methods, unless polymorphism genuinely calls for `defprotocol`/`deftype`/`defrecord` or a JS class is required at an interop boundary (e.g. a React component).
-- **Sequence/threading idioms over loops.** Prefer `map`/`filter`/`reduce`/`keep`/`for` and `->`/`->>` threading over `for`/`while`-style imperative loops, index juggling, or manual accumulation. This is a style preference, not a stack-safety rule: `loop`/`recur` is the *correct* (not just a perf-justified) choice for genuinely tail-recursive, scalar-producing logic — see Recursion above — reach for a transient only when profiling justifies it.
+- **Sequence/threading idioms over loops.** Prefer `map`/`filter`/`reduce`/`keep`/`for` and `->`/`->>` threading over `for`/`while`-style imperative loops, index juggling, or manual accumulation. This is a style preference, not a stack-safety rule: `loop`/`recur` is the _correct_ (not just a perf-justified) choice for genuinely tail-recursive, scalar-producing logic — see Recursion above — reach for a transient only when profiling justifies it.
 - **Destructuring over manual accessors.** Use `let`/fn-arg destructuring (`{:keys [...]}`, `[a b & rest]`) instead of repeated `(get m :k)` or positional indexing.
 - **Small composed functions over long procedural bodies.** Break logic into small, named, testable functions and compose them, rather than one large function with sequential mutation-heavy steps.
 - **Idiomatic control flow.** Prefer `cond`/`case`/`condp` and `when`/`if-let`/`when-let` over nested `if`s or JS-style early-return chains; prefer `^:async`/`await` or `core.async` (per the async section above) over manual `.then` chains.
@@ -132,20 +126,21 @@ When converting JS/TS to CLJS specifically: re-derive the idiomatic CLJS shape o
 If the surrounding codebase has an established (even if less idiomatic) convention, match it for consistency rather than unilaterally "fixing" the whole file — but say so, and offer the idiomatic alternative as a suggestion rather than silently picking one or the other.
 
 Other working-style notes:
+
 - When debugging, ask whether the error is happening under `:none` (dev) or `:advanced`/`:simple` (prod) optimizations — the failure modes are very different (the former is usually a logic/require bug, the latter is very often a renaming/externs issue).
 
 ---
 
+## Historical Clojure skill benchmark
 
-## Benchmark
+These results predate the merge into `lisper`; they do not validate the merged skill's routing.
 
 Scenario: `.benchmarks/scenarios/clojure-001-async-await.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/clojure-001-async-await.json`
 
-| Model             | Without | With  | Delta |
-| ----------------- | ------- | ----- | ----- |
-| claude-opus-4-8   | 67%     | 100%    | +33%   |
-| claude-sonnet-4-6 | 83%     | 100%    | +17%   |
-| claude-haiku-4-5  | 100%    | 100%    | +0%   |
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 67%     | 100% | +33%  |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **PASS (run 2026-08-31)**. Salience re-run (✅/❌ `^:async`-placement pair added to the Async section, wf_9a5588bc): sonnet's arg-vector typo cleared (+17); gains on all models. The prior single-run sonnet −17 was a salience gap, not noise. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
-````

@@ -1,6 +1,6 @@
 ---
 id: clojure-001-async-await
-skill: clojure
+skill: lisper
 ---
 
 # Prompt

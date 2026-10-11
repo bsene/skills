@@ -1,6 +1,6 @@
 ---
 name: lisper
-description: Work across the Lisp family, including Common Lisp, Scheme, Racket, Clojure, ClojureScript, Emacs Lisp, and related dialects such as Hy, Fennel, and Janet. Use for unspecified Lisp tasks, dialect comparisons, ports between Lisps, or dialects without a dedicated skill. For known Clojure or CHICKEN tasks, load the corresponding specialist skill.
+description: Write, review, debug, and configure Lisp-family code, including Common Lisp, Scheme, Racket, JVM Clojure, ClojureScript, Emacs Lisp, Hy, Fennel, and Janet. Use for .clj/.cljc/.cljs files, deps.edn, Leiningen, shadow-cljs, JVM/JS interop, CLJS compiler configuration and async code, unspecified Lisp tasks, dialect comparisons, and ports between Lisps. For CHICKEN, load the dedicated skill; distinguish Babashka/nbb scripts from JVM Clojure and compiled CLJS.
 ---
 
 # Lisper
@@ -11,18 +11,18 @@ Identify the dialect and implementation before applying Lisp idioms. Shared pare
 
 Inspect source headers, imports, project manifests, and the documented run command. A `.lisp` or `.scm` extension alone does not establish the implementation. Ask which runtime is intended when the available evidence cannot resolve a consequential choice.
 
-| Dialect or runtime | Evidence to inspect | Guidance to load |
-| ------------------ | ------------------- | ---------------- |
-| JVM Clojure / ClojureScript | `.clj`, `.cljs`, `.cljc`, `deps.edn`, `project.clj`, `shadow-cljs.edn` | [Clojure skill](../clojure/SKILL.md) |
-| Babashka / nbb | `bb.edn`, `nbb.edn`, script shebang or invocation | [Babashka](https://babashka.org/) or [nbb documentation](https://github.com/babashka/nbb); check interpreter support before assuming JVM or compiled CLJS APIs |
-| CHICKEN Scheme | CHICKEN imports, eggs, `csi`, `csc`, `chicken-install` | [CHICKEN Scheme skill](../chicken-scheme/SKILL.md) |
-| Other Scheme implementations | Imports, library declarations, executable name, required Scheme report | [Scheme implementation reference](#scheme-implementation-reference), then the implementation's manual |
-| Racket | `.rkt`, `#lang`, `info.rkt` | [Racket Guide](https://docs.racket-lang.org/guide/); honor the actual `#lang`, including teaching and typed languages |
-| Common Lisp | `.lisp`, `.cl`, `.asd`, `defpackage`, `in-package`, implementation invocation | [Common Lisp guidance](#common-lisp) |
-| Emacs Lisp | `.el`, file-local variables, `require`, `provide` | [Emacs Lisp manual](https://www.gnu.org/software/emacs/manual/html_node/elisp/); inspect lexical binding and the supported Emacs version |
-| Hy | `.hy`, Python project configuration | [Hy documentation](https://hylang.org/); preserve Python runtime and interop constraints |
-| Fennel | `.fnl`, Lua host configuration | [Fennel reference](https://fennel-lang.org/reference); preserve Lua host constraints |
-| Janet | `.janet`, project run command | [Janet documentation](https://janet-lang.org/); use Janet's own collection and runtime semantics |
+| Dialect or runtime           | Evidence to inspect                                                           | Guidance to load                                                                                                                                               |
+| ---------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| JVM Clojure / ClojureScript  | `.clj`, `.cljs`, `.cljc`, `deps.edn`, `project.clj`, `shadow-cljs.edn`        | [Clojure & ClojureScript guidance](references/clojure.md); for promises or async code, also read [Async functions](references/async-functions.md)              |
+| Babashka / nbb               | `bb.edn`, `nbb.edn`, script shebang or invocation                             | [Babashka](https://babashka.org/) or [nbb documentation](https://github.com/babashka/nbb); check interpreter support before assuming JVM or compiled CLJS APIs |
+| CHICKEN Scheme               | CHICKEN imports, eggs, `csi`, `csc`, `chicken-install`                        | [CHICKEN Scheme skill](../chicken-scheme/SKILL.md)                                                                                                             |
+| Other Scheme implementations | Imports, library declarations, executable name, required Scheme report        | [Scheme implementation reference](#scheme-implementation-reference), then the implementation's manual                                                          |
+| Racket                       | `.rkt`, `#lang`, `info.rkt`                                                   | [Racket Guide](https://docs.racket-lang.org/guide/); honor the actual `#lang`, including teaching and typed languages                                          |
+| Common Lisp                  | `.lisp`, `.cl`, `.asd`, `defpackage`, `in-package`, implementation invocation | [Common Lisp guidance](#common-lisp)                                                                                                                           |
+| Emacs Lisp                   | `.el`, file-local variables, `require`, `provide`                             | [Emacs Lisp manual](https://www.gnu.org/software/emacs/manual/html_node/elisp/); inspect lexical binding and the supported Emacs version                       |
+| Hy                           | `.hy`, Python project configuration                                           | [Hy documentation](https://hylang.org/); preserve Python runtime and interop constraints                                                                       |
+| Fennel                       | `.fnl`, Lua host configuration                                                | [Fennel reference](https://fennel-lang.org/reference); preserve Lua host constraints                                                                           |
+| Janet                        | `.janet`, project run command                                                 | [Janet documentation](https://janet-lang.org/); use Janet's own collection and runtime semantics                                                               |
 
 For another Lisp dialect, identify its implementation and consult its language manual before proposing dialect-specific code. Do not silently substitute Common Lisp or Scheme.
 
@@ -59,8 +59,8 @@ Use the [Common Lisp HyperSpec](https://www.lispworks.com/documentation/HyperSpe
 
 Read only the relevant section of [Lisp programming from the bookshelf](references/book-derived-guidance.md) when the task involves:
 
-- Recursive lists or trees: base cases, progress, accumulators, and teaching-language assumptions from *The Little Schemer* and *SICP*.
-- Common Lisp collections: equality, shared structure, destructive operations, and representation choices from *ANSI Common Lisp*.
-- Common Lisp macros: functions versus macros, variable capture, evaluation count/order, and expansion-time effects from *On Lisp*.
-- State, delayed evaluation, or interpreters: environment models and abstraction boundaries from *SICP*.
+- Recursive lists or trees: base cases, progress, accumulators, and teaching-language assumptions from _The Little Schemer_ and _SICP_.
+- Common Lisp collections: equality, shared structure, destructive operations, and representation choices from _ANSI Common Lisp_.
+- Common Lisp macros: functions versus macros, variable capture, evaluation count/order, and expansion-time effects from _On Lisp_.
+- State, delayed evaluation, or interpreters: environment models and abstraction boundaries from _SICP_.
 - Portable Scheme: truthiness, operand order, proper tail calls, and hygienic macros checked against R7RS-small.

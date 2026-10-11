@@ -28,7 +28,7 @@ is on just because "it's production".
 JS interop** unless guarded. "Works in dev, breaks in prod" is almost always
 `:advanced` renaming hitting un-extern'd JS — fix with an **externs file** or
 **string-keyed access** (`goog.object/get`), not by changing app logic. See
-`references/dependencies-and-interop.md` for the externs mechanics.
+[dependencies and interop](dependencies-and-interop.md) for the externs mechanics.
 
 ## Core options reference
 
