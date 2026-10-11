@@ -53,7 +53,8 @@ Do **not** include:
 - Directory structure overviews (explorer orientation → `README`/ADR, which search agents do read)
 - Architecture descriptions agents can infer from code
 - Generic best-practice advice
-- Rules already enforced by tooling (linters, typecheck, tests, CI)
+- Rules already enforced by tooling (linters, typecheck, tests, CI); remove the
+  instruction and keep the enforceable rule in tooling
 - Mandatory boilerplate headers unless the repo explicitly requires one
 
 ### Recommended structure
