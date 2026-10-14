@@ -2,14 +2,16 @@
 name: typescript
 description: >
   JS/TS best-practices and rule enforcement — JS idioms, TS type safety, runtime validation,
-  error handling. Routes to type-system, Zod, and `object-oriented-programming` (SOLID).
+  error handling, and Deno runtime workflows. Routes to type-system, Zod, Deno guidance,
+  and `object-oriented-programming` (SOLID).
 
   TRIGGER when: TS/JS code; type-system (discriminated unions, generics, utility types, illegal
   states, narrowing, variance); safety (strict mode, any vs unknown); runtime (Zod, schema
   validation, parse/safeParse); errors (Result type, union returns); ts-conventions (readonly,
   return annotations, modules, `as const`); js-idioms (const/let, destructuring, optional
   chaining, arrow functions, this binding, array chains); composition (pipe, compose, currying,
-  monoid); testing (unit tests, mock vs stub); or "is this idiomatic JS/TS".
+  monoid); testing (unit tests, mock vs stub); Deno (CLI, deno.json, permissions, JSR/npm,
+  Deno.serve, Deno.test, Node-to-Deno migration); or "is this idiomatic JS/TS".
 metadata:
   user-invocable: "false"
 ---
@@ -28,8 +30,10 @@ Read its agent instructions and configuration before changing tooling or introdu
 `type-system/` and `zod/` are reference bundles read on demand from this router — they are not independently discovered skills, so their own frontmatter is intentionally minimal (no duplicate trigger list needed).
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
+→ **Total TypeScript / Matt Pocock** (type derivation, `satisfies`, generic inference, `NoInfer`, distributivity, type tests) → [references/total-typescript.md](references/total-typescript.md)
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
 → **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, monoids…) → `composition/SKILL.md`
+→ **Deno runtime** (configuration, permissions, dependencies, HTTP, tests, Node compatibility) → [references/deno.md](references/deno.md)
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 → **Testing** (unit tests, mocks vs stubs, brittle tests, test pyramid) → `testing` skill
@@ -92,6 +96,7 @@ else res.status(200).json(result);
 
 ## Read On Demand
 
+- Effect TS — use the [official documentation](https://effect.website/docs/) for typed errors, concurrency, resource management, and dependency requirements. Match the documentation version to the project's installed `effect` version before using API examples.
 - Domain vs. DTO mapping example — DTO shape never leaks into the domain:
 
 ```typescript

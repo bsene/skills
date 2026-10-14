@@ -1,9 +1,6 @@
----
-name: deno
-description: Build, debug, review, or migrate JavaScript and TypeScript applications using Deno. Use for Deno CLI commands, deno.json configuration, permissions, JSR/npm dependencies, Deno.serve, Deno.test, and Node-to-Deno compatibility. For Fresh or Deno Deploy specifics, consult their own official documentation.
----
-
 # Deno
+
+For Fresh or Deno Deploy specifics, consult their own official documentation.
 
 Use [Deno's official documentation](https://docs.deno.com/runtime/) as the source
 of truth. Check `deno --version` and the project's configuration before choosing
