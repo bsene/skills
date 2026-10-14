@@ -32,6 +32,8 @@ Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Sect
 
 ## Concepts
 
+For type derivation (`keyof typeof`, indexed access), `satisfies`, generic inference (`NoInfer`), conditional-type distribution, and type tests, read [Total TypeScript guidance](../references/total-typescript.md).
+
 **Structural typing** — Compatibility is determined by shape, not by nominal inheritance. Prefer the narrowest useful shape; a name alone does not prevent mixing semantically different values. Use branding for domain IDs.
 
 Avoid empty structures; they accept almost every value:
