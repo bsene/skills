@@ -2,7 +2,7 @@
 
 Un monoïde est une structure minimaliste : un ensemble de valeurs + une opération binaire **associative** (`combine`) + un **élément neutre** (`empty`). Rien de plus. Reconnaître cette structure dans du code métier permet de remplacer une logique de fusion ad hoc — source fréquente de bugs sur les cas limites — par une API générique et testée une fois pour toutes.
 
-Cette référence couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change. Pour l'idiomatique TypeScript (interface `Monoid<T>`, folds, monoïdes métier), lire [Monoids](../../typescript/composition/SKILL.md#monoids).
+Cette référence couvre Clojure/ClojureScript. Le concept est identique dans les deux langages ; seule l'idiomatique change.
 
 Source de référence : [Les monoïdes : une abstraction omniprésente (evryg)](https://kb.evryg.com/fr/ingenierie-logicielle-avancee/fondations/les-monoides-une-abstraction-omnipresente)
 

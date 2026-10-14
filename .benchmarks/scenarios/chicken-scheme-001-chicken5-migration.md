@@ -1,6 +1,6 @@
 ---
 id: chicken-scheme-001-chicken5-migration
-skill: chicken-scheme
+skill: lisper
 ---
 
 # Prompt

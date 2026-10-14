@@ -1,6 +1,6 @@
 ---
 name: lisper
-description: Write, review, debug, and configure Lisp-family code, including Common Lisp, Scheme, Racket, JVM Clojure, ClojureScript, Emacs Lisp, Hy, Fennel, and Janet. Use for .clj/.cljc/.cljs files, deps.edn, Leiningen, shadow-cljs, JVM/JS interop, CLJS compiler configuration and async code, Clojure/CLJS monoids and partitioned aggregation, unspecified Lisp tasks, dialect comparisons, and ports between Lisps. For CHICKEN, load the dedicated skill; distinguish Babashka/nbb scripts from JVM Clojure and compiled CLJS.
+description: Write, review, debug, and configure Lisp-family code, including Common Lisp, Scheme, CHICKEN Scheme, Racket, JVM Clojure, ClojureScript, Emacs Lisp, Hy, Fennel, and Janet. Use for CHICKEN eggs, csi/csc, Scheme-to-C compilation and FFI, .clj/.cljc/.cljs files, deps.edn, Leiningen, shadow-cljs, JVM/JS interop, CLJS compiler configuration and async code, Clojure/CLJS monoids and partitioned aggregation, unspecified Lisp tasks, dialect comparisons, and ports between Lisps. Distinguish Babashka/nbb scripts from JVM Clojure and compiled CLJS.
 ---
 
 # Lisper
@@ -15,7 +15,7 @@ Inspect source headers, imports, project manifests, and the documented run comma
 | ---------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | JVM Clojure / ClojureScript  | `.clj`, `.cljs`, `.cljc`, `deps.edn`, `project.clj`, `shadow-cljs.edn`        | [Clojure & ClojureScript guidance](references/clojure.md); for promises or async code, also read [Async functions](references/async-functions.md)              |
 | Babashka / nbb               | `bb.edn`, `nbb.edn`, script shebang or invocation                             | [Babashka](https://babashka.org/) or [nbb documentation](https://github.com/babashka/nbb); check interpreter support before assuming JVM or compiled CLJS APIs |
-| CHICKEN Scheme               | CHICKEN imports, eggs, `csi`, `csc`, `chicken-install`                        | [CHICKEN Scheme skill](../chicken-scheme/SKILL.md)                                                                                                             |
+| CHICKEN Scheme               | CHICKEN imports, eggs, `csi`, `csc`, `chicken-install`                        | [CHICKEN Scheme guidance](references/chicken-scheme.md)                                                                                                        |
 | Other Scheme implementations | Imports, library declarations, executable name, required Scheme report        | [Scheme implementation reference](#scheme-implementation-reference), then the implementation's manual                                                          |
 | Racket                       | `.rkt`, `#lang`, `info.rkt`                                                   | [Racket Guide](https://docs.racket-lang.org/guide/); honor the actual `#lang`, including teaching and typed languages                                          |
 | Common Lisp                  | `.lisp`, `.cl`, `.asd`, `defpackage`, `in-package`, implementation invocation | [Common Lisp guidance](#common-lisp)                                                                                                                           |
@@ -26,7 +26,7 @@ Inspect source headers, imports, project manifests, and the documented run comma
 
 For another Lisp dialect, identify its implementation and consult its language manual before proposing dialect-specific code. Do not silently substitute Common Lisp or Scheme.
 
-For Clojure/ClojureScript aggregation, merging, `reduce`/`fold`, empty collections, or partitioned/parallel summaries, read [Monoids](references/monoids.md). Check associativity and a natural identity before using partitioned reduction; prefer core functions over a new abstraction. For TypeScript monoids, use [TypeScript composition](../typescript/composition/SKILL.md#monoids).
+For Clojure/ClojureScript aggregation, merging, `reduce`/`fold`, empty collections, or partitioned/parallel summaries, read [Monoids](references/monoids.md). Check associativity and a natural identity before using partitioned reduction; prefer core functions over a new abstraction.
 
 ## Scheme implementation reference
 
@@ -35,7 +35,7 @@ Use [Scheme Implementations — get.scheme.org](https://get.scheme.org/) to disc
 - Preserve the project's implementation and required report. For a new project, use the user's deployment, embedding, and library needs to narrow the choices.
 - Follow the directory's implementation link for exact module syntax, package tooling, extensions, and standards limitations; the directory is a starting point, not a compatibility guarantee.
 - Distinguish report features, SRFIs, and implementation extensions. Do not assume a library or import form from one Scheme works in another.
-- Load the CHICKEN skill only when CHICKEN is the target; Racket's `#lang` also determines which language rules apply.
+- Load the bundled [CHICKEN guidance](references/chicken-scheme.md) only when CHICKEN is the target; Racket's `#lang` also determines which language rules apply.
 
 ## Common Lisp
 

@@ -1,16 +1,6 @@
----
-name: chicken-scheme
-description: >
-  Write, compile, debug, and package CHICKEN Scheme programs. Use this skill whenever the user mentions CHICKEN Scheme,
-  call-cc.org, csc, csi, Scheme eggs, Scheme-to-C compilation, R5RS/R7RS Scheme, call/cc, continuations, SRFI, or wants
-  help with any Scheme programming task using CHICKEN. Also trigger for questions about the CHICKEN FFI, C interop from
-  Scheme, egg packaging, REPL usage, or scripting with csi. Even if the user just says "scheme" without specifying CHICKEN,
-  use this skill if context suggests CHICKEN (e.g. they mention eggs, csc, chicken-install, or wiki.call-cc.org).
-  DO NOT USE when: the user is working with another Scheme implementation (Racket, Guile, MIT Scheme, Gambit) — those have
-  different module systems, package managers, and idioms.
----
+# CHICKEN Scheme
 
-# CHICKEN Scheme Skill
+Use this guidance for CHICKEN programs, eggs, `csi`/`csc`, Scheme-to-C compilation, and C interop. Other Scheme implementations have different module systems, package managers, and idioms; preserve the project's implementation.
 
 CHICKEN is a Scheme-to-C compiler + interpreter. It produces portable, efficient C from Scheme source and supports R5RS / R7RS (via extension). The main commands are:
 
@@ -118,17 +108,19 @@ runs the same source interpreted.
 
 ## Read On Demand
 
-| Read When                                                                                              | File                                                  |
-| ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- |
-| Modules, imports, tail recursion, call/cc, macros, records                                             | [Core Language](references/core-language.md)          |
-| Scripting, shebang, CLI tools, everyday compiler flag examples, egg structure                          | [Scripting & CLI](references/scripting-cli.md)        |
-| FFI: foreign-lambda, callbacks, C interop, embedding                                                   | [FFI Guide](references/ffi.md)                        |
-| Egg authoring, testing, and publishing workflow                                                        | [Egg System](references/eggs.md)                      |
-| Full `csi`/`csc` flag reference, runtime options, `(declare ...)` reference, deployment/static linking | [CLI & Compiler Cheatsheet](references/cheatsheet.md) |
+| Read When                                                                                              | File                                                      |
+| ------------------------------------------------------------------------------------------------------ | --------------------------------------------------------- |
+| Modules, imports, tail recursion, call/cc, macros, records                                             | [Core Language](chicken-scheme/core-language.md)          |
+| Scripting, shebang, CLI tools, everyday compiler flag examples, egg structure                          | [Scripting & CLI](chicken-scheme/scripting-cli.md)        |
+| FFI: foreign-lambda, callbacks, C interop, embedding                                                   | [FFI Guide](chicken-scheme/ffi.md)                        |
+| Egg authoring, testing, and publishing workflow                                                        | [Egg System](chicken-scheme/eggs.md)                      |
+| Full `csi`/`csc` flag reference, runtime options, `(declare ...)` reference, deployment/static linking | [CLI & Compiler Cheatsheet](chicken-scheme/cheatsheet.md) |
 
 ---
 
-## Benchmark
+## Historical standalone benchmark
+
+These results predate the merge into Lisper and do not measure the bundled reference routing.
 
 Scenario: `.benchmarks/scenarios/chicken-scheme-001-chicken5-migration.md` · Run: 2026-08-31 (salience re-run `wf_9a5588bc`) · Log: `.benchmarks/runs/2026-08-31/chicken-scheme-001-chicken5-migration.json`
 
