@@ -1,6 +1,6 @@
 ---
 id: golang-testing-001-table-driven
-skill: testing
+skill: golang-testing
 ---
 
 # Prompt

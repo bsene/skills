@@ -5,7 +5,7 @@ skill: show-me-the-code
 
 # Prompt
 
-Make this change: skip items whose `qty` is zero or negative instead of adding them to the subtotal.
+Make this change and show me the unified diff: skip items whose `qty` is zero or negative instead of adding them to the subtotal.
 
 File `src/pricing.ts`:
 

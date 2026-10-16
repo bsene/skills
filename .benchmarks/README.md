@@ -11,6 +11,16 @@ Bench harness for the skills in this repo. Goal: measure with-skill vs without-s
 5. **Edit for salience** — sharpen triggers, add integrated examples, tighten checklists. Re-run.
 6. **Gate** — once stable, document the run in the skill's `## Benchmark` footer.
 
+The three recipes exclude empty responses, reported skill-loading failures, failed grading
+calls, and malformed grades. Grades must contain `validResponse` and exactly one boolean
+per criterion. Invalid cells appear in `invalidCells` with their scenario, model, condition,
+and reason; they have no score and cannot produce a delta. An incorrect substantive answer
+remains valid, including a genuine 0% score.
+
+The grader's `validResponse` flag detects reported failures; it does not prove that a skill
+was loaded. Tool-trace review in step 2 remains required before publishing scores or deltas.
+Run the offline validity checks with `node --test .benchmarks/benchmark-validity.test.js`.
+
 These recipes measure instruction uptake after explicit loading. They do not measure automatic
 skill selection. Evaluate selection separately with the skill catalog and a task prompt that
 does not name a skill path, recording which skills the model reads.
