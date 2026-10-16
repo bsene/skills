@@ -9,7 +9,7 @@ When the user presents a refactoring goal, help them:
 2. **Draw the root node** — on paper, whiteboard, or a tool like Mermaid or Excalidraw.
 3. **Attempt the change naively** in a throwaway branch or with `git stash` ready.
 4. **List every error/breakage** — each one becomes a child bubble.
-5. **Revert immediately** — `git checkout .` or `git stash drop`.
+5. **Revert immediately** — `git restore <touched files>` (scope to files you touched, not all uncommitted work).
 
 ---
 
