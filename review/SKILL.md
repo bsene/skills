@@ -59,12 +59,14 @@ who clicks merge owns the change.
 
 Classify the observed behavior, not a label: an incorrect calculation is a Blocker; a name or
 rename is a Nit unless the supplied diff or context proves it breaks compatibility or behavior.
+A renamed field on a returned/public shape is at most a Concern ("check consumers of the old
+name"), never a Blocker without a shown caller; never let it displace the real behavior bug.
 
-| Tier        | Criterion                                       | Required Action      |
-| ----------- | ----------------------------------------------- | -------------------- |
-| **Blocker** | Incorrect behavior, security hole, data loss, broken invariant, or unjustified weakened gate | Fix before merge |
-| **Concern** | Design flaw, missing evidence/test, or perf issue without demonstrated user harm              | Discuss + likely fix |
-| **Nit**     | Style, naming, minor duplication                | Optional             |
+| Tier        | Criterion                                                                                    | Required Action      |
+| ----------- | -------------------------------------------------------------------------------------------- | -------------------- |
+| **Blocker** | Incorrect behavior, security hole, data loss, broken invariant, or unjustified weakened gate | Fix before merge     |
+| **Concern** | Design flaw, missing evidence/test, or perf issue without demonstrated user harm             | Discuss + likely fix |
+| **Nit**     | Style, naming, minor duplication                                                             | Optional             |
 
 If a performance finding may affect availability but its impact is unclear, ask the user whether
 to treat it as a Blocker before assigning a tier.
