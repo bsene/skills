@@ -1,20 +1,17 @@
 ---
 name: show-me-the-code
 description: >
-  Enforces one rule: every code change must be presented as a unified diff (`diff -u` format) with 3 lines of context. No exceptions, even one-liners.
-
-  TRIGGER when: user requests a code modification — fix, refactor, update, replace, edit, patch, change, tweak, rename, rewrite,
-  apply changes, modify this, edit the file, change this code,
-  or explicitly asks for a diff — "show me the diff", "as a unified diff", "what changed", "show the patch", "/show-me-the-code".
-  DO NOT USE when: producing a brand-new file from scratch (no context lines to diff against),
-  or for non-code responses such as plans, explanations, architecture, or diagrams.
+  Presents requested code changes as unified diffs (`diff -u` format) with 3 lines of context where available.
+  TRIGGER when: user explicitly asks for a code diff or patch — "show me the diff", "as a unified diff",
+  "show the patch", or "/show-me-the-code" — including additions and deletions.
+  DO NOT USE for code edits without a diff request, or for plans, explanations, architecture, or diagrams.
 ---
 
 # Show Me The Code
 
-**Rule:** every code change → unified diff (`diff -u` format). No exceptions.
+**Rule:** when this skill is requested, present code changes as unified diffs (`diff -u` format), including one-liners, new files, and deleted files.
 
-- 3 lines of unchanged context above and below each hunk
+- 3 lines of unchanged context above and below each hunk where available; file boundaries may leave fewer
 - New file: `--- /dev/null` / deleted file: `+++ /dev/null`
 - No filename? Use `a/snippet.ts`
 - Multiple files: one diff block per file
@@ -23,13 +20,14 @@ After the diff: optional 1–3 sentence _why_.
 
 ## Example
 
-Asked to "make `total` ignore negative prices", the entire response is the diff in `diff -u`
-format — 3 context lines each side, file headers, hunk header — followed by one line of why:
+Asked to "make `total` ignore negative prices and show the diff", the response starts with the diff in `diff -u`
+format — context where available, file headers, hunk header — followed by one line of why:
 
 ```diff
 --- a/src/cart.ts
 +++ b/src/cart.ts
-@@ -5,7 +5,7 @@ export function total(items: Item[]): number {
+@@ -1,5 +1,5 @@
+ export function total(items: Item[]): number {
    return items.reduce((sum, item) => {
 -    return sum + item.price;
 +    return sum + Math.max(0, item.price);
@@ -52,3 +50,5 @@ Scenario: `.benchmarks/scenarios/show-me-the-code-001-diff-response.md` · Run: 
 | claude-haiku-4-5  | 17%     | 83%  | +66%  |
 
 > **PASS (run 2026-08-31)**. Large uniform gains; no regressions. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+Activation scope and the scenario's explicit diff request changed after this run; rerun pending.
