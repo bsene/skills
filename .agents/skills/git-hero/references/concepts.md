@@ -27,7 +27,7 @@ A good commit message:
 - Is concise on the first line (<72 chars)
 - Explains _why_, not just _what_
 
-**Conventional Commits format** → [Conventional Commits reference](../../references/conventional-commits.md)
+**Conventional Commits format** → [Conventional Commits reference](conventional-commits.md)
 
 ### Atomic commit (commit atomique)
 

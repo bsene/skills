@@ -89,6 +89,34 @@ develop ──●───●───●───●───●──●──
 **Pros:** Clear release process, parallel development, hotfix isolation.
 **Cons:** Complex, many long-lived branches, merge overhead.
 
+### GitFlow command sequence
+
+```bash
+# Start a feature
+git switch develop && git switch -c feature/my-feature
+
+# Finish a feature
+git switch develop
+git merge --no-ff feature/my-feature
+git branch -d feature/my-feature
+
+# Start a release
+git switch -c release/1.2.0 develop
+
+# Finish a release
+git switch main && git merge --no-ff release/1.2.0
+git tag -a v1.2.0 -m "Release 1.2.0"
+git switch develop && git merge --no-ff release/1.2.0
+git branch -d release/1.2.0
+
+# Hotfix
+git switch -c hotfix/fix-login main
+git switch main && git merge --no-ff hotfix/fix-login
+git tag -a v1.2.1 -m "Release 1.2.1"
+git switch develop && git merge --no-ff hotfix/fix-login
+git branch -d hotfix/fix-login
+```
+
 ### Ship / Show / Ask
 
 ```
@@ -107,11 +135,29 @@ main ──●───●──────●────●─────●
 - Ask — open a PR and wait for feedback before merging (genuine uncertainty, experiments)
 - Author decides the mode per change and merges their own PR
 - Short-lived branches, rebased on mainline often; feature toggles keep mainline releasable
+- Skipping a PR does not replace team communication; discuss changes synchronously when needed
+
+The mix of Ship, Show, and Ask depends on trust and familiarity with the code and team.
+Follow the project's review policy; these modes do not authorize bypassing required approval.
 
 **Pros:** CI speed + PR feedback culture, no approval-queue bottleneck, avoids rubber-stamp reviews.
 **Cons:** Needs real team trust and feature-flag discipline; not suited to regulated/mandatory-review environments.
 
 Source: https://martinfowler.com/articles/ship-show-ask.html
+
+## Choosing a workflow
+
+| Factor            | GitFlow         | GitHub Flow  | Trunk-Based     | Ship/Show/Ask                                                |
+| ----------------- | --------------- | ------------ | --------------- | ------------------------------------------------------------ |
+| Release cadence   | Scheduled       | Continuous   | Continuous      | Continuous                                                   |
+| Team size         | Any             | Small/medium | Medium/large    | Small/medium, high-trust                                     |
+| CI/CD maturity    | Low needed      | Medium       | High required   | High required                                                |
+| Branch complexity | High            | Low          | Minimal         | Low (short branches, no approval gate)                       |
+| Best for          | Libraries, apps | Web services | Large tech orgs | High-trust teams wanting PR feedback without blocking merges |
+
+For commit type, breaking-change, and scope selection, read
+[Conventional Commits](conventional-commits.md). Use imperative subjects: "If applied,
+this commit will…" is a useful wording check.
 
 ## Branch Naming Conventions
 

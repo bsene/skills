@@ -1,6 +1,6 @@
 # Gitmoji Catalog
 
-Complete reference of all 73 gitmojis, grouped by category. Source: [gitmoji.dev](https://gitmoji.dev/)
+Complete reference of all 75 gitmojis, grouped by category. Source: [gitmoji.dev](https://gitmoji.dev/)
 
 ## Code Quality & Refactoring
 

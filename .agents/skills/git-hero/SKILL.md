@@ -1,17 +1,11 @@
 ---
 name: git-hero
 description: >
-  Git best practices — commit discipline, branching/history hygiene, safety, and CI/CD pipelines.
-  Routes to `git-guru` (expert Q&A), `gitmoji`, and `gitlab-dag` sub-skills.
-
-  TRIGGER when: commits (Conventional Commits, atomic commits, commit message format, commit hygiene,
-  commit types, scope selection, breaking change),
-  history (branch naming, rebase vs merge, clean git history, interactive rebase, history management),
-  safety (force push safety, recover lost commits, reflog, reset),
-  CI/CD (GitLab CI, pipeline optimization, DAG, .gitlab-ci.yml),
-  emoji (gitmoji, commit emoji, "quel emoji pour ce commit"),
-  setup (git configuration, "bonnes pratiques git", "comment faire un rebase", "configure git properly").
-  DO NOT USE when: user needs a single one-shot git command answer — let Claude answer directly.
+  Answer Git questions and guide commits, branching, merge/rebase, conflict resolution,
+  recovery, configuration, and internals in French or English. Use for Git commands,
+  workflows, history rewriting, reflog/stash, Conventional Commits, Gitmoji, and GitLab
+  CI pipeline design. Routes emoji selection to gitmoji and GitLab CI to gitlab-dag;
+  not for non-Git version control or other CI systems.
 metadata:
   user-invocable: "false"
 ---
@@ -20,13 +14,21 @@ metadata:
 
 Comprehensive Git mastery — best practices, expert Q&A, gitmoji, and CI/CD pipelines.
 
-## Route to Sub-skills
+## Answer Git questions
 
-Route immediately on keyword match. Answer inline only for quick factual git questions not covered by a sub-skill.
+Match the user's language and experience. For conceptual questions, explain what and
+why before showing a concrete command; use a commit graph when it clarifies history.
+For workflow questions, state the recommendation, its trade-offs, and the command sequence.
+Keep simple command answers short; read references only when the question needs them.
 
--> **Git Q&A** — route when: user asks about concepts, commands, workflows, internals, troubleshooting, conflicts, stash, rebase, reflog, or anything "how do I do X in git?" → `git-guru/` sub-skill
--> **Gitmoji** — route when: user asks about commit emoji, gitmoji prefix, "which emoji for this commit?", or emoji commit conventions → `gitmoji/` sub-skill
--> **GitLab CI/CD** — route when: user mentions GitLab pipelines, DAG, `needs:`, parallel matrix, `.gitlab-ci.yml`, or pipeline optimization → `gitlab-dag/` sub-skill
+For recovery, diagnose with `git status` and, when needed, `git reflog` before suggesting
+a corrective command. Prefer the safest fix and explain data loss or history rewriting
+before recommending destructive commands. Do not rewrite shared history as a default fix.
+
+## Route to specialized skills
+
+- **Commit emoji / Gitmoji** → [gitmoji](gitmoji/SKILL.md). Plain Conventional Commits need no emoji.
+- **GitLab pipelines, DAG, `needs:`, parallel matrix** → [gitlab-dag](gitlab-dag/SKILL.md).
 
 ---
 
@@ -68,10 +70,17 @@ One logical change per commit. Each commit should:
 | Choosing a commit type by release impact, breaking changes (`!` / `BREAKING CHANGE`), scope selection, commitlint validation | [Conventional Commits](references/conventional-commits.md) |
 | Configuring git (aliases, GPG signing, push safety, force push, reflog, modern syntax, rerere)                               | [Config Recipes](references/config-recipes.md)             |
 | Choosing a workflow, merge vs rebase, branch naming conventions, branch lifecycle                                            | [Workflow Decisions](references/workflow-decisions.md)     |
+| Understanding HEAD, branches, zones, remotes, objects, or merge vs rebase                                                    | [Git Concepts](references/concepts.md)                     |
+| Looking up command flags, inspection, worktrees, submodules, or history rewriting                                            | [Command Cheatsheet](references/commands.md)               |
+| Understanding snapshots, commit objects, hashes, or the add/commit lifecycle                                                 | [Commit Internals](references/commit.md)                   |
+| Undoing, amending, moving commits, resolving conflicts, or using stash                                                       | [Common Scenarios](references/scenarios.md)                |
 
 ---
 
 ## Benchmark
+
+These historical results predate the Git Guru consolidation; the merged skill has
+not been rerun. Scenario IDs remain unchanged to preserve run provenance.
 
 Scenario: `.benchmarks/scenarios/git-hero-001-atomic-commits.md` · Run: 2026-09-04 · Log: `.benchmarks/runs/2026-09-04/git-hero-001-atomic-commits.json`
 
@@ -82,3 +91,15 @@ Scenario: `.benchmarks/scenarios/git-hero-001-atomic-commits.md` · Run: 2026-09
 | claude-haiku-4-5  | 100%    | 100% | +0%   |
 
 > **NEUTRAL (run 2026-09-04)**. All models 100% with and without — atomic-commit guidance is at ceiling on this scenario; the router's value is triage, not code change. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+### Git questions (formerly Git Guru)
+
+Scenario: `.benchmarks/scenarios/git-guru-001-merge-vs-rebase.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/git-guru-001-merge-vs-rebase.json`
+
+| Model             | Without | With | Delta |
+| ----------------- | ------- | ---- | ----- |
+| claude-opus-4-8   | 83%     | 83%  | +0%   |
+| claude-sonnet-4-6 | 83%     | 100% | +17%  |
+| claude-haiku-4-5  | 83%     | 83%  | +0%   |
+
+> **SOFT PASS (run 2026-08-31)**. Sonnet +17; opus/haiku unchanged. Merge-vs-rebase criteria are mostly default behavior. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
