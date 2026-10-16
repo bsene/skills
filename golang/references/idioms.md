@@ -78,6 +78,10 @@ type Closer interface { Close() error }
 
 Multi-method interfaces: use a descriptive noun (`ReadWriter`, `Handler`, `Store`).
 
+### Getters
+
+No `Get` prefix: `user.Name()`, not `user.GetName()`.
+
 ### Package Names
 
 Short, lowercase, no underscores or mixedCaps:

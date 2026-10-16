@@ -27,7 +27,7 @@ Before approving any goroutine-spawning code, confirm all of these:
 1. **Exit path** — every goroutine can stop (ctx cancel, done channel, or input channel closing). No exit path = leak.
 2. **Cancellation** — a slow/hung call is bounded by `context` (`ctx.Done()` / `WithTimeout`). Without it, one stuck call leaks the goroutine and can block its collector forever.
 3. **Bounded fan-out** — never one goroutine per item unbounded. Use a **worker pool** with fixed concurrency under load.
-4. **Channel coupling** — an **unbuffered** channel blocks the sender until a receiver is ready; buffer it or use a pool when you don't want that coupling.
+4. **Channel coupling** — an **unbuffered** channel blocks the sender until a receiver is ready; default to unbuffered; add a justified buffer or use a pool only when you need to decouple.
 5. **Errors** — propagate goroutine errors and cancel siblings with **`errgroup.Group`**; don't silently drop them.
 6. **Loop-variable capture** — pre-Go 1.22, a goroutine closing over a `range` variable captures the _shared_ var. See [Closures](../references/functions-methods-pointers.md#closures) for the pin fix and Go 1.22+ per-iteration scoping.
 7. **No shared mutable state** without a `sync.Mutex`/atomic — and prove it with **`go test -race ./...`**.
@@ -78,12 +78,7 @@ Annotate direction in function signatures for compile-time safety: `chan<- T` is
 
 ## Buffered vs Unbuffered
 
-| Type                       | Behavior                             | Use when                                         |
-| -------------------------- | ------------------------------------ | ------------------------------------------------ |
-| Unbuffered `make(chan T)`  | Send blocks until receiver is ready  | Synchronization — both sides must be present     |
-| Buffered `make(chan T, n)` | Send blocks only when buffer is full | Decoupling producer/consumer speeds, known bound |
-
-**Default to unbuffered.** Add a buffer only when you can justify the size.
+**Default to unbuffered** (sender blocks until a receiver is ready). Add a buffer only when you can justify the size. Examples: [Unbuffered vs Buffered](references/goroutines-channels.md#unbuffered-vs-buffered-channels).
 
 ---
 

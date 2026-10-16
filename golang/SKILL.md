@@ -26,7 +26,7 @@ Write simple, explicit, readable Go. The language rewards clarity over clevernes
 → **Error handling** (error interface, wrapping, sentinel errors, panic/recover) → `error-handling/` sub-skill
 → **Concurrency** (goroutines, channels, sync, context, errgroup) → `concurrency/` sub-skill
 → **Types and interfaces** (structs, interfaces, embedding, generics, slices, maps, enums) → `types-and-interfaces/` sub-skill
-→ **Testing** (table-driven tests, benchmarks, fuzz, httptest, testify) → `testing/` sub-skill
+→ **Testing** (table-driven tests, benchmarks, fuzz, httptest, testify) → [golang-testing](testing/SKILL.md) sub-skill
 → **Web** (HTTP server/client, handlers, middleware, JSON, templates) → `web/` sub-skill
 → **Packages and modules** (go.mod, imports, versioning, proxies, workspaces) → `packages-and-modules/` sub-skill
 
@@ -65,32 +65,15 @@ Every type has a usable zero value — no null surprises.
 | Pointer, slice, map, channel, function, interface | `nil`             |
 | Struct                                            | All fields zeroed |
 
-### Naming
+### Naming and Formatting
 
-| Rule                                            | Example                                           |
-| ----------------------------------------------- | ------------------------------------------------- |
-| Exported = uppercase first letter               | `ProcessOrder` (public), `processOrder` (private) |
-| Acronyms stay all-caps                          | `HTTPServer`, `userID`, `xmlParser`               |
-| Receivers: 1-2 letter abbreviation of type      | `func (s *Server) Start()`                        |
-| Interfaces: verb + `-er` when single method     | `Reader`, `Writer`, `Stringer`, `Closer`          |
-| No `Get` prefix for getters                     | `user.Name()` not `user.GetName()`                |
-| Package names: short, lowercase, no underscores | `strconv`, `httputil`, `bufio`                    |
-
-### Formatting
-
-`gofmt` is non-negotiable. No style debates. Run `gofmt` or `goimports` — the tool decides.
+Exported = uppercase first letter; `gofmt`/`goimports` decide style. Full rules (acronyms, receivers, `-er` interfaces, no `Get` prefix, package names) live in [Go Idioms](references/idioms.md).
 
 ---
 
 ## Anti-patterns
 
-| Anti-pattern                    | Problem                                                      | Fix                                                               |
-| ------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
-| Ignoring errors with `_`        | Silent failures, impossible debugging                        | Handle every error or document why it's safe to ignore            |
-| `init()` with side effects      | Hidden execution order, hard to test                         | Use explicit initialization in `main()`                           |
-| Naked returns in long functions | Unreadable — reader must scroll to find return vars          | Name return values only when it helps godoc; use explicit returns |
-| Interface pollution             | Declaring interfaces before a second implementation exists   | Define interfaces at the consumer site, only when needed          |
-| Premature concurrency           | Goroutines before measuring that sequential code is too slow | Profile first, add concurrency only when bottleneck is proven     |
+Never ignore errors with `_`, use side-effecting `init()`, or add interfaces/goroutines before they are needed. Details and fixes live in the leaf skills: `error-handling/`, `types-and-interfaces/`, `concurrency/`.
 
 ---
 

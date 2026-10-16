@@ -1,12 +1,12 @@
 ---
-name: testing
+name: golang-testing
 description: >
   Go testing — table-driven tests, test helpers, benchmarks, fuzz testing, profiling, and testify.
   TRIGGER when: user asks about Go testing, go test, testing package, table-driven tests in Go,
   Go test helpers, t.Helper, t.Run, Go benchmarks, Go profiling, pprof, Go fuzz testing,
   Go test coverage, testify, Go mock, Go test patterns, Go test organization, TestMain,
   t.Cleanup, t.Parallel, Go golden files, Go httptest.
-  DO NOT USE when: user needs general testing philosophy (not Go-specific) — use the top-level `testing` skill instead.
+  DO NOT USE when: user needs general testing philosophy (not Go-specific) — use the top-level `testing` skill at `../../testing/SKILL.md` instead.
 metadata:
   user-invocable: "false"
 ---

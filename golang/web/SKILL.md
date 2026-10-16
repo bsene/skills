@@ -81,31 +81,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 
 ## Middleware Pattern
 
-Middleware wraps a handler and returns a handler:
-
-```go
-func logging(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        start := time.Now()
-        next.ServeHTTP(w, r)
-        slog.Info("request", "method", r.Method, "path", r.URL.Path, "duration", time.Since(start))
-    })
-}
-
-func auth(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        token := r.Header.Get("Authorization")
-        if !isValid(token) {
-            http.Error(w, "unauthorized", http.StatusUnauthorized)
-            return
-        }
-        next.ServeHTTP(w, r)
-    })
-}
-
-// Chain: logging → auth → handler
-handler := logging(auth(mux))
-```
+Middleware is `func(http.Handler) http.Handler`, e.g. `handler := logging(auth(mux))`. Logging, auth, recovery, CORS, request ID and chain helper: [HTTP Server](references/http-server.md#middleware-composition).
 
 ---
 
