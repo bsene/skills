@@ -8,15 +8,15 @@
 
 ## Metadata
 
-| Field                   | Value                          |
-| ----------------------- | ------------------------------ |
-| 🟢 **ID**               | `[ISSUE_ID]`                   |
-| 🟢 **Analysis Date**    | `[DATE_YYYY/MM/DD]`            |
-| 🟢 **Project**          | `[PROJECT_NAME]`               |
-| 🟢 **Detection Stage**  | `[A/B/C/D/E/F] - [STAGE_NAME]` |
-| 🟢 **Status**           | `[e.g., To Challenge]`         |
-| 🟢 **Owner**            | `[OWNER_NAME]`                 |
-| **Standard**            | 🎓 Dantotsu                    |
+| Field                  | Value                          |
+| ---------------------- | ------------------------------ |
+| 🟢 **ID**              | `[ISSUE_ID]`                   |
+| 🟢 **Analysis Date**   | `[DATE_YYYY/MM/DD]`            |
+| 🟢 **Project**         | `[PROJECT_NAME]`               |
+| 🟢 **Detection Stage** | `[A/B/C/D/E/F] - [STAGE_NAME]` |
+| 🟢 **Status**          | `[e.g., To Challenge]`         |
+| 🟢 **Owner**           | `[OWNER_NAME]`                 |
+| **Standard**           | 🎓 Dantotsu                    |
 
 ---
 
@@ -33,6 +33,8 @@ _The sequence of events that led to the user-facing error._
 
 <!-- Numbered list of events from user action to final error -->
 <!-- Include code snippets if relevant -->
+
+**Recurrence check:** _Has this defect, or one with the same underlying pattern, occurred before? Cite prior incidents or "none found"._
 
 ---
 
