@@ -48,6 +48,7 @@ test-frontend:
 | Writing `needs:` dependencies, artifact control, immediate-start jobs | [needs: Keyword Reference](references/needs-keyword.md)            |
 | Using `parallel:`, `parallel:matrix`, or 1:1 matrix expressions       | [Parallel & Matrix Patterns](references/parallel-and-matrix.md)    |
 | DRY patterns (YAML anchors, `!reference`), full pipeline examples     | [DRY Patterns & Examples](references/dry-patterns-and-examples.md) |
+| Cross-pipeline `needs:pipeline`, parent-child or multi-project DAGs   | [GitLab DAG Advanced Reference](resources/gitlab-dag-advanced.md)  |
 
 ---
 

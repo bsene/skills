@@ -122,7 +122,7 @@ Use the default when no more specific gitmoji applies. Override with a more prec
 
 ## Full Catalog
 
-For the complete 73-emoji catalog grouped by category, see [references/gitmoji-catalog.md](references/gitmoji-catalog.md).
+For the complete 75-emoji catalog grouped by category, see [references/gitmoji-catalog.md](references/gitmoji-catalog.md).
 
 ---
 
