@@ -1,15 +1,10 @@
 ---
 name: object-oriented-programming
 description: >
-  Evaluate and write OOP code — class-shape smells, SOLID, GoF design patterns, Tell Don't Ask, and Object
-  Calisthenics — in TypeScript/Node.js/NestJS. Use for code review, refactoring, or new class/service design.
+  Review and write OOP code in TypeScript/Node.js/NestJS: SOLID, GoF patterns, Tell Don't Ask, Object Calisthenics, class-shape smells. Use for code review, refactoring, or new class/service design.
+  TRIGGER when: static-only class; single public method; setters required before valid; data-only class; getters used to decide externally; GoF pattern names; SOLID/god class/coupling; primitive obsession, Law of Demeter; "should this be a class or a function?".
+  DO NOT USE for pure FP code, non-OOP languages (Go, Rust, C, OCaml), architecture layering (ports-adapters-architecture), or type-level questions (typescript).
 
-  TRIGGER when: class has only static methods; single public method + constructor; invalid until setters are
-  called; data class with only constructor + properties; getters read externally to decide (Tell Don't Ask);
-  GoF pattern names (Decorator/Factory/Strategy/Builder/Command/Observer/Mixin/Proxy/Flyweight/Mediator); SOLID,
-  SRP, OCP, LSP, ISP, DIP, god class, fat interface, reduce coupling, testability; object calisthenics, primitive
-  obsession, first-class collections, one dot per line, Law of Demeter; "is this an OOP anti-pattern?", "should
-  this be a class or a function?", "why does my code feel procedural?", or a stricter pass on existing code.
 ---
 
 # Object Oriented Programming
@@ -51,20 +46,20 @@ Full annotated TypeScript examples for all five: `references/solid.md`
 
 ## Design patterns — quick selector
 
-| Problem                                          | Pattern              |
-| ------------------------------------------------ | -------------------- |
-| One shared instance (DB, config, logger)         | **Singleton**        |
-| Swap algorithms at runtime                       | **Strategy**         |
-| Create families of related objects               | **Abstract Factory** |
-| Create objects without naming the concrete class | **Factory**          |
-| Construct complex objects step-by-step           | **Builder**          |
-| Pair a type and utility object under one name    | **Companion Object** |
-| Notify subscribers on state change               | **Observer**         |
-| Add cross-cutting behavior non-invasively        | **Decorator**        |
-| Intercept/validate/log property access           | **Proxy**            |
-| Share behavior across unrelated classes          | **Mixin**            |
-| Reuse instances to reduce memory                 | **Flyweight**        |
-| Decouple via a central hub                       | **Mediator**         |
+| Problem                                          | Pattern                                                               |
+| ------------------------------------------------ | --------------------------------------------------------------------- |
+| One shared instance (DB, config, logger)         | **Singleton** (exception to the core rule; prefer DI-scoped instance) |
+| Swap algorithms at runtime                       | **Strategy**                                                          |
+| Create families of related objects               | **Abstract Factory**                                                  |
+| Create objects without naming the concrete class | **Factory**                                                           |
+| Construct complex objects step-by-step           | **Builder**                                                           |
+| Pair a type and utility object under one name    | **Companion Object**                                                  |
+| Notify subscribers on state change               | **Observer**                                                          |
+| Add cross-cutting behavior non-invasively        | **Decorator**                                                         |
+| Intercept/validate/log property access           | **Proxy**                                                             |
+| Share behavior across unrelated classes          | **Mixin**                                                             |
+| Reuse instances to reduce memory                 | **Flyweight**                                                         |
+| Decouple via a central hub                       | **Mediator**                                                          |
 
 When answering a pattern question, cover: what it is (1 sentence), when to use / not use, a minimal runnable
 TypeScript example, trade-offs, and any TS-specific caveat (e.g. standard vs `experimentalDecorators`).
