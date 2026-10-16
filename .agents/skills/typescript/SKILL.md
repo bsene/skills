@@ -1,15 +1,17 @@
 ---
 name: typescript
 description: >
-  JS/TS best-practices and rule enforcement — JS idioms, TS type safety, runtime validation,
-  error handling. Routes to type-system, Zod, and `object-oriented-programming` (SOLID).
+  JS/TS best-practices and rule enforcement — JS idioms, TS type safety, Zod runtime validation,
+  error handling, and Deno workflows.
 
-  TRIGGER when: TS/JS code; type-system (discriminated unions, generics, utility types, illegal
-  states, narrowing, variance); safety (strict mode, any vs unknown); runtime (Zod, schema
-  validation, parse/safeParse); errors (Result type, union returns); ts-conventions (readonly,
-  return annotations, modules, `as const`); js-idioms (const/let, destructuring, optional
-  chaining, arrow functions, this binding, array chains); composition (pipe, compose, currying,
-  monoid); testing (unit tests, mock vs stub); or "is this idiomatic JS/TS".
+  TRIGGER when: TS/JS code; discriminated unions, generics, narrowing, any vs unknown; Zod
+  parse/safeParse; Result types; readonly, `as const`, modules; destructuring, optional
+  chaining; pipe/compose/currying; unit tests, mock vs stub; Deno (deno.json, permissions,
+  JSR, Deno.serve, Node-to-Deno migration); or "is this idiomatic JS/TS".
+
+  DO NOT USE for advanced generic/conditional/mapped types or compiler-error puzzles
+  (`typescript-magician`), class/SOLID design (`object-oriented-programming`), or
+  language-agnostic test strategy (`testing`).
 metadata:
   user-invocable: "false"
 ---
@@ -18,13 +20,20 @@ metadata:
 
 Primary reference: [TypeScript docs](https://www.typescriptlang.org/docs/). Rule files below link to the specific docs section they encode; when a rule and the official docs disagree, the docs win and the rule should be updated.
 
+## Follow the project
+
+Use the repository's configured runtime, imports, test runner, and verification commands.
+Read its agent instructions and configuration before changing tooling or introducing a workflow.
+
 ## Route to Sub-skills
 
 `type-system/` and `zod/` are reference bundles read on demand from this router — they are not independently discovered skills, so their own frontmatter is intentionally minimal (no duplicate trigger list needed).
 
 → **Type system** (unknown/any, narrowing, discriminated unions, mapped types…) → `type-system/SKILL.md`
+→ **Total TypeScript / Matt Pocock** (type derivation, `satisfies`, generic inference, `NoInfer`, distributivity, type tests) → [references/total-typescript.md](references/total-typescript.md)
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
 → **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, monoids…) → `composition/SKILL.md`
+→ **Deno runtime** (configuration, permissions, dependencies, HTTP, tests, Node compatibility) → [references/deno.md](references/deno.md)
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 → **Testing** (unit tests, mocks vs stubs, brittle tests, test pyramid) → `testing` skill
@@ -87,6 +96,7 @@ else res.status(200).json(result);
 
 ## Read On Demand
 
+- Effect TS — use the [official documentation](https://effect.website/docs/) for typed errors, concurrency, resource management, and dependency requirements. Match the documentation version to the project's installed `effect` version before using API examples.
 - Domain vs. DTO mapping example — DTO shape never leaks into the domain:
 
 ```typescript
@@ -125,15 +135,15 @@ export function toDomain(dto: UserDTO): User {
 
 ### TypeScript-specific
 
-| Rule                                                               | File                                          |
-| ------------------------------------------------------------------ | --------------------------------------------- |
-| Avoid type assertions (`as T`, `!`, `as unknown as T`)             | `rules/avoid-type-assertions.md`              |
-| Favor existing types over `as const`                               | `rules/favor-existing-types-over-as-const.md` |
-| Do not prefix interfaces with `I`                                  | `rules/no-interface-prefix.md`                |
-| Mark properties and arrays `readonly` to signal immutability       | `rules/readonly.md`                           |
-| Annotate function return types explicitly; enable `noImplicitAny`  | `rules/explicit-return-types.md`              |
-| Use modules instead of namespaces; prefer named exports            | `rules/module-organization.md`                |
-| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts` | `rules/js-interop-declarations.md`            |
+| Rule                                                                                          | File                                          |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Avoid type assertions (`as T`, `!`, `as unknown as T`)                                        | `rules/avoid-type-assertions.md`              |
+| Favor existing types over `as const`                                                          | `rules/favor-existing-types-over-as-const.md` |
+| Do not prefix interfaces with `I`                                                             | `rules/no-interface-prefix.md`                |
+| Mark properties and arrays `readonly` to signal immutability                                  | `rules/readonly.md`                           |
+| Infer obvious local returns; annotate public APIs and risky inference; enable `noImplicitAny` | `rules/explicit-return-types.md`              |
+| Use modules instead of namespaces; prefer named exports                                       | `rules/module-organization.md`                |
+| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts`                            | `rules/js-interop-declarations.md`            |
 
 ---
 

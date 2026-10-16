@@ -1,9 +1,9 @@
 <!-- Reference rule, reached only via typescript/SKILL.md's rules table. No skill-style frontmatter needed. -->
 <!-- tags: typescript, type-safety, return-types, noImplicitAny -->
 
-# Annotate function return types explicitly
+# Infer local returns; annotate public boundaries and risky inference
 
-TypeScript infers return types, but inference can silently widen to `any` when calling untyped or loosely-typed dependencies. Explicit return types catch this at the function boundary. Reference: [Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html).
+TypeScript infers obvious local return types. Explicit annotations document public contracts and catch incompatible typed returns. They do not make dependency `any` safe: fix the dependency's types or validate its output as `unknown` at the boundary. Reference: [Functions](https://www.typescriptlang.org/docs/handbook/2/functions.html).
 
 ## Inference-first policy
 
@@ -20,16 +20,16 @@ const activeUsers = users.filter(user => user.isActive);
 export function getUser(id: string): User | undefined { ... }
 ```
 
-## Banned patterns
+## Risky inference
 
 ```typescript
-// Bad — return type inferred; if userStore.get() returns any, result is any
-function getUser(id: string) {
+// Bad — exported contract changes when the store's return type changes
+export function getUser(id: string) {
   return userStore.get(id);
 }
 
-// Bad — could return string | undefined | null depending on lookup
-function findRole(userId: string) {
+// Bad — exported lookup leaves its nullable contract implicit
+export function findRole(userId: string) {
   return roleMap[userId];
 }
 ```
@@ -37,12 +37,12 @@ function findRole(userId: string) {
 ## Use instead
 
 ```typescript
-function getUser(id: string): User | undefined {
+export function getUser(id: string): User | undefined {
   return userStore.get(id);
 }
 
-function findRole(userId: string): Role | null {
-  return roleMap[userId] ?? null;
+export function findRole(userId: string): Role | undefined {
+  return roleMap[userId] ?? undefined;
 }
 ```
 
@@ -59,7 +59,7 @@ function findRole(userId: string): Role | null {
 
 [`noImplicitAny`](https://www.typescriptlang.org/tsconfig/#noImplicitAny) forces TypeScript to error when it cannot infer a type. It is included in `"strict": true`. Never disable it.
 
-## Exceptions
+## Prefer inference for local or contextually typed code
 
 - Short, obvious one-liner utilities where the return type is self-evident from the expression:
   ```typescript

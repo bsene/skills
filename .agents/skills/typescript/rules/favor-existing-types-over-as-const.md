@@ -4,7 +4,7 @@
 # Favor existing types over `as const`
 
 `as const` is useful for deriving types from values when no type exists yet.
-When a type already exists, annotate with it — don't recreate it from a const. Reference: [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions).
+When a type already exists, annotate with it or use `satisfies` to check the shape while retaining specific keys — don't recreate the type from a duplicate const. Reference: [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions).
 
 ## Banned patterns
 
@@ -44,7 +44,7 @@ const palette = {
   red: [255, 0, 0],
   blue: [0, 0, 255],
 } satisfies Record<string, [number, number, number]>;
-// type known, literal types preserved, no as const needed
+// Shape checked; red and blue are number tuples, not literal-number tuples.
 ```
 
 ## When `as const` IS correct
