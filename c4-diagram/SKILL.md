@@ -78,7 +78,7 @@ Run in order, stop at first success. Native `svg`/`png` export does not exist in
 
    Point to `http://localhost:8080`.
 
-3. **Neither** — output DSL as a ` ```dsl ` code block. Note: paste at `https://playground.structurizr.com/` to render online.
+3. **Neither** — output DSL in a fenced `dsl` code block. Note: paste at `https://playground.structurizr.com/` to render online.
 
 ---
 
