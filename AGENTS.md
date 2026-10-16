@@ -17,7 +17,7 @@ There is no application build step. Useful checks include:
 
 - `git diff --check` — detect whitespace errors before committing.
 - `npx prettier --check "**/*.md"` — verify Markdown formatting if Prettier is available.
-- `node .benchmarks/skill-benchmark-trio.js` — run the available local benchmark harness when benchmark behavior changes.
+- `node --test .benchmarks/benchmark-validity.test.js` — check benchmark validity offline; live recipes require Pi (see `.benchmarks/README.md`).
 - `git status --short` — review intended changes before opening a PR.
 
 ## Coding Style & Naming Conventions
