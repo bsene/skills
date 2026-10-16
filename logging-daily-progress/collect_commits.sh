@@ -3,7 +3,7 @@
 # in the exact format used by the Commits section of progress-daily.md.
 #
 # Usage:
-#   bash scripts/collect_commits.sh <YYYY-MM-DD> [author-regex]
+#   bash collect_commits.sh <YYYY-MM-DD> [author-regex]
 #
 # If author-regex is omitted, falls back to `git config user.email`.
 # Output format, one line per commit:

@@ -41,7 +41,7 @@ Entries are separated by `---`. Newest is at the bottom so the file reads chrono
 
 ## Workflow
 
-When invoked, work through these steps in order. Do not skip the confirmation step.
+When invoked, work through these steps in order. Do not skip the confirmation step for a new single-day entry; for multi-day backfills, show all drafted entries in one batch and confirm once.
 
 ### 1. Locate the log file
 
@@ -76,7 +76,7 @@ Guidelines for good bullets:
 - **Impact bullets name outcomes, not activities.** "Fixed CI: gitignore pattern for scripts/smoke was incorrect, unblocking smoke test runs" is impact. "Worked on CI" is activity. If you can't say what changed for someone else, it's probably not impact.
 - **Learnings are specific and transferable.** "gitignore glob scope: `scripts/smoke/` (directory only) vs `scripts/smoke` (file or dir)" is a learning. "Learned about gitignore" is not.
 - **If commits are all chores with no clear outcome, say so.** A day of tooling/refactor is still worth logging — label it honestly ("Largest single-day agentic investment: expanded skill library by 48 files") rather than inventing impact.
-- **Draft, then show the user before writing.** The user knows what the day actually produced; you only see what git recorded. Always propose the Impact/Learnings bullets and wait for edits before appending to the file.
+- **Draft, then show the user before writing.** The user knows what the day actually produced; you only see what git recorded. For a new single-day entry, propose the Impact/Learnings bullets and wait for edits before appending. For multi-day backfills, present all drafts in one batch and confirm once.
 
 ### 6. Append, don't prepend
 
