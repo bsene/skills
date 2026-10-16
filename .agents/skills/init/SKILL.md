@@ -1,6 +1,6 @@
 ---
 name: init
-description: Creates, updates, or optimizes an AGENTS.md file for a repository with minimal, high-signal instructions covering non-discoverable coding conventions, tooling quirks, workflow preferences, and project-specific rules that agents cannot infer from reading the codebase. Use when setting up agent instructions or Claude configuration for a new repository, when an existing AGENTS.md is too long, generic, or stale, when agents repeatedly make avoidable mistakes, or when repository workflows have changed and the agent configuration needs pruning. Applies a discoverability filter—omitting anything Claude can learn from README, code, config, or directory structure—and a quality gate to verify each line remains accurate and operationally significant.
+description: Creates, updates, or optimizes an AGENTS.md file for a repository with minimal, high-signal instructions covering non-discoverable coding conventions, tooling quirks, workflow preferences, and project-specific rules that agents cannot infer from reading the codebase. Use when setting up agent instructions or Claude configuration for a new repository, when an existing AGENTS.md is too long, generic, or stale, when agents repeatedly make avoidable mistakes, or when repository workflows have changed and the agent configuration needs pruning. Applies a discoverability filter—omitting anything Claude can learn from README, code, config, or directory structure—and a quality gate to verify each line remains accurate and operationally significant. DO NOT USE for writing README/ADR/architecture docs, one-off task prompts, or editing code-level lint/CI config without an AGENTS.md change.
 metadata:
   tags: initialization, agents, context-engineering, agents-md, maintenance
 ---
@@ -53,8 +53,8 @@ Do **not** include:
 - Directory structure overviews (explorer orientation → `README`/ADR, which search agents do read)
 - Architecture descriptions agents can infer from code
 - Generic best-practice advice
-- Rules already enforced by tooling (linters, typecheck, tests, CI); remove the
-  instruction and keep the enforceable rule in tooling
+- Rules already enforced by tooling (linters, typecheck, tests, CI): delete the
+  line from `AGENTS.md`; the durable fix is to enforce the rule in lint/CI
 - Mandatory boilerplate headers unless the repo explicitly requires one
 
 ### Recommended structure

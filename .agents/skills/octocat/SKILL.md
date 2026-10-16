@@ -1,8 +1,8 @@
 ---
 name: octocat
-description: Use this skill whenever the prompt contains any `github.com` URL, even if the user only pastes a link and gives no GitHub-specific keywords. Handles git and GitHub operations using the gh CLI. Triggers include any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository. Covers creating and reviewing PRs, watching CI checks, interactive rebasing, branch cleanup, submodule management, and repository archaeology with git log/blame/bisect.
+description: Use this skill whenever the prompt contains any `github.com` URL, even if the user only pastes a link and gives no GitHub-specific keywords. Handles git and GitHub operations using the gh CLI. Triggers include any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository. Covers creating and reviewing PRs, repository security advisories (GHSA) and their comments, private vulnerability report discussions, watching CI checks, interactive rebasing, branch cleanup, submodule management, and repository archaeology with git log/blame/bisect.
 metadata:
-  tags: git, github, gh-cli, version-control, merge-conflicts, pull-requests
+  tags: git, github, gh-cli, version-control, merge-conflicts, pull-requests, security-advisories
 ---
 
 ## When to use
@@ -12,6 +12,7 @@ Use this skill for:
 - Any GitHub link to an issue, pull request, commit, compare page, Actions run, release, discussion, or repository
 - "Fix https://github.com/owner/repo/issues/123" style tasks
 - Creating, reviewing, and managing pull requests and GitHub issues
+- Reading or triaging repository security advisories (GHSA), private vulnerability reports, and advisory comments; adding or editing triage notes
 - Merge conflict resolution and history rewriting
 - Pre-commit hook debugging and fixes
 - Branch management and cleanup
@@ -29,6 +30,7 @@ When invoked:
 6. Fix pre-commit hook issues or delegate to typescript-magician for TypeScript linting
 7. Never alter git signing key configuration; if signing is already enabled and configured, use it. Otherwise, proceed without signing
 8. NEVER include "Co-Authored-By: Claude" or similar AI attribution
+9. For security advisory work, read [rules/security-advisory-comments.md](rules/security-advisory-comments.md) and fetch the accessible discussion before drawing triage conclusions; advisory bodies alone can omit important context
 
 ## Activation examples
 
@@ -37,6 +39,8 @@ When invoked:
 - `What changed in https://github.com/org/repo/compare/v1.0.0...v1.1.0?`
 - `Check https://github.com/org/repo/actions/runs/123456789`
 - `Investigate https://github.com/org/repo/commit/abcdef1234567890`
+- `Triage https://github.com/org/repo/security/advisories/GHSA-xxxx-xxxx-xxxx, including the discussion`
+- `Add a triage note to the private vulnerability report's advisory`
 
 ## Capabilities
 
@@ -53,6 +57,7 @@ When invoked:
 - Open PRs with explicit base/head and clear concise content, e.g. `gh pr create --base main --head <branch> --title "<title>" --body-file <file>`
 - After opening a PR, wait for CI with `gh pr checks <num> --watch 2>&1` and proactively fix failures
 - Validate unfamiliar gh commands first with `gh help <command>` before using them in guidance
+- Read repository security advisories and their comments; add/edit advisory comments via REST ([workflow and limits](rules/security-advisory-comments.md))
 - Handle issues and project boards
 - Manage releases and artifacts
 - Configure repository settings
