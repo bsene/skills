@@ -1,17 +1,17 @@
 ---
 name: typescript
 description: >
-  JS/TS best-practices and rule enforcement — JS idioms, TS type safety, runtime validation,
-  error handling, and Deno runtime workflows. Routes to type-system, Zod, Deno guidance,
-  and `object-oriented-programming` (SOLID).
+  JS/TS best-practices and rule enforcement — JS idioms, TS type safety, Zod runtime validation,
+  error handling, and Deno workflows.
 
-  TRIGGER when: TS/JS code; type-system (discriminated unions, generics, utility types, illegal
-  states, narrowing, variance); safety (strict mode, any vs unknown); runtime (Zod, schema
-  validation, parse/safeParse); errors (Result type, union returns); ts-conventions (readonly,
-  return annotations, modules, `as const`); js-idioms (const/let, destructuring, optional
-  chaining, arrow functions, this binding, array chains); composition (pipe, compose, currying,
-  monoid); testing (unit tests, mock vs stub); Deno (CLI, deno.json, permissions, JSR/npm,
-  Deno.serve, Deno.test, Node-to-Deno migration); or "is this idiomatic JS/TS".
+  TRIGGER when: TS/JS code; discriminated unions, generics, narrowing, any vs unknown; Zod
+  parse/safeParse; Result types; readonly, `as const`, modules; destructuring, optional
+  chaining; pipe/compose/currying; unit tests, mock vs stub; Deno (deno.json, permissions,
+  JSR, Deno.serve, Node-to-Deno migration); or "is this idiomatic JS/TS".
+
+  DO NOT USE for advanced generic/conditional/mapped types or compiler-error puzzles
+  (`typescript-magician`), class/SOLID design (`object-oriented-programming`), or
+  language-agnostic test strategy (`testing`).
 metadata:
   user-invocable: "false"
 ---
@@ -135,15 +135,15 @@ export function toDomain(dto: UserDTO): User {
 
 ### TypeScript-specific
 
-| Rule                                                               | File                                          |
-| ------------------------------------------------------------------ | --------------------------------------------- |
-| Avoid type assertions (`as T`, `!`, `as unknown as T`)             | `rules/avoid-type-assertions.md`              |
-| Favor existing types over `as const`                               | `rules/favor-existing-types-over-as-const.md` |
-| Do not prefix interfaces with `I`                                  | `rules/no-interface-prefix.md`                |
-| Mark properties and arrays `readonly` to signal immutability       | `rules/readonly.md`                           |
-| Annotate function return types explicitly; enable `noImplicitAny`  | `rules/explicit-return-types.md`              |
-| Use modules instead of namespaces; prefer named exports            | `rules/module-organization.md`                |
-| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts` | `rules/js-interop-declarations.md`            |
+| Rule                                                                                          | File                                          |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Avoid type assertions (`as T`, `!`, `as unknown as T`)                                        | `rules/avoid-type-assertions.md`              |
+| Favor existing types over `as const`                                                          | `rules/favor-existing-types-over-as-const.md` |
+| Do not prefix interfaces with `I`                                                             | `rules/no-interface-prefix.md`                |
+| Mark properties and arrays `readonly` to signal immutability                                  | `rules/readonly.md`                           |
+| Infer obvious local returns; annotate public APIs and risky inference; enable `noImplicitAny` | `rules/explicit-return-types.md`              |
+| Use modules instead of namespaces; prefer named exports                                       | `rules/module-organization.md`                |
+| Prefer shipped types / `@types/*`; otherwise add a minimal `.d.ts`                            | `rules/js-interop-declarations.md`            |
 
 ---
 
