@@ -17,13 +17,13 @@
       "source": "bsene/skills",
       "sourceType": "github",
       "skillPath": "git-hero/SKILL.md",
-      "computedHash": "bd458097bc49b0499b846997f0d21503b5bcbfce9859c94f29a6cd609707d4ac"
+      "computedHash": "25781079cd181b1ec31582dcdbea54626f9c9bca7468403af4edef34b3476745"
     },
     "handoff": {
       "source": "mattpocock/skills",
       "sourceType": "github",
       "skillPath": "skills/productivity/handoff/SKILL.md",
-      "computedHash": "20e5f4afdef502637510bc5c64d27645d3c85c88df9cb006824bbb0980166319"
+      "computedHash": "8ebcf017c0a59681f3c2f1ebf90e32f481954a068181a75151c44aa2c55de4b4"
     },
     "init": {
       "source": "mcollina/skills",
@@ -59,7 +59,7 @@
       "source": "mcollina/skills",
       "sourceType": "github",
       "skillPath": "skills/octocat/SKILL.md",
-      "computedHash": "b5e546eedcde6ff050435f9e7e3b6ffa66cc37f3ab0443d0030d96f05fcdd7b1"
+      "computedHash": "be13fea9b6e75fbf010956a1e90d1064fa38020f12b626fb4f2be5c14778ccd4"
     },
     "skill-optimizer": {
       "source": "mcollina/skills",
@@ -77,7 +77,7 @@
       "source": "bsene/skills",
       "sourceType": "github",
       "skillPath": "typescript/SKILL.md",
-      "computedHash": "b30e8419974366e50c37f61fa403fe8fc2da9412e9ae3b91f74d1ae7f56b7bbb"
+      "computedHash": "b84ce939339ceaf21406eceab5526f0c6bc88983ca5af125bdb8d2b10a082003"
     },
     "typescript-magician": {
       "source": "mcollina/skills",
