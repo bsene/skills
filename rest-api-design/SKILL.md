@@ -65,137 +65,34 @@ POST /v1/clients/007/orders
 
 **`400` vs `422`** — `422` = format/schema/type wrong (Pydantic/validator failure). `400` = format valid but operation illegal (cancel an already-shipped order, transfer more than balance). Different signals to the client; don't conflate.
 
-## Response Envelope (optional)
+## Read on demand
 
-Two stylistic choices — pick one project-wide:
+| Read when                                                               | Reference                                                                |
+| ----------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Choosing consistent success and error envelopes                         | [Response shapes](references/response-shapes.md)                         |
+| Designing pagination, filters, expansions, partial responses or HATEOAS | [Collections and navigation](references/collections-and-navigation.md)   |
+| Implementing idempotency, rate limiting or content negotiation          | [Reliability and negotiation](references/reliability-and-negotiation.md) |
 
-**Bare** (HTTP-native, Octo): return the resource directly. Status code + headers carry meta. `200 OK` body = `{"id": 7, ...}`. Errors use a separate envelope (below).
+## Cross-endpoint rules
 
-**Wrapped** (Stripe/GitHub-flavored): every response — success or error — wears the same shell:
+- Pick bare or wrapped responses and one error shape project-wide; include machine-readable errors, a human message and field-level validation details.
+- Paginate lists from day one. Prefer opaque cursors for large mutable feeds; fetch `limit + 1` to detect another page. Page-based pagination suits small/admin datasets requiring random-page access.
+- Whitelist filter, sort and expand fields server-side; eager-load expansions to avoid N+1 queries and accidental data exposure.
+- Use `Idempotency-Key` for state-changing side effects. Replay the same response; cache 2xx and 4xx, allow retries on 5xx. See the reference for method scope, headers and TTL.
+- Expose rate-limit headers on every response; reject excess requests with `429` and `Retry-After`.
+- Honor `Accept` preference order; return `406` when no supported format matches. Default to JSON; use XML only when required.
 
-```json
-// success
-{ "success": true, "data": {...}, "pagination": {...} }
-// error
-{ "success": false, "error_code": "NOT_FOUND", "message": "...", "details": null }
+## Example: create and replay a payment
+
+```http
+POST /v1/payments
+Idempotency-Key: 8b2f7e6c-example
+Content-Type: application/json
+
+{ "amount": 4200, "currency": "EUR" }
 ```
 
-Tradeoff: wrapped is friendlier to one generic client handler; bare is leaner and reuses HTTP semantics. **Don't mix.** Consistency across the whole API is the point.
-
-## Error Envelope
-
-Pick one shape, apply across the **whole** API.
-
-**OAuth2-style** (Octo recommendation, reuses OAuth2 spec):
-
-```json
-{
-  "error": "invalid_request",
-  "error_description": "There is no 'payed' property on users.",
-  "error_uri": "https://developers.example.com/errors/invalid_request"
-}
-```
-
-**RFC 7807 Problem Details** (modern alternative, `Content-Type: application/problem+json`):
-
-```json
-{
-  "type": "https://example.com/probs/out-of-credit",
-  "title": "You do not have enough credit.",
-  "status": 403,
-  "detail": "Your balance is 30, but charge was 50.",
-  "instance": "/account/12345/msgs/abc"
-}
-```
-
-## Pagination
-
-**HTTP Range semantics** (Octo, reuses HTTP):
-
-```
-GET /v1/restaurants?range=0-24
-< 206 Partial Content
-< Content-Range: 0-24/48
-< Accept-Range: restaurant 50
-< Link: <https://api.example.com/v1/restaurants?range=25-49>; rel="next",
-        <https://api.example.com/v1/restaurants?range=0-24>; rel="first",
-        <https://api.example.com/v1/restaurants?range=25-47>; rel="last"
-```
-
-- `400 Bad Request` if range exceeds `Accept-Range` max.
-- Navigation links use **RFC 5988** `Link:` header.
-
-**Cursor pagination** (Stripe-style, prefer for large/mutable/streaming sets):
-
-```
-GET /v1/events?limit=25&after=evt_abc123
-< 200 OK
-< {"data":[...], "has_more": true, "next_cursor": "evt_xyz789"}
-```
-
-- **Opaque cursor**: base64-encode the position key (e.g. `{id, created_at}`). Clients pass it back blindly — you can change the encoding later without breaking them.
-- **`limit + 1` trick**: fetch `limit + 1` rows; if you got the extra, set `has_more: true` and slice it off. Avoids a separate `COUNT(*)` on the full table.
-- Tradeoff: avoids skip-cost and shifting-offset duplicates; loses random-page access ("go to page 7").
-
-**When**: page-based for admin panels / small datasets / "go to page N" UIs. Cursor for feeds, timelines, infinite scroll, high-volume, mutable.
-
-## Filter, Sort, Search
-
-```
-GET /v1/restaurants?type=thai,japanese&rating=4,5      # filter (CSV multi-value)
-GET /v1/restaurants?sort=rating,name&desc=rating       # Octo: asc default; mark desc fields
-GET /v1/restaurants?sort=-rating,name                  # Stripe/GitHub: -prefix = desc (more common)
-GET /v1/orders?min_total=10&max_total=500              # range filters: min_/max_ prefix
-GET /v1/orders?created_after=2026-01-01                # date filters: _after/_before suffix
-GET /v1/restaurants/search?name=la*&zipcode=75*        # scoped search (wildcards)
-GET /v1/search?q=running+paid                          # global search
-```
-
-**Whitelist sortable + filterable fields server-side.** Free-form `?sort=<anything>` exposes you to surprise `ORDER BY` on unindexed columns and JOIN explosions. Same for `?filter=`.
-
-## Expand / Include (related resources)
-
-Let clients pull nested data in one call instead of N round-trips:
-
-```
-GET /v1/orders/123                          # order only
-GET /v1/orders/123?expand=customer,items    # order + nested customer + items
-```
-
-- **Whitelist allowed expansions** (set intersection). Blocks random JOIN chains and accidental data exposure.
-- Eager-load on the server (`JOIN` / `selectinload`); never N+1 inside a loop.
-- Pattern from Stripe, Shopify. Clients control payload size — mobile gets the lean version, dashboard the full version, same endpoint.
-
-## Partial Responses
-
-Google syntax — let clients shrink payloads:
-
-```
-GET /v1/clients/007?fields=firstname,name,address(street)
-```
-
-## HATEOAS
-
-Make resources discoverable. Pick one approach project-wide.
-
-**RFC 5988 `Link:` header** (preferred — no body coupling):
-
-```
-GET /v1/clients/007
-< 200 OK
-< {"id":"007", "firstname":"James"}
-< Link: <https://api.example.com/v1/addresses/42>; rel="addresses"; method="GET",
-        <https://api.example.com/v1/orders/1234>; rel="orders"; method="GET"
-```
-
-**Embedded JSON** (PayPal-style):
-
-```json
-"_links": [
-  {"href": "...", "rel": "self", "method": "GET"},
-  {"href": "...", "rel": "approval_url", "method": "REDIRECT"}
-]
-```
+Return `201 Created` plus `Location` for creation; a replay returns the same body with `X-Idempotent-Replayed: true`. Use `422` for schema/type failure, `400` for a valid request that exceeds the balance, and `409` for conflicting resource state. Keep the error shape consistent across all three.
 
 ## Security
 
@@ -203,49 +100,6 @@ GET /v1/clients/007
 - **Bearer JWT** for stateless services; **OIDC** when identity claims needed.
 - **Scopes per endpoint** — least privilege; document required scope in API reference.
 - Validate tokens; rotate signing keys; never log tokens.
-
-## Idempotency
-
-For non-idempotent ops (`POST` payments, transfers, order creation), accept an `Idempotency-Key` request header. Cache the response keyed by it; replay returns the same body + `X-Idempotent-Replayed: true`.
-
-```
-POST /v1/payments
-Idempotency-Key: 8b2f7e6c-...
-{ "amount": 4200, "currency": "EUR" }
-
-→ first call:  201 Created  + Location: ...
-→ replay:      201 Created  + X-Idempotent-Replayed: true  (same body)
-```
-
-- TTL ~24h is the Stripe default.
-- Apply only to state-changing methods: `POST`, `PUT`, `PATCH`. `GET`/`DELETE` are already idempotent.
-- Cache 2xx **and** 4xx (not 5xx — let the client retry transient server errors).
-
-## Rate Limiting
-
-Return limit state in headers on every response; reject with `429` + `Retry-After` when exceeded.
-
-```
-< X-RateLimit-Limit:     1000
-< X-RateLimit-Remaining: 42
-< X-RateLimit-Reset:     1735689600   # epoch seconds
-
-429 Too Many Requests
-Retry-After: 30
-{ "error": "rate_limited", "error_description": "Try again in 30s." }
-```
-
-## Content Negotiation
-
-```
-GET /v1/users
-Accept: application/json
-< 200 OK
-< Content-Type: application/json
-```
-
-- Honor `Accept:` order; respond `406 Not Acceptable` if no supported format matches.
-- JSON is the default. XML only if a client explicitly requires it (no longer mandatory).
 
 ## Review / Pre-Launch Checklist
 
@@ -264,7 +118,7 @@ Run before any endpoint ships. Tier = severity if violated.
 ## References
 
 - [Octo blog — Designer une API REST](https://blog.octo.com/designer-une-api-rest)
-- [Anas Issath — API Design Patterns I Stole From Companies Like Stripe and GitHub](https://medium.com/gitconnected) (envelope, cursor `limit+1`, expand, idempotency-key, rate-limit headers)
+- Anas Issath — API Design Patterns I Stole From Companies Like Stripe and GitHub (envelope, cursor `limit+1`, expand, idempotency-key, rate-limit headers)
 - [Stripe API reference](https://stripe.com/docs/api) — cursor pagination, idempotency, expand
 - RFC 6749 (OAuth 2.0), RFC 5988 (Link header), RFC 7807 (Problem Details), RFC 3986 (URIs)
 - [interagent/http-api-design](https://github.com/interagent/http-api-design)
@@ -282,3 +136,5 @@ Scenario: `.benchmarks/scenarios/rest-api-001-status-code.md` · Run: 2026-06-14
 | claude-haiku-4-5  | 40%     | 60%  | +20%  |
 
 > **PASS.** Flips the core 400-vs-422 call on all 3 models (every baseline wrongly chose 422). Weaker models under-apply secondary idempotency/409 guidance — candidate for higher salience. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+2026-10-14: detailed endpoint guidance moved into linked references; these historical scores have not been rerun against the new layout.
