@@ -11,7 +11,7 @@ description: >
   improve readability, tidying, tidy first, "clean up this function", "refactor this class".
 
   DO NOT USE when: no tests exist (unsafe to refactor blind — add tests first), the change is behavior-altering
-  rather than structure-only (use `tcrdd` instead), or the user needs to safely untangle a *cross-file*
+  rather than structure-only (use `testing` (TCRDD reference) instead), or the user needs to safely untangle a *cross-file*
   dependency graph where one change ripples to many call sites (use `mikado-method` instead).
 ---
 

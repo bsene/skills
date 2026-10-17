@@ -1,13 +1,3 @@
----
-name: smoke-tests
-description: >
-  Smoke test identification, authoring, and CI integration for HTTP APIs — using Hurl or curl only.
-  TRIGGER when: smoke test, smoke testing, critical path test, CI gate, gate before full suite,
-  write smoke tests, add smoke test, smoke test template, which tests are smoke tests,
-  hurl, .hurl file, curl smoke test.
-  DO NOT USE when: user needs full testing strategy or philosophy — use `testing` instead.
----
-
 # Smoke Tests
 
 Minimal, rapid tests that validate critical user-facing functionality before slower suites run.
@@ -57,7 +47,7 @@ hurl --test --max-time 10 --variables-file smoke-tests/vars.env --report-html re
 # curl — quick health check, fail on non-2xx
 curl --fail --silent --show-error "$BASE_URL/health" | jq -e '.status == "ok"'
 
-# curl — run a smoke script (see references/curl.md)
+# curl — run a smoke script (see smoke-tests/curl.md)
 BASE_URL=https://staging.example.com bash smoke-tests/smoke.sh
 ```
 
@@ -82,7 +72,7 @@ BASE_URL=https://staging.example.com bash smoke-tests/smoke.sh
 # GitHub Actions — Hurl smoke as gate
 - name: Install Hurl
   # Pin an exact version + verify checksum — don't pipe install.sh straight from
-  # the web with no version pin or verification (see references/hurl.md for the
+  # the web with no version pin or verification (see smoke-tests/hurl.md for the
   # full snippet with the sha256sum check).
   run: |
     HURL_VERSION=4.3.0
@@ -170,10 +160,10 @@ suite never starts.
 
 ## Read On Demand
 
-| Read When                                                | File                                       |
-| -------------------------------------------------------- | ------------------------------------------ |
-| Need Hurl template, variables, CI snippet, patterns      | [`references/hurl.md`](references/hurl.md) |
-| No Hurl available / need a curl+jq shell script template | [`references/curl.md`](references/curl.md) |
+| Read When                                                | File                             |
+| -------------------------------------------------------- | -------------------------------- |
+| Need Hurl template, variables, CI snippet, patterns      | [`hurl.md`](smoke-tests/hurl.md) |
+| No Hurl available / need a curl+jq shell script template | [`curl.md`](smoke-tests/curl.md) |
 
 ---
 

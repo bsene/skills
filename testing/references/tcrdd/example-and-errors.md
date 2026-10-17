@@ -1,6 +1,6 @@
 # Example and Error Handling
 
-Detail for [TCRDD](../SKILL.md).
+Detail for [TCRDD](../tcrdd.md).
 
 ## Example: baby step vs one-shot
 

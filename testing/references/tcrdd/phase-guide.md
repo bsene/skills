@@ -1,6 +1,6 @@
 # Phase Guide
 
-Detail for [TCRDD](../SKILL.md): how to write each phase and the transformation ladder.
+Detail for [TCRDD](../tcrdd.md): how to write each phase and the transformation ladder.
 
 Before each phase (**interactive mode only** — skip in autonomous mode, see Mode):
 

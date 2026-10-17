@@ -1,6 +1,6 @@
 ---
 id: smoke-tests-001-ci-gate
-skill: smoke-tests
+skill: testing
 ---
 
 # Prompt

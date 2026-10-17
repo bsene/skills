@@ -12,10 +12,10 @@ description: >
   questions the value of a story or ticket before starting work.
 
   DO NOT USE when: the decision is already made and the question is purely implementation
-  technique (use `tcrdd` or `testing` instead); performing market research or competitive
+  technique (use `testing` (TCRDD reference) or `testing` instead); performing market research or competitive
   analysis; the user needs help writing tests or code.
 
-  Prefer this over `tcrdd` when the question is "should we build this?" rather than
+  Prefer this over `testing` (TCRDD reference) when the question is "should we build this?" rather than
   "how should we build this?"
 ---
 
@@ -89,11 +89,11 @@ Once classified:
 
 The Kano skill's output is a _decision_: build, refuse, or scope-down. Implementation method is a separate concern.
 
-| Situation                                  | Route to        | Why                                                             |
-| ------------------------------------------ | --------------- | --------------------------------------------------------------- |
-| Feature validated, build with discipline   | `tcrdd`         | Red/green/refactor ensures craft quality on what Kano validated |
-| Feature requires large-scale restructuring | `mikado-method` | Safe incremental refactoring via dependency graphs              |
-| Need to audit or add test coverage         | `testing`       | Testing strategy and philosophy                                 |
+| Situation                                  | Route to                    | Why                                                             |
+| ------------------------------------------ | --------------------------- | --------------------------------------------------------------- |
+| Feature validated, build with discipline   | `testing` (TCRDD reference) | Red/green/refactor ensures craft quality on what Kano validated |
+| Feature requires large-scale restructuring | `mikado-method`             | Safe incremental refactoring via dependency graphs              |
+| Need to audit or add test coverage         | `testing`                   | Testing strategy and philosophy                                 |
 
 ---
 

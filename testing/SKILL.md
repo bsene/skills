@@ -4,8 +4,10 @@ description: >
   Design or review testing strategy, test portfolios, and test quality. Use for
   unit/integration/contract/E2E choices, flaky or brittle tests, mocks and test
   doubles, BDD review, legacy-code testing, production QA, and testing LLM or
-  AI-generated systems. For red/green/refactor cadence use `tcrdd`; for critical-path
-  smoke tests use `smoke-tests`.
+  AI-generated systems. Also covers TCRDD / TCR (test && commit || revert,
+  red-green-refactor, baby steps, commit on green, revert on failure, approval-gated
+  TDD) and HTTP API smoke tests (smoke test, critical path test, CI gate, Hurl,
+  .hurl files, curl smoke test).
 ---
 
 # Testing — Strategy & Philosophy
@@ -46,17 +48,17 @@ When a high-level test finds a bug, reproduce it at the lowest useful level befo
 
 ## Decision Guide
 
-| Question                                                 | Answer → Action                                                                               |
-| -------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| Is this pure behavior or a wiring concern?               | Pure behavior → unit test; wiring → component/integration test                                |
-| Does the scenario cross a service boundary?              | Yes → contract test for consumer/provider expectations; keep E2E for one journey              |
-| Is this a critical user journey?                         | Write one E2E test, then push variations to lower layers                                      |
-| Do I need mocks, or can I use real collaborators?        | Real collaborators preferred; mocks only when the outgoing interaction itself is the behavior |
-| Is the test hard to write?                               | Treat that as design feedback; refactor before adding more doubles                            |
-| Does the test depend on timing or non-deterministic I/O? | Fix the design; fast tests must be deterministic                                              |
-| Have I seen this test fail when it should?               | No → inject an obvious bug, confirm the failure, revert it                                    |
-| Would production behavior surprise us?                   | Add synthetic monitoring, domain observability, or exploratory investigation                  |
-| Who's driving — human or AI agent?                       | Human → `tcrdd` micro-steps; Agent → test-first batches with separate trust signals           |
+| Question                                                 | Answer → Action                                                                                          |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Is this pure behavior or a wiring concern?               | Pure behavior → unit test; wiring → component/integration test                                           |
+| Does the scenario cross a service boundary?              | Yes → contract test for consumer/provider expectations; keep E2E for one journey                         |
+| Is this a critical user journey?                         | Write one E2E test, then push variations to lower layers                                                 |
+| Do I need mocks, or can I use real collaborators?        | Real collaborators preferred; mocks only when the outgoing interaction itself is the behavior            |
+| Is the test hard to write?                               | Treat that as design feedback; refactor before adding more doubles                                       |
+| Does the test depend on timing or non-deterministic I/O? | Fix the design; fast tests must be deterministic                                                         |
+| Have I seen this test fail when it should?               | No → inject an obvious bug, confirm the failure, revert it                                               |
+| Would production behavior surprise us?                   | Add synthetic monitoring, domain observability, or exploratory investigation                             |
+| Who's driving — human or AI agent?                       | Human → [TCRDD](references/tcrdd.md) micro-steps; Agent → test-first batches with separate trust signals |
 
 ---
 
@@ -149,21 +151,13 @@ function sendOverdueReminders() {
 | Distributing scenarios across test layers; test recipes; legacy triage               | [Test Strategy & Legacy Code](references/test-strategy.md)           |
 | Testing async code, timers, events, or faking modules                                | [Async, Time & Module Faking](references/async-and-time.md)          |
 | Applying Fowler-style portfolio, doubles, production feedback, and LLM practices     | [Martin Fowler's Testing Canon](references/martin-fowler-testing.md) |
-| Identifying and writing smoke tests for CI gates                                     | Dedicated `smoke-tests` skill                                        |
+| Identifying and writing smoke tests for CI gates (Hurl or curl)                      | [Smoke Tests](references/smoke-tests.md)                             |
+| Red/green/refactor with auto-commit on green and auto-revert on failure (TCR/TCRDD)  | [TCRDD](references/tcrdd.md)                                         |
 | Driving behavior from Given/When/Then scenarios; crap + mutation quality gates       | [Acceptance-Testing Workflow](references/acceptance-testing.md)      |
 | Test styles, functional core, mocking boundaries, DB tests, anti-patterns (Khorikov) | [Unit-Testing Principles](references/unit-testing-principles.md)     |
 | Test-first rhythm: fake it, triangulation, testable design, acceptance TDD (Koskela) | [TDD and ATDD](references/tdd-and-atdd.md)                           |
 | Testing web APIs: risk-based checks, contracts, performance, security, SLOs          | [Web API Testing](references/web-api-testing.md)                     |
 | Arrange-Act-Assert, mock objects, TDD notes from the c2 wiki                         | [XP Testing Practices](references/xp-testing-practices.md)           |
-
----
-
-## Specialist Skills
-
-| Situation                                  | Specialist skill | Why                                                |
-| ------------------------------------------ | ---------------- | -------------------------------------------------- |
-| Need interactive, human-paced TDD practice | `tcrdd`          | Red/green/refactor cadence with immediate feedback |
-| Identifying or writing smoke tests         | `smoke-tests`    | Dedicated triggers, template, and CI integration   |
 
 ---
 

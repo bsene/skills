@@ -1,18 +1,3 @@
----
-name: tcrdd
-description: >
-  Test-Commit-Revert + TDD (TCRDD): red/green/refactor with per-phase auto-commit on success
-  and auto-revert on failure, gated by user approval before code and before committing.
-
-  TRIGGER when: user says TCRDD, TCR, TDD, red-green-refactor, "test-first", "write the test
-  first", "let's TDD this", "baby steps", "commit on green", "revert on failure", or "go
-  step by step with tests"; user wants approval-gated pair programming or test-then-code cadence.
-
-  DO NOT USE for: retrofitting tests onto existing code (use `testing`); one-off bug fixes;
-  no runnable test command; trivial code, GUI layout, throwaway scripts, or trusted
-  third-party wrappers. Prefer over `testing` for commit cadence.
----
-
 # TCRDD
 
 Red/green/refactor driven by native git: each phase stages, runs the tests, and auto-commits on the expected result or auto-reverts (`git reset --hard`) otherwise. No external tool required.
@@ -28,10 +13,10 @@ Red/green/refactor driven by native git: each phase stages, runs the tests, and 
 
 - Inspect an actual full test-runner result before declaring RED/GREEN or committing. Never advance based on a prediction.
 - Keep one baby step per phase, including unattended runs; never batch a full test suite or implementation.
-- Stage with `git add -A` before tests so a failed step also reverts new files. Capture failure details before resetting, then append to `tcr-failure-log.md` and commit the log separately after the reset. Read [the git cycle](references/git-cycle.md) before executing a phase.
+- Stage with `git add -A` before tests so a failed step also reverts new files. Capture failure details before resetting, then append to `tcr-failure-log.md` and commit the log separately after the reset. Read [the git cycle](tcrdd/git-cycle.md) before executing a phase.
 - Resolve the repository's test command once (package script, Makefile, language convention, then README/CI or ask); reuse the full CI suite every phase unless the user explicitly scopes it.
-- Autonomous runs: set a budget, use an isolated worktree for concurrent agents, tag phase commits, and stop when the budget is reached. After more than two reverts of the same step, split it; if a second round of splitting stalls, halt and report a blocker. Follow [autonomous execution](references/autonomous-execution.md) for the required structured handoff.
-- Skip or downgrade only for trivial code, GUI layout fiddling, trusted third-party internals, or genuine throwaway work. Extract and TCRDD lasting GUI logic; test your code at third-party boundaries. Read [pragmatics](references/pragmatics.md) for exceptions and narrow limits.
+- Autonomous runs: set a budget, use an isolated worktree for concurrent agents, tag phase commits, and stop when the budget is reached. After more than two reverts of the same step, split it; if a second round of splitting stalls, halt and report a blocker. Follow [autonomous execution](tcrdd/autonomous-execution.md) for the required structured handoff.
+- Skip or downgrade only for trivial code, GUI layout fiddling, trusted third-party internals, or genuine throwaway work. Extract and TCRDD lasting GUI logic; test your code at third-party boundaries. Read [pragmatics](tcrdd/pragmatics.md) for exceptions and narrow limits.
 
 ## Workflow
 
@@ -66,15 +51,15 @@ Details, the full 12-step ladder, a baby-step vs one-shot example, and the error
 
 ## Read On Demand
 
-| Read when                                                          | Link                                                       |
-| ------------------------------------------------------------------ | ---------------------------------------------------------- |
-| Writing a RED/GREEN/REFACTOR phase or choosing a transformation    | [Phase guide](references/phase-guide.md)                   |
-| Seeing a baby-step example, or a revert/flaky/dirty-tree situation | [Example and errors](references/example-and-errors.md)     |
-| Running unattended or reporting back to an orchestrator            | [Autonomous execution](references/autonomous-execution.md) |
-| Implementing stage/test/commit/revert and the failure log          | [Git cycle](references/git-cycle.md)                       |
-| Deciding whether to skip or downgrade the loop                     | [Pragmatics](references/pragmatics.md)                     |
-| TCR/TDD/TPP theory and original articles (Beck, Uncle Bob)         | [Further reading](references/further-reading.md)           |
-| Benchmark results                                                  | [Benchmarks](references/benchmarks.md)                     |
+| Read when                                                          | Link                                                  |
+| ------------------------------------------------------------------ | ----------------------------------------------------- |
+| Writing a RED/GREEN/REFACTOR phase or choosing a transformation    | [Phase guide](tcrdd/phase-guide.md)                   |
+| Seeing a baby-step example, or a revert/flaky/dirty-tree situation | [Example and errors](tcrdd/example-and-errors.md)     |
+| Running unattended or reporting back to an orchestrator            | [Autonomous execution](tcrdd/autonomous-execution.md) |
+| Implementing stage/test/commit/revert and the failure log          | [Git cycle](tcrdd/git-cycle.md)                       |
+| Deciding whether to skip or downgrade the loop                     | [Pragmatics](tcrdd/pragmatics.md)                     |
+| TCR/TDD/TPP theory and original articles (Beck, Uncle Bob)         | [Further reading](tcrdd/further-reading.md)           |
+| Benchmark results                                                  | [Benchmarks](tcrdd/benchmarks.md)                     |
 
 ## Upstream
 

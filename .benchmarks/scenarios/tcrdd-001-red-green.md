@@ -1,6 +1,6 @@
 ---
 id: tcrdd-001-red-green
-skill: tcrdd
+skill: testing
 ---
 
 # Prompt
