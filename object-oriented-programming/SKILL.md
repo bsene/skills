@@ -4,7 +4,6 @@ description: >
   Review and write OOP code in TypeScript/Node.js/NestJS: SOLID, GoF patterns, Tell Don't Ask, Object Calisthenics, class-shape smells. Use for code review, refactoring, or new class/service design.
   TRIGGER when: static-only class; single public method; setters required before valid; data-only class; getters used to decide externally; GoF pattern names; SOLID/god class/coupling; primitive obsession, Law of Demeter; "should this be a class or a function?".
   DO NOT USE for pure FP code, non-OOP languages (Go, Rust, C, OCaml), architecture layering (ports-adapters-architecture), or type-level questions (typescript).
-
 ---
 
 # Object Oriented Programming
@@ -101,6 +100,8 @@ Full rule-by-rule checklist with TS/NestJS examples and gotchas: `references/obj
 - `references/patterns.md` — GoF + modern TS pattern catalog with trade-offs
 - `references/tell-dont-ask.md` — encapsulation deep dive
 - `references/object-calisthenics.md` — Jeff Bay's 9 rules, NestJS/DDD-flavored
+- `references/design-by-contract.md` — pre/postconditions, invariants, precise LSP rules, command-query separation
+- `references/responsibility-driven-design.md` — role stereotypes, control styles, finding responsibilities
 
 ---
 
