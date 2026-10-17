@@ -45,6 +45,7 @@ when that makes the policy easier to locate.
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | Test behaviour through use-case ports with fakes; test pyramid; test-first order   | [Testing Through Ports](references/testing-through-ports.md)                                              |
 | Repository, Unit of Work, aggregates, commands vs events, message bus, read models | [Application Patterns](references/application-patterns.md)                                                |
+| Model-View-Controller roles, Observer link, variants (MVP, PAC), testing           | [Model-View-Controller](references/model-view-controller.md)                                              |
 | Who owns port interfaces, configurator / composition root, cost of adopting        | [Configurator and Required Interfaces](references/ports-adapters/configurator-and-required-interfaces.md) |
 
 ## Reference scope
