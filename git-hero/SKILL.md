@@ -70,6 +70,7 @@ One logical change per commit. Each commit should:
 | Choosing a commit type by release impact, breaking changes (`!` / `BREAKING CHANGE`), scope selection, commitlint validation | [Conventional Commits](references/conventional-commits.md) |
 | Configuring git (aliases, GPG signing, push safety, force push, reflog, modern syntax, rerere)                               | [Config Recipes](references/config-recipes.md)             |
 | Choosing a workflow, merge vs rebase, branch naming conventions, branch lifecycle                                            | [Workflow Decisions](references/workflow-decisions.md)     |
+| Environment/release branches, GitLab Flow, feature switches, cherry-pick backports, or CI pipeline quick wins                | [GitLab Flow and Pipelines](references/gitlab-flow.md)     |
 | Understanding HEAD, branches, zones, remotes, objects, or merge vs rebase                                                    | [Git Concepts](references/concepts.md)                     |
 | Looking up command flags, inspection, worktrees, submodules, or history rewriting                                            | [Command Cheatsheet](references/commands.md)               |
 | Understanding snapshots, commit objects, hashes, or the add/commit lifecycle                                                 | [Commit Internals](references/commit.md)                   |
