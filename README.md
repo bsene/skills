@@ -54,6 +54,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Idiomatic Elixir / OTP          | [elixir](/skills/elixir/SKILL.md)                                                                                                                                      | Pattern matching, pipelines, OTP supervision, Mix, ExUnit                                 |
 | Safe Elm front ends             | [elm](/skills/elm/SKILL.md)                                                                                                                                            | Elm architecture, types, decoders, ports, tooling                                         |
 | Live Smalltalk in Pharo         | [smalltalk-pharo](/skills/smalltalk-pharo/SKILL.md)                                                                                                                    | Image-based Pharo, message passing, Spec, MVC history                                     |
+| Idiomatic modern Python         | [python](/skills/python/SKILL.md)                                                                                                                                      | Idioms, typing, pytest, packaging, asyncio                                                |
 
 Install `lisper` for the complete Lisp package, including CHICKEN Scheme's compiler, eggs, FFI, and deployment references. Dialect-specific guidance loads on demand; no separate CHICKEN skill is required.
 
