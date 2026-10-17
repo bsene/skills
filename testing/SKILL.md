@@ -138,19 +138,22 @@ function sendOverdueReminders() {
 
 ## Read On Demand
 
-| Read when                                                                        | File                                                                 |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| Understanding the four cross-cutting testing principles                          | [Testing Principles](references/principles.md)                       |
-| Auditing test quality against the 12 desiderata properties                       | [TestDesiderata — Quality Audit](references/testdesiderata.md)       |
-| Reviewing tests for BDD compliance and structure                                 | [BDD Test Review](references/bdd-review.md)                          |
-| Directing an AI coding agent: cadence, pipeline, trust model                     | [Testing With AI Coding Agents](references/ai-agent-testing.md)      |
-| Choosing what to mock and what to assert                                         | [Mocks & Fragility](references/mocks-and-fragility.md)               |
-| Auditing trustworthiness, maintainability, and readability                       | [Trustworthy & Maintainable Tests](references/trustworthy-tests.md)  |
-| Distributing scenarios across test layers; test recipes; legacy triage           | [Test Strategy & Legacy Code](references/test-strategy.md)           |
-| Testing async code, timers, events, or faking modules                            | [Async, Time & Module Faking](references/async-and-time.md)          |
-| Applying Fowler-style portfolio, doubles, production feedback, and LLM practices | [Martin Fowler's Testing Canon](references/martin-fowler-testing.md) |
-| Identifying and writing smoke tests for CI gates                                 | Dedicated `smoke-tests` skill                                        |
-| Driving behavior from Given/When/Then scenarios; crap + mutation quality gates   | [Acceptance-Testing Workflow](references/acceptance-testing.md)      |
+| Read when                                                                            | File                                                                 |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| Understanding the four cross-cutting testing principles                              | [Testing Principles](references/principles.md)                       |
+| Auditing test quality against the 12 desiderata properties                           | [TestDesiderata — Quality Audit](references/testdesiderata.md)       |
+| Reviewing tests for BDD compliance and structure                                     | [BDD Test Review](references/bdd-review.md)                          |
+| Directing an AI coding agent: cadence, pipeline, trust model                         | [Testing With AI Coding Agents](references/ai-agent-testing.md)      |
+| Choosing what to mock and what to assert                                             | [Mocks & Fragility](references/mocks-and-fragility.md)               |
+| Auditing trustworthiness, maintainability, and readability                           | [Trustworthy & Maintainable Tests](references/trustworthy-tests.md)  |
+| Distributing scenarios across test layers; test recipes; legacy triage               | [Test Strategy & Legacy Code](references/test-strategy.md)           |
+| Testing async code, timers, events, or faking modules                                | [Async, Time & Module Faking](references/async-and-time.md)          |
+| Applying Fowler-style portfolio, doubles, production feedback, and LLM practices     | [Martin Fowler's Testing Canon](references/martin-fowler-testing.md) |
+| Identifying and writing smoke tests for CI gates                                     | Dedicated `smoke-tests` skill                                        |
+| Driving behavior from Given/When/Then scenarios; crap + mutation quality gates       | [Acceptance-Testing Workflow](references/acceptance-testing.md)      |
+| Test styles, functional core, mocking boundaries, DB tests, anti-patterns (Khorikov) | [Unit-Testing Principles](references/unit-testing-principles.md)     |
+| Test-first rhythm: fake it, triangulation, testable design, acceptance TDD (Koskela) | [TDD and ATDD](references/tdd-and-atdd.md)                           |
+| Testing web APIs: risk-based checks, contracts, performance, security, SLOs          | [Web API Testing](references/web-api-testing.md)                     |
 
 ---
 
