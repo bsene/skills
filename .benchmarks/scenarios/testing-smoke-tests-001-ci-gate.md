@@ -1,5 +1,5 @@
 ---
-id: smoke-tests-001-ci-gate
+id: testing-smoke-tests-001-ci-gate
 skill: testing
 ---
 

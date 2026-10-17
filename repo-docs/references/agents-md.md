@@ -97,7 +97,7 @@ Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-
 
 ## Benchmark
 
-Scenario: `.benchmarks/scenarios/writing-a-good-agents-md-001-consolidate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/writing-a-good-agents-md-001-consolidate.json`
+Scenario: `.benchmarks/scenarios/repo-docs-001-consolidate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/writing-a-good-agents-md-001-consolidate.json`
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |

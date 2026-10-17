@@ -1,5 +1,5 @@
 ---
-id: writing-a-good-agents-md-001-consolidate
+id: repo-docs-001-consolidate
 skill: repo-docs
 ---
 

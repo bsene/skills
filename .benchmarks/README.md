@@ -39,7 +39,7 @@ require a new run; historical scores remain tied to their original criteria.
 │   ├── kano-001-feature-triage.md
 │   ├── refactoring-001-long-method.md
 │   ├── rest-api-001-status-code.md
-│   ├── tcrdd-001-red-green.md
+│   ├── testing-tcrdd-001-red-green.md
 │   └── typescript-001-illegal-states.md
 └── runs/                     # gitignored; one folder per run date
     └── YYYY-MM-DD/

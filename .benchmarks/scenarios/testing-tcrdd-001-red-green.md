@@ -1,5 +1,5 @@
 ---
-id: tcrdd-001-red-green
+id: testing-tcrdd-001-red-green
 skill: testing
 ---
 

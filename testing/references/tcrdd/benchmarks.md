@@ -2,7 +2,7 @@
 
 Detail for [TCRDD](../tcrdd.md).
 
-Scenario: `.benchmarks/scenarios/tcrdd-001-red-green.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/tcrdd-001-red-green.json`
+Scenario: `.benchmarks/scenarios/testing-tcrdd-001-red-green.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/tcrdd-001-red-green.json`
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |

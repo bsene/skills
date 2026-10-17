@@ -169,7 +169,7 @@ suite never starts.
 
 ## Benchmark
 
-Scenario: `.benchmarks/scenarios/smoke-tests-001-ci-gate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/smoke-tests-001-ci-gate.json`
+Scenario: `.benchmarks/scenarios/testing-smoke-tests-001-ci-gate.md` · Run: 2026-08-31 · Log: `.benchmarks/runs/2026-08-31/smoke-tests-001-ci-gate.json`
 
 | Model             | Without | With | Delta |
 | ----------------- | ------- | ---- | ----- |

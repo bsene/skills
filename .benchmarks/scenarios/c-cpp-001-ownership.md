@@ -1,5 +1,5 @@
 ---
-id: cpp-expert-001-ownership
+id: c-cpp-001-ownership
 skill: c-cpp
 ---
 
