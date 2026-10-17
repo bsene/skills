@@ -73,6 +73,8 @@ getter chains used to make a decision, `if (obj.getX() > obj.getLimit())` outsid
 sequence from the caller. Legitimate exceptions: DTOs, value objects, serialization/persistence boundaries, and
 query methods that genuinely transform data for the caller — don't be a "getter eradicator."
 
+
+Law of Demeter (call chains, mock-driven design): `references/law-of-demeter.md`
 Full guide, refactor steps, and review checklist: `references/tell-dont-ask.md`
 
 ## Object Calisthenics (stricter pass)
