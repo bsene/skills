@@ -52,6 +52,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Idiomatic modern Java / AspectJ | [java](/skills/java/SKILL.md)                                                                                                                                          | Effective Java themes, records, streams, concurrency, AspectJ                             |
 | Design data-intensive systems   | [data-systems](/skills/data-systems/SKILL.md)                                                                                                                          | Data models, replication, transactions, streams, database choice                          |
 | Idiomatic Elixir / OTP          | [elixir](/skills/elixir/SKILL.md)                                                                                                                                      | Pattern matching, pipelines, OTP supervision, Mix, ExUnit                                 |
+| Safe Elm front ends             | [elm](/skills/elm/SKILL.md)                                                                                                                                            | Elm architecture, types, decoders, ports, tooling                                         |
 
 Install `lisper` for the complete Lisp package, including CHICKEN Scheme's compiler, eggs, FFI, and deployment references. Dialect-specific guidance loads on demand; no separate CHICKEN skill is required.
 
