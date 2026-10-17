@@ -154,6 +154,7 @@ function sendOverdueReminders() {
 | Test styles, functional core, mocking boundaries, DB tests, anti-patterns (Khorikov) | [Unit-Testing Principles](references/unit-testing-principles.md)     |
 | Test-first rhythm: fake it, triangulation, testable design, acceptance TDD (Koskela) | [TDD and ATDD](references/tdd-and-atdd.md)                           |
 | Testing web APIs: risk-based checks, contracts, performance, security, SLOs          | [Web API Testing](references/web-api-testing.md)                     |
+| Arrange-Act-Assert, mock objects, TDD notes from the c2 wiki                         | [XP Testing Practices](references/xp-testing-practices.md)           |
 
 ---
 
