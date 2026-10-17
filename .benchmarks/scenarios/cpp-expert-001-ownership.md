@@ -1,6 +1,6 @@
 ---
 id: cpp-expert-001-ownership
-skill: cpp-expert
+skill: c-cpp
 ---
 
 # Prompt

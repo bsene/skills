@@ -1,16 +1,18 @@
 ---
-name: cpp-expert
+name: c-cpp
 description: >
-  Write, review, and explain C++ code: value semantics, initialization,
-  const/constexpr, pointers, arrays, references, lifetime, functions, and
-  control flow. Use for C++ source files, compiler questions, C++ idioms,
-  and C interoperability. Do not use for C-only questions or when C++ is
-  incidental to another language.
+  Write, review, debug, and explain C and C++ code (formerly cpp-expert and
+  c-programming). C++: value semantics, initialization, const/constexpr,
+  pointers, arrays, references, lifetime, functions, control flow, compiler
+  questions, idioms. C: .c files, pointers, allocation, buffers, strings,
+  error handling, compiler diagnostics, C/C++ interoperability. For ambiguous
+  .h files, check whether the project compiles them as C or C++. Do not use
+  when C or C++ is incidental to another language.
 metadata:
   user-invocable: "false"
 ---
 
-# C++ Expert
+# C and C++
 
 C++ is a **statically typed, compiled** language whose fundamental constructs map **directly to hardware** — that direct mapping is the source of its raw performance and also the source of most of its foot-guns. Write C++ that leans on the standard library, uses value semantics deliberately, and lets the compiler catch mistakes at compile time instead of at 3am.
 
@@ -105,12 +107,12 @@ Use `auto` unless you have a specific reason to name the type (large scope where
 | Full worked examples for every construct above | [references/basics-worked-examples.md](references/basics-worked-examples.md) |
 | The complete advice list (§1.10) | [references/advice.md](references/advice.md) |
 | C foundations that matter when reading or interfacing with C++ | [references/c-foundations.md](references/c-foundations.md) |
+| C-only work: ownership, buffers, strings, errors, interfaces, verification (no C++ idioms) | [references/c.md](references/c.md) |
 
 ## Specialist Skills
 
 | Situation | Skill | Why |
 | --------- | ----- | --- |
-| C (not C++) | `c-programming` | C-specific idioms and tooling |
 | General testing philosophy | `testing` | Language-agnostic testing strategy |
 | OOP design principles | `object-oriented-programming` | SOLID, design patterns |
 | Hexagonal architecture | `the-architect` | Ports and adapters reference |

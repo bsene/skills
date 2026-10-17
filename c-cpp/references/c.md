@@ -1,12 +1,3 @@
----
-name: c-programming
-description: >
-  Write, review, debug, and explain C code. Use for C-only questions, .c files,
-  and headers compiled as C, including pointers, allocation, buffers, strings,
-  error handling, and C compiler diagnostics. For ambiguous .h files, check
-  whether the project compiles them as C or C++; use cpp-expert for C++.
----
-
 # C Programming
 
 Work in the project's C dialect and platform constraints. Check its compiler
