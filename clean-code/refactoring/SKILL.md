@@ -23,12 +23,13 @@ A comprehensive guide to detecting code smells and applying refactoring techniqu
 
 ## Read On Demand
 
-| Read When                                                                | File                                               |
-| ------------------------------------------------------------------------ | -------------------------------------------------- |
-| Identifying code smells or reviewing a diff/PR for bloaters              | [Code Smell Catalog](references/smells.md)         |
-| Deciding which refactoring technique to use                              | [Refactoring Techniques](references/techniques.md) |
-| Choosing the right pattern, scenario-based decisions, or review workflow | [Decision Guide](references/decision-guide.md)     |
-| **Only** when user asks where a pattern applies in a specific language   | [Language Idioms](references/language-idioms.md)   |
+| Read When                                                                                               | File                                               |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| Identifying code smells or reviewing a diff/PR for bloaters                                             | [Code Smell Catalog](references/smells.md)         |
+| Deciding which refactoring technique to use                                                             | [Refactoring Techniques](references/techniques.md) |
+| Choosing the right pattern, scenario-based decisions, or review workflow                                | [Decision Guide](references/decision-guide.md)     |
+| **Only** when user asks where a pattern applies in a specific language                                  | [Language Idioms](references/language-idioms.md)   |
+| Refactoring legacy code with few tests (hotspots, micro-commits, subclass and override, approval tests) | [Legacy First Aid](references/legacy-first-aid.md) |
 
 ---
 
