@@ -1,7 +1,6 @@
 ---
 name: clean-code
-description: Use when writing new code, naming modules/files/functions/variables, reviewing or refactoring for readability, reducing complexity, deciding whether an abstraction belongs, or reviewing with CUPID. Behavior-preserving refactors within a function, class, or file route to the `refactoring/` sub-skill. Pairs with language skills (typescript, go, lisper). DO NOT USE for behavior changes (`tcrdd`), cross-file dependency untangling (`mikado-method`), or pure simplicity/YAGNI debates (`simple`).
-
+description: Use when writing new code, naming modules/files/functions/variables, reviewing or refactoring for readability, reducing complexity, deciding whether an abstraction belongs, or reviewing with CUPID; also the constructive hacker ethos (curiosity, craftsmanship, open-source contribution, remove drudgery; never unauthorized access). Behavior-preserving refactors within a function, class, or file route to the `refactoring/` sub-skill. Pairs with language skills (typescript, go, lisper). DO NOT USE for behavior changes (`testing` (TCRDD reference)), cross-file dependency untangling (`mikado-method`), or pure simplicity/YAGNI debates (`simple`).
 ---
 
 # Clean Code
@@ -12,7 +11,7 @@ Code is for people to read, modify, and delete. Run four checks: design, naming,
 
 For a behavior-preserving refactor within a function, class, or file, read
 [`refactoring/SKILL.md`](refactoring/SKILL.md). It supplies the smell catalog, technique selector,
-and guardrails. Do not use it for behavior changes (`tcrdd`) or cross-file dependency untangling
+and guardrails. Do not use it for behavior changes (`testing` (TCRDD reference)) or cross-file dependency untangling
 (`mikado-method`).
 
 ## 1. Design for a human-sized mental model
@@ -82,9 +81,10 @@ Use CUPID when the user asks for that framework or a broad design-quality review
 | Idiomatic       | Language and local conventions; no reinvention                   |
 | Domain-based    | Domain vocabulary and boundaries rather than framework structure |
 
-
 Simplicity rules (OAOO, rule of three, YAGNI, simplest thing): [simplicity principles](references/simplicity-principles.md). XP practices (collective ownership, pairing, CI, refactor mercilessly): [XP practices](references/xp-practices.md).
 End with what is already working and the one to three highest-leverage improvements. CUPID is a direction, not compliance: acknowledge trade-offs and avoid “violates” or “must.” Read [the full CUPID reference](references/cupid-properties.md) when a property needs deeper analysis.
+
+Hacker ethos (curiosity- and craftsmanship-led engineering, open-source contribution approach; refuse unauthorized access): [hacker manifesto](references/hacker-manifesto.md).
 
 ## Gotchas
 

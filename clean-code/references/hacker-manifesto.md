@@ -1,13 +1,3 @@
----
-name: hacker-manifesto
-description: >
-  Apply the constructive hacker ethos to programming, technical learning, or open-source work: solve
-  interesting problems, share durable solutions, remove drudgery, protect freedom, and earn claims through
-  competence. Use when the user asks for a hacker mindset or ethos, an open-source contribution approach, or a
-  curiosity- and craftsmanship-led engineering standard. Do not use for cybersecurity testing or any request
-  involving unauthorized access.
----
-
 # Hacker Manifesto
 
 Use “hacker” in its constructive sense: a person who learns how systems work, solves problems, and improves the commons. It does not mean breaking into systems, evading controls, or accessing data without permission.
