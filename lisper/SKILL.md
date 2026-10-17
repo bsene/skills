@@ -66,3 +66,4 @@ Read only the relevant section of [Lisp programming from the bookshelf](referenc
 - Common Lisp macros: functions versus macros, variable capture, evaluation count/order, and expansion-time effects from _On Lisp_.
 - State, delayed evaluation, or interpreters: environment models and abstraction boundaries from _SICP_.
 - Portable Scheme: truthiness, operand order, proper tail calls, and hygienic macros checked against R7RS-small.
+- Clojure laziness, concurrency primitives, transients/performance, and macro hygiene: [Clojure idioms and performance](references/clojure-idioms-and-performance.md), from _The Joy of Clojure_ and _Living Clojure_.
