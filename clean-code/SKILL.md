@@ -82,6 +82,8 @@ Use CUPID when the user asks for that framework or a broad design-quality review
 | Idiomatic       | Language and local conventions; no reinvention                   |
 | Domain-based    | Domain vocabulary and boundaries rather than framework structure |
 
+
+Simplicity rules (OAOO, rule of three, YAGNI, simplest thing): [simplicity principles](references/simplicity-principles.md). XP practices (collective ownership, pairing, CI, refactor mercilessly): [XP practices](references/xp-practices.md).
 End with what is already working and the one to three highest-leverage improvements. CUPID is a direction, not compliance: acknowledge trade-offs and avoid “violates” or “must.” Read [the full CUPID reference](references/cupid-properties.md) when a property needs deeper analysis.
 
 ## Gotchas
