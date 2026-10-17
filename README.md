@@ -49,6 +49,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Write a README                  | [writing-a-readme](/skills/writing-a-readme/SKILL.md)                                                                                                                  | Draft a clear, accurate project or profile README                                         |
 | Ground on real library source   | [vendor-reference](/skills/vendor-reference/SKILL.md)                                                                                                                  | Vendor library gitignored, read source, never commit                                      |
 | Write idiomatic systems Rust    | [rust](/skills/rust/SKILL.md)                                                                                                                                          | Ownership, errors, traits, concurrency, unsafe, cargo                                     |
+| Idiomatic modern Java / AspectJ | [java](/skills/java/SKILL.md)                                                                                                                                          | Effective Java themes, records, streams, concurrency, AspectJ                             |
 
 Install `lisper` for the complete Lisp package, including CHICKEN Scheme's compiler, eggs, FFI, and deployment references. Dialect-specific guidance loads on demand; no separate CHICKEN skill is required.
 
