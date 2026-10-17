@@ -48,6 +48,7 @@ Every coding assistant is broad by default; to be sharp on a specific craft you 
 | Write AGENTS.md well            | [writing-a-good-agents-md](/skills/writing-a-good-agents-md/SKILL.md)                                                                                                  | Author/audit agent context files (AGENTS.md, CLAUDE.md…)                                  |
 | Write a README                  | [writing-a-readme](/skills/writing-a-readme/SKILL.md)                                                                                                                  | Draft a clear, accurate project or profile README                                         |
 | Ground on real library source   | [vendor-reference](/skills/vendor-reference/SKILL.md)                                                                                                                  | Vendor library gitignored, read source, never commit                                      |
+| Write idiomatic systems Rust    | [rust](/skills/rust/SKILL.md)                                                                                                                                          | Ownership, errors, traits, concurrency, unsafe, cargo                                     |
 
 Install `lisper` for the complete Lisp package, including CHICKEN Scheme's compiler, eggs, FFI, and deployment references. Dialect-specific guidance loads on demand; no separate CHICKEN skill is required.
 
