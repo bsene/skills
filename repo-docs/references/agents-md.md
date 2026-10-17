@@ -1,18 +1,3 @@
----
-name: writing-a-good-agents-md
-description: >
-  Write, audit, or improve AGENTS.md — the tool-agnostic context file for
-  coding agents — plus harness adapters (CLAUDE.md, .cursorrules, GEMINI.md,
-  Copilot instructions). Use when creating one from scratch, auditing for
-  bloat or anti-patterns, consolidating multiple tool files into one source
-  of truth, or applying progressive disclosure.
-metadata:
-  source: https://www.humanlayer.dev/blog/writing-a-good-claude-md
-  author: Kyle (HumanLayer), generalized for AGENTS.md
-  standard: https://agents.md/
-  version: "2.0"
----
-
 # Writing a Good AGENTS.md
 
 Help users write, audit, and improve `AGENTS.md` — and the harness-specific files that sit alongside or import it.
@@ -22,7 +7,7 @@ Help users write, audit, and improve `AGENTS.md` — and the harness-specific fi
 `AGENTS.md` is an **onboarding document**, not a configuration dump. It answers three questions:
 
 - **WHY** — purpose of the project and its components
-- **WHAT** — stack and structure the _implementer_ needs to act, not an explorer's tour (see [Sub-Agent Context Loading](references/subagent-context-loading.md))
+- **WHAT** — stack and structure the _implementer_ needs to act, not an explorer's tour (see [Sub-Agent Context Loading](subagent-context-loading.md))
 - **HOW** — build, test, verify commands the agent runs
 
 Everything else lives elsewhere: linter config, sub-documents, one-off instructions, and orientation material (README/ADR), which search agents find on their own.
@@ -105,10 +90,10 @@ Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-
 
 | Read When                                                           | File                                                                         |
 | ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Principle details, research evidence, reasoning                     | [Six Principles Detailed](references/six-principles-detailed.md)             |
-| Who actually loads the file (Explore/Plan never do), audience split | [Sub-Agent Context Loading](references/subagent-context-loading.md)          |
-| Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](references/anti-patterns-and-local-files.md)   |
-| What real production AGENTS files look like (add-on sections)       | [Real-World Structure Patterns](references/real-world-structure-patterns.md) |
+| Principle details, research evidence, reasoning                     | [Six Principles Detailed](six-principles-detailed.md)             |
+| Who actually loads the file (Explore/Plan never do), audience split | [Sub-Agent Context Loading](subagent-context-loading.md)          |
+| Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](anti-patterns-and-local-files.md)   |
+| What real production AGENTS files look like (add-on sections)       | [Real-World Structure Patterns](real-world-structure-patterns.md) |
 
 ## Benchmark
 

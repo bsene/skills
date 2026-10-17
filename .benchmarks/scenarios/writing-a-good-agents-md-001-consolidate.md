@@ -1,6 +1,6 @@
 ---
 id: writing-a-good-agents-md-001-consolidate
-skill: writing-a-good-agents-md
+skill: repo-docs
 ---
 
 # Prompt

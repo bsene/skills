@@ -1,8 +1,3 @@
----
-name: writing-a-readme
-description: Write or overhaul a project's README.md, drawing on patterns from the most-starred GitHub readme-template repos and guides (othneildrew/Best-README-Template, the standard-readme spec, makeareadme.com, awesome-readme). Use this whenever the user asks to write, create, improve, restructure, or "make my README look better/more professional", asks for a README for a library/CLI/API/app, asks about badges/shields, a table of contents, "getting started" or "installation" sections, a Support or Project Status section, or wants their GitHub profile README (the special username/username repo) polished. Covers picking the right template variant (library, CLI tool, application, monorepo, or profile README), section ordering, badge selection, and common mistakes that make READMEs look templated or get skipped by readers.
----
-
 # Writing a README
 
 ## First response
@@ -38,7 +33,7 @@ because they optimize for different things:
 Pick the lineage that fits the ask (or blend them — badges from Best-README-Template,
 discipline about section order from standard-readme, the Support/Project-status habit
 from makeareadme.com) rather than reflexively using one template for everything. See
-`references/templates.md` for full worked templates of each variant.
+[readme-templates.md](readme-templates.md) for full worked templates of each variant.
 
 ## Step 1: Figure out which kind of README this is
 
@@ -187,7 +182,7 @@ Draft the full README, then reread it as a skeptical stranger and cut:
 
 ## Reference
 
-`references/templates.md` has full worked-out templates for: a library README, a CLI
+[readme-templates.md](readme-templates.md) has full worked-out templates for: a library README, a CLI
 tool README, and a GitHub profile README, plus the standard-readme required-section
 list and makeareadme.com's minimal starting template and full section checklist. Read
 it before drafting when the user wants something copy-pasteable rather than guidance,
