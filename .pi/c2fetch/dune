@@ -1,0 +1,3 @@
+(executable
+ (name c2fetch)
+ (libraries yojson unix))
