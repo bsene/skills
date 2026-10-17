@@ -39,6 +39,14 @@ The top-level structure should reveal the product's use cases and business conce
 not primarily the web framework or ORM. Group code by feature or bounded capability
 when that makes the policy easier to locate.
 
+## More references
+
+| Need                                                                               | Read                                                                                                      |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Test behaviour through use-case ports with fakes; test pyramid; test-first order   | [Testing Through Ports](references/testing-through-ports.md)                                              |
+| Repository, Unit of Work, aggregates, commands vs events, message bus, read models | [Application Patterns](references/application-patterns.md)                                                |
+| Who owns port interfaces, configurator / composition root, cost of adopting        | [Configurator and Required Interfaces](references/ports-adapters/configurator-and-required-interfaces.md) |
+
 ## Reference scope
 
 Read only the reference for the chosen approach; read both when comparing them.
