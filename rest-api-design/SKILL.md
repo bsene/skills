@@ -20,6 +20,14 @@ description: >
 
 API designed for the developer-client. KISS, standard vocabulary, predictable shapes — expose what clients need, not the internal data model.
 
+## Non-negotiables (never omit from an answer)
+
+1. `422` = schema/type invalid; `400` = valid body but illegal operation (insufficient balance, already shipped); `409` = state collision (concurrent edit, duplicate). Name all three when choosing one.
+2. State-changing side effects (payments, orders, sends) **must** take `Idempotency-Key`; replay the stored response, cache 2xx/4xx, allow retry on 5xx.
+3. Every error body **must** carry a machine-readable `error_code`, a human `message` and field-level details for validation.
+4. Creation returns `201` + `Location:`; delete returns `204`; never `2xx` on error.
+5. Lists are paginated from day one; filter/sort/expand fields are whitelisted server-side.
+
 ## Workflow
 
 1. Identify resources — nouns, plural, ≤2 levels of nesting
@@ -136,5 +144,7 @@ Scenario: `.benchmarks/scenarios/rest-api-001-status-code.md` · Run: 2026-06-14
 | claude-haiku-4-5  | 40%     | 60%  | +20%  |
 
 > **PASS.** Flips the core 400-vs-422 call on all 3 models (every baseline wrongly chose 422). Weaker models under-apply secondary idempotency/409 guidance — candidate for higher salience. Gate per `.agents/skills/skill-optimizer/rules/release-gates.md`.
+
+Pending rerun: `rest-api-002-idempotent-payment` (targets the idempotency/409 gap above) and `rest-api-001` against the Non-negotiables layout; ship only if no model regresses vs the table.
 
 2026-10-14: detailed endpoint guidance moved into linked references; these historical scores have not been rerun against the new layout.
