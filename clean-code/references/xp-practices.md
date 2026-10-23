@@ -16,4 +16,4 @@ Distilled from the c2 wiki pages ExtremeProgramming, CollectiveCodeOwnership, Pa
 - Refactoring is safe only behind tests. No tests: write them first (see the testing skill).
 - Related: [simplicity principles](simplicity-principles.md).
 
-Sources: https://wiki.c2.com/?ExtremeProgramming, ?CollectiveCodeOwnership, ?PairProgramming, ?ContinuousIntegration, ?RefactorMercilessly
+Sources: https://wiki.c2.com/?ExtremeProgramming, ?CollectiveCodeOwnership, ?PairProgramming, ?ContinuousIntegration, ?RefactorMercilessly, http://www.extremeprogramming.org/
