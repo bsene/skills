@@ -122,6 +122,12 @@ After any naive attempt: **"Revert now — `git restore <touched files>` — you
 
 ---
 
+## Sources
+
+- [Home of the Mikado Method](https://mikadomethod.wordpress.com/) — Ola Ellnestam & Daniel Brolund, authors of the method and the Manning book.
+
+---
+
 ## Benchmark
 
 Scenario: `.benchmarks/scenarios/mikado-method-001-revert-discipline.md`
