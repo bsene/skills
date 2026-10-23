@@ -118,6 +118,7 @@ After any naive attempt: **"Revert now — `git restore <touched files>` — you
 | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | Starting a graph, populating prerequisites, evaluating leaves, shared prerequisites                     | [Graph Building](references/graph-building.md)                   |
 | Execution order, committing strategy, legacy code, large refactors, hygiene rules, non-actionable goals | [Execution & Situations](references/execution-and-situations.md) |
+| Applying Mikado to team, process, or organizational change (Agile/CI adoption, impediments)             | [Organizational Change](references/organizational-change.md)     |
 
 ---
 
