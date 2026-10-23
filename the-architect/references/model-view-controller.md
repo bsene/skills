@@ -25,6 +25,39 @@ user input -> Controller -> Model.update()
                        View(s) re-read Model and redraw
 ```
 
+## Original Smalltalk-80 MVC
+
+Reenskaug sketched it at Xerox PARC in 1978-79 (first as Thing-Model-View-Editor); Smalltalk-80 shipped it as the framework for every window.
+
+| Piece        | Smalltalk-80 detail                                                                                            |
+| ------------ | -------------------------------------------------------------------------------------------------------------- |
+| Model        | Any object. `Object` implements the dependents protocol, so no base class or interface is needed               |
+| Notification | Model runs `self changed: #aspect`; each dependent receives `update: #aspect` and decides what to redraw       |
+| Wiring       | `model addDependent: view`; a view knows exactly one model and one controller, a controller one model and view |
+| View         | `displayView` / `displayOn:` draw within a display box; views nest as superview / subviews                     |
+| Controller   | Owns input for its view. Control is granted to the controller whose view contains the cursor                   |
+| Control loop | Active controller loops `isControlActive` -> `controlActivity`, polling mouse and keyboard; no event queue     |
+| Scheduling   | A global controller manager hands control between top-level windows' controllers                               |
+
+```smalltalk
+"Model: announces, never references a view"
+Counter >> increment
+    count := count + 1.
+    self changed: #count
+
+"View: pulls on update"
+CounterView >> update: aspect
+    aspect == #count ifTrue: [self display]
+```
+
+What to keep from the original:
+
+- The model is plain and view-ignorant; the dependents mechanism is the only link.
+- Change notice carries an aspect, not data; views pull what they show.
+- Input handling is its own object, so it can be swapped or faked.
+
+What later frameworks changed: widget toolkits own event dispatch (no polling controller), views and controllers merge, and pluggable views take aspect/selector parameters instead of subclassing. The Smalltalk language side is in the `smalltalk-pharo` skill.
+
 ## When it earns its place
 
 - Several views or input devices over one model (tree and list of the same data, GUI plus MIDI or script controller, VT-100 vs window).
@@ -61,4 +94,4 @@ MVC sits on the delivery side of a boundary: views and controllers are adapters,
 
 ## Source
 
-Paraphrased from the c2 wiki pages ModelViewController and ModelViewPresenter (https://wiki.c2.com/?ModelViewController, https://wiki.c2.com/?ModelViewPresenter).
+Paraphrased from Reenskaug's MVC notes (https://folk.universitetetioslo.no/trygver/themes/mvc/mvc-index.html), Krasner and Pope, "A Cookbook for Using the Model-View-Controller User Interface Paradigm in Smalltalk-80" (JOOP, 1988), and the c2 wiki pages ModelViewController and ModelViewPresenter (https://wiki.c2.com/?ModelViewController, https://wiki.c2.com/?ModelViewPresenter).
