@@ -24,6 +24,8 @@ cancelled ("Agile doesn't work for us").
 
 The Kata alone doesn't say how to remove impediments; recursing on each one is what makes it Mikado.
 
+Why it works: the Kata is a four-step model of scientific thinking. Compare what you think (theory) with what actually happens (evidence) and adjust on the difference. Each experiment is a test, not a rollout. Rother's site adds practice routines ("Starter Kata") and a five-question card to run in meetings.
+
 ## Example: continuous integration
 
 - Goal: every developer integrates within 10 minutes. Try with a few teams.
