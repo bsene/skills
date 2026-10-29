@@ -33,6 +33,9 @@ Read its agent instructions and configuration before changing tooling or introdu
 → **Total TypeScript / Matt Pocock** (type derivation, `satisfies`, generic inference, `NoInfer`, distributivity, type tests) → [references/total-typescript.md](references/total-typescript.md)
 → **Zod** (schema validation, transforms, coercion, branded types…) → `zod/SKILL.md`
 → **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, monoids…) → `composition/SKILL.md`
+→ **Node.js design patterns** (async control flow, streams, EventEmitter, DI, batching, workers, scaling) → [references/node-patterns.md](references/node-patterns.md)
+→ **JS runtime mechanics** (`this`, closures, prototypes, generators, event-loop order, promises) → [references/js-runtime-mechanics.md](references/js-runtime-mechanics.md)
+→ **TS language gaps** (variance, overloads, assertion functions, module resolution, type-driven design) → [references/ts-language-gaps.md](references/ts-language-gaps.md)
 → **Deno runtime** (configuration, permissions, dependencies, HTTP, tests, Node compatibility) → [references/deno.md](references/deno.md)
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
