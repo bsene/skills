@@ -35,6 +35,7 @@ Read its agent instructions and configuration before changing tooling or introdu
 → **Functional composition** (pipe/compose, currying, pure functions, factories, functional mixins, monoids…) → `composition/SKILL.md`
 → **Node.js design patterns** (async control flow, streams, EventEmitter, DI, batching, workers, scaling) → [references/node-patterns.md](references/node-patterns.md)
 → **JS runtime mechanics** (`this`, closures, prototypes, generators, event-loop order, promises) → [references/js-runtime-mechanics.md](references/js-runtime-mechanics.md)
+→ **JS pitfalls & idioms** (coercion, dictionaries, array/iteration, API design, async discipline, surviving patterns) → [references/js-pitfalls-and-idioms.md](references/js-pitfalls-and-idioms.md)
 → **TS language gaps** (variance, overloads, assertion functions, module resolution, type-driven design) → [references/ts-language-gaps.md](references/ts-language-gaps.md)
 → **Deno runtime** (configuration, permissions, dependencies, HTTP, tests, Node compatibility) → [references/deno.md](references/deno.md)
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
