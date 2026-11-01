@@ -60,6 +60,7 @@ Install `lisper` for the complete Lisp package, including CHICKEN Scheme's compi
 The TypeScript skill follows each project's configured runtime, imports, tests, and verification workflow.
 Its [Total TypeScript reference](typescript/references/total-typescript.md) adds guidance from Matt Pocock's public material on type derivation, `satisfies`, generic inference, conditional types, and type tests.
 Its [JS pitfalls and idioms reference](typescript/references/js-pitfalls-and-idioms.md) distills coercion, dictionary, iteration, API-design, and async rules from _Effective JavaScript_, _The Good Parts_, _JavaScript Patterns_, and _You Don't Know JS_.
+Its [ES features by edition reference](typescript/references/es-features-by-edition.md) summarizes ES2015–ES2025 additions from the ECMA-262 specification.
 For Effect TS, the skill links to the [official documentation](https://effect.website/docs/) and directs agents to match the installed library version.
 See [.benchmarks/README.md](.benchmarks/README.md) for instruction-uptake benchmarks and their limits.
 
