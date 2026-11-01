@@ -16,6 +16,12 @@ Source: _Effective JavaScript_ (Herman), _JavaScript: The Good Parts_ (Crockford
 | Objects coerced via `toString` / `valueOf`     | Implement `Symbol.toPrimitive` or avoid coercing objects; `[] + {}` is not a feature                  |
 | Strings are UTF-16 code units, not characters  | `"😀".length === 2`; iterate with `for...of` / `[...s]` (code points), `Intl.Segmenter` for graphemes |
 
+### What `==` does (ECMA-262 `IsLooselyEqual`)
+
+Same type → same as `===`. Otherwise, in order: `null == undefined` is true (and equal to nothing else); Number vs String → String converted to Number; BigInt vs String → String parsed as BigInt (`false` if unparsable); Boolean → converted to Number first; String/Number/BigInt/Symbol vs Object → Object converted with `ToPrimitive`; BigInt vs Number → compared by mathematical value (`1n == 1` is true, never for `NaN`/`Infinity`); anything else false.
+
+Consequences: `"0" == false` is true (`false`→`0`, `"0"`→`0`), `[] == false` is true, `null == 0` is false, `NaN == NaN` is false. `ToPrimitive` calls `obj[Symbol.toPrimitive](hint)` if present (hint `"default"`, `"string"`, or `"number"`), else `valueOf` then `toString` (reversed for the `"string"` hint); a non-primitive result throws `TypeError`.
+
 ## Scope and declarations
 
 - `const` by default, `let` when rebinding, never `var`. Declare every variable; an undeclared assignment creates a global (modules and `"use strict"` throw instead).
