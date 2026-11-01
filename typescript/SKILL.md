@@ -39,7 +39,7 @@ Read its agent instructions and configuration before changing tooling or introdu
 → **ES features by edition** (ES2015–ES2025 additions, modern replacements, `target`/`lib` guidance) → [references/es-features-by-edition.md](references/es-features-by-edition.md)
 → **Domain modeling** (workflows as pipelines, state machines by type, Result errors, DTO boundaries, persistence at the edges) → [references/domain-modeling-functional.md](references/domain-modeling-functional.md)
 → **TS language gaps** (variance, overloads, assertion functions, module resolution, type-driven design) → [references/ts-language-gaps.md](references/ts-language-gaps.md)
-→ **Deno runtime** (configuration, permissions, dependencies, HTTP, tests, Node compatibility) → [references/deno.md](references/deno.md)
+→ **Deno runtime** (runtime sunset notice; maintain existing projects only: configuration, permissions, dependencies, HTTP, tests, Node compatibility) → [references/deno.md](references/deno.md)
 → **Design patterns** (Strategy, Factory, Builder, Decorator, Mixin…) → `object-oriented-programming` skill
 → **SOLID principles** (SRP, OCP, LSP, ISP, DIP) → `object-oriented-programming` skill
 → **Testing** (unit tests, mocks vs stubs, brittle tests, test pyramid) → `testing` skill

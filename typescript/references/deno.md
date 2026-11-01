@@ -1,5 +1,8 @@
 # Deno
 
+> **Runtime sunset (announced 2026-10-09).** Deno is joining Cloudflare. Per [Deno's announcement](https://deno.com/blog/cloudflare), the team supports the runtime for one more year with monthly bug-fix and security releases, after which Cloudflare ends development (the project stays open source). Deno Deploy shuts down after six months. JSR keeps operating, with its infrastructure moving to Cloudflare. See also [Cloudflare's post](https://blog.cloudflare.com/deno-joins-cloudflare/).
+> For existing Deno projects, keep following this file. For new projects, prefer Node.js (with `--experimental-strip-types`/native type stripping) or Cloudflare Workers, and avoid new Deno-only APIs (`Deno.*`) that complicate a later move; publishing to JSR remains fine.
+
 For Fresh or Deno Deploy specifics, consult their own official documentation.
 
 Use [Deno's official documentation](https://docs.deno.com/runtime/) as the source
