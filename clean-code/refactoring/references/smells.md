@@ -361,6 +361,47 @@ int fileAgeInDays;           // ✅ domain-specific framing
 
 ---
 
+## Remaining Fowler Smells (Quick Reference)
+
+The rest of the catalog from Fowler's _Refactoring_ (2nd ed., ch. 3). Smells #1–#7 above have their own sections; these are detect-and-treat only.
+
+| Smell                                         | What to look for                                                            | Usual refactorings                                                                        |
+| --------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Duplicated Code**                           | Same knowledge expressed in more than one place, including next to new code | Extract Function, Slide Statements, Pull Up Method                                        |
+| **Global Data**                               | Mutable statics, ambient singletons reachable from anywhere                 | Encapsulate Variable                                                                      |
+| **Mutable Data**                              | State changed in place where a value or returned copy would do              | Encapsulate Variable, Split Variable, Separate Query from Modifier, Remove Setting Method |
+| **Divergent Change**                          | One class changed for several unrelated reasons                             | Split Phase, Move Function, Extract Class                                                 |
+| **Shotgun Surgery**                           | One conceptual change touches many classes                                  | Move Function, Move Field, Combine Functions into Class, Inline Class                     |
+| **Feature Envy**                              | Method more interested in another object's data than its own                | Move Function, Extract Function                                                           |
+| **Repeated Switches**                         | Same `switch` / `if`-chain on a type in more than one place                 | Replace Conditional with Polymorphism                                                     |
+| **Loops**                                     | Loop a pipeline (`map`/`filter`/`reduce`) would state more clearly          | Replace Loop with Pipeline                                                                |
+| **Lazy Element**                              | Class, method or interface that no longer earns its place                   | Inline Function, Inline Class, Collapse Hierarchy                                         |
+| **Speculative Generality**                    | Parameters, hooks, abstract classes or branches nothing uses yet            | Collapse Hierarchy, Inline Function, Remove Dead Code                                     |
+| **Temporary Field**                           | Field only set or meaningful in some circumstances                          | Extract Class, Move Function, Introduce Special Case                                      |
+| **Message Chains**                            | `a.b().c().d()` navigation the caller should not depend on                  | Hide Delegate, Extract Function, Move Function                                            |
+| **Middle Man**                                | Class whose methods mostly just delegate                                    | Remove Middle Man, Inline Function                                                        |
+| **Insider Trading**                           | Classes that know too much about each other's internals                     | Move Function, Move Field, Hide Delegate                                                  |
+| **Alternative Classes, Different Interfaces** | Interchangeable classes whose signatures differ                             | Change Function Declaration, Move Function, Extract Superclass                            |
+| **Data Class**                                | Fields and nothing else; behavior lives in callers                          | Encapsulate Record, Remove Setting Method, Move Function                                  |
+| **Refused Bequest**                           | Subclass ignores or overrides away most of what it inherits                 | Push Down Method/Field, Replace Subclass/Superclass with Delegate                         |
+
+### Reviewing a Change for Smells
+
+Source: [Brighter `/refactor:smells`](https://github.com/BrighterCommand/Brighter/blob/master/.claude/commands/refactor/smells.md).
+
+1. **Only after green.** Failing tests or a half-finished change → stop; smells in moving code are noise.
+2. **Scope = what the change added or touched**, not the whole codebase. Read changed files in full — Large Class, Divergent Change and Feature Envy only show against the surrounding class. Skip generated files, migrations, project files.
+3. **Evidence or nothing.** Each finding names file, line range and the code showing it. "Feels large" is not a finding.
+4. **Name the refactoring** from Fowler's catalog so follow-up work has a known shape.
+5. **Classify each finding:**
+   - _Kind_ — `structural` (public signatures unchanged, safe to tidy with green tests) vs `public API change` (breaking; needs a decision, not a tidy).
+   - _Size_ — small (one method/rename), medium (one class), large (several classes/packages).
+6. **Uncertain?** Put it in a separate "Worth a look" list with the question that would settle it. Don't pad the main list; a clean result is valid.
+7. **Calibrate to project conventions.** Don't flag deliberate design: one-implementation interfaces kept for override/testing, boundary DTOs (not Data Class), parallel sync/async bodies, public XML docs (not Comments). Do flag visibility widened only for a test.
+8. **No behavior changes disguised as refactorings** — if removing the smell changes behavior, it belongs in a test-first change.
+
+---
+
 ## Severity Guidelines
 
 | Severity     | Long Method        | Large Class             | Param List         | Data Clumps   | Uncommunicative Name                                  |
