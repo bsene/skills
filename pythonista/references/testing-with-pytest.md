@@ -10,3 +10,5 @@
 - Mark slow/integration tests (`@pytest.mark.slow`) and register markers in `pyproject.toml`.
 - Coverage (`pytest --cov`) finds gaps; do not chase the number. Property tests with `hypothesis` for parsers and invariants.
 - Async tests need the project's plugin (`pytest-asyncio` or `anyio`).
+
+Further reading: Real Python, <https://realpython.com/> (search "pytest").

@@ -20,3 +20,5 @@
 - Entry points: `if __name__ == "__main__": main()`; parse args with `argparse` (or the project's CLI library).
 - Config from environment variables; never commit secrets. Use `logging` configured once at the entry point.
 - Docstrings state purpose, args, raises; follow the project's style (Google/NumPy/reST) consistently.
+
+Further reading: Real Python, <https://realpython.com/> (search "uv virtual environments pyproject").

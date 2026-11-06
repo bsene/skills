@@ -22,3 +22,5 @@
 
 - Validate at boundaries, then pass typed objects inward; use `__post_init__` for invariants.
 - Don't subclass `dict`/`list`; compose or use `collections.UserDict`.
+
+Further reading: Real Python, <https://realpython.com/> (search "type hints dataclasses").

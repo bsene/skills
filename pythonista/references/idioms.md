@@ -33,3 +33,5 @@
 
 - f-strings for formatting; `!r` in logs and errors. Use `str.join`, not `+=` in loops.
 - Pass `encoding` explicitly; `json`, `csv`, `tomllib` (3.11+) from the stdlib; `secrets` (not `random`) for tokens.
+
+Further reading: Real Python, <https://realpython.com/> (search "Pythonic idioms generators decorators").

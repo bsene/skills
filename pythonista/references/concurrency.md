@@ -13,3 +13,5 @@
 - Bound parallelism with `asyncio.Semaphore` or executor `max_workers`.
 - Share state minimally: queues (`queue.Queue`, `asyncio.Queue`) over locks; guard shared mutables with `threading.Lock` in a `with`.
 - Use `async with` / `async for` for async resources and streams; don't mix event loops across threads.
+
+Further reading: Real Python, <https://realpython.com/> (search "asyncio threading multiprocessing").

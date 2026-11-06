@@ -15,7 +15,7 @@ description: >
 
 # Python
 
-Primary reference: the official Python site, <https://www.python.org/> (documentation, PEP index, and downloads). Check the project's Python version before using newer syntax. For tutorial-style further reading, see <https://realpython.com/>; guidance here is original and paraphrased.
+Primary reference: the official Python site, <https://www.python.org/> (documentation, PEP index, and downloads). Check the project's Python version before using newer syntax. For tutorial-style further reading, see Real Python, <https://realpython.com/> (each reference ends with a search pointer); guidance here is original and paraphrased.
 
 Be explicit, readable, and boring. Use the standard library first, type the public surface, and let tools enforce style.
 
