@@ -6,10 +6,11 @@ description: >
   TRIGGER when: Python, .py files, pyproject.toml, pip, uv, venv, pytest, type hints,
   mypy, pyright, ruff, dataclasses, generators, decorators, context managers, asyncio,
   async/await, comprehensions, f-strings, pathlib, logging, packaging, virtual environments,
-  Pythonic code, PEP 8, PEP 484.
+  Pythonic code, PEP 8, PEP 484, Django, Flask, FastAPI, ASGI/WSGI, REST APIs, SQLAlchemy,
+  Alembic, Celery, Pydantic.
 
-  DO NOT USE for framework specifics (Django, Flask, FastAPI, pandas, PyTorch) beyond
-  the language and standard-library patterns here.
+  DO NOT USE for data-science or ML frameworks (pandas, PyTorch) beyond the language and
+  standard-library patterns here.
 ---
 
 # Python
@@ -27,6 +28,7 @@ Be explicit, readable, and boring. Use the standard library first, type the publ
 | pytest, fixtures, parametrization, mocking             | [testing-with-pytest](references/testing-with-pytest.md)       |
 | Venvs, `pyproject.toml`, uv/pip, ruff, packaging       | [tooling-and-packaging](references/tooling-and-packaging.md)   |
 | `asyncio`, threads vs processes, the GIL               | [concurrency](references/concurrency.md)                       |
+| Django, FastAPI, Flask, ORM, security, background jobs | [web-development](references/web-development.md)               |
 
 ## Core workflow
 
