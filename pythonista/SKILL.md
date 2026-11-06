@@ -1,5 +1,5 @@
 ---
-name: python
+name: pythonista
 description: >
   Write, review, and debug idiomatic modern Python.
 
