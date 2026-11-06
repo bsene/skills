@@ -77,7 +77,7 @@
       "source": "bsene/skills",
       "sourceType": "github",
       "skillPath": "typescript/SKILL.md",
-      "computedHash": "147432bb4e7f79e64b99557c7de1b3a40d886763ae84a931c204b7f3a035b716"
+      "computedHash": "dd4d3252400bf209920894365e288fbfb0b20de5cbed9aa89074d569744a1513"
     },
     "typescript-magician": {
       "source": "mcollina/skills",
