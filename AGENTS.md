@@ -1,51 +1,25 @@
 # Repository Guidelines
 
-This repository is a coding-agent skill library. Each skill is a focused Markdown knowledge pack that agents can load on demand.
+Coding-agent skill library: each top-level directory is one skill (`SKILL.md` + optional `references/`).
 
-## Project Structure & Module Organization
+## Landmines
 
-- Each top-level directory is one skill, e.g. `review/`, `golang/`, or `typescript/`.
-- Every skill must contain `SKILL.md` with YAML frontmatter (`name`, `description`) followed by its core workflow.
-- Place supporting material in `references/`; nest related skills as subdirectories when useful.
-- `.benchmarks/` contains benchmark scenarios and scripts; do not treat it as an installable package.
-- `skills-lock.json` tracks externally sourced skills and their hashes.
-- Update `README.md` whenever adding, removing, or materially changing a skill.
+- **Two skill locations.** Top-level dirs are skills authored here. `.agents/skills/` holds externally installed skills (tracked in `skills-lock.json`); `.pi/skills/` and `.claude/skills/` are symlinks into it. Edit the real dir under `.agents/skills/`, never through a symlink target elsewhere, and keep `skills-lock.json` hashes intact when syncing.
+- `typescript` exists in both places; check which copy you are editing and keep them in sync.
+- Commit hooks live in `.githooks/` but are not active until `git config core.hooksPath .githooks`. Enforce one-line Conventional Commits and no `Co-authored-by` even if the hook is off.
+- Update `README.md` whenever a skill is added, removed, or materially changed.
 
-## Build, Test, and Development Commands
+## Commands
 
-There is no application build step. Useful checks include:
+- `git diff --check` — whitespace errors before committing.
+- `npx prettier --check "**/*.md"` — Markdown formatting.
+- `node --test .benchmarks/benchmark-validity.test.js` — offline benchmark validity; live recipes need Pi (see `.benchmarks/README.md`). Include benchmark results in PRs.
+- No unit-test suite: validate by checking links, frontmatter, and that every command/example in a skill actually works.
 
-- `git diff --check` — detect whitespace errors before committing.
-- `npx prettier --check "**/*.md"` — verify Markdown formatting if Prettier is available.
-- `node --test .benchmarks/benchmark-validity.test.js` — check benchmark validity offline; live recipes require Pi (see `.benchmarks/README.md`).
-- `git status --short` — review intended changes before opening a PR.
+## Conventions
 
-## Coding Style & Naming Conventions
-
-- Write concise, instructional Markdown with descriptive headings, tables, and short code examples.
-- Use two-space indentation for YAML frontmatter and fenced code blocks.
-- Keep skill directory and frontmatter names short, lowercase, and hyphenated, e.g. `ports-adapters-architecture`.
-- Name reference files descriptively, e.g. `references/testing-and-quality.md`.
-- Keep `SKILL.md` focused; move detailed material to references and link it on demand.
-
-## OCaml Tooling
-
-- Implement OCaml tooling and helper executables in **OCaml**, not Python or another language. Use a dune project and keep it under `.pi/`.
-
-## Testing Guidelines
-
-There is no conventional unit-test suite. Validate changes by checking Markdown rendering, links, frontmatter syntax, and the accuracy of every command or example. For benchmark changes, run the benchmark scripts directly and include the results in the PR.
-
-## Commit & Pull Request Guidelines
-
-Follow the existing one-line Conventional Commit style:
-
-- `feat(skills): add rescript skill`
-- `docs(ocaml): add testing reference`
-- `chore(skills): update skills-lock.json`
-
-Keep each commit focused on one skill or concern. Pull requests should include a short purpose statement, list of changed skills, validation performed, and linked issues where applicable. Add screenshots only when Markdown rendering itself changes.
-
-## Security & Configuration Tips
-
-Do not commit secrets, local editor configuration, or generated caches. Preserve `skills-lock.json` hashes when syncing external skills.
+- Keep `SKILL.md` focused; push detail to `references/<descriptive-name>.md` and link it.
+- Skill dir and frontmatter `name`: short, lowercase, hyphenated.
+- Tooling and helper executables are **OCaml** (dune project under `.pi/`, e.g. `.pi/c2fetch`), never Python. Fetch/scrape tasks included.
+- Commits: one focused skill/concern each, e.g. `feat(skills): add rescript skill`.
+- No secrets, editor config, or generated caches (`_build/`, `.DS_Store`).
