@@ -101,6 +101,8 @@ Fill the "Causal Chain" and "Root Cause of Occurrence" sections with the defect 
 
 If the user also wants the learning-sharing item or the prioritization scoring captured in the document, add optional `## Learning to share` and `## Prioritization` sections — don't add them by default, only when asked or when clearly working at team/recurring level.
 
+For a filled-in illustration of the template, see [`references/worked-example.md`](references/worked-example.md).
+
 If the user wants this saved as a file rather than shown inline, write it as a Markdown (.md) file.
 
 ---
