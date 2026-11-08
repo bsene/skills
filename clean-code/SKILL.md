@@ -84,6 +84,10 @@ Use CUPID when the user asks for that framework or a broad design-quality review
 Simplicity rules (OAOO, rule of three, YAGNI, simplest thing): [simplicity principles](references/simplicity-principles.md). XP practices (collective ownership, pairing, CI, refactor mercilessly): [XP practices](references/xp-practices.md).
 End with what is already working and the one to three highest-leverage improvements. CUPID is a direction, not compliance: acknowledge trade-offs and avoid “violates” or “must.” Read [the full CUPID reference](references/cupid-properties.md) when a property needs deeper analysis.
 
+SOLID, repeated `if/else/switch`, objects vs data structures, livable code (Uncle Bob): [design principles](references/uncle-bob-design-principles.md).
+
+Variable scope, strings vs real types, coding to interfaces, naming conventions (Effective Java): [general programming habits](references/general-programming-habits.md).
+
 Hacker ethos (curiosity- and craftsmanship-led engineering, open-source contribution approach; refuse unauthorized access): [hacker manifesto](references/hacker-manifesto.md).
 
 ## Gotchas
