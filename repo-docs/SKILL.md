@@ -17,10 +17,10 @@ description: >
 
 Two files, two audiences. Route first, then read only the matching reference.
 
-| File        | Reader                          | Answers                           | Read                                                |
-| ----------- | ------------------------------- | --------------------------------- | --------------------------------------------------- |
-| `README.md` | Humans deciding to use the repo | What is it, how do I install/use  | [references/readme.md](references/readme.md)        |
-| `AGENTS.md` | Coding agents working in repo   | Non-discoverable rules, commands  | [references/agents-md.md](references/agents-md.md)  |
+| File        | Reader                          | Answers                          | Read                                               |
+| ----------- | ------------------------------- | -------------------------------- | -------------------------------------------------- |
+| `README.md` | Humans deciding to use the repo | What is it, how do I install/use | [references/readme.md](references/readme.md)       |
+| `AGENTS.md` | Coding agents working in repo   | Non-discoverable rules, commands | [references/agents-md.md](references/agents-md.md) |
 
 ## Workflow
 
@@ -30,10 +30,11 @@ Two files, two audiences. Route first, then read only the matching reference.
 
 ## Read On Demand
 
-| Read When                                      | File                                                                          |
-| ---------------------------------------------- | ----------------------------------------------------------------------------- |
-| README templates (library, CLI, profile)       | [readme-templates.md](references/readme-templates.md)                         |
-| AGENTS.md principles, evidence                 | [six-principles-detailed.md](references/six-principles-detailed.md)           |
-| Which sub-agents load the file                 | [subagent-context-loading.md](references/subagent-context-loading.md)         |
-| Anti-pattern fixes, directory-scoped files     | [anti-patterns-and-local-files.md](references/anti-patterns-and-local-files.md) |
-| Real production AGENTS.md structures           | [real-world-structure-patterns.md](references/real-world-structure-patterns.md) |
+| Read When                                                  | File                                                                            |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| README templates (library, CLI, profile)                   | [readme-templates.md](references/readme-templates.md)                           |
+| AGENTS.md principles, evidence                             | [six-principles-detailed.md](references/six-principles-detailed.md)             |
+| Which sub-agents load the file                             | [subagent-context-loading.md](references/subagent-context-loading.md)           |
+| Anti-pattern fixes, directory-scoped files                 | [anti-patterns-and-local-files.md](references/anti-patterns-and-local-files.md) |
+| Real production AGENTS.md structures                       | [real-world-structure-patterns.md](references/real-world-structure-patterns.md) |
+| Organise a doc set (tutorial/how-to/reference/explanation) | [diataxis.md](references/diataxis.md)                                           |
