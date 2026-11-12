@@ -112,5 +112,17 @@
     "google",
     "fireflies",
     "notion"
-  ]
+  ],
+  "skillOverrides": {
+    "fastify-best-practices": "off",
+    "linting-neostandard-eslint9": "off",
+    "node": "off",
+    "nodejs-core": "off",
+    "oauth": "off",
+    "octocat": "off",
+    "simple": "off",
+    "snipgrapher": "off",
+    "typescript-magician": "off",
+    "documentation": "off"
+  }
 }
