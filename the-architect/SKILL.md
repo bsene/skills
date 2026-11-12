@@ -47,6 +47,7 @@ when that makes the policy easier to locate.
 | Repository, Unit of Work, aggregates, commands vs events, message bus, read models       | [Application Patterns](references/application-patterns.md)                                                |
 | Model-View-Controller roles, original Smalltalk-80 MVC, Observer link, variants, testing | [Model-View-Controller](references/model-view-controller.md)                                              |
 | Who owns port interfaces, configurator / composition root, cost of adopting              | [Configurator and Required Interfaces](references/ports-adapters/configurator-and-required-interfaces.md) |
+| Record the chosen boundary and the rejected alternatives as an ADR                       | [ADRs](../repo-docs/references/adrs.md)                                                                   |
 
 ## Reference scope
 
