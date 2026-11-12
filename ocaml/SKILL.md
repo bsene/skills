@@ -1,6 +1,6 @@
 ---
 name: ocaml
-description: Write, review, debug, and explain OCaml code and dune projects. Use whenever the user mentions OCaml, .ml/.mli files, dune, dune-project, opam, Alcotest, qcheck, shrinking, counterexamples, property-based testing, mutation testing, katas or exercises written in OCaml, or asks to convert JS/TS/PHP logic into OCaml. Trigger even if the user just pastes OCaml code with a compiler error and asks "what's wrong here", asks to set up a new dune project, or asks for the OCaml idiom for something they already know how to do in JS/TS. The user is an experienced JS/TS/PHP developer but a genuine OCaml beginner — explanations should assume strong general programming skill and zero OCaml-specific knowledge, never the reverse. DO NOT USE for F#, ReasonML/ReScript, Standard ML, or other ML-family languages unless the user is explicitly comparing them to OCaml.
+description: Write, review, debug, and explain OCaml code and dune projects. Use whenever the user mentions OCaml, .ml/.mli files, dune, dune-project, opam, Alcotest, qcheck, shrinking, counterexamples, property-based testing, mutation testing, katas or exercises written in OCaml, or asks to convert JS/TS/PHP logic into OCaml. Trigger even if the user just pastes OCaml code with a compiler error and asks "what's wrong here", asks to set up a new dune project, or asks for the OCaml idiom for something they already know how to do in JS/TS. Also use for ReasonML (Reason syntax for OCaml): .re/.rei files, refmt, rtop, Reason with dune or Melange, or converting between Reason and OCaml syntax. The user is an experienced JS/TS/PHP developer but a genuine OCaml beginner — explanations should assume strong general programming skill and zero OCaml-specific knowledge, never the reverse. DO NOT USE for F#, ReScript (.res), Standard ML, or other ML-family languages unless the user is explicitly comparing them to OCaml.
 ---
 
 # OCaml
@@ -60,13 +60,14 @@ Treat `dune build` output as ground truth: type errors usually point at a real l
 
 ## Read On Demand
 
-| Read when                                                       | Link                                                                         |
-| --------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Reading inference errors, compiler messages, or typing rules    | [Inference and compiler errors](references/inference-and-compiler-errors.md) |
-| Explaining a syntax or semantic idiom coming from JS/TS/PHP     | [Core language cheat sheet](references/core-language-cheat-sheet.md)         |
-| Explaining `=` vs `==`, mutation, or value layout               | [Runtime model](references/runtime-model.md)                                 |
-| Scaffolding dune projects or writing Alcotest suites            | [Dune and Alcotest](references/dune-and-alcotest.md)                         |
-| Choosing qcheck, mutation testing, linting, or dead-code tools  | [Testing and quality](references/testing-and-quality.md)                     |
-| Katas, exercises, or a beginner-to-real-programs learning path  | [Learning resources](references/learning-resources.md)                       |
-| Concrete programs, data structures, or algorithms from the book | [Learn Programming with OCaml](references/learn-programming-with-ocaml.md)   |
-| Benchmark results                                               | [Benchmarks](references/benchmarks.md)                                       |
+| Read when                                                         | Link                                                                                                       |
+| ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Reading inference errors, compiler messages, or typing rules      | [Inference and compiler errors](references/inference-and-compiler-errors.md)                               |
+| Explaining a syntax or semantic idiom coming from JS/TS/PHP       | [Core language cheat sheet](references/core-language-cheat-sheet.md)                                       |
+| Explaining `=` vs `==`, mutation, or value layout                 | [Runtime model](references/runtime-model.md)                                                               |
+| Scaffolding dune projects or writing Alcotest suites              | [Dune and Alcotest](references/dune-and-alcotest.md)                                                       |
+| Choosing qcheck, mutation testing, linting, or dead-code tools    | [Testing and quality](references/testing-and-quality.md)                                                   |
+| Katas, exercises, or a beginner-to-real-programs learning path    | [Learning resources](references/learning-resources.md)                                                     |
+| Concrete programs, data structures, or algorithms from the book   | [Learn Programming with OCaml](references/learn-programming-with-ocaml.md)                                 |
+| Reading or writing ReasonML (.re), refmt, Reason↔OCaml syntax map | [ReasonML](references/reasonml.md) · [reasonml.github.io](https://reasonml.github.io/docs/en/what-and-why) |
+| Benchmark results                                                 | [Benchmarks](references/benchmarks.md)                                                                     |
