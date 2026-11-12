@@ -10,7 +10,9 @@ description: >
   audit, trim, or consolidate AGENTS.md / CLAUDE.md for coding agents,
   progressive disclosure, bloat and anti-patterns. Templates drawn from
   Best-README-Template, standard-readme, makeareadme.com, awesome-readme, and
-  the agents.md standard.
+  the agents.md standard. Also: architecture decision records (ADR, "document
+  this decision", docs/adr, supersede a decision), changelogs, and organising a
+  doc set with Diátaxis.
 ---
 
 # Repo Docs
@@ -30,11 +32,13 @@ Two files, two audiences. Route first, then read only the matching reference.
 
 ## Read On Demand
 
-| Read When                                                  | File                                                                            |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| README templates (library, CLI, profile)                   | [readme-templates.md](references/readme-templates.md)                           |
-| AGENTS.md principles, evidence                             | [six-principles-detailed.md](references/six-principles-detailed.md)             |
-| Which sub-agents load the file                             | [subagent-context-loading.md](references/subagent-context-loading.md)           |
-| Anti-pattern fixes, directory-scoped files                 | [anti-patterns-and-local-files.md](references/anti-patterns-and-local-files.md) |
-| Real production AGENTS.md structures                       | [real-world-structure-patterns.md](references/real-world-structure-patterns.md) |
-| Organise a doc set (tutorial/how-to/reference/explanation) | [diataxis.md](references/diataxis.md)                                           |
+| Read When                                                                                      | File                                                                                                                            |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| README templates (library, CLI, profile)                                                       | [readme-templates.md](references/readme-templates.md)                                                                           |
+| AGENTS.md principles, evidence                                                                 | [six-principles-detailed.md](references/six-principles-detailed.md)                                                             |
+| Which sub-agents load the file                                                                 | [subagent-context-loading.md](references/subagent-context-loading.md)                                                           |
+| Anti-pattern fixes, directory-scoped files                                                     | [anti-patterns-and-local-files.md](references/anti-patterns-and-local-files.md)                                                 |
+| Real production AGENTS.md structures                                                           | [real-world-structure-patterns.md](references/real-world-structure-patterns.md)                                                 |
+| Organise a doc set (tutorial/how-to/reference/explanation)                                     | [diataxis.md](references/diataxis.md)                                                                                           |
+| Record an architecture decision (ADR), changelog, inline gotchas, fact-preserving prose review | [adrs.md](references/adrs.md)                                                                                                   |
+| Write or review one tutorial/how-to/reference/explanation page                                 | installed `documentation` skill ([mcollina/skills](https://github.com/mcollina/skills/blob/main/skills/documentation/SKILL.md)) |
