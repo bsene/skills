@@ -61,6 +61,8 @@ No big deal. Don't treat comments as sacred or as a metric to hit — code that 
 - Delete comments that just restate the code (`// increment i` above `i++`).
 - Stale comments (describing behavior the code no longer has) are worse than no comment — flag them for removal on sight.
 - TODOs are fine when they carry real information (why deferred, ideally by whom/when); a bare `// TODO` isn't worth keeping.
+- Delete commented-out code: git has the history.
+- Document a non-obvious gotcha (call order, timing, a known race) at the definition. If a design decision explains it, link that decision record ([ADRs](../repo-docs/references/adrs.md)).
 
 ## 5. CUPID review
 
