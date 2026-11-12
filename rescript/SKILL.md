@@ -1,7 +1,6 @@
 ---
 name: rescript
-description: Write, review, debug, and explain ReScript code and rewatch projects. Use when the user mentions ReScript, .res/.resi files, rescript.json, bsconfig.json, rewatch, @rescript/core, @rescript/react, genType, uncurried functions, ReScript 11 to 12 migration, JS bindings, or pastes .res code with a compiler error. Explain for a JS/TS developer new to ReScript; adapt if they show fluency. DO NOT USE for ReasonML/BuckleScript-only or Melange projects, or plain OCaml; use ocaml or typescript instead.
-
+description: Write, review, debug, and explain ReScript code and rewatch projects. Use when the user mentions ReScript, .res/.resi files, rescript.json, bsconfig.json, rewatch, @rescript/core, @rescript/react, genType, uncurried functions, ReScript 11 to 12 migration, JS bindings, or pastes .res code with a compiler error. Explain for a JS/TS developer new to ReScript; adapt if they show fluency. DO NOT USE for ReasonML (.re), BuckleScript-only or Melange projects, or plain OCaml (use the ocaml skill, which covers Reason syntax), or plain JS/TS (use typescript).
 ---
 
 # ReScript
