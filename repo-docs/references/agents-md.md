@@ -88,8 +88,8 @@ Single tool → just write `AGENTS.md`. Multiple tools → adapters, never copy-
 
 ## Read On Demand
 
-| Read When                                                           | File                                                                         |
-| ------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Read When                                                           | File                                                              |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------- |
 | Principle details, research evidence, reasoning                     | [Six Principles Detailed](six-principles-detailed.md)             |
 | Who actually loads the file (Explore/Plan never do), audience split | [Sub-Agent Context Loading](subagent-context-loading.md)          |
 | Writing workflow, anti-pattern fixes, directory-scoped files, drift | [Anti-Patterns & Local Files](anti-patterns-and-local-files.md)   |

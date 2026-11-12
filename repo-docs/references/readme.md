@@ -23,7 +23,7 @@ because they optimize for different things:
   common in the Node/npm world. Less flashy, more predictable.
 - **makeareadme.com** — a lighter-weight, explanatory guide rather than a rigid
   template: a minimal starting skeleton plus a checklist of optional sections with the
-  reasoning for each, aimed at getting *any* programming project (not just npm
+  reasoning for each, aimed at getting _any_ programming project (not just npm
   packages) to a reasonable baseline quickly. It's the source for two sections the
   other two lineages tend to skip — **Support** (where to get help: issue tracker,
   chat, email) and **Project status** (a note at the top if the project is
@@ -43,7 +43,7 @@ which sections matter:
 - **Library / package** (npm, pip, gem, crate...) — installation via a package manager,
   a runnable code example, and an API reference are the core. Badges for version,
   downloads, and build status carry real information here.
-- **CLI tool** — installation, then a *usage* block showing actual commands and flags,
+- **CLI tool** — installation, then a _usage_ block showing actual commands and flags,
   often with a `--help` dump or a GIF/asciinema recording. Skip "API Reference."
 - **Application / service** (web app, self-hosted tool) — screenshots or a demo link
   matter more than code snippets. "Getting Started" usually means "how do I deploy or
@@ -66,7 +66,7 @@ whatever isn't discoverable):
 - An existing `package.json` / `pyproject.toml` / `Cargo.toml` / `go.mod` etc. for the
   real project name, description, license, and dependencies.
 - The actual install command for the ecosystem (`npm install <name>`, `pip install
-  <name>`, `cargo add <name>`...) — never guess a package name.
+<name>`, `cargo add <name>`...) — never guess a package name.
 - One real, runnable usage example — pull it from tests, examples/, or ask the user
   for their canonical "hello world" use case. A README's credibility mostly rides on
   whether the first code block actually works if pasted in.
@@ -96,36 +96,47 @@ One or two sentences: what this is and who it's for.
 [optional: screenshot, GIF, or logo]
 
 ## Table of Contents
+
 [only for READMEs long enough to need one — roughly 200+ lines / 5+ sections]
 
 ## About / Features
+
 What it does and why it exists. What makes it different from the obvious alternative.
 
 ## Getting Started
+
 ### Prerequisites
+
 ### Installation
 
 ## Usage
+
 The real, runnable example. This is the section people actually read.
 
 ## Configuration / API Reference
+
 [if applicable — options, environment variables, exported functions]
 
 ## Support
+
 [optional — where to get help: issue tracker, chat/Discord, email]
 
 ## Roadmap
+
 [optional — link to Issues instead if the roadmap lives there]
 
 ## Contributing
+
 [can be one paragraph + a link to CONTRIBUTING.md instead of inlining the whole process]
 
 ## Authors and Acknowledgment / Contact
+
 [optional — trim if it's just a list of unrelated link dumps]
 
 ## License
 
 ## Project Status
+
 [optional — only if development has slowed or stopped; say so explicitly and
 mention if you're open to someone forking or stepping in as maintainer]
 ```

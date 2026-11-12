@@ -82,7 +82,9 @@ Distributed under the [MIT License](LICENSE).
 
 \`\`\`bash
 brew install [tool-name]
+
 # or
+
 npm install -g [tool-name]
 \`\`\`
 
@@ -190,12 +192,15 @@ pip install foobar
 import foobar
 
 # returns 'words'
+
 foobar.pluralize('word')
 
 # returns 'geese'
+
 foobar.pluralize('goose')
 
 # returns 'phenomenon'
+
 foobar.singularize('phenomena')
 \`\`\`
 
