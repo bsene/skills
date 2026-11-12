@@ -22,6 +22,8 @@ description: >
 
 Keep explanations conversational. For complex concepts, use multiple analogies.
 
+**Stay in the explanation form** ([Diátaxis](https://diataxis.fr/)): answer "how does it work / why is it like this", not "how do I do X". If the user actually needs to complete a task, give numbered how-to steps instead. If they want an exhaustive list of options or signatures, point to the reference docs. Don't mix a tutorial into a walkthrough. When the walkthrough will be saved as project docs, file it under explanation (see `repo-docs` → `references/diataxis.md`) and write it with the installed `documentation` skill.
+
 ## Example output shapes
 
 ### Single function
