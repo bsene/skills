@@ -79,16 +79,18 @@ Never ignore errors with `_`, use side-effecting `init()`, or add interfaces/gor
 
 ## Read On Demand
 
-| Read When                                                                                      | File                                                                                                                  |
-| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| Go proverbs, naming rules, formatting, zero value idioms                                       | [Go Idioms](references/idioms.md)                                                                                     |
-| Project layout decisions (cmd/, internal/, pkg/)                                               | [Project Layout](references/project-layout.md) · [go.dev/doc/code](https://go.dev/doc/code)                           |
-| Value vs pointer receivers, closures, defer semantics                                          | [Functions, Methods & Pointers](references/functions-methods-pointers.md)                                             |
-| Verification gate, table-driven tests, don't pre-DRY                                           | [Verification Gate & Discipline](references/verification-gate-and-discipline.md)                                      |
-| GoF patterns as Go idioms, extra concurrency patterns (future, pub/sub), fundamentals recap    | [Design Patterns in Go](references/design-patterns-in-go.md)                                                          |
-| Retries/backoff, circuit breaker, health, observability, service security, event-driven        | [Microservice Resilience](references/microservice-resilience.md)                                                      |
-| Go code review checklist, common pitfalls (slices, maps, errors, goroutines, time.After, HTTP) | [100 Go Mistakes](references/100-go-mistakes.md) · [100go.co](https://100go.co/)                                      |
-| Go 1.24–1.27 features (`b.Loop`, `wg.Go`, `synctest`, `new(expr)`, `errors.AsType`, json/v2)   | [Modern Go Releases](references/modern-go-releases.md) · [go.dev/doc/devel/release](https://go.dev/doc/devel/release) |
+| Read When                                                                                                       | File                                                                                                                                                          |
+| --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Go proverbs, naming rules, formatting, zero value idioms                                                        | [Go Idioms](references/idioms.md)                                                                                                                             |
+| Project layout decisions (cmd/, internal/, pkg/)                                                                | [Project Layout](references/project-layout.md) · [go.dev/doc/code](https://go.dev/doc/code)                                                                   |
+| Value vs pointer receivers, closures, defer semantics                                                           | [Functions, Methods & Pointers](references/functions-methods-pointers.md)                                                                                     |
+| Verification gate, table-driven tests, don't pre-DRY                                                            | [Verification Gate & Discipline](references/verification-gate-and-discipline.md)                                                                              |
+| GoF patterns as Go idioms, extra concurrency patterns (future, pub/sub), fundamentals recap                     | [Design Patterns in Go](references/design-patterns-in-go.md)                                                                                                  |
+| Retries/backoff, circuit breaker, health, observability, service security, event-driven                         | [Microservice Resilience](references/microservice-resilience.md)                                                                                              |
+| Go code review checklist, common pitfalls (slices, maps, errors, goroutines, time.After, HTTP)                  | [100 Go Mistakes](references/100-go-mistakes.md) · [100go.co](https://100go.co/)                                                                              |
+| Book chapter maps: core rules (GOPL), I/O + pitfalls (Way to Go), package/file/function design heuristics (PGL) | [GOPL](references/gopl-book-notes.md) · [The Way to Go](references/the-way-to-go-notes.md) · [Practical Go Lessons](references/practical-go-lessons-notes.md) |
+| Which book for a topic (concurrency, TDD, performance, web, networking, services, CLI, generics) + takeaways    | [Go Books](references/go-books.md) · [go.dev/wiki/Books](https://go.dev/wiki/Books)                                                                           |
+| Go 1.24–1.27 features (`b.Loop`, `wg.Go`, `synctest`, `new(expr)`, `errors.AsType`, json/v2)                    | [Modern Go Releases](references/modern-go-releases.md) · [go.dev/doc/devel/release](https://go.dev/doc/devel/release)                                         |
 
 ---
 
