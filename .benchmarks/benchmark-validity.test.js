@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import test from 'node:test'
 
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor
-const recipes = ['skill-benchmark-trio.js', 'php-benchmark-trio.js', 'skill-benchmark-gitmoji002.js']
+const recipes = ['skill-benchmark-trio.js', 'php-benchmark-trio.js', 'skill-benchmark-gitmoji002.js', 'ocaml-benchmark.js']
 
 for (const recipe of recipes) {
   test(`${recipe}: invalid cells never produce scores or deltas`, async () => {
