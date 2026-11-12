@@ -1,6 +1,6 @@
 ---
 name: init
-description: Creates, updates, or optimizes an AGENTS.md file for a repository with minimal, high-signal instructions covering non-discoverable coding conventions, tooling quirks, workflow preferences, and project-specific rules that agents cannot infer from reading the codebase. Use when setting up agent instructions or Claude configuration for a new repository, when an existing AGENTS.md is too long, generic, or stale, when agents repeatedly make avoidable mistakes, or when repository workflows have changed and the agent configuration needs pruning. Applies a discoverability filter—omitting anything Claude can learn from README, code, config, or directory structure—and a quality gate to verify each line remains accurate and operationally significant. DO NOT USE for writing README/ADR/architecture docs, one-off task prompts, or editing code-level lint/CI config without an AGENTS.md change.
+description: Creates, updates, or optimizes an AGENTS.md file for a repository with minimal, high-signal instructions covering non-discoverable coding conventions, tooling quirks, workflow preferences, and project-specific rules that agents cannot infer from reading the codebase. Use when setting up agent instructions or Claude configuration for a new repository, when an existing AGENTS.md is too long, generic, or stale, when agents repeatedly make avoidable mistakes, or when repository workflows have changed and the agent configuration needs pruning. Applies a discoverability filter—omitting anything Claude can learn from README, code, config, or directory structure—and a quality gate to verify each line remains accurate and operationally significant.
 metadata:
   tags: initialization, agents, context-engineering, agents-md, maintenance
 ---
@@ -10,7 +10,6 @@ metadata:
 Use this skill when creating or updating `AGENTS.md` for a repository.
 
 Use it especially when:
-
 - the current `AGENTS.md` is long, generic, or stale
 - agents repeatedly make the same avoidable mistakes
 - repository workflows changed and agent guidance needs pruning
@@ -31,15 +30,11 @@ Before adding any line, ask:
 ### What earns a line
 
 Include only guidance that is:
-
 1. **Non-discoverable** from repository files alone
 2. **Operationally significant** (changes commands, outcomes, or safety)
 3. **Actionable** (specific enough to execute)
-4. **Loaded by the agent that acts on it** — Explore/Plan sub-agents never load
-   `AGENTS.md`/`CLAUDE.md`; orientation content goes to `README`/ADR instead
 
 Typical examples:
-
 - Non-standard tooling choices (e.g. use `uv` instead of `pip`)
 - Command caveats (e.g. tests must run with `--no-cache` due to fixture behavior)
 - Hidden constraints/landmines (deprecated directories still imported in production)
@@ -48,19 +43,16 @@ Typical examples:
 ### What to remove or avoid
 
 Do **not** include:
-
 - Tech stack summaries
-- Directory structure overviews (explorer orientation → `README`/ADR, which search agents do read)
+- Directory structure overviews
 - Architecture descriptions agents can infer from code
 - Generic best-practice advice
-- Rules already enforced by tooling (linters, typecheck, tests, CI): delete the
-  line from `AGENTS.md`; the durable fix is to enforce the rule in lint/CI
+- Rules already enforced by tooling (linters, typecheck, tests, CI)
 - Mandatory boilerplate headers unless the repo explicitly requires one
 
 ### Recommended structure
 
 Prefer short, high-signal sections such as:
-
 - `Scope & routing` (which areas need separate/module-local AGENTS files)
 - `Non-discoverable commands`
 - `Landmines / do-not-touch areas`
@@ -85,7 +77,6 @@ If `AGENTS.md` exists, improve it incrementally instead of replacing it blindly.
 `AGENTS.md` is temporary guidance, not permanent configuration.
 
 When recurring issues appear:
-
 1. Prefer fixing the root cause in code/tooling (lint rule, test, script, structure)
 2. Keep only the minimum instruction needed until the root cause is solved
 3. Prune stale instructions aggressively
@@ -93,7 +84,6 @@ When recurring issues appear:
 ### Quality gate before finalizing
 
 For each line in `AGENTS.md`, verify:
-
 - Is it non-discoverable?
 - Is it still accurate today?
 - Does it materially reduce mistakes/cost/time?
