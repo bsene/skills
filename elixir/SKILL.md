@@ -1,12 +1,14 @@
 ---
 name: elixir
 description: >
-  Write, review, and debug idiomatic Elixir — pattern matching, pipelines, immutable data, processes, OTP (GenServer, Supervisor, Task, Agent), Mix projects, and ExUnit.
+  Write, review, and debug idiomatic Elixir — pattern matching, pipelines, immutable data, processes, OTP (GenServer, Supervisor, Task, Agent), Mix projects, ExUnit, and Phoenix LiveView.
 
   TRIGGER when: Elixir, .ex/.exs files, mix.exs, mix test, iex, `|>` pipe operator, pattern matching on tuples/maps/lists,
   with/case/cond, GenServer, Supervisor, Task, Agent, spawn/send/receive, let it crash, OTP application, ExUnit, doctest,
-  Enum/Stream, protocols, behaviours, `{:ok, v}`/`{:error, r}` tuples, or "how do I do X in Elixir".
-  DO NOT USE for Erlang-only code, Phoenix/Ecto specifics beyond the language, or other BEAM languages (Gleam, LFE).
+  Enum/Stream, protocols, behaviours, `{:ok, v}`/`{:error, r}` tuples, or "how do I do X in Elixir";
+  LiveView (Phoenix.LiveView, .heex/~H, mount/handle_event/handle_params, phx-click/phx-change/phx-submit, streams,
+  assign_async, LiveComponent, function components, on_mount/live_session, LiveViewTest).
+  DO NOT USE for Erlang-only code, non-LiveView Phoenix/Ecto specifics, or other BEAM languages (Gleam, LFE).
 metadata:
   user-invocable: "false"
 ---
@@ -93,7 +95,8 @@ end
 
 ## Read On Demand
 
-| Read When                                                                                                                                | File                                                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Map vs struct vs keyword list, error style, OTP app planning, restart options, macros/behaviours/protocols, tooling, stale 1.6-era parts | [Programming Elixir Notes](references/programming-elixir-notes.md)                                                  |
-| Which book for a need (OTP design, back-pressure pipelines, macros, adoption, production debugging), Erlang pointers                     | [Elixir & Erlang Books](references/elixir-books.md) · [elixir-lang.org/learning](https://elixir-lang.org/learning/) |
+| Read When                                                                                                                                | File                                                                                                                       |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Map vs struct vs keyword list, error style, OTP app planning, restart options, macros/behaviours/protocols, tooling, stale 1.6-era parts | [Programming Elixir Notes](references/programming-elixir-notes.md)                                                         |
+| Which book for a need (OTP design, back-pressure pipelines, macros, adoption, production debugging), Erlang pointers                     | [Elixir & Erlang Books](references/elixir-books.md) · [elixir-lang.org/learning](https://elixir-lang.org/learning/)        |
+| Phoenix LiveView: lifecycle, change tracking, streams/async, navigation, forms, security, JS hooks, LiveViewTest                         | [Phoenix LiveView](references/phoenix-liveview.md) · [hexdocs.pm/phoenix_live_view](https://hexdocs.pm/phoenix_live_view/) |
