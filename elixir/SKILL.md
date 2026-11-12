@@ -13,7 +13,7 @@ metadata:
 
 # Elixir
 
-Functional language on the BEAM VM: immutable data, lightweight isolated processes, fault tolerance via supervision. Source: _Programming Elixir >= 1.6_ (Dave Thomas, Pragmatic Bookshelf); paraphrased, see the book for depth.
+Functional language on the BEAM VM: immutable data, lightweight isolated processes, fault tolerance via supervision. Source: _Programming Elixir >= 1.6_ (Dave Thomas, Pragmatic Bookshelf), paraphrased; chapter notes and a curated reading map under [Read On Demand](#read-on-demand).
 
 ## Core idioms
 
@@ -90,3 +90,10 @@ end
 3. No unsupervised long-lived `spawn`; GenServer calls have sane timeouts.
 4. Errors are tagged tuples at boundaries; `!` only where failure is a bug.
 5. `mix format` clean; specs (`@spec`) on public functions.
+
+## Read On Demand
+
+| Read When                                                                                                                                | File                                                                                                                |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Map vs struct vs keyword list, error style, OTP app planning, restart options, macros/behaviours/protocols, tooling, stale 1.6-era parts | [Programming Elixir Notes](references/programming-elixir-notes.md)                                                  |
+| Which book for a need (OTP design, back-pressure pipelines, macros, adoption, production debugging), Erlang pointers                     | [Elixir & Erlang Books](references/elixir-books.md) · [elixir-lang.org/learning](https://elixir-lang.org/learning/) |
