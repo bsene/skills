@@ -109,6 +109,17 @@ Return `201 Created` plus `Location` for creation; a replay returns the same bod
 - **Scopes per endpoint** — least privilege; document required scope in API reference.
 - Validate tokens; rotate signing keys; never log tokens.
 
+## API Documentation
+
+Split API docs by [Diátaxis](https://diataxis.fr/) form; don't fold everything into one generated page. Write each page with the installed `documentation` skill:
+
+| Form        | API content                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------- |
+| Tutorial    | "Your first request": get a key, make one call, see a result                                |
+| How-to      | Task recipes: paginate a list, retry with `Idempotency-Key`, handle `429`, rotate keys      |
+| Reference   | OpenAPI 3.x spec: every endpoint, field, status, error code and required scope; no steps    |
+| Explanation | Auth model, versioning and deprecation policy, why cursor pagination, error-shape rationale |
+
 ## Review / Pre-Launch Checklist
 
 Run before any endpoint ships. Tier = severity if violated.
