@@ -336,40 +336,48 @@ workspace "Accounts Service" "Component view" {
 
 ## CLI
 
-Binary names by install method:
+Structurizr vNext is one tool with subcommands (`local`, `server`, `playground`, `export`, `validate`, `push`, `pull`, …). Official docs: [docs.structurizr.com](https://docs.structurizr.com/). Run it as either:
 
-- Local install (zip from GitHub releases) and Docker: `structurizr.sh` (Unix/macOS), `structurizr.bat` (Windows)
-- Homebrew (`brew install structurizr-cli`) / Scoop: `structurizr-cli`
+- `java -jar structurizr.war <command> …` — needs Java 21; `curl -O https://download.structurizr.com/structurizr.war`
+- `docker run -it --rm -v "$PWD":/usr/local/structurizr structurizr/structurizr <command> …`
+
+End of life, never emit: `structurizr.sh`, `structurizr-cli`, `structurizr/cli`, `structurizr/lite` (Lite → `local`, CLI → `export`/`push`/`pull`, on-premises → `server`). All commands are free except `server` from prebuilt binaries, which needs a license.
 
 Flags are long-form only (`-workspace`, `-format`, `-output`).
 
 ### Validate
 
 ```bash
-structurizr.sh validate -workspace diagram.dsl
+java -jar structurizr.war validate -workspace workspace.dsl
 ```
 
 ### Export
 
-Supported formats: `plantuml`, `plantuml/structurizr`, `plantuml/c4plantuml`, `mermaid`, `websequencediagrams`, `dot`, `ilograph`, `d2`, `json`, `theme`, `static`. **Note:** `svg` and `png` are not native export formats — render the intermediate output (PlantUML/Mermaid/D2/DOT) with the corresponding tool, or open the workspace in Structurizr Lite / `structurizr/structurizr local`.
+Formats: `plantuml` (= `plantuml/structurizr`), `plantuml/c4plantuml`, `mermaid`, `websequencediagrams` (dynamic views), `static` (HTML site), `json`, `theme`, `png`, `svg`. `d2`, `dot` and `ilograph` are not in the vNext list.
+
+`png`/`svg` use the browser renderer (Playwright + headless Chromium, downloaded on first run) and only work from the preview `.war` or a source build — not the Docker image. Default to PlantUML/Mermaid and render with that tool.
 
 ```bash
-structurizr.sh export -workspace diagram.dsl -format plantuml -output ./out/
-structurizr.sh export -workspace diagram.dsl -format mermaid  -output ./out/
-structurizr.sh export -workspace diagram.dsl -format d2       -output ./out/
+java -jar structurizr.war export -workspace workspace.dsl -format plantuml -output out
+java -jar structurizr.war export -workspace workspace.dsl -format plantuml/c4plantuml -output out
+java -jar structurizr.war export -workspace workspace.dsl -format mermaid -output out
 ```
 
-### Docker (no local install)
+`plantuml/c4plantuml` emits C4-PlantUML; since C4-PlantUML v2.14.0 (bundled with PlantUML) add `!NEW_C4_STYLE=1` for the new visual style.
+
+### Docker (no Java)
 
 ```bash
-docker run --rm -v "$PWD":/usr/local/structurizr structurizr/cli \
-  validate -workspace diagram.dsl
+docker run --rm -v "$PWD":/usr/local/structurizr structurizr/structurizr \
+  validate -workspace workspace.dsl
 
-docker run --rm -v "$PWD":/usr/local/structurizr structurizr/cli \
-  export -workspace diagram.dsl -format mermaid -output out
+docker run --rm -v "$PWD":/usr/local/structurizr structurizr/structurizr \
+  export -workspace workspace.dsl -format mermaid -output out
+
+docker run -it --rm -p 8080:8080 -v "$PWD":/usr/local/structurizr structurizr/structurizr local
 ```
 
-The `structurizr/cli` image is archived (Feb 2026) but functional. The active replacement is the consolidated `structurizr/structurizr` image (see Lite/local server).
+`local` loads `workspace.dsl` (then `workspace.json`) from the mounted directory; browse `http://localhost:8080`. No install at all: [playground.structurizr.com](https://playground.structurizr.com/), or `structurizr/structurizr playground` locally.
 
 ---
 

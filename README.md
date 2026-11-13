@@ -77,4 +77,4 @@ See [repo-docs](/skills/repo-docs/references/agents-md.md) for quality guidance 
 
 ---
 
-**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Oct 17, 2026
+**Built by**: [birrame](https://github.com/birrame) · **Last updated**: Nov 13, 2026

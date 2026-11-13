@@ -56,27 +56,25 @@ description: >
 
 ## Rendering
 
-Run in order, stop at first success. Native `svg`/`png` export does not exist in the Structurizr CLI — always export to PlantUML/Mermaid/D2 first, then render with that tool.
+Run in order, stop at first success. Structurizr is one tool now: `structurizr.war` (Java 21) or the `structurizr/structurizr` Docker image. `structurizr.sh`, `structurizr-cli`, `structurizr/lite` and `structurizr/cli` are end of life — never emit them. Always save the DSL as `/tmp/<name>/workspace.dsl` (`local` mode only loads a file named `workspace.dsl`). Native `png`/`svg` export needs the preview `.war` plus Playwright and is not in the Docker image, so export to PlantUML or Mermaid and render with that tool.
 
-1. **CLI available** (binary is `structurizr.sh` from local install / Docker, or `structurizr-cli` from Homebrew/Scoop) — save DSL to `/tmp/<name>.dsl`, then:
+1. **Java 21 + `structurizr.war`** (`curl -O https://download.structurizr.com/structurizr.war`):
 
    ```bash
-   structurizr.sh export -workspace /tmp/<name>.dsl -format plantuml -output /tmp/structurizr-out/
-   # render the .puml to SVG/PNG with `plantuml /tmp/structurizr-out/*.puml`
+   java -jar structurizr.war export -workspace /tmp/<name>/workspace.dsl -format plantuml -output /tmp/<name>/out
+   plantuml -tsvg /tmp/<name>/out/*.puml
    ```
 
    Share output path with user.
 
-2. **Docker available** — save DSL to `/tmp/<name>.dsl`, give user:
+2. **Docker available** — export, or give the user the interactive viewer:
 
    ```bash
-   # Active replacement (recommended):
-   docker run -it --rm -p 8080:8080 -v /tmp:/usr/local/structurizr structurizr/structurizr local
-   # Legacy (archived but functional):
-   docker run -it --rm -p 8080:8080 -v /tmp:/usr/local/structurizr structurizr/lite
+   docker run --rm -v /tmp/<name>:/usr/local/structurizr structurizr/structurizr export -workspace workspace.dsl -format plantuml -output out
+   docker run -it --rm -p 8080:8080 -v /tmp/<name>:/usr/local/structurizr structurizr/structurizr local
    ```
 
-   Point to `http://localhost:8080`.
+   For `local`, point to `http://localhost:8080`.
 
 3. **Neither** — output DSL in a fenced `dsl` code block. Note: paste at `https://playground.structurizr.com/` to render online.
 
