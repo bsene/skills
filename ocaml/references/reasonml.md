@@ -10,7 +10,10 @@ Condensed from the official [Reason documentation](https://reasonml.github.io/do
 
 ## Setup
 
+From the official [installation guide](https://reasonml.github.io/docs/en/installation). For a JS target, start from the Melange team's `melange-opam-template` instead.
+
 ```sh
+opam init -y && eval $(opam env)         # once per machine
 opam switch create . 5.1.0 --deps-only   # local switch; any recent OCaml 5.x works
 eval $(opam env)
 opam install reason dune                 # reason provides refmt and rtop
@@ -22,6 +25,7 @@ A project is the usual dune layout with `.re` sources:
 hello.re      print_endline("Hello world!");
 dune          (executable (name hello) (public_name hello))
 dune-project  (lang dune 3.6)
+hello.opam    (empty; public_name needs a package)
 ```
 
 `dune exec hello` builds and runs; `dune build @fmt` formats with refmt.
